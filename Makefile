@@ -11,7 +11,7 @@ SRC_TEST			=	src/nanotekspice.cpp
 
 SRC					=	$(SRC_MAIN) $(SRC_TEST)
 
-CXXFLAGS			=	-Wall -Wextra
+CXXFLAGS				=	-Wall -Wextra
 
 CPPFLAGS			=	-I./include/
 
@@ -46,6 +46,7 @@ clean:
 fclean:	clean
 	rm -f $(NAME)
 
-re:	fclean all
+re::	fclean
+re::	all
 
 .PHONY:	all tests_run debug clean fclean re
