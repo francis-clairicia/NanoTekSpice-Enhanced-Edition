@@ -53,6 +53,12 @@ namespace nts
             ComponentNameExistsException(std::size_t line, const std::string &name) noexcept;
     };
 
+    class BadComponentTypeException: public Exception
+    {
+        public:
+            BadComponentTypeException(const std::string &type) noexcept;
+    };
+
     class BadLinkException: public Exception
     {
         public:

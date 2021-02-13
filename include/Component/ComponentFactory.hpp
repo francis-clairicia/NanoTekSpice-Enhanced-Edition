@@ -26,6 +26,9 @@ namespace nts
             typedef std::map<std::string, std::unique_ptr<nts::OutputComponent> &> output_component_map_t;
 
         public:
+            static const std::unordered_map<std::string, component_creator_t> COMPONENT_CREATOR;
+
+        public:
             ComponentFactory() noexcept;
             ComponentFactory(const nts::ComponentFactory &other) noexcept;
             ~ComponentFactory() noexcept;
@@ -43,7 +46,6 @@ namespace nts
             std::unique_ptr<nts::IComponent> &operator[](const std::string &key);
 
         private:
-            std::unordered_map<std::string, component_creator_t> m_component_creator;
             component_map_t m_components;
             input_component_map_t m_input_components;
             output_component_map_t m_output_components;

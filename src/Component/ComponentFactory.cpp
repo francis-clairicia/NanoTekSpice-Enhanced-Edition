@@ -7,15 +7,15 @@
 
 #include <iostream>
 #include "ComponentFactory.hpp"
+#include "Exception.hpp"
+
+const std::unordered_map<std::string, nts::ComponentFactory::component_creator_t> nts::ComponentFactory::COMPONENT_CREATOR{
+    {"input", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::InputComponent>();}},
+    {"output", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::OutputComponent>();}}
+};
 
 nts::ComponentFactory::ComponentFactory() noexcept:
-    m_component_creator{
-        {"input", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::InputComponent>();}},
-        {"output", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::OutputComponent>();}}
-    },
-    m_components{},
-    m_input_components{},
-    m_output_components{}
+    m_components{}, m_input_components{}, m_output_components{}
 {
 }
 
@@ -29,11 +29,11 @@ nts::ComponentFactory::ComponentFactory(const nts::ComponentFactory &other __att
 
 std::unique_ptr<nts::IComponent> nts::ComponentFactory::createComponent(const std::string &type) const
 {
-    auto search = m_component_creator.find(type);
+    auto search = nts::ComponentFactory::COMPONENT_CREATOR.find(type);
 
-    if (search != m_component_creator.end())
-        return search->second();
-    return nullptr;
+    if (search == nts::ComponentFactory::COMPONENT_CREATOR.end())
+        throw nts::BadComponentTypeException(type);
+    return search->second();
 }
 
 nts::ComponentFactory::component_map_t &nts::ComponentFactory::get() noexcept

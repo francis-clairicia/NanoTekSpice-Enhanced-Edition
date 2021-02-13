@@ -41,6 +41,11 @@ nts::ComponentNameExistsException::ComponentNameExistsException(std::size_t line
 {
 }
 
+nts::BadComponentTypeException::BadComponentTypeException(const std::string &type) noexcept:
+    Exception("Unknown component type \"" + type + "\"")
+{
+}
+
 nts::BadLinkException::BadLinkException(const std::string &component_type, const std::string &why) noexcept:
     Exception("Cannot set link for " + component_type + " component: " + why)
 {

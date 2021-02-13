@@ -16,7 +16,7 @@
 
 namespace nts
 {
-    const std::unordered_map<std::string, nts::Tristate> INPUT_CONVERTER = {
+    const std::unordered_map<std::string, nts::Tristate> INPUT_CONVERTER{
         {"0", nts::FALSE},
         {"1", nts::TRUE},
         {"U", nts::UNDEFINED}

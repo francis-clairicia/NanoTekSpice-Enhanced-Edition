@@ -9,6 +9,7 @@
 #include <list>
 #include "ComponentFactory.hpp"
 #include "Parser.hpp"
+#include "Exception.hpp"
 #include "nanotekspice.hpp"
 
 int nts::nanotekspice(const std::string &circuit_file)

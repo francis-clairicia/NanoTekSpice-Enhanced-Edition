@@ -13,6 +13,8 @@ SRC_EXCEPTIONS		=	src/Exception.cpp
 
 SRC_PARSER			=	src/Parser.cpp
 
+SRC_UTILS			=	src/Utils/string_operations.cpp
+
 SRC_COMPONENTS		=	src/Component/ComponentFactory.cpp	\
 						src/Component/InputComponent.cpp	\
 						src/Component/OutputComponent.cpp
@@ -30,17 +32,20 @@ SRC					=	$(SRC_MAIN)							\
 						$(SRC_NANOTEKSPICE)					\
 						$(SRC_EXCEPTIONS)					\
 						$(SRC_PARSER)						\
+						$(SRC_UTILS)						\
 						$(SRC_COMPONENTS)					\
 						$(SRC_GATES)
 
 SRC_TEST			=	$(SRC_GATES)						\
-						$(SRC_EXCEPTIONS)
+						$(SRC_EXCEPTIONS)					\
+						$(SRC_UTILS)
 
 CXXFLAGS			=	-Wall -Wextra
 
 CPPFLAGS			=	-I./include/						\
 						-I./include/Component/				\
-						-I./include/Gate/
+						-I./include/Gate/					\
+						-I./include/Utils/
 
 OBJ					=	$(SRC:.cpp=.o)
 
@@ -56,7 +61,7 @@ tests_run:	CXXFLAGS += --coverage
 tests_run:	LDLIBS += -lcriterion
 tests_run:	$(LDLIBS)
 	@find -name "*.gc*" -delete
-	$(CXX) -o unit_tests $(SRC_TEST) tests/*.cpp $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS)
+	$(CXX) -o unit_tests $(SRC_TEST) tests/**/*.cpp $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS)
 	-./unit_tests --verbose
 	$(RM) unit_tests test*.gc*
 	mkdir -p coverage
