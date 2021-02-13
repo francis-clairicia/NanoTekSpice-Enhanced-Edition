@@ -77,6 +77,12 @@ namespace nts
             NoChipsetException() noexcept;
     };
 
+    class ConstComponentException: public Exception
+    {
+        public:
+            ConstComponentException(const std::string &msg) noexcept;
+    };
+
     class FileException: public Exception
     {
         public:

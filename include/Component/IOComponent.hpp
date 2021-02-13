@@ -13,7 +13,7 @@
 
 namespace nts
 {
-    class IOComponent: public IComponent {
+    class IOComponent: public nts::IComponent {
         public:
             IOComponent(const std::string &type) noexcept;
             virtual ~IOComponent() override;

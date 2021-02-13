@@ -60,6 +60,10 @@ nts::NoChipsetException::NoChipsetException() noexcept: Exception("No chipset in
 {
 }
 
+nts::ConstComponentException::ConstComponentException(const std::string &msg) noexcept: Exception(msg)
+{
+}
+
 nts::FileException::FileException(const std::string &filepath, const std::string &error_msg) noexcept:
     Exception(filepath + ": " + error_msg)
 {

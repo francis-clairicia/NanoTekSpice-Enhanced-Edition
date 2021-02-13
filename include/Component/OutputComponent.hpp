@@ -12,7 +12,7 @@
 
 namespace nts
 {
-    class OutputComponent: public IOComponent {
+    class OutputComponent: public nts::IOComponent {
         public:
             OutputComponent() noexcept;
 

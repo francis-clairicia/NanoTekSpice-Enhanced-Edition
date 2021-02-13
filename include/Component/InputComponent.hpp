@@ -12,14 +12,14 @@
 
 namespace nts
 {
-    class InputComponent: public IOComponent {
+    class InputComponent: public nts::IOComponent {
         public:
             InputComponent() noexcept;
 
             nts::Tristate compute(std::size_t pin) final;
             virtual void dump() const override;
 
-            void setValue(const std::string &value);
+            virtual void setValue(const std::string &value);
     };  
 }
 

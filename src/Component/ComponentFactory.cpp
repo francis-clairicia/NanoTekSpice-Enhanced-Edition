@@ -7,10 +7,14 @@
 
 #include <iostream>
 #include "ComponentFactory.hpp"
+#include "TrueComponent.hpp"
+#include "FalseComponent.hpp"
 #include "Exception.hpp"
 
 const std::unordered_map<std::string, nts::ComponentFactory::component_creator_t> nts::ComponentFactory::COMPONENT_CREATOR{
     {"input", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::InputComponent>();}},
+    {"true", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::TrueComponent>();}},
+    {"false", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::FalseComponent>();}},
     {"output", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::OutputComponent>();}}
 };
 

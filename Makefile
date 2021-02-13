@@ -18,7 +18,10 @@ SRC_UTILS			=	src/Utils/string_operations.cpp
 SRC_COMPONENTS		=	src/Component/ComponentFactory.cpp	\
 						src/Component/IOComponent.cpp		\
 						src/Component/InputComponent.cpp	\
-						src/Component/OutputComponent.cpp
+						src/Component/OutputComponent.cpp	\
+						src/Component/ConstComponent.cpp	\
+						src/Component/TrueComponent.cpp		\
+						src/Component/FalseComponent.cpp	\
 
 SRC_GATES			=	src/Gate/OneInputGate.cpp			\
 						src/Gate/TwoInputsGate.cpp			\
