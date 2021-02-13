@@ -8,3 +8,5 @@ debug
 unit_tests
 coverage
 vgcore.*
+
+*.nts

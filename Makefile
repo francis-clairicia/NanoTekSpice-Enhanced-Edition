@@ -7,13 +7,40 @@
 
 SRC_MAIN			=	src/main.cpp
 
-SRC_TEST			=	src/nanotekspice.cpp
+SRC_NANOTEKSPICE	=	src/nanotekspice.cpp
 
-SRC					=	$(SRC_MAIN) $(SRC_TEST)
+SRC_EXCEPTIONS		=	src/Exception.cpp
 
-CXXFLAGS				=	-Wall -Wextra
+SRC_PARSER			=	src/Parser.cpp
 
-CPPFLAGS			=	-I./include/
+SRC_COMPONENTS		=	src/Component/ComponentFactory.cpp	\
+						src/Component/InputComponent.cpp	\
+						src/Component/OutputComponent.cpp
+
+SRC_GATES			=	src/Gate/OneInputGate.cpp			\
+						src/Gate/TwoInputsGate.cpp			\
+						src/Gate/GateAND.cpp				\
+						src/Gate/GateOR.cpp					\
+						src/Gate/GateXOR.cpp				\
+						src/Gate/GateNOR.cpp				\
+						src/Gate/GateNAND.cpp				\
+						src/Gate/GateINVERTER.cpp			\
+
+SRC					=	$(SRC_MAIN)							\
+						$(SRC_NANOTEKSPICE)					\
+						$(SRC_EXCEPTIONS)					\
+						$(SRC_PARSER)						\
+						$(SRC_COMPONENTS)					\
+						$(SRC_GATES)
+
+SRC_TEST			=	$(SRC_GATES)						\
+						$(SRC_EXCEPTIONS)
+
+CXXFLAGS			=	-Wall -Wextra
+
+CPPFLAGS			=	-I./include/						\
+						-I./include/Component/				\
+						-I./include/Gate/
 
 OBJ					=	$(SRC:.cpp=.o)
 
@@ -30,7 +57,7 @@ tests_run:	LDLIBS += -lcriterion
 tests_run:	$(LDLIBS)
 	@find -name "*.gc*" -delete
 	$(CXX) -o unit_tests $(SRC_TEST) tests/*.cpp $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS)
-	-./unit_tests
+	-./unit_tests --verbose
 	$(RM) unit_tests test*.gc*
 	mkdir -p coverage
 	mv *.gc* coverage/
