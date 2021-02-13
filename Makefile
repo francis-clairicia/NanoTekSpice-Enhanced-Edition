@@ -16,6 +16,7 @@ SRC_PARSER			=	src/Parser.cpp
 SRC_UTILS			=	src/Utils/string_operations.cpp
 
 SRC_COMPONENTS		=	src/Component/ComponentFactory.cpp	\
+						src/Component/IOComponent.cpp		\
 						src/Component/InputComponent.cpp	\
 						src/Component/OutputComponent.cpp
 

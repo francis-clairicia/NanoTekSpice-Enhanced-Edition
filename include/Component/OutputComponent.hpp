@@ -8,28 +8,15 @@
 #ifndef OUTPUTCOMPONENT_HPP_
 #define OUTPUTCOMPONENT_HPP_
 
-#include "IComponent.hpp"
-#include "definitions.hpp"
+#include "IOComponent.hpp"
 
 namespace nts
 {
-    class OutputComponent: public IComponent {
+    class OutputComponent: public IOComponent {
         public:
             OutputComponent() noexcept;
-            virtual ~OutputComponent() override;
 
-            virtual void simulate(std::size_t tick) override;
             nts::Tristate compute(std::size_t pin) final;
-            void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
-            virtual void dump() const override;
-
-            const std::string getValueAsString() const noexcept;
-
-        protected:
-            IComponent *m_link;
-            std::size_t m_link_pin;
-            std::string m_type;
-            nts::Tristate m_value;
     };
 }
 
