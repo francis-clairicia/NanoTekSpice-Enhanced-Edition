@@ -140,5 +140,6 @@ void nts::Parser::initLink(std::size_t line_index, std::vector<std::string> &lin
     std::size_t pin1 = std::strtoul(chipset_pin1.data(), &end, 10);
     std::size_t pin2 = std::strtoul(chipset_pin2.data(), &end, 10);
 
+    chipset1->second->setLink(pin1, *(chipset2->second), pin2);
     chipset2->second->setLink(pin2, *(chipset1->second), pin1);
 }

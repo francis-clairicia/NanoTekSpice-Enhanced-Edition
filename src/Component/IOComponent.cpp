@@ -29,11 +29,8 @@ void nts::IOComponent::setLink(std::size_t pin, nts::IComponent &other, std::siz
 {
     if (pin != 1)
         throw nts::BadPinException(m_type, pin);
-    if (m_link == &other && m_link_pin == otherPin)
-        return;
     m_link = &other;
     m_link_pin = otherPin;
-    other.setLink(otherPin, *this, pin);
 }
 
 void nts::IOComponent::dump() const
