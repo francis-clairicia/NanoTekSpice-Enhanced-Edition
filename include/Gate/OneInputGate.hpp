@@ -8,20 +8,28 @@
 #ifndef ONEINPUTGATE_HPP_
 #define ONEINPUTGATE_HPP_
 
-#include "IGate.hpp"
+#include <string>
+#include <list>
+#include "IComponent.hpp"
+#include "definitions.hpp"
 
 namespace nts
 {
-    class OneInputGate: public IGate {
+    class OneInputGate: public nts::IComponent {
         public:
-            OneInputGate(std::size_t input_pin) noexcept;
+            OneInputGate(const std::string &type) noexcept;
             virtual ~OneInputGate() override;
 
-            nts::Tristate compute(const std::string &component_name, nts::component_link_t &links) const final;
+            virtual void simulate(std::size_t tick) override;
+            void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
+            nts::Tristate compute(std::size_t pin) final;
+            virtual void dump() const override;
             virtual nts::Tristate operation(nts::Tristate a) const = 0;
 
         private:
-            std::size_t m_input_pin;
+            std::string m_type;
+            nts::component_link_t<2> m_links;
+            std::list<std::size_t> m_input_pins;
     };
 }
 

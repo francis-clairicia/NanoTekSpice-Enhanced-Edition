@@ -7,7 +7,7 @@
 
 #include "GateAND.hpp"
 
-nts::GateAND::GateAND(std::size_t input_pin1, std::size_t input_pin2): TwoInputsGate(input_pin1, input_pin2)
+nts::GateAND::GateAND() noexcept: TwoInputsGate("AND gate")
 {
 }
 

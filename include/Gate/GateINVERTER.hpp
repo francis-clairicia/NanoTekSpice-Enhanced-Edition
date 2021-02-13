@@ -14,7 +14,7 @@ namespace nts
 {
     class GateINVERTER: public nts::OneInputGate {
         public:
-            GateINVERTER(std::size_t input_pin);
+            GateINVERTER() noexcept;
             nts::Tristate operation(nts::Tristate a) const final;
     };
 }

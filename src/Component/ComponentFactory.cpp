@@ -8,10 +8,15 @@
 #include <iostream>
 #include "ComponentFactory.hpp"
 
-nts::ComponentFactory::ComponentFactory() noexcept
+nts::ComponentFactory::ComponentFactory() noexcept:
+    m_component_creator{
+        {"input", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::InputComponent>();}},
+        {"output", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::OutputComponent>();}}
+    },
+    m_components{},
+    m_input_components{},
+    m_output_components{}
 {
-    // m_components.emplace("input", ([]() -> std::unique_ptr<nts::IComponent> {return std::make_unique<InputComponent>();}));
-    // m_components.emplace("output", ([]() -> std::unique_ptr<nts::IComponent> {return std::make_unique<InputComponent>();}));
 }
 
 nts::ComponentFactory::~ComponentFactory() noexcept
@@ -49,8 +54,11 @@ nts::ComponentFactory::output_component_map_t &nts::ComponentFactory::outputs() 
 void nts::ComponentFactory::dump() const noexcept
 {
     std::cout << "Chipsets dump:" << std::endl;
+    std::size_t index = 0;
     for (auto &pair : m_components) {
-        std::cout << "\t-> ";
+        if (index++)
+            std::cout << std::endl;
+        std::cout << "==== '" << pair.first << "' component ====" << std::endl;
         pair.second->dump();
     }
 }
@@ -58,4 +66,14 @@ void nts::ComponentFactory::dump() const noexcept
 nts::ComponentFactory &nts::ComponentFactory::operator=(const nts::ComponentFactory &rhs __attribute__((unused))) noexcept
 {
     return *this;
+}
+
+const std::unique_ptr<nts::IComponent> &nts::ComponentFactory::operator[](const std::string &key) const
+{
+    return m_components.at(key);
+}
+
+std::unique_ptr<nts::IComponent> &nts::ComponentFactory::operator[](const std::string &key)
+{
+    return m_components[key];
 }

@@ -11,7 +11,7 @@
 
 Test(GateINVERTER, truth_table)
 {
-    nts::GateINVERTER gate(1);
+    nts::GateINVERTER gate;
 
     cr_assert_eq(gate.operation(nts::FALSE), nts::TRUE);
     cr_assert_eq(gate.operation(nts::TRUE), nts::FALSE);
@@ -19,7 +19,7 @@ Test(GateINVERTER, truth_table)
 
 Test(GateINVERTER, handle_undefined_value)
 {
-    nts::GateINVERTER gate(1);
+    nts::GateINVERTER gate;
 
     cr_assert_eq(gate.operation(nts::UNDEFINED), nts::UNDEFINED);
 }

@@ -39,6 +39,8 @@ namespace nts
             void dump() const noexcept;
 
             nts::ComponentFactory &operator=(const nts::ComponentFactory &rhs) noexcept;
+            const std::unique_ptr<nts::IComponent> &operator[](const std::string &key) const;
+            std::unique_ptr<nts::IComponent> &operator[](const std::string &key);
 
         private:
             std::unordered_map<std::string, component_creator_t> m_component_creator;

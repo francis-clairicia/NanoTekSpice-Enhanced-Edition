@@ -34,4 +34,7 @@ void nts::Parser::parse()
 
     std::string buffer((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     file.close();
+
+    m_factory["a"] = m_factory.createComponent("input");
+    m_factory["b"] = m_factory.createComponent("output");
 }

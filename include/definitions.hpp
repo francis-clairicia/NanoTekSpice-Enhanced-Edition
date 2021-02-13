@@ -9,7 +9,7 @@
 #define DEFINITIONS_HPP_
 
 #include <string>
-#include <vector>
+#include <array>
 #include <utility>
 #include <unordered_map>
 #include "IComponent.hpp"
@@ -22,7 +22,8 @@ namespace nts
         {"U", nts::UNDEFINED}
     };
 
-    using component_link_t = std::vector<std::pair<IComponent *, std::size_t>>;
+    template<std::size_t Nb>
+    using component_link_t = std::array<std::pair<IComponent *, std::size_t>, Nb>;
 }
 
 #endif /* !DEFINITIONS_HPP_ */

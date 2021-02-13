@@ -7,7 +7,7 @@
 
 #include "GateNOR.hpp"
 
-nts::GateNOR::GateNOR(std::size_t input_pin1, std::size_t input_pin2): TwoInputsGate(input_pin1, input_pin2)
+nts::GateNOR::GateNOR() noexcept: TwoInputsGate("NOR gate")
 {
 }
 

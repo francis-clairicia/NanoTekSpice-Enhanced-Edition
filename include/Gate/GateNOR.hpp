@@ -14,7 +14,7 @@ namespace nts
 {
     class GateNOR: public nts::TwoInputsGate {
         public:
-            GateNOR(std::size_t input_pin1, std::size_t input_pin2);
+            GateNOR() noexcept;
             nts::Tristate operation(nts::Tristate a, nts::Tristate b) const final;
     };
 }

@@ -7,7 +7,7 @@
 
 #include "GateINVERTER.hpp"
 
-nts::GateINVERTER::GateINVERTER(std::size_t input_pin): OneInputGate(input_pin)
+nts::GateINVERTER::GateINVERTER() noexcept: OneInputGate("INVERTER gate")
 {
 }
 

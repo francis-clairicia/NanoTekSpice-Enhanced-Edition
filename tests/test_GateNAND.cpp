@@ -7,11 +7,10 @@
 
 #include <criterion/criterion.h>
 #include "GateNAND.hpp"
-#include "Exception.hpp"
 
 Test(GateNAND, truth_table)
 {
-    nts::GateNAND gate(1, 2);
+    nts::GateNAND gate;
 
     cr_assert_eq(gate.operation(nts::FALSE, nts::FALSE), nts::TRUE);
     cr_assert_eq(gate.operation(nts::TRUE, nts::FALSE), nts::TRUE);
@@ -21,13 +20,8 @@ Test(GateNAND, truth_table)
 
 Test(GateNAND, handle_undefined_value)
 {
-    nts::GateNAND gate(1, 2);
+    nts::GateNAND gate;
 
     cr_assert_eq(gate.operation(nts::UNDEFINED, nts::FALSE), nts::UNDEFINED);
     cr_assert_eq(gate.operation(nts::TRUE, nts::UNDEFINED), nts::UNDEFINED);
-}
-
-Test(GateNAND, handle_same_pin_value)
-{
-    cr_assert_throw(nts::GateNAND(1, 1), nts::GateInputException);
 }

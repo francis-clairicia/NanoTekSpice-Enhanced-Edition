@@ -7,7 +7,7 @@
 
 #include "GateOR.hpp"
 
-nts::GateOR::GateOR(std::size_t input_pin1, std::size_t input_pin2): TwoInputsGate(input_pin1, input_pin2)
+nts::GateOR::GateOR() noexcept: TwoInputsGate("OR gate")
 {
 }
 

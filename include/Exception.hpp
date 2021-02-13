@@ -56,19 +56,13 @@ namespace nts
     class BadLinkException: public Exception
     {
         public:
-            BadLinkException(const std::string &component_name, const std::string &why) noexcept;
+            BadLinkException(const std::string &component_type, const std::string &why) noexcept;
     };
 
     class BadPinException: public Exception
     {
         public:
-            BadPinException(const std::string &component_name, std::size_t non_valid_pin) noexcept;
-    };
-
-    class GateInputException: public Exception
-    {
-        public:
-            GateInputException(const std::string &msg) noexcept;
+            BadPinException(const std::string &component_type, std::size_t non_valid_pin) noexcept;
     };
 
     class NoChipsetException: public Exception

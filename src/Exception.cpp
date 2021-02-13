@@ -41,18 +41,13 @@ nts::ComponentNameExistsException::ComponentNameExistsException(std::size_t line
 {
 }
 
-nts::BadLinkException::BadLinkException(const std::string &component_name, const std::string &why) noexcept:
-    Exception("Cannot set link for component \"" + component_name + "\": " + why)
+nts::BadLinkException::BadLinkException(const std::string &component_type, const std::string &why) noexcept:
+    Exception("Cannot set link for " + component_type + " component: " + why)
 {
 }
 
-nts::BadPinException::BadPinException(const std::string &component_name, std::size_t non_valid_pin) noexcept:
-    Exception("\"" + component_name + "\" does not have pin " + std::to_string(non_valid_pin))
-{
-}
-
-nts::GateInputException::GateInputException(const std::string &msg) noexcept:
-    Exception("Gate inputs error: " + msg)
+nts::BadPinException::BadPinException(const std::string &component_type, std::size_t non_valid_pin) noexcept:
+    Exception(component_type + " component does not have pin " + std::to_string(non_valid_pin))
 {
 }
 

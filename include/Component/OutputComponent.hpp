@@ -25,13 +25,10 @@ namespace nts
 
             const std::string getValueAsString() const noexcept;
 
-            const std::string &getName() const noexcept;
-            void setName(const std::string &name) noexcept;
-
         protected:
             IComponent *m_link;
             std::size_t m_link_pin;
-            std::string m_name;
+            std::string m_type;
             nts::Tristate m_value;
     };
 }

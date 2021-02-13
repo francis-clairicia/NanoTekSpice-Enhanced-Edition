@@ -7,11 +7,10 @@
 
 #include <criterion/criterion.h>
 #include "GateXOR.hpp"
-#include "Exception.hpp"
 
 Test(GateXOR, truth_table)
 {
-    nts::GateXOR gate(1, 2);
+    nts::GateXOR gate;
 
     cr_assert_eq(gate.operation(nts::FALSE, nts::FALSE), nts::FALSE);
     cr_assert_eq(gate.operation(nts::TRUE, nts::FALSE), nts::TRUE);
@@ -21,13 +20,8 @@ Test(GateXOR, truth_table)
 
 Test(GateXOR, handle_undefined_value)
 {
-    nts::GateXOR gate(1, 2);
+    nts::GateXOR gate;
 
     cr_assert_eq(gate.operation(nts::UNDEFINED, nts::FALSE), nts::UNDEFINED);
     cr_assert_eq(gate.operation(nts::TRUE, nts::UNDEFINED), nts::UNDEFINED);
-}
-
-Test(GateXOR, handle_same_pin_value)
-{
-    cr_assert_throw(nts::GateXOR(1, 1), nts::GateInputException);
 }

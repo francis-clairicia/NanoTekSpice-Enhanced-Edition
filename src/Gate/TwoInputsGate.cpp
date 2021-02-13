@@ -5,32 +5,61 @@
 ** TwoInputsGate
 */
 
+#include <algorithm>
+#include <iostream>
 #include "TwoInputsGate.hpp"
 #include "Exception.hpp"
 
-nts::TwoInputsGate::TwoInputsGate(std::size_t input_pin1, std::size_t input_pin2):
-    m_input_pin1(input_pin1), m_input_pin2(input_pin2)
+nts::TwoInputsGate::TwoInputsGate(const std::string &type) noexcept:
+    m_type(type),
+    m_links{
+        std::make_pair(nullptr, 0),
+        std::make_pair(nullptr, 0)
+    }
 {
-    if (m_input_pin1 == m_input_pin2)
-        throw GateInputException("The two inputs must not be identical");
 }
 
 nts::TwoInputsGate::~TwoInputsGate()
 {
 }
 
-nts::Tristate nts::TwoInputsGate::compute(const std::string &component_name, nts::component_link_t &links) const
+void nts::TwoInputsGate::simulate(std::size_t tick __attribute__((unused)))
 {
-    if (m_input_pin1 == 0 || m_input_pin1 > links.size())
-        throw nts::BadPinException(component_name, m_input_pin1);
-    if (m_input_pin2 == 0 || m_input_pin2 > links.size())
-        throw nts::BadPinException(component_name, m_input_pin2);
+}
 
-    auto &link1 = links.at(m_input_pin1 - 1);
-    auto &link2 = links.at(m_input_pin2 - 1);
+void nts::TwoInputsGate::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
+{
+    if (pin == 0 || pin > m_links.size())
+        throw BadPinException(m_type, pin);
+    if (std::find(m_input_pins.begin(), m_input_pins.end(), pin) == m_input_pins.end())
+        throw BadLinkException(m_type, "the pin " + std::to_string(pin) + " is an output pin");
+    other.compute(otherPin);
+    m_links[pin - 1] = std::make_pair(&other, otherPin);
+}
 
-    nts::Tristate input1 = (link1.first) ? (link1.first->compute(link1.second)) : nts::UNDEFINED;
-    nts::Tristate input2 = (link2.first) ? (link2.first->compute(link2.second)) : nts::UNDEFINED;
+nts::Tristate nts::TwoInputsGate::compute(std::size_t pin)
+{
+    if (pin == 0 || pin > m_links.size())
+        throw BadPinException(m_type, pin);
+    if (std::find(m_input_pins.begin(), m_input_pins.end(), pin) != m_input_pins.end()) {
+        auto pair = m_links.at(pin - 1);
+        return (pair.first) ? pair.first->compute(pair.second) : nts::UNDEFINED;
+    }
+    return operation(compute(1), compute(2));
+}
 
-    return operation(input1, input2);
+void nts::TwoInputsGate::dump() const
+{
+    std::cout << m_type << " component:" << std::endl;
+
+    std::size_t index = 0;
+    for (auto &pair : m_links) {
+        std::cout << "-> Pin " << ++index << ": ";
+        if (pair.first) {
+            std::cout << "linked to pin " << pair.second << " of a component";
+        } else {
+            std::cout << "not linked";
+        }
+        std::cout << std::endl;
+    }
 }
