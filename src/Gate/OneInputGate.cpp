@@ -11,7 +11,7 @@
 #include "Exception.hpp"
 
 nts::OneInputGate::OneInputGate(const std::string &type) noexcept:
-    m_type(type), m_links{std::make_pair(nullptr, 0)}, m_input_pins({1})
+    m_type(type), m_links{}, m_input_pins{1}
 {
 }
 
@@ -27,9 +27,6 @@ void nts::OneInputGate::setLink(std::size_t pin, nts::IComponent &other, std::si
 {
     if (pin == 0 || pin > m_links.size())
         throw BadPinException(m_type, pin);
-    if (std::find(m_input_pins.begin(), m_input_pins.end(), pin) == m_input_pins.end())
-        throw BadLinkException(m_type, "the pin " + std::to_string(pin) + " is an output pin");
-    other.compute(otherPin);
     m_links[pin - 1] = std::make_pair(&other, otherPin);
 }
 
