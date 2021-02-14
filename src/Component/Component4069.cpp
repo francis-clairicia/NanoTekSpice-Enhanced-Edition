@@ -14,7 +14,7 @@
 nts::Component4069::Component4069():
     m_type("4069"),
     m_internal_links{}, m_external_links{},
-    m_gates{
+    m_components{
         std::make_unique<GateNOT>(),
         std::make_unique<GateNOT>(),
         std::make_unique<GateNOT>(),
@@ -25,29 +25,29 @@ nts::Component4069::Component4069():
     m_input_pins{1, 3, 5, 9, 11, 13},
     m_output_pins{2, 4, 6, 8, 10, 12}
 {
-    m_gates[0]->setLink(1, *this, 1);
-    m_gates[0]->setLink(2, *this, 2);
-    m_internal_links[2] = std::make_pair(m_gates[0].get(), 2);
+    m_components[0]->setLink(1, *this, 1);
+    m_components[0]->setLink(2, *this, 2);
+    m_internal_links[2] = std::make_pair(m_components[0].get(), 2);
 
-    m_gates[1]->setLink(1, *this, 3);
-    m_gates[1]->setLink(2, *this, 4);
-    m_internal_links[4] = std::make_pair(m_gates[1].get(), 2);
+    m_components[1]->setLink(1, *this, 3);
+    m_components[1]->setLink(2, *this, 4);
+    m_internal_links[4] = std::make_pair(m_components[1].get(), 2);
 
-    m_gates[2]->setLink(1, *this, 5);
-    m_gates[2]->setLink(2, *this, 6);
-    m_internal_links[6] = std::make_pair(m_gates[2].get(), 2);
+    m_components[2]->setLink(1, *this, 5);
+    m_components[2]->setLink(2, *this, 6);
+    m_internal_links[6] = std::make_pair(m_components[2].get(), 2);
 
-    m_gates[3]->setLink(1, *this, 9);
-    m_gates[3]->setLink(2, *this, 8);
-    m_internal_links[8] = std::make_pair(m_gates[3].get(), 2);
+    m_components[3]->setLink(1, *this, 9);
+    m_components[3]->setLink(2, *this, 8);
+    m_internal_links[8] = std::make_pair(m_components[3].get(), 2);
 
-    m_gates[4]->setLink(1, *this, 11);
-    m_gates[4]->setLink(2, *this, 10);
-    m_internal_links[10] = std::make_pair(m_gates[4].get(), 2);
+    m_components[4]->setLink(1, *this, 11);
+    m_components[4]->setLink(2, *this, 10);
+    m_internal_links[10] = std::make_pair(m_components[4].get(), 2);
 
-    m_gates[5]->setLink(1, *this, 13);
-    m_gates[5]->setLink(2, *this, 12);
-    m_internal_links[12] = std::make_pair(m_gates[5].get(), 2);
+    m_components[5]->setLink(1, *this, 13);
+    m_components[5]->setLink(2, *this, 12);
+    m_internal_links[12] = std::make_pair(m_components[5].get(), 2);
 }
 
 nts::Component4069::~Component4069()
@@ -96,6 +96,6 @@ void nts::Component4069::dump() const
         std::cout << std::endl;
     }
     std::cout << "Gates:" << std::endl;
-    for (auto &component : m_gates)
+    for (auto &component : m_components)
         component->dump();
 }

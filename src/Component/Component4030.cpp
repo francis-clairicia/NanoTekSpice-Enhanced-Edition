@@ -14,7 +14,7 @@
 nts::Component4030::Component4030():
     m_type("4030"),
     m_internal_links{}, m_external_links{},
-    m_gates{
+    m_components{
         std::make_unique<GateXOR>(),
         std::make_unique<GateXOR>(),
         std::make_unique<GateXOR>(),
@@ -23,25 +23,25 @@ nts::Component4030::Component4030():
     m_input_pins{1, 2, 5, 6, 8, 9, 12, 13},
     m_output_pins{3, 4, 10, 11}
 {
-    m_gates[0]->setLink(1, *this, 1);
-    m_gates[0]->setLink(2, *this, 2);
-    m_gates[0]->setLink(3, *this, 3);
-    m_internal_links[3] = std::make_pair(m_gates[0].get(), 3);
+    m_components[0]->setLink(1, *this, 1);
+    m_components[0]->setLink(2, *this, 2);
+    m_components[0]->setLink(3, *this, 3);
+    m_internal_links[3] = std::make_pair(m_components[0].get(), 3);
 
-    m_gates[1]->setLink(1, *this, 5);
-    m_gates[1]->setLink(2, *this, 6);
-    m_gates[1]->setLink(3, *this, 4);
-    m_internal_links[4] = std::make_pair(m_gates[1].get(), 3);
+    m_components[1]->setLink(1, *this, 5);
+    m_components[1]->setLink(2, *this, 6);
+    m_components[1]->setLink(3, *this, 4);
+    m_internal_links[4] = std::make_pair(m_components[1].get(), 3);
 
-    m_gates[2]->setLink(1, *this, 8);
-    m_gates[2]->setLink(2, *this, 9);
-    m_gates[2]->setLink(3, *this, 10);
-    m_internal_links[10] = std::make_pair(m_gates[2].get(), 3);
+    m_components[2]->setLink(1, *this, 8);
+    m_components[2]->setLink(2, *this, 9);
+    m_components[2]->setLink(3, *this, 10);
+    m_internal_links[10] = std::make_pair(m_components[2].get(), 3);
 
-    m_gates[3]->setLink(1, *this, 12);
-    m_gates[3]->setLink(2, *this, 13);
-    m_gates[3]->setLink(3, *this, 11);
-    m_internal_links[11] = std::make_pair(m_gates[3].get(), 3);
+    m_components[3]->setLink(1, *this, 12);
+    m_components[3]->setLink(2, *this, 13);
+    m_components[3]->setLink(3, *this, 11);
+    m_internal_links[11] = std::make_pair(m_components[3].get(), 3);
 }
 
 nts::Component4030::~Component4030()
@@ -90,6 +90,6 @@ void nts::Component4030::dump() const
         std::cout << std::endl;
     }
     std::cout << "Gates:" << std::endl;
-    for (auto &component : m_gates)
+    for (auto &component : m_components)
         component->dump();
 }

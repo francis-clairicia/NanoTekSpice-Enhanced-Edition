@@ -28,7 +28,7 @@ namespace nts
             std::string m_type;
             nts::component_link_t<14> m_internal_links;
             nts::component_link_t<14> m_external_links;
-            nts::component_gate_t<6>  m_gates;
+            nts::intern_component_t<6>  m_components;
             const nts::component_pin_t<6> m_input_pins;
             const nts::component_pin_t<6> m_output_pins;
     };

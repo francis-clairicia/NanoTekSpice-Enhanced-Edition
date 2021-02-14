@@ -27,7 +27,7 @@ namespace nts
     using component_link_t = std::array<std::pair<IComponent *, std::size_t>, Nb>;
 
     template<std::size_t Nb>
-    using component_gate_t = std::array<std::unique_ptr<IComponent>, Nb>;
+    using intern_component_t = std::array<std::unique_ptr<IComponent>, Nb>;
 
     template<std::size_t Nb>
     using component_pin_t = std::array<std::size_t, Nb>;
