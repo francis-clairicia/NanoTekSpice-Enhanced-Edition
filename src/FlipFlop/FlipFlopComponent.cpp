@@ -43,8 +43,8 @@ nts::Tristate nts::FlipFlopComponent::compute(std::size_t pin)
         return (pair.first) ? pair.first->compute(pair.second) : nts::UNDEFINED;
     }
     if (pin == 1)
-        return operation_Q(compute(3), compute(5), compute(4), compute(6));
-    return operation_notQ(compute(3), compute(5), compute(4), compute(6));
+        return operationQ(compute(3), compute(5), compute(4), compute(6));
+    return operationNotQ(compute(3), compute(5), compute(4), compute(6));
 }
 
 void nts::FlipFlopComponent::dump() const
@@ -63,7 +63,7 @@ void nts::FlipFlopComponent::dump() const
     }
 }
 
-nts::Tristate nts::FlipFlopComponent::operation_Q(nts::Tristate cl, nts::Tristate d, nts::Tristate r, nts::Tristate s)
+nts::Tristate nts::FlipFlopComponent::operationQ(nts::Tristate cl, nts::Tristate d, nts::Tristate r, nts::Tristate s)
 {
     if (cl == nts::UNDEFINED || d == nts::UNDEFINED || r == nts::UNDEFINED || s == nts::UNDEFINED)
         return nts::UNDEFINED;
@@ -76,7 +76,7 @@ nts::Tristate nts::FlipFlopComponent::operation_Q(nts::Tristate cl, nts::Tristat
     return nts::UNDEFINED;
 }
 
-nts::Tristate nts::FlipFlopComponent::operation_notQ(nts::Tristate cl, nts::Tristate d, nts::Tristate r, nts::Tristate s)
+nts::Tristate nts::FlipFlopComponent::operationNotQ(nts::Tristate cl, nts::Tristate d, nts::Tristate r, nts::Tristate s)
 {
     if (cl == nts::UNDEFINED || d == nts::UNDEFINED || r == nts::UNDEFINED || s == nts::UNDEFINED)
         return nts::UNDEFINED;

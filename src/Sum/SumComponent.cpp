@@ -42,8 +42,8 @@ nts::Tristate nts::SumComponent::compute(std::size_t pin)
         return (pair.first) ? pair.first->compute(pair.second) : nts::UNDEFINED;
     }
     if (pin == 4)
-        return operation_Co(compute(1), compute(2), compute(3));
-    return operation_S(compute(1), compute(2), compute(3));
+        return operationCo(compute(1), compute(2), compute(3));
+    return operationS(compute(1), compute(2), compute(3));
 }
 
 void nts::SumComponent::dump() const
@@ -62,14 +62,14 @@ void nts::SumComponent::dump() const
     }
 }
 
-nts::Tristate nts::SumComponent::operation_Co(nts::Tristate a, nts::Tristate b, nts::Tristate c)
+nts::Tristate nts::SumComponent::operationCo(nts::Tristate a, nts::Tristate b, nts::Tristate c)
 {
     if (a == nts::UNDEFINED || b == nts::UNDEFINED || c == nts::UNDEFINED)
         return nts::UNDEFINED;
     return static_cast<nts::Tristate>((!c) ? (a && b) : (a || b));
 }
 
-nts::Tristate nts::SumComponent::operation_S(nts::Tristate a, nts::Tristate b, nts::Tristate c)
+nts::Tristate nts::SumComponent::operationS(nts::Tristate a, nts::Tristate b, nts::Tristate c)
 {
     if (a == nts::UNDEFINED || b == nts::UNDEFINED || c == nts::UNDEFINED)
         return nts::UNDEFINED;

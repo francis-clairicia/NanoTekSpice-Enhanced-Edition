@@ -17,10 +17,6 @@ nts::IOComponent::IOComponent(const std::string &type) noexcept:
 {
 }
 
-nts::IOComponent::~IOComponent()
-{
-}
-
 void nts::IOComponent::simulate(std::size_t tick __attribute__((unused)))
 {
 }

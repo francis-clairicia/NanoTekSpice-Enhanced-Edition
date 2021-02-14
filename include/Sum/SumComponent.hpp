@@ -21,8 +21,8 @@ namespace nts
             nts::Tristate compute(std::size_t pin) final;
             void dump() const override;
 
-            nts::Tristate operation_Co(nts::Tristate a, nts::Tristate b, nts::Tristate c);
-            nts::Tristate operation_S(nts::Tristate a, nts::Tristate b, nts::Tristate c);
+            nts::Tristate operationCo(nts::Tristate a, nts::Tristate b, nts::Tristate c);
+            nts::Tristate operationS(nts::Tristate a, nts::Tristate b, nts::Tristate c);
 
         private:
     };
