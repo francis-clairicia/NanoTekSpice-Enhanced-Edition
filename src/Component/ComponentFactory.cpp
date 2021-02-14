@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "ComponentFactory.hpp"
+#include "ClockComponent.hpp"
 #include "TrueComponent.hpp"
 #include "FalseComponent.hpp"
 #include "Component4001.hpp"
@@ -19,6 +20,7 @@
 
 const std::unordered_map<std::string, nts::ComponentFactory::component_creator_t> nts::ComponentFactory::COMPONENT_CREATOR{
     {"input",  []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::InputComponent>();}},
+    {"clock",  []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::ClockComponent>();}},
     {"true",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::TrueComponent>();}},
     {"false",  []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::FalseComponent>();}},
     {"output", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::OutputComponent>();}},

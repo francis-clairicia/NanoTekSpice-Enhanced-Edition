@@ -19,6 +19,7 @@ SRC_COMPONENTS		=	src/Component/ComponentFactory.cpp	\
 						src/Component/IOComponent.cpp		\
 						src/Component/InputComponent.cpp	\
 						src/Component/OutputComponent.cpp	\
+						src/Component/ClockComponent.cpp	\
 						src/Component/ConstComponent.cpp	\
 						src/Component/TrueComponent.cpp		\
 						src/Component/FalseComponent.cpp	\
