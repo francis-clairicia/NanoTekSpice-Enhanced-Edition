@@ -10,8 +10,7 @@
 #include "TwoInputsGate.hpp"
 #include "Exception.hpp"
 
-nts::TwoInputsGate::TwoInputsGate(const std::string &type) noexcept:
-    m_type(type), m_links{}, m_input_pins{1, 2}
+nts::TwoInputsGate::TwoInputsGate(const std::string &type) noexcept: AComponent(type, 3, {1, 2}, {3})
 {
 }
 
@@ -23,20 +22,12 @@ void nts::TwoInputsGate::simulate(std::size_t tick __attribute__((unused)))
 {
 }
 
-void nts::TwoInputsGate::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
-{
-    if (pin == 0 || pin > m_links.size())
-        throw BadPinException(m_type, pin);
-    other.compute(otherPin);
-    m_links[pin - 1] = std::make_pair(&other, otherPin);
-}
-
 nts::Tristate nts::TwoInputsGate::compute(std::size_t pin)
 {
-    if (pin == 0 || pin > m_links.size())
+    if (pin == 0 || pin > m_external_links.size())
         throw BadPinException(m_type, pin);
     if (std::find(m_input_pins.begin(), m_input_pins.end(), pin) != m_input_pins.end()) {
-        auto pair = m_links.at(pin - 1);
+        auto pair = m_external_links.at(pin - 1);
         return (pair.first) ? pair.first->compute(pair.second) : nts::UNDEFINED;
     }
     return operation(compute(1), compute(2));
@@ -47,7 +38,7 @@ void nts::TwoInputsGate::dump() const
     std::cout << m_type << " component:" << std::endl;
 
     std::size_t index = 0;
-    for (auto &pair : m_links) {
+    for (auto &pair : m_external_links) {
         std::cout << "-> Pin " << ++index << ": ";
         if (pair.first) {
             std::cout << "linked to pin " << pair.second << " of a component";
