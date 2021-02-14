@@ -8,23 +8,22 @@
 #ifndef SUMCOMPONENT_HPP_
 #define SUMCOMPONENT_HPP_
 
-#include "AComponent.hpp"
+#include "ACalculationComponent.hpp"
 
 namespace nts
 {
-    class SumComponent: public nts::AComponent {
+    class SumComponent: public nts::ACalculationComponent {
         public:
             SumComponent() noexcept;
             ~SumComponent();
 
             void simulate(std::size_t tick) final;
-            nts::Tristate compute(std::size_t pin) final;
-            void dump() const override;
 
             nts::Tristate operationCo(nts::Tristate a, nts::Tristate b, nts::Tristate c);
             nts::Tristate operationS(nts::Tristate a, nts::Tristate b, nts::Tristate c);
 
-        private:
+        protected:
+            nts::Tristate computeOutput(std::size_t pin) final;
     };
 }
 

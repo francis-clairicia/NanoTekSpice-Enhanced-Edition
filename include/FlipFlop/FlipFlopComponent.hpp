@@ -8,22 +8,22 @@
 #ifndef FLIPFLOPCOMPONENT_HPP_
 #define FLIPFLOPCOMPONENT_HPP_
 
-#include "AComponent.hpp"
-#include "GateNOT.hpp"
+#include "ACalculationComponent.hpp"
 
 namespace nts
 {
-    class FlipFlopComponent: public nts::AComponent {
+    class FlipFlopComponent: public nts::ACalculationComponent {
         public:
             FlipFlopComponent() noexcept;
             ~FlipFlopComponent();
 
             void simulate(std::size_t tick) final;
-            nts::Tristate compute(std::size_t pin) final;
-            void dump() const override;
 
             nts::Tristate operationQ(nts::Tristate cl, nts::Tristate d, nts::Tristate r, nts::Tristate s);
             nts::Tristate operationNotQ(nts::Tristate cl, nts::Tristate d, nts::Tristate r, nts::Tristate s);
+        
+        protected:
+            nts::Tristate computeOutput(std::size_t pin) final;
     };
 }
 

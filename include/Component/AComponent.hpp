@@ -24,6 +24,8 @@ namespace nts
         
         protected:
             void setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin);
+            void dumpExternalLinks() const;
+            void dumpInternalLinks() const;
 
         protected:
             std::string                m_type;

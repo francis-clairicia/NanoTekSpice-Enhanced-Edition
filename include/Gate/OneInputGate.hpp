@@ -8,19 +8,21 @@
 #ifndef ONEINPUTGATE_HPP_
 #define ONEINPUTGATE_HPP_
 
-#include "AComponent.hpp"
+#include "ACalculationComponent.hpp"
 
 namespace nts
 {
-    class OneInputGate: public nts::AComponent {
+    class OneInputGate: public nts::ACalculationComponent {
         public:
             OneInputGate(const std::string &type) noexcept;
             ~OneInputGate() override;
 
             void simulate(std::size_t tick) override;
-            nts::Tristate compute(std::size_t pin) final;
-            void dump() const override;
+
             virtual nts::Tristate operation(nts::Tristate a) const = 0;
+        
+        protected:
+            nts::Tristate computeOutput(std::size_t pin) final;
     };
 }
 

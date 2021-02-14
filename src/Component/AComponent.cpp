@@ -40,6 +40,20 @@ void nts::AComponent::setLink(std::size_t pin, nts::IComponent &other, std::size
 
 void nts::AComponent::dump() const
 {
+    dumpExternalLinks();
+    dumpInternalLinks();
+}
+
+void nts::AComponent::setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
+{
+    if (pin == 0 || pin > m_internal_links.size())
+        throw BadPinException(m_type, pin);
+    other.compute(otherPin);
+    m_internal_links[pin - 1] = std::make_pair(&other, otherPin);
+}
+
+void nts::AComponent::dumpExternalLinks() const
+{
     std::cout << m_type << " component:" << std::endl;
 
     std::size_t index = 0;
@@ -52,15 +66,11 @@ void nts::AComponent::dump() const
         }
         std::cout << std::endl;
     }
+}
+
+void nts::AComponent::dumpInternalLinks() const
+{
     std::cout << "Internal components:" << std::endl;
     for (auto &component : m_components)
         component->dump();
-}
-
-void nts::AComponent::setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
-{
-    if (pin == 0 || pin > m_internal_links.size())
-        throw BadPinException(m_type, pin);
-    other.compute(otherPin);
-    m_internal_links[pin - 1] = std::make_pair(&other, otherPin);
 }
