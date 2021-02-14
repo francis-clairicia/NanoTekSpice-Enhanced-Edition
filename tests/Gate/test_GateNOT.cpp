@@ -2,24 +2,24 @@
 ** EPITECH PROJECT, 2021
 ** B-OOP-400-BDX-4-1-tekspice-francis.clairicia-rose-claire-josephine
 ** File description:
-** test_GateINVERTER
+** test_GateNOT
 */
 
 #include <criterion/criterion.h>
-#include "GateINVERTER.hpp"
+#include "GateNOT.hpp"
 #include "Exception.hpp"
 
-Test(GateINVERTER, truth_table)
+Test(GateNOT, truth_table)
 {
-    nts::GateINVERTER gate;
+    nts::GateNOT gate;
 
     cr_assert_eq(gate.operation(nts::FALSE), nts::TRUE);
     cr_assert_eq(gate.operation(nts::TRUE), nts::FALSE);
 }
 
-Test(GateINVERTER, handle_undefined_value)
+Test(GateNOT, handle_undefined_value)
 {
-    nts::GateINVERTER gate;
+    nts::GateNOT gate;
 
     cr_assert_eq(gate.operation(nts::UNDEFINED), nts::UNDEFINED);
 }

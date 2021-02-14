@@ -2,21 +2,21 @@
 ** EPITECH PROJECT, 2021
 ** B-OOP-400-BDX-4-1-tekspice-francis.clairicia-rose-claire-josephine
 ** File description:
-** GateINVERTER
+** GateNOT
 */
 
-#ifndef GATEINVERTER_HPP_
-#define GATEINVERTER_HPP_
+#ifndef GATENOT_HPP_
+#define GATENOT_HPP_
 
 #include "OneInputGate.hpp"
 
 namespace nts
 {
-    class GateINVERTER: public nts::OneInputGate {
+    class GateNOT: public nts::OneInputGate {
         public:
-            GateINVERTER() noexcept;
+            GateNOT() noexcept;
             nts::Tristate operation(nts::Tristate a) const final;
     };
 }
 
-#endif /* !GATEINVERTER_HPP_ */
+#endif /* !GATENOT_HPP_ */

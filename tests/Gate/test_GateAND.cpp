@@ -13,8 +13,8 @@ Test(GateAND, truth_table)
     nts::GateAND gate;
 
     cr_assert_eq(gate.operation(nts::FALSE, nts::FALSE), nts::FALSE);
-    cr_assert_eq(gate.operation(nts::TRUE, nts::FALSE), nts::FALSE);
     cr_assert_eq(gate.operation(nts::FALSE, nts::TRUE), nts::FALSE);
+    cr_assert_eq(gate.operation(nts::TRUE, nts::FALSE), nts::FALSE);
     cr_assert_eq(gate.operation(nts::TRUE, nts::TRUE), nts::TRUE);
 }
 

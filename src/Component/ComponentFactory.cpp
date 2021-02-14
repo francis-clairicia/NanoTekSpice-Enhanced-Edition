@@ -9,13 +9,25 @@
 #include "ComponentFactory.hpp"
 #include "TrueComponent.hpp"
 #include "FalseComponent.hpp"
+#include "Component4001.hpp"
+#include "Component4011.hpp"
+#include "Component4030.hpp"
+#include "Component4069.hpp"
+#include "Component4071.hpp"
+#include "Component4081.hpp"
 #include "Exception.hpp"
 
 const std::unordered_map<std::string, nts::ComponentFactory::component_creator_t> nts::ComponentFactory::COMPONENT_CREATOR{
-    {"input", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::InputComponent>();}},
-    {"true", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::TrueComponent>();}},
-    {"false", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::FalseComponent>();}},
-    {"output", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::OutputComponent>();}}
+    {"input",  []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::InputComponent>();}},
+    {"true",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::TrueComponent>();}},
+    {"false",  []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::FalseComponent>();}},
+    {"output", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::OutputComponent>();}},
+    {"4001",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4001>();}},
+    {"4011",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4011>();}},
+    {"4030",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4030>();}},
+    {"4069",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4069>();}},
+    {"4071",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4071>();}},
+    {"4081",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4081>();}},
 };
 
 nts::ComponentFactory::ComponentFactory() noexcept:

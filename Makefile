@@ -22,6 +22,12 @@ SRC_COMPONENTS		=	src/Component/ComponentFactory.cpp	\
 						src/Component/ConstComponent.cpp	\
 						src/Component/TrueComponent.cpp		\
 						src/Component/FalseComponent.cpp	\
+						src/Component/Component4001.cpp		\
+						src/Component/Component4011.cpp		\
+						src/Component/Component4030.cpp		\
+						src/Component/Component4069.cpp		\
+						src/Component/Component4071.cpp		\
+						src/Component/Component4081.cpp
 
 SRC_GATES			=	src/Gate/OneInputGate.cpp			\
 						src/Gate/TwoInputsGate.cpp			\
@@ -30,7 +36,7 @@ SRC_GATES			=	src/Gate/OneInputGate.cpp			\
 						src/Gate/GateXOR.cpp				\
 						src/Gate/GateNOR.cpp				\
 						src/Gate/GateNAND.cpp				\
-						src/Gate/GateINVERTER.cpp			\
+						src/Gate/GateNOT.cpp			\
 
 SRC					=	$(SRC_MAIN)							\
 						$(SRC_NANOTEKSPICE)					\

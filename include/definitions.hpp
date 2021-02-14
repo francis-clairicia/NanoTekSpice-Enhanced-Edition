@@ -12,6 +12,7 @@
 #include <array>
 #include <utility>
 #include <unordered_map>
+#include <memory>
 #include "IComponent.hpp"
 
 namespace nts
@@ -24,6 +25,12 @@ namespace nts
 
     template<std::size_t Nb>
     using component_link_t = std::array<std::pair<IComponent *, std::size_t>, Nb>;
+
+    template<std::size_t Nb>
+    using component_gate_t = std::array<std::unique_ptr<IComponent>, Nb>;
+
+    template<std::size_t Nb>
+    using component_pin_t = std::array<std::size_t, Nb>;
 }
 
 #endif /* !DEFINITIONS_HPP_ */

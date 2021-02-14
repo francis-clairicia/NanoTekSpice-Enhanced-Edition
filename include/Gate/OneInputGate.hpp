@@ -29,7 +29,7 @@ namespace nts
         private:
             std::string m_type;
             nts::component_link_t<2> m_links;
-            std::list<std::size_t> m_input_pins;
+            const nts::component_pin_t<1> m_input_pins;
     };
 }
 
