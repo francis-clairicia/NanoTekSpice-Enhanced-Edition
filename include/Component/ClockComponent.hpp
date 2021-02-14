@@ -22,7 +22,7 @@ namespace nts
         
         private:
             std::size_t m_actual_tick;
-            std::unique_ptr<nts::GateNOT> m_gate;
+            std::unique_ptr<nts::GateNOT> m_inverter;
     };
 }
 

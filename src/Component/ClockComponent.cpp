@@ -8,7 +8,7 @@
 #include "ClockComponent.hpp"
 
 nts::ClockComponent::ClockComponent():
-    m_actual_tick(0), m_gate(std::make_unique<GateNOT>())
+    m_actual_tick(0), m_inverter(std::make_unique<GateNOT>())
 {
     m_type = "clock";
 }
@@ -19,7 +19,7 @@ void nts::ClockComponent::simulate(std::size_t tick)
         if (m_value == nts::UNDEFINED)
             m_value = nts::FALSE;
         else
-            m_value = m_gate->operation(m_value);
+            m_value = m_inverter->operation(m_value);
         ++m_actual_tick;
     }
 }
