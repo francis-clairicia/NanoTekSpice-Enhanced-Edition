@@ -16,14 +16,11 @@ namespace nts
 {
     class AComponent: public nts::IComponent {
         public:
-            typedef std::initializer_list<std::size_t> pin_list_t;
-
-        public:
             AComponent(const std::string &type, std::size_t nb_pins, const pin_list_t &input_pins, const pin_list_t &output_pins) noexcept;
 
-            virtual nts::Tristate compute(std::size_t pin) override;
+            nts::Tristate compute(std::size_t pin) override;
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
-            virtual void dump() const override;
+            void dump() const override;
         
         protected:
             void setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin);

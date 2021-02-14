@@ -17,7 +17,7 @@ namespace nts
             InputComponent() noexcept;
 
             nts::Tristate compute(std::size_t pin) final;
-            virtual void dump() const override;
+            void dump() const override;
 
             virtual void setValue(const std::string &value);
     };  

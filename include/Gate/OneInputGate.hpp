@@ -15,11 +15,11 @@ namespace nts
     class OneInputGate: public nts::AComponent {
         public:
             OneInputGate(const std::string &type) noexcept;
-            virtual ~OneInputGate() override;
+            ~OneInputGate() override;
 
-            virtual void simulate(std::size_t tick) override;
+            void simulate(std::size_t tick) override;
             nts::Tristate compute(std::size_t pin) final;
-            virtual void dump() const override;
+            void dump() const override;
             virtual nts::Tristate operation(nts::Tristate a) const = 0;
     };
 }

@@ -16,11 +16,10 @@ namespace nts
     class IOComponent: public nts::IComponent {
         public:
             IOComponent(const std::string &type) noexcept;
-            virtual ~IOComponent() override;
 
-            virtual void simulate(std::size_t tick) override;
+            void simulate(std::size_t tick) override;
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
-            virtual void dump() const override;
+            void dump() const override;
 
             std::string getValueAsString() const noexcept;
 

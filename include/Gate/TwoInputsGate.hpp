@@ -15,11 +15,11 @@ namespace nts
     class TwoInputsGate: public nts::AComponent {
         public:
             TwoInputsGate(const std::string &type) noexcept;
-            virtual ~TwoInputsGate() override;
+            ~TwoInputsGate() override;
 
-            virtual void simulate(std::size_t tick) override;
+            void simulate(std::size_t tick) override;
             nts::Tristate compute(std::size_t pin) final;
-            virtual void dump() const override;
+            void dump() const override;
             virtual nts::Tristate operation(nts::Tristate a, nts::Tristate b) const = 0;
     };
 }

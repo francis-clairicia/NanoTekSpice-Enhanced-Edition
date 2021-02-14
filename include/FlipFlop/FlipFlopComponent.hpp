@@ -20,7 +20,7 @@ namespace nts
 
             void simulate(std::size_t tick) final;
             nts::Tristate compute(std::size_t pin) final;
-            virtual void dump() const override;
+            void dump() const override;
 
             nts::Tristate operation_Q(nts::Tristate cl, nts::Tristate d, nts::Tristate r, nts::Tristate s);
             nts::Tristate operation_notQ(nts::Tristate cl, nts::Tristate d, nts::Tristate r, nts::Tristate s);
