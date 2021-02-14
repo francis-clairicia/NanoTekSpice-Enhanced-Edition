@@ -19,6 +19,7 @@ namespace nts
             ClockComponent();
 
             void simulate(std::size_t tick) final;
+            void setValue(const std::string &value) final;
         
         private:
             std::size_t m_actual_tick;

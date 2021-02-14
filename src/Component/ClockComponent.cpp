@@ -23,3 +23,7 @@ void nts::ClockComponent::simulate(std::size_t tick)
         ++m_actual_tick;
     }
 }
+
+void nts::ClockComponent::setValue(const std::string &value __attribute__((unused)))
+{
+}
