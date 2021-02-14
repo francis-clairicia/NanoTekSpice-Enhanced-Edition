@@ -20,5 +20,6 @@ void nts::ClockComponent::simulate(std::size_t tick)
             m_value = nts::FALSE;
         else
             m_value = m_gate->operation(m_value);
+        ++m_actual_tick;
     }
 }
