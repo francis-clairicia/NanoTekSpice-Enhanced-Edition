@@ -13,9 +13,9 @@ Test(GateNAND, truth_table)
     nts::GateNAND gate;
 
     cr_assert_eq(gate.operation(nts::FALSE, nts::FALSE), nts::TRUE);
-    cr_assert_eq(gate.operation(nts::FALSE, nts::TRUE), nts::TRUE);
-    cr_assert_eq(gate.operation(nts::TRUE, nts::FALSE), nts::TRUE);
-    cr_assert_eq(gate.operation(nts::TRUE, nts::TRUE), nts::FALSE);
+    cr_assert_eq(gate.operation(nts::FALSE, nts::TRUE),  nts::TRUE);
+    cr_assert_eq(gate.operation(nts::TRUE,  nts::FALSE), nts::TRUE);
+    cr_assert_eq(gate.operation(nts::TRUE,  nts::TRUE),  nts::FALSE);
 }
 
 Test(GateNAND, handle_undefined_value)
@@ -23,5 +23,5 @@ Test(GateNAND, handle_undefined_value)
     nts::GateNAND gate;
 
     cr_assert_eq(gate.operation(nts::UNDEFINED, nts::FALSE), nts::UNDEFINED);
-    cr_assert_eq(gate.operation(nts::TRUE, nts::UNDEFINED), nts::UNDEFINED);
+    cr_assert_eq(gate.operation(nts::TRUE, nts::UNDEFINED),  nts::UNDEFINED);
 }

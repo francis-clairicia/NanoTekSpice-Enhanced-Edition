@@ -25,6 +25,7 @@ SRC_COMPONENTS		=	src/Component/ComponentFactory.cpp	\
 						src/Component/FalseComponent.cpp	\
 						src/Component/AComponent.cpp		\
 						src/Component/Component4001.cpp		\
+						src/Component/Component4008.cpp		\
 						src/Component/Component4011.cpp		\
 						src/Component/Component4030.cpp		\
 						src/Component/Component4069.cpp		\
@@ -40,16 +41,20 @@ SRC_GATES			=	src/Gate/OneInputGate.cpp			\
 						src/Gate/GateNAND.cpp				\
 						src/Gate/GateNOT.cpp				\
 
+SRC_SUM				=	src/Sum/SumComponent.cpp
+
 SRC					=	$(SRC_MAIN)							\
 						$(SRC_NANOTEKSPICE)					\
 						$(SRC_EXCEPTIONS)					\
 						$(SRC_PARSER)						\
 						$(SRC_UTILS)						\
 						$(SRC_COMPONENTS)					\
-						$(SRC_GATES)
+						$(SRC_GATES)						\
+						$(SRC_SUM)
 
 SRC_TEST			=	$(SRC_COMPONENTS)					\
 						$(SRC_GATES)						\
+						$(SRC_SUM)							\
 						$(SRC_EXCEPTIONS)					\
 						$(SRC_UTILS)
 
@@ -58,6 +63,7 @@ CXXFLAGS			=	-Wall -Wextra
 CPPFLAGS			=	-I./include/						\
 						-I./include/Component/				\
 						-I./include/Gate/					\
+						-I./include/Sum/					\
 						-I./include/Utils/
 
 OBJ					=	$(SRC:.cpp=.o)
