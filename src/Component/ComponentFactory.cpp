@@ -13,6 +13,7 @@
 #include "Component4001.hpp"
 #include "Component4008.hpp"
 #include "Component4011.hpp"
+#include "Component4013.hpp"
 #include "Component4030.hpp"
 #include "Component4069.hpp"
 #include "Component4071.hpp"
@@ -28,6 +29,7 @@ const std::unordered_map<std::string, nts::ComponentFactory::component_creator_t
     {"4001",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4001>();}},
     {"4008",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4008>();}},
     {"4011",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4011>();}},
+    {"4013",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4013>();}},
     {"4030",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4030>();}},
     {"4069",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4069>();}},
     {"4071",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4071>();}},

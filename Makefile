@@ -27,6 +27,7 @@ SRC_COMPONENTS		=	src/Component/ComponentFactory.cpp	\
 						src/Component/Component4001.cpp		\
 						src/Component/Component4008.cpp		\
 						src/Component/Component4011.cpp		\
+						src/Component/Component4013.cpp		\
 						src/Component/Component4030.cpp		\
 						src/Component/Component4069.cpp		\
 						src/Component/Component4071.cpp		\
@@ -43,6 +44,8 @@ SRC_GATES			=	src/Gate/OneInputGate.cpp			\
 
 SRC_SUM				=	src/Sum/SumComponent.cpp
 
+SRC_FLIPFLOP		=	src/FlipFlop/FlipFlopComponent.cpp
+
 SRC					=	$(SRC_MAIN)							\
 						$(SRC_NANOTEKSPICE)					\
 						$(SRC_EXCEPTIONS)					\
@@ -50,11 +53,13 @@ SRC					=	$(SRC_MAIN)							\
 						$(SRC_UTILS)						\
 						$(SRC_COMPONENTS)					\
 						$(SRC_GATES)						\
-						$(SRC_SUM)
+						$(SRC_SUM)							\
+						$(SRC_FLIPFLOP)
 
 SRC_TEST			=	$(SRC_COMPONENTS)					\
 						$(SRC_GATES)						\
 						$(SRC_SUM)							\
+						$(SRC_FLIPFLOP)						\
 						$(SRC_EXCEPTIONS)					\
 						$(SRC_UTILS)
 
@@ -64,6 +69,7 @@ CPPFLAGS			=	-I./include/						\
 						-I./include/Component/				\
 						-I./include/Gate/					\
 						-I./include/Sum/					\
+						-I./include/FlipFlop/				\
 						-I./include/Utils/
 
 OBJ					=	$(SRC:.cpp=.o)

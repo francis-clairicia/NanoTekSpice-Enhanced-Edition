@@ -8,7 +8,7 @@
 #include "Component4008.hpp"
 #include "SumComponent.hpp"
 
-nts::Component4008::Component4008() noexcept: AComponent("4008", 16, {1, 2, 3, 4, 5, 6, 7, 9, 15}, {10, 11, 12, 13, 14})
+nts::Component4008::Component4008(): AComponent("4008", 16, {1, 2, 3, 4, 5, 6, 7, 9, 15}, {10, 11, 12, 13, 14})
 {
     for (std::size_t index = 0; index < 4; ++index)
         m_components.push_back(std::make_unique<SumComponent>());

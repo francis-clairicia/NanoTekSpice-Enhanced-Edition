@@ -14,7 +14,7 @@ namespace nts
 {
     class Component4008: public nts::AComponent {
         public:
-            Component4008() noexcept;
+            Component4008();
             ~Component4008();
 
             void simulate(std::size_t tick) final;

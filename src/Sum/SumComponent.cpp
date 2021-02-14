@@ -66,9 +66,7 @@ nts::Tristate nts::SumComponent::operation_Co(nts::Tristate a, nts::Tristate b, 
 {
     if (a == nts::UNDEFINED || b == nts::UNDEFINED || c == nts::UNDEFINED)
         return nts::UNDEFINED;
-    if (!c)
-        return static_cast<nts::Tristate>(a && b);
-    return static_cast<nts::Tristate>(a || b);
+    return static_cast<nts::Tristate>((!c) ? (a && b) : (a || b));
 }
 
 nts::Tristate nts::SumComponent::operation_S(nts::Tristate a, nts::Tristate b, nts::Tristate c)

@@ -8,7 +8,7 @@
 #include "Component4069.hpp"
 #include "GateNOT.hpp"
 
-nts::Component4069::Component4069() noexcept: AComponent("4069", 14, {1, 3, 5, 9, 11, 13}, {2, 4, 6, 8, 10, 12})
+nts::Component4069::Component4069(): AComponent("4069", 14, {1, 3, 5, 9, 11, 13}, {2, 4, 6, 8, 10, 12})
 {
     m_components.push_back(std::make_unique<GateNOT>());
     m_components.back()->setLink(1, *this, 1);

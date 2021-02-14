@@ -17,7 +17,7 @@ namespace nts
             SumComponent() noexcept;
             ~SumComponent();
 
-            virtual void simulate(std::size_t tick) override;
+            void simulate(std::size_t tick) final;
             nts::Tristate compute(std::size_t pin) final;
             virtual void dump() const override;
 
