@@ -46,8 +46,8 @@ nts::BadComponentTypeException::BadComponentTypeException(const std::string &typ
 {
 }
 
-nts::BadLinkException::BadLinkException(const std::string &component_type, const std::string &why) noexcept:
-    Exception("Cannot set link for " + component_type + " component: " + why)
+nts::BadComponentName::BadComponentName(const std::string &component_name) noexcept:
+    Exception("Unknown component name \"" + component_name + "\"")
 {
 }
 
@@ -71,5 +71,9 @@ nts::FileException::FileException(const std::string &filepath, const std::string
 
 nts::InputValueException::InputValueException(const std::string &value) noexcept:
     Exception("Unknown input value \"" + value + "\"")
+{
+}
+
+nts::ExitException::ExitException() noexcept: Exception("NanoTekSpice exit")
 {
 }

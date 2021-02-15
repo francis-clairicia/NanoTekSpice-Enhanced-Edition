@@ -58,19 +58,70 @@ std::unique_ptr<nts::IComponent> nts::ComponentFactory::createComponent(const st
     return search->second();
 }
 
+void nts::ComponentFactory::addComponent(const std::string &type, const std::string &name)
+{
+    m_components[name] = createComponent(type);
+
+    InputComponent *input = dynamic_cast<InputComponent *>(m_components[name].get());
+    if (input)
+        m_input_components.emplace(name, reinterpret_cast<std::unique_ptr<InputComponent> &>(m_components[name]));
+    
+    OutputComponent *output = dynamic_cast<OutputComponent *>(m_components[name].get());
+    if (output)
+        m_output_components.emplace(name, reinterpret_cast<std::unique_ptr<OutputComponent> &>(m_components[name]));
+}
+
 nts::ComponentFactory::component_map_t &nts::ComponentFactory::get() noexcept
 {
     return m_components;
 }
 
-nts::ComponentFactory::input_component_map_t &nts::ComponentFactory::inputs() noexcept
+const nts::ComponentFactory::input_component_map_t &nts::ComponentFactory::inputs() const noexcept
 {
     return m_input_components;
 }
 
-nts::ComponentFactory::output_component_map_t &nts::ComponentFactory::outputs() noexcept
+nts::InputComponent &nts::ComponentFactory::inputs(const std::string &name) const
+{
+    auto search = m_input_components.find(name);
+
+    if (search == m_input_components.end())
+        throw nts::BadComponentName(name);
+    return *(search->second.get());
+}
+
+const nts::ComponentFactory::output_component_map_t &nts::ComponentFactory::outputs() const noexcept
 {
     return m_output_components;
+}
+
+nts::OutputComponent &nts::ComponentFactory::outputs(const std::string &name) const
+{
+    auto search = m_output_components.find(name);
+
+    if (search == m_output_components.end())
+        throw nts::BadComponentName(name);
+    return *(search->second.get());
+}
+
+void nts::ComponentFactory::display(std::size_t tick) const noexcept
+{
+    std::cout << "tick: " << tick << std::endl;
+    std::cout << "input(s):" << std::endl;
+    for (auto &component : m_input_components)
+        std::cout << std::string(2, ' ') << component.first << ": " << component.second->getValueAsString() << std::endl;
+    std::cout << "output(s):" << std::endl;
+    for (auto &component : m_output_components)
+        std::cout << std::string(2, ' ') << component.first << ": " << component.second->getValueAsString() << std::endl;
+}
+
+void nts::ComponentFactory::simulate(std::size_t tick) const
+{
+    for (auto &component : m_components)
+        component.second->simulate(tick);
+    for (auto &component : m_output_components) {
+        component.second->compute(1);
+    }
 }
 
 void nts::ComponentFactory::dump() const noexcept
@@ -92,10 +143,9 @@ nts::ComponentFactory &nts::ComponentFactory::operator=(const nts::ComponentFact
 
 const std::unique_ptr<nts::IComponent> &nts::ComponentFactory::operator[](const std::string &key) const
 {
-    return m_components.at(key);
-}
+    auto search = m_components.find(key);
 
-std::unique_ptr<nts::IComponent> &nts::ComponentFactory::operator[](const std::string &key)
-{
-    return m_components[key];
+    if (search == m_components.end())
+        throw nts::BadComponentName(key);
+    return search->second;
 }

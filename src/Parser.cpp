@@ -101,7 +101,7 @@ void nts::Parser::initChipset(std::size_t line_index, std::vector<std::string> &
         throw nts::ComponentNameExistsException(line_index, component_name);
 
     try {
-        m_factory[component_name] = m_factory.createComponent(component_type);
+        m_factory.addComponent(component_type, component_name);
     } catch (const nts::BadComponentTypeException &) {
         throw nts::ComponentTypeUnknownException(line_index, component_type);
     }

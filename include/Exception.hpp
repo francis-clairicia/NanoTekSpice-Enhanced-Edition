@@ -59,10 +59,10 @@ namespace nts
             BadComponentTypeException(const std::string &type) noexcept;
     };
 
-    class BadLinkException: public Exception
+    class BadComponentName: public Exception
     {
         public:
-            BadLinkException(const std::string &component_type, const std::string &why) noexcept;
+            BadComponentName(const std::string &component_name) noexcept;
     };
 
     class BadPinException: public Exception
@@ -93,6 +93,12 @@ namespace nts
     {
         public:
             InputValueException(const std::string &value) noexcept;
+    };
+
+    class ExitException: public Exception
+    {
+        public:
+            ExitException() noexcept;
     };
 }
 
