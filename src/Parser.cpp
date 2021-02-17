@@ -55,18 +55,25 @@ void nts::Parser::readBuffer(const std::string &buffer, std::list<nts::Parser::L
             line = line.substr(0, sharp);
         trim_trailing_whitespace(line);
         if (!line.empty())
-            lines.push_back((nts::Parser::Line){.index = index, .content = line});
+            lines.push_back(nts::Parser::Line(index, line));
     }
 }
 
 void nts::Parser::initFactory(std::list<nts::Parser::Line> &lines)
 {
+    if (lines.empty())
+        throw nts::FileException(m_file, "There is no instructions inside file");
     if (lines.front().content.compare(CHIPSET_DECLARATION) != 0)
         throw nts::SyntaxException(lines.front().index, "The first instruction must be the chipsets declaration");
 
     bool chipset_declared = false;
     bool links_declared = false;
+    std::vector<std::string> line_tab;
     nts::Parser::Declaration declaration = nts::Parser::CHIPSETS;
+    std::unordered_map<nts::Parser::Declaration, void (nts::Parser::*)(std::size_t, std::vector<std::string> &)> initializer{
+        {nts::Parser::CHIPSETS, &nts::Parser::initChipset},
+        {nts::Parser::LINKS, &nts::Parser::initLink},
+    };
 
     for (const auto &line : lines) {
         if (line.content.compare(CHIPSET_DECLARATION) == 0) {
@@ -80,11 +87,8 @@ void nts::Parser::initFactory(std::list<nts::Parser::Line> &lines)
             links_declared = true;
             declaration = nts::Parser::LINKS;
         } else {
-            std::vector<std::string> line_tab = string_split_by_delimiters(line.content, " \t\v");
-            if (declaration == nts::Parser::CHIPSETS)
-                initChipset(line.index, line_tab);
-            else if (declaration == nts::Parser::LINKS)
-                initLink(line.index, line_tab);
+            line_tab = string_split_by_delimiters(line.content, " \t\v");
+            (this->*initializer.at(declaration))(line.index, line_tab);
         }
     }
 }
@@ -142,4 +146,9 @@ void nts::Parser::initLink(std::size_t line_index, std::vector<std::string> &lin
 
     chipset1->second->setLink(pin1, *(chipset2->second), pin2);
     chipset2->second->setLink(pin2, *(chipset1->second), pin1);
+}
+
+nts::Parser::Line::Line(std::size_t index, const std::string &content) noexcept:
+    index(index), content(content)
+{
 }

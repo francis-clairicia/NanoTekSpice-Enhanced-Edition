@@ -19,6 +19,7 @@ namespace nts
         public:
             struct Line
             {
+                Line(std::size_t index, const std::string &content) noexcept;
                 std::size_t index;
                 std::string content;
             };
