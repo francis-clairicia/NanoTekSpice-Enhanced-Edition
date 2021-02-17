@@ -72,7 +72,7 @@ void nts::ComponentFactory::addComponent(const std::string &type, const std::str
         m_output_components.emplace(name, *output);
 }
 
-nts::ComponentFactory::component_map_t &nts::ComponentFactory::get() noexcept
+const nts::ComponentFactory::component_map_t &nts::ComponentFactory::get() const noexcept
 {
     return m_components;
 }

@@ -33,7 +33,7 @@ namespace nts
             std::unique_ptr<nts::IComponent> createComponent(const std::string &type) const;
             void addComponent(const std::string &type, const std::string &name);
 
-            component_map_t &get() noexcept;
+            const component_map_t &get() const noexcept;
             const input_component_map_t &inputs() const noexcept;
             InputComponent &inputs(const std::string &name) const;
             const output_component_map_t &outputs() const noexcept;
