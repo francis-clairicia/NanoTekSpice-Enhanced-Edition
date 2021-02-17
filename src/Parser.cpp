@@ -114,13 +114,13 @@ void nts::Parser::initChipset(std::size_t line_index, std::vector<std::string> &
 void nts::Parser::initLink(std::size_t line_index, std::vector<std::string> &line_tab)
 {
     if (line_tab.size() != 2)
-        throw nts::SyntaxException(line_index, "Link declaration must respect this for: name1:output_pin1 name2:input_pin2");
+        throw nts::SyntaxException(line_index, "Link declaration must respect this for: name1:pin1 name2:pin2");
 
     std::vector<std::string> chipset_link1 = string_split_by_delimiters(line_tab[0], ":", true);
     std::vector<std::string> chipset_link2 = string_split_by_delimiters(line_tab[1], ":", true);
 
     if (chipset_link1.size() != 2 || chipset_link2.size() != 2)
-        throw nts::SyntaxException(line_index, "Link declaration must respect this for: name1:output_pin1 name2:input_pin2");
+        throw nts::SyntaxException(line_index, "Link declaration must respect this for: name1:pin1 name2:pin2");
     
     const std::string &chipset_name1 = chipset_link1[0];
     const std::string &chipset_pin1 = chipset_link1[1];
