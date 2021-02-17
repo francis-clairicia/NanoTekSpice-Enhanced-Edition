@@ -19,8 +19,8 @@ namespace nts
         public:
             using component_creator_t = std::unique_ptr<nts::IComponent> (*)();
             using component_map_t = std::map<std::string, std::unique_ptr<nts::IComponent>>;
-            using input_component_map_t = std::map<std::string, std::unique_ptr<nts::InputComponent> &>;
-            using output_component_map_t = std::map<std::string, std::unique_ptr<nts::OutputComponent> &>;
+            using input_component_map_t = std::map<std::string, nts::InputComponent &>;
+            using output_component_map_t = std::map<std::string, nts::OutputComponent &>;
 
         public:
             static const std::unordered_map<std::string, component_creator_t> COMPONENT_CREATOR;

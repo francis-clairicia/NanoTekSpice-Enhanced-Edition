@@ -65,11 +65,11 @@ void nts::ComponentFactory::addComponent(const std::string &type, const std::str
 
     InputComponent *input = dynamic_cast<InputComponent *>(m_components[name].get());
     if (input)
-        m_input_components.emplace(name, reinterpret_cast<std::unique_ptr<InputComponent> &>(m_components[name]));
+        m_input_components.emplace(name, *input);
     
     OutputComponent *output = dynamic_cast<OutputComponent *>(m_components[name].get());
     if (output)
-        m_output_components.emplace(name, reinterpret_cast<std::unique_ptr<OutputComponent> &>(m_components[name]));
+        m_output_components.emplace(name, *output);
 }
 
 nts::ComponentFactory::component_map_t &nts::ComponentFactory::get() noexcept
@@ -88,7 +88,7 @@ nts::InputComponent &nts::ComponentFactory::inputs(const std::string &name) cons
 
     if (search == m_input_components.end())
         throw nts::BadComponentNameException(name);
-    return *(search->second.get());
+    return (search->second);
 }
 
 const nts::ComponentFactory::output_component_map_t &nts::ComponentFactory::outputs() const noexcept
@@ -102,7 +102,7 @@ nts::OutputComponent &nts::ComponentFactory::outputs(const std::string &name) co
 
     if (search == m_output_components.end())
         throw nts::BadComponentNameException(name);
-    return *(search->second.get());
+    return (search->second);
 }
 
 void nts::ComponentFactory::display(std::size_t tick) const noexcept
@@ -110,10 +110,10 @@ void nts::ComponentFactory::display(std::size_t tick) const noexcept
     std::cout << "tick: " << tick << std::endl;
     std::cout << "input(s):" << std::endl;
     for (auto &component : m_input_components)
-        std::cout << std::string(2, ' ') << component.first << ": " << component.second->getValueAsString() << std::endl;
+        std::cout << std::string(2, ' ') << component.first << ": " << component.second.getValueAsString() << std::endl;
     std::cout << "output(s):" << std::endl;
     for (auto &component : m_output_components)
-        std::cout << std::string(2, ' ') << component.first << ": " << component.second->getValueAsString() << std::endl;
+        std::cout << std::string(2, ' ') << component.first << ": " << component.second.getValueAsString() << std::endl;
 }
 
 void nts::ComponentFactory::simulate(std::size_t tick) const
@@ -121,7 +121,7 @@ void nts::ComponentFactory::simulate(std::size_t tick) const
     for (auto &component : m_components)
         component.second->simulate(tick);
     for (auto &component : m_output_components) {
-        component.second->compute(1);
+        component.second.compute(1);
     }
 }
 
