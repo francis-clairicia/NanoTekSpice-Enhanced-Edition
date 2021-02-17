@@ -10,10 +10,10 @@
 #include "BadPinException.hpp"
 
 const std::unordered_map<std::string, nts::Tristate> nts::IOComponent::TRISTATE_CONVERTER{
-        {"0", nts::FALSE},
-        {"1", nts::TRUE},
-        {"U", nts::UNDEFINED}
-    };
+    {"0", nts::FALSE},
+    {"1", nts::TRUE},
+    {"U", nts::UNDEFINED}
+};
 
 nts::IOComponent::IOComponent(const std::string &type) noexcept:
     m_link(nullptr),
