@@ -8,11 +8,8 @@
 #ifndef COMPONENTFACTORY_HPP_
 #define COMPONENTFACTORY_HPP_
 
-#include <string>
-#include <memory>
-#include <unordered_map>
 #include <map>
-#include "IComponent.hpp"
+#include <memory>
 #include "InputComponent.hpp"
 #include "OutputComponent.hpp"
 
@@ -20,10 +17,10 @@ namespace nts
 {
     class ComponentFactory {
         public:
-            typedef std::unique_ptr<nts::IComponent> (*component_creator_t)();
-            typedef std::map<std::string, std::unique_ptr<nts::IComponent>> component_map_t;
-            typedef std::map<std::string, std::unique_ptr<nts::InputComponent> &> input_component_map_t;
-            typedef std::map<std::string, std::unique_ptr<nts::OutputComponent> &> output_component_map_t;
+            using component_creator_t = std::unique_ptr<nts::IComponent> (*)();
+            using component_map_t = std::map<std::string, std::unique_ptr<nts::IComponent>>;
+            using input_component_map_t = std::map<std::string, std::unique_ptr<nts::InputComponent> &>;
+            using output_component_map_t = std::map<std::string, std::unique_ptr<nts::OutputComponent> &>;
 
         public:
             static const std::unordered_map<std::string, component_creator_t> COMPONENT_CREATOR;

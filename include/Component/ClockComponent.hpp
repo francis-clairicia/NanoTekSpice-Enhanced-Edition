@@ -8,7 +8,6 @@
 #ifndef CLOCKCOMPONENT_HPP_
 #define CLOCKCOMPONENT_HPP_
 
-#include <memory>
 #include "InputComponent.hpp"
 
 namespace nts

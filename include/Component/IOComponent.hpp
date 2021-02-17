@@ -8,12 +8,16 @@
 #ifndef IOCOMPONENT_HPP_
 #define IOCOMPONENT_HPP_
 
+#include <string>
+#include <unordered_map>
 #include "IComponent.hpp"
-#include "definitions.hpp"
 
 namespace nts
 {
     class IOComponent: public nts::IComponent {
+        public:
+            static const std::unordered_map<std::string, nts::Tristate> TRISTATE_CONVERTER;
+
         public:
             IOComponent(const std::string &type) noexcept;
 

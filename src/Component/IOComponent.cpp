@@ -9,6 +9,12 @@
 #include "IOComponent.hpp"
 #include "BadPinException.hpp"
 
+const std::unordered_map<std::string, nts::Tristate> nts::IOComponent::TRISTATE_CONVERTER{
+        {"0", nts::FALSE},
+        {"1", nts::TRUE},
+        {"U", nts::UNDEFINED}
+    };
+
 nts::IOComponent::IOComponent(const std::string &type) noexcept:
     m_link(nullptr),
     m_link_pin(0),
@@ -42,7 +48,7 @@ void nts::IOComponent::dump() const
 
 std::string nts::IOComponent::getValueAsString() const noexcept
 {
-    for (auto &pair : nts::INPUT_CONVERTER) {
+    for (auto &pair : TRISTATE_CONVERTER) {
         if (pair.second == m_value)
             return pair.first;
     }

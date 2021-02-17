@@ -6,7 +6,6 @@
 */
 
 #include <fstream>
-#include <list>
 #include "string_operations.hpp"
 #include "Parser.hpp"
 #include "FileException.hpp"

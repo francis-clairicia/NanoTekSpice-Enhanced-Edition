@@ -8,9 +8,8 @@
 #ifndef PARSER_HPP_
 #define PARSER_HPP_
 
-#include <string>
-#include <vector>
 #include <list>
+#include <vector>
 #include "ComponentFactory.hpp"
 
 namespace nts

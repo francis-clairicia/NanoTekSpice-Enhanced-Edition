@@ -85,6 +85,8 @@ int nts::nanotekspice(const std::string &circuit_file)
     parser.parse();
     while (command_prompt(input, tty)) {
         trim_trailing_whitespace(input);
+        if (input.empty())
+            continue;
         try {
             auto search = commands.find(input);
             if (search != commands.end()) {
