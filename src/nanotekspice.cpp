@@ -7,12 +7,15 @@
 
 #include <iostream>
 #include <algorithm>
+#include <csignal>
 #include <unistd.h>
 #include "ComponentFactory.hpp"
 #include "Parser.hpp"
 #include "ExitException.hpp"
 #include "nanotekspice.hpp"
 #include "string_operations.hpp"
+
+static bool LOOP_BOOLEAN = false;
 
 static std::istream &command_prompt(std::string &buffer, bool print_command_prompt)
 {
@@ -33,12 +36,19 @@ static void display_command(nts::ComponentFactory &factory, std::size_t &tick)
 
 static void simulate_command(nts::ComponentFactory &factory, std::size_t &tick)
 {
-    ++tick;
-    factory.simulate(tick);
+    factory.simulate(++tick);
 }
 
-static void loop_command(nts::ComponentFactory &factory __attribute__((unused)), std::size_t &tick __attribute__((unused)))
+static void loop_command(nts::ComponentFactory &factory, std::size_t &tick)
 {
+    sighandler_t former_handler = signal(SIGINT, [](int){LOOP_BOOLEAN = false;});
+
+    LOOP_BOOLEAN = true;
+    while (LOOP_BOOLEAN) {
+        simulate_command(factory, tick);
+        display_command(factory, tick);
+    }
+    signal(SIGINT, former_handler);
 }
 
 static void dump_command(nts::ComponentFactory &factory, std::size_t &tick __attribute__((unused)))
