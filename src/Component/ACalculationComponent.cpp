@@ -8,7 +8,7 @@
 #include <algorithm>
 #include <iostream>
 #include "ACalculationComponent.hpp"
-#include "Exception.hpp"
+#include "BadPinException.hpp"
 
 nts::ACalculationComponent::ACalculationComponent(const std::string &type, std::size_t nb_pins, const pin_list_t &input_pins, const pin_list_t &output_pins) noexcept:
     AComponent(type, nb_pins, input_pins, output_pins)

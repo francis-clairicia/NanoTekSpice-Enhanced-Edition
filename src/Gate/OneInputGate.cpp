@@ -8,7 +8,6 @@
 #include <algorithm>
 #include <iostream>
 #include "OneInputGate.hpp"
-#include "Exception.hpp"
 
 nts::OneInputGate::OneInputGate(const std::string &type) noexcept: ACalculationComponent(type, 2, {1}, {2})
 {

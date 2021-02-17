@@ -6,7 +6,7 @@
 */
 
 #include "ConstComponent.hpp"
-#include "Exception.hpp"
+#include "ConstComponentException.hpp"
 
 nts::ConstComponent::ConstComponent(const std::string &type, nts::Tristate value): InputComponent()
 {

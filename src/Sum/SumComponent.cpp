@@ -8,7 +8,6 @@
 #include <algorithm>
 #include <iostream>
 #include "SumComponent.hpp"
-#include "Exception.hpp"
 
 /*
 Inputs:

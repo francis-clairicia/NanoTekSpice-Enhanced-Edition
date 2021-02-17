@@ -7,7 +7,6 @@
 
 #include <criterion/criterion.h>
 #include "GateNOT.hpp"
-#include "Exception.hpp"
 
 Test(GateNOT, truth_table)
 {

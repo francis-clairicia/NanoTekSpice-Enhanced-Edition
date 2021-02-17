@@ -18,7 +18,8 @@
 #include "Component4069.hpp"
 #include "Component4071.hpp"
 #include "Component4081.hpp"
-#include "Exception.hpp"
+#include "BadComponentTypeException.hpp"
+#include "BadComponentNameException.hpp"
 
 const std::unordered_map<std::string, nts::ComponentFactory::component_creator_t> nts::ComponentFactory::COMPONENT_CREATOR{
     {"input",  []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::InputComponent>();}},
@@ -86,7 +87,7 @@ nts::InputComponent &nts::ComponentFactory::inputs(const std::string &name) cons
     auto search = m_input_components.find(name);
 
     if (search == m_input_components.end())
-        throw nts::BadComponentName(name);
+        throw nts::BadComponentNameException(name);
     return *(search->second.get());
 }
 
@@ -100,7 +101,7 @@ nts::OutputComponent &nts::ComponentFactory::outputs(const std::string &name) co
     auto search = m_output_components.find(name);
 
     if (search == m_output_components.end())
-        throw nts::BadComponentName(name);
+        throw nts::BadComponentNameException(name);
     return *(search->second.get());
 }
 
@@ -146,6 +147,6 @@ const std::unique_ptr<nts::IComponent> &nts::ComponentFactory::operator[](const 
     auto search = m_components.find(key);
 
     if (search == m_components.end())
-        throw nts::BadComponentName(key);
+        throw nts::BadComponentNameException(key);
     return search->second;
 }

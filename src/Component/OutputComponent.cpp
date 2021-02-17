@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include "OutputComponent.hpp"
-#include "Exception.hpp"
+#include "BadPinException.hpp"
 
 nts::OutputComponent::OutputComponent() noexcept:
     IOComponent("output")

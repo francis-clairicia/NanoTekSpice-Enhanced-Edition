@@ -8,7 +8,6 @@
 #include <algorithm>
 #include <iostream>
 #include "TwoInputsGate.hpp"
-#include "Exception.hpp"
 
 nts::TwoInputsGate::TwoInputsGate(const std::string &type) noexcept: ACalculationComponent(type, 3, {1, 2}, {3})
 {

@@ -9,7 +9,20 @@ SRC_MAIN			=	src/main.cpp
 
 SRC_NANOTEKSPICE	=	src/nanotekspice.cpp
 
-SRC_EXCEPTIONS		=	src/Exception.cpp
+SRC_EXCEPTIONS		=	src/Exception/ComponentTypeUnknownException.cpp		\
+						src/Exception/ComponentNameExistsException.cpp		\
+						src/Exception/FileException.cpp						\
+						src/Exception/BadPinException.cpp					\
+						src/Exception/InputValueException.cpp				\
+						src/Exception/Exception.cpp							\
+						src/Exception/SyntaxException.cpp					\
+						src/Exception/ComponentNameUnknownException.cpp		\
+						src/Exception/BadComponentNameException.cpp			\
+						src/Exception/BadComponentTypeException.cpp			\
+						src/Exception/NoChipsetException.cpp				\
+						src/Exception/ConstComponentException.cpp			\
+						src/Exception/ExitException.cpp						\
+						src/Exception/ParserException.cpp
 
 SRC_PARSER			=	src/Parser.cpp
 
@@ -67,6 +80,7 @@ SRC_TEST			=	$(SRC_COMPONENTS)							\
 CXXFLAGS			=	-Wall -Wextra
 
 CPPFLAGS			=	-I./include/								\
+						-I./include/Exception/						\
 						-I./include/Component/						\
 						-I./include/Gate/							\
 						-I./include/Sum/							\

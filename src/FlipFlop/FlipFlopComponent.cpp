@@ -8,7 +8,6 @@
 #include <algorithm>
 #include <iostream>
 #include "FlipFlopComponent.hpp"
-#include "Exception.hpp"
 
 /*
 Inputs:

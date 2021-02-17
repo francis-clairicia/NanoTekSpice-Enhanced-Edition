@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include "ComponentFactory.hpp"
 #include "Parser.hpp"
-#include "Exception.hpp"
+#include "ExitException.hpp"
 #include "nanotekspice.hpp"
 #include "string_operations.hpp"
 

@@ -9,7 +9,13 @@
 #include <list>
 #include "string_operations.hpp"
 #include "Parser.hpp"
-#include "Exception.hpp"
+#include "FileException.hpp"
+#include "SyntaxException.hpp"
+#include "BadComponentTypeException.hpp"
+#include "ComponentTypeUnknownException.hpp"
+#include "ComponentNameExistsException.hpp"
+#include "ComponentNameUnknownException.hpp"
+#include "NoChipsetException.hpp"
 
 const std::string nts::Parser::CHIPSET_DECLARATION{".chipsets:"};
 const std::string nts::Parser::LINK_DECLARATION{".links:"};

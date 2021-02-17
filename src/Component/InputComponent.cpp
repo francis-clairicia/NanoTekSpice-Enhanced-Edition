@@ -7,7 +7,8 @@
 
 #include <iostream>
 #include "InputComponent.hpp"
-#include "Exception.hpp"
+#include "BadPinException.hpp"
+#include "InputValueException.hpp"
 
 nts::InputComponent::InputComponent() noexcept:
     IOComponent("input")

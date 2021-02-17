@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include "IOComponent.hpp"
-#include "Exception.hpp"
+#include "BadPinException.hpp"
 
 nts::IOComponent::IOComponent(const std::string &type) noexcept:
     m_link(nullptr),
