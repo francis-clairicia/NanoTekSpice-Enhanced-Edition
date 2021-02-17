@@ -56,7 +56,7 @@ static void dump_command(nts::ComponentFactory &factory, std::size_t &tick __att
     factory.dump();
 }
 
-static void input_value_set(const std::string &input, nts::ComponentFactory &factory)
+static void input_value_set(const std::string &input, nts::ComponentFactory &factory, std::size_t tick)
 {
     std::vector<std::string> args = string_split_by_delimiters(input, "=", true);
 
@@ -65,6 +65,7 @@ static void input_value_set(const std::string &input, nts::ComponentFactory &fac
         throw nts::Exception("Invalid syntax");
     }
     factory.inputs(args[0]).setValue(args[1]);
+    factory.simulate(tick);
 }
 
 int nts::nanotekspice(const std::string &circuit_file)
@@ -92,7 +93,7 @@ int nts::nanotekspice(const std::string &circuit_file)
             if (search != commands.end()) {
                 search->second(factory, tick);
             } else if (input.find('=') != std::string::npos){
-                input_value_set(input, factory);
+                input_value_set(input, factory, tick);
             } else {
                 std::cerr << "Unknown command \"" << input << "\"" << std::endl;
             }
