@@ -66,8 +66,6 @@ SRC					=	$(SRC_MAIN)									\
 						$(SRC_UTILS)								\
 						$(SRC_COMPONENTS)							\
 						$(SRC_GATES)								\
-						$(SRC_SUM)									\
-						$(SRC_FLIPFLOP)
 
 SRC_TEST			=	$(SRC_COMPONENTS)							\
 						$(SRC_GATES)								\

@@ -18,6 +18,16 @@ namespace nts
             ~SumComponent();
 
             void simulate(std::size_t tick) final;
+
+        protected:
+            void dumpInternalComponents() const final;
+
+        protected:
+            std::unique_ptr<IComponent> m_xor1;
+            std::unique_ptr<IComponent> m_xor2;
+            std::unique_ptr<IComponent> m_and1;
+            std::unique_ptr<IComponent> m_and2;
+            std::unique_ptr<IComponent> m_or;
     };
 }
 

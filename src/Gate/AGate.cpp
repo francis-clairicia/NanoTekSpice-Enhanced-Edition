@@ -46,11 +46,15 @@ void nts::AGate::dump() const
 
     std::size_t index = 0;
     for (const auto &pair : m_links) {
-        std::cout << "-> Pin " << ++index << ": ";
-        if (pair.first) {
-            std::cout << "linked to pin " << pair.second << " of a component";
+        std::cout << "-> Pin " << index << ": ";
+        if (++index != m_output_pin) {
+            if (pair.first) {
+                std::cout << "linked to pin " << pair.second << " of a component";
+            } else {
+                std::cout << "not linked";
+            }
         } else {
-            std::cout << "not linked";
+            std::cout << "Output pin";
         }
         std::cout << std::endl;
     }

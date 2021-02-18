@@ -12,8 +12,6 @@
 nts::Component4013::Component4013() noexcept: AComponent("4013", 14, {3, 4, 5, 6, 8, 9, 10, 11}, {1, 2, 12, 13})
 {
     m_components.push_back(std::make_unique<FlipFlopComponent>());
-    m_components.back()->setLink(1, *this, 1);
-    m_components.back()->setLink(2, *this, 2);
     m_components.back()->setLink(3, *this, 3);
     m_components.back()->setLink(4, *this, 4);
     m_components.back()->setLink(5, *this, 5);
@@ -22,8 +20,6 @@ nts::Component4013::Component4013() noexcept: AComponent("4013", 14, {3, 4, 5, 6
     setLinkInternal(2, *m_components.back(), 2);
 
     m_components.push_back(std::make_unique<FlipFlopComponent>());
-    m_components.back()->setLink(1, *this, 13);
-    m_components.back()->setLink(2, *this, 12);
     m_components.back()->setLink(3, *this, 11);
     m_components.back()->setLink(4, *this, 10);
     m_components.back()->setLink(5, *this, 9);
