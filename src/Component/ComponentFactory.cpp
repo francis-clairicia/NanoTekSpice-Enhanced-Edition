@@ -11,7 +11,7 @@
 #include "TrueComponent.hpp"
 #include "FalseComponent.hpp"
 #include "Component4001.hpp"
-// #include "Component4008.hpp"
+#include "Component4008.hpp"
 #include "Component4011.hpp"
 // #include "Component4013.hpp"
 #include "Component4030.hpp"
@@ -28,7 +28,7 @@ const std::unordered_map<std::string, nts::ComponentFactory::component_creator_t
     {"false",  []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::FalseComponent>();}},
     {"output", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::OutputComponent>();}},
     {"4001",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4001>();}},
-    // {"4008",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4008>();}},
+    {"4008",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4008>();}},
     {"4011",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4011>();}},
     // {"4013",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4013>();}},
     {"4030",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4030>();}},

@@ -39,6 +39,7 @@ SRC_COMPONENTS		=	src/Component/ComponentFactory.cpp			\
 						src/Component/FalseComponent.cpp			\
 						src/Component/AComponent.cpp				\
 						src/Component/Component4001.cpp				\
+						src/Component/Component4008.cpp				\
 						src/Component/Component4011.cpp				\
 						src/Component/Component4030.cpp				\
 						src/Component/Component4069.cpp				\
@@ -66,11 +67,13 @@ SRC					=	$(SRC_MAIN)									\
 						$(SRC_UTILS)								\
 						$(SRC_COMPONENTS)							\
 						$(SRC_GATES)								\
+						$(SRC_SUM)
 
 SRC_TEST			=	$(SRC_COMPONENTS)							\
 						$(SRC_GATES)								\
 						$(SRC_EXCEPTIONS)							\
-						$(SRC_UTILS)
+						$(SRC_UTILS)								\
+						$(SRC_SUM)
 
 CXXFLAGS			=	-Wall -Wextra
 
