@@ -36,8 +36,10 @@ nts::Component4001::~Component4001() noexcept
 {
 }
 
-void nts::Component4001::simulate(std::size_t tick __attribute__((unused)))
+void nts::Component4001::simulate(std::size_t tick)
 {
+    for (const auto &component : m_components)
+        component->simulate(tick);
 }
 
 void nts::Component4001::dumpInternalComponents() const

@@ -11,12 +11,17 @@
 #include "BadPinException.hpp"
 
 nts::AGate::AGate(const std::string &type, std::size_t nb_pins, const pin_list_t &input_pins, std::size_t output_pin) noexcept:
-    m_type(type), m_links{nb_pins}, m_input_pins{input_pins}, m_output_pin{output_pin}
+    m_value(nts::UNDEFINED), m_type(type), m_actual_tick(0), m_computed(false),
+    m_links{nb_pins}, m_input_pins{input_pins}, m_output_pin{output_pin}
 {
 }
 
-void nts::AGate::simulate(std::size_t tick __attribute__((unused)))
+void nts::AGate::simulate(std::size_t tick)
 {
+    if (m_actual_tick < tick) {
+        m_computed = false;
+        m_actual_tick = tick;
+    }
 }
 
 void nts::AGate::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
@@ -35,7 +40,11 @@ nts::Tristate nts::AGate::compute(std::size_t pin)
         return (pair.first) ? pair.first->compute(pair.second) : nts::UNDEFINED;
     }
     if (pin == m_output_pin) {
-        return computeOutput();
+        if (!m_computed) {
+            m_computed = true;
+            m_value = computeOutput();
+        }
+        return m_value;
     }
     return nts::UNDEFINED;
 }

@@ -5,7 +5,6 @@
 ** FlipFlopComponent
 */
 
-#include <algorithm>
 #include <iostream>
 #include "FlipFlopComponent.hpp"
 

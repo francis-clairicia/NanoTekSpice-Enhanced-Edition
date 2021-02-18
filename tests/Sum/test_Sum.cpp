@@ -16,9 +16,12 @@ static nts::Tristate compute(nts::SumComponent &sum,
                              nts::InputComponent &c,
                              std::size_t output_pin)
 {
+    static std::size_t tick = 0;
+
     sum.setLink(1, a, 1);
     sum.setLink(2, b, 1);
     sum.setLink(3, c, 1);
+    sum.simulate(++tick);
     return sum.compute(output_pin);
 }
 

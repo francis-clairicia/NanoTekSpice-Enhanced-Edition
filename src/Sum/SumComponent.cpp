@@ -52,8 +52,13 @@ nts::SumComponent::~SumComponent()
 {
 }
 
-void nts::SumComponent::simulate(std::size_t tick __attribute__((unused)))
+void nts::SumComponent::simulate(std::size_t tick)
 {
+    m_xor1->simulate(tick);
+    m_xor2->simulate(tick);
+    m_and1->simulate(tick);
+    m_and2->simulate(tick);
+    m_or->simulate(tick);
 }
 
 void nts::SumComponent::dumpInternalComponents() const
