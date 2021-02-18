@@ -11,7 +11,7 @@
 #include "BadPinException.hpp"
 
 nts::AComponent::AComponent(const std::string &type, std::size_t nb_pins, const pin_list_t &input_pins, const pin_list_t &output_pins) noexcept:
-    m_type{type}, m_internal_links{nb_pins}, m_external_links{nb_pins}, m_components{}, m_input_pins{input_pins}, m_output_pins{output_pins}
+    m_type{type}, m_internal_links{nb_pins}, m_external_links{nb_pins}, m_input_pins{input_pins}, m_output_pins{output_pins}
 {
 }
 
@@ -68,9 +68,6 @@ void nts::AComponent::dumpExternalLinks() const
 
 void nts::AComponent::dumpInternalLinks() const
 {
-    std::cout << "Internal components:" << std::endl;
-    for (const auto &component : m_components)
-        component->dump();
     std::cout << "Internal linkage:" << std::endl;
 
     std::size_t index = 0;

@@ -18,6 +18,9 @@ namespace nts
             ~Component4081() noexcept;
 
             void simulate(std::size_t tick) final;
+
+        protected:
+            intern_component_t m_components;
     };
 }
 

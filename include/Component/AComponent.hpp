@@ -41,7 +41,6 @@ namespace nts
             std::string             m_type;
             component_vector_link_t m_internal_links;
             component_vector_link_t m_external_links;
-            intern_component_t      m_components;
             const component_pin_t   m_input_pins;
             const component_pin_t   m_output_pins;
     };
