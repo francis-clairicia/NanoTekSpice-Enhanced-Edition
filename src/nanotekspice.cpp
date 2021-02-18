@@ -15,8 +15,6 @@
 #include "nanotekspice.hpp"
 #include "string_operations.hpp"
 
-static bool LOOP_BOOLEAN = false;
-
 static std::istream &command_prompt(std::string &buffer, bool print_command_prompt)
 {
     if (print_command_prompt)
@@ -41,10 +39,11 @@ static void simulate_command(nts::ComponentFactory &factory, std::size_t &tick)
 
 static void loop_command(nts::ComponentFactory &factory, std::size_t &tick)
 {
-    sighandler_t former_handler = signal(SIGINT, [](int){LOOP_BOOLEAN = false;});
+    static bool loop = false;
+    sighandler_t former_handler = signal(SIGINT, [](int){loop = false;});
 
-    LOOP_BOOLEAN = true;
-    while (LOOP_BOOLEAN) {
+    loop = true;
+    while (loop) {
         simulate_command(factory, tick);
         display_command(factory, tick);
     }
