@@ -7,8 +7,7 @@
 
 #include <criterion/criterion.h>
 #include "SumComponent.hpp"
-#include "TrueComponent.hpp"
-#include "FalseComponent.hpp"
+#include "ConstComponent.hpp"
 
 static nts::Tristate compute(nts::SumComponent &sum,
                              nts::InputComponent &a,
@@ -27,8 +26,8 @@ static nts::Tristate compute(nts::SumComponent &sum,
 
 Test(SumComponent, Co_truth_table)
 {
-    nts::TrueComponent c_true;
-    nts::FalseComponent c_false;
+    nts::ConstComponent c_true("true", nts::TRUE);
+    nts::ConstComponent c_false("false", nts::FALSE);
     nts::SumComponent sum;
     std::size_t Co_output = 4;
 
@@ -44,8 +43,8 @@ Test(SumComponent, Co_truth_table)
 
 Test(SumComponent, Co_handle_undefined_value)
 {
-    nts::TrueComponent c_true;
-    nts::FalseComponent c_false;
+    nts::ConstComponent c_true("true", nts::TRUE);
+    nts::ConstComponent c_false("false", nts::FALSE);
     nts::InputComponent c_undefined;
     nts::SumComponent sum;
     std::size_t Co_output = 4;
@@ -57,8 +56,8 @@ Test(SumComponent, Co_handle_undefined_value)
 
 Test(SumComponent, S_truth_table)
 {
-    nts::TrueComponent c_true;
-    nts::FalseComponent c_false;
+    nts::ConstComponent c_true("true", nts::TRUE);
+    nts::ConstComponent c_false("false", nts::FALSE);
     nts::SumComponent sum;
     std::size_t S_output = 5;
 
@@ -74,8 +73,8 @@ Test(SumComponent, S_truth_table)
 
 Test(SumComponent, S_handle_undefined_value)
 {
-    nts::TrueComponent c_true;
-    nts::FalseComponent c_false;
+    nts::ConstComponent c_true("true", nts::TRUE);
+    nts::ConstComponent c_false("false", nts::FALSE);
     nts::InputComponent c_undefined;
     nts::SumComponent sum;
     std::size_t S_output = 5;
