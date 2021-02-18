@@ -8,7 +8,7 @@
 #include "Component4011.hpp"
 #include "GateNAND.hpp"
 
-nts::Component4011::Component4011(): AComponent("4011", 14, {1, 2, 5, 6, 8, 9, 12, 13}, {3, 4, 10, 11})
+nts::Component4011::Component4011() noexcept: AComponent("4011", 14, {1, 2, 5, 6, 8, 9, 12, 13}, {3, 4, 10, 11})
 {
     m_components.push_back(std::make_unique<GateNAND>());
     m_components.back()->setLink(1, *this, 1);
@@ -35,7 +35,7 @@ nts::Component4011::Component4011(): AComponent("4011", 14, {1, 2, 5, 6, 8, 9, 1
     setLinkInternal(11, *m_components.back(), 3);
 }
 
-nts::Component4011::~Component4011()
+nts::Component4011::~Component4011() noexcept
 {
 }
 

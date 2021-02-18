@@ -8,7 +8,7 @@
 #include "Component4071.hpp"
 #include "GateOR.hpp"
 
-nts::Component4071::Component4071(): AComponent("4071", 14, {1, 2, 5, 6, 8, 9, 12, 13}, {3, 4, 10, 11})
+nts::Component4071::Component4071() noexcept: AComponent("4071", 14, {1, 2, 5, 6, 8, 9, 12, 13}, {3, 4, 10, 11})
 {
     m_components.push_back(std::make_unique<GateOR>());
     m_components.back()->setLink(1, *this, 1);
@@ -35,7 +35,7 @@ nts::Component4071::Component4071(): AComponent("4071", 14, {1, 2, 5, 6, 8, 9, 1
     setLinkInternal(11, *m_components.back(), 3);
 }
 
-nts::Component4071::~Component4071()
+nts::Component4071::~Component4071() noexcept
 {
 }
 

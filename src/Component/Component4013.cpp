@@ -8,7 +8,7 @@
 #include "Component4013.hpp"
 #include "FlipFlopComponent.hpp"
 
-nts::Component4013::Component4013(): AComponent("4013", 14, {3, 4, 5, 6, 8, 9, 10, 11}, {1, 2, 12, 13})
+nts::Component4013::Component4013() noexcept: AComponent("4013", 14, {3, 4, 5, 6, 8, 9, 10, 11}, {1, 2, 12, 13})
 {
     m_components.push_back(std::make_unique<FlipFlopComponent>());
     m_components.back()->setLink(1, *this, 1);
@@ -31,7 +31,7 @@ nts::Component4013::Component4013(): AComponent("4013", 14, {3, 4, 5, 6, 8, 9, 1
     setLinkInternal(13, *m_components.back(), 1);
 }
 
-nts::Component4013::~Component4013()
+nts::Component4013::~Component4013() noexcept
 {
 }
 
