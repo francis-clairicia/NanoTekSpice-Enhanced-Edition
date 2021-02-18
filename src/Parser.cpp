@@ -10,6 +10,7 @@
 #include "Parser.hpp"
 #include "FileException.hpp"
 #include "SyntaxException.hpp"
+#include "BadComponentNameException.hpp"
 #include "BadComponentTypeException.hpp"
 #include "BadPinException.hpp"
 #include "ComponentLinkException.hpp"
@@ -21,8 +22,8 @@
 const std::string nts::Parser::CHIPSET_DECLARATION{".chipsets:"};
 const std::string nts::Parser::LINK_DECLARATION{".links:"};
 
-nts::Parser::Parser(const std::string &circuit_file, nts::ComponentFactory &factory):
-    m_file(circuit_file), m_factory(factory)
+nts::Parser::Parser(const std::string &circuit_file, nts::Circuit &circuit):
+    m_file(circuit_file), m_circuit(circuit)
 {
     if (!string_endswith(m_file, ".nts"))
         throw nts::FileException(m_file, "Circuit file must have .nts extension");
@@ -45,7 +46,7 @@ void nts::Parser::parse() const
     std::list<nts::Parser::Line> lines;
     readBuffer(buffer, lines);
     initFactory(lines);
-    if (m_factory.get().empty())
+    if (m_circuit.empty())
         throw nts::NoChipsetException();
 }
 
@@ -108,11 +109,11 @@ void nts::Parser::initChipset(std::size_t line_index, const std::vector<std::str
     const std::string &component_type = line_tab[0];
     const std::string &component_name = line_tab[1];
 
-    if (m_factory.get().find(component_name) != m_factory.get().end())
+    if (m_circuit.hasComponent(component_name))
         throw nts::ComponentNameExistsException(line_index, component_name);
 
     try {
-        m_factory.addComponent(component_type, component_name);
+        m_circuit.addComponent(component_type, component_name);
     } catch (const nts::BadComponentTypeException &) {
         throw nts::ComponentTypeUnknownException(line_index, component_type);
     }
@@ -138,27 +139,21 @@ void nts::Parser::initLink(std::size_t line_index, const std::vector<std::string
         throw nts::SyntaxException(line_index, "\"" + chipset_pin1 + "\" is not a positive number");
     if (!string_is_number(chipset_pin2))
         throw nts::SyntaxException(line_index, "\"" + chipset_pin2 + "\" is not a positive number");
-    
-    const auto &chipset1 = m_factory.get().find(chipset_name1);
-    const auto &chipset2 = m_factory.get().find(chipset_name2);
 
-    if (chipset1 == m_factory.get().end())
-        throw nts::ComponentNameUnknownException(line_index, chipset_name1);
-    if (chipset2 == m_factory.get().end())
-        throw nts::ComponentNameUnknownException(line_index, chipset_name2);
-    
     char *end = NULL;
     std::size_t pin1 = std::strtoul(chipset_pin1.data(), &end, 10);
     std::size_t pin2 = std::strtoul(chipset_pin2.data(), &end, 10);
 
     try {
-        chipset1->second->setLink(pin1, *(chipset2->second), pin2);
+        m_circuit[chipset_name1]->setLink(pin1, *(m_circuit[chipset_name2]), pin2);
+    } catch (const nts::BadComponentNameException &e) {
+        throw nts::ComponentNameUnknownException(line_index, e.what());
     } catch (const nts::BadPinException &e) {
-        throw nts::ComponentLinkException(line_index, chipset1->first, e.what());
+        throw nts::ComponentLinkException(line_index, chipset_name1, e.what());
     }
     try {
-        chipset2->second->setLink(pin2, *(chipset1->second), pin1);
+        m_circuit[chipset_name2]->setLink(pin2, *(m_circuit[chipset_name1]), pin1);
     } catch (const nts::BadPinException &e) {
-        throw nts::ComponentLinkException(line_index, chipset2->first, e.what());
+        throw nts::ComponentLinkException(line_index, chipset_name2, e.what());
     }
 }

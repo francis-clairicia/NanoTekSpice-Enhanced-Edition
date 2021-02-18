@@ -8,10 +8,13 @@
 #include <iostream>
 #include "InputComponent.hpp"
 #include "BadPinException.hpp"
-#include "InputValueException.hpp"
 
 nts::InputComponent::InputComponent() noexcept:
-    IOComponent("input")
+    SinglePinComponent("input")
+{
+}
+
+void nts::InputComponent::simulate(std::size_t tick __attribute__((unused)))
 {
 }
 
@@ -24,15 +27,11 @@ nts::Tristate nts::InputComponent::compute(std::size_t pin)
 
 void nts::InputComponent::dump() const
 {
-    nts::IOComponent::dump();
+    nts::SinglePinComponent::dump();
     std::cout << "-> Value: " << getValueAsString() << std::endl;
 }
 
-void nts::InputComponent::setValue(const std::string &value)
+void nts::InputComponent::setValue(nts::Tristate value)
 {
-    const auto &conversion = TRISTATE_CONVERTER.find(value);
-
-    if (conversion == TRISTATE_CONVERTER.end())
-        throw InputValueException(value);
-    m_value = conversion->second;
+    m_value = value;
 }

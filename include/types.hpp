@@ -17,11 +17,10 @@
 
 namespace nts
 {
-    using component_link_t = std::pair<IComponent *, std::size_t>;
-    using component_vector_link_t = std::vector<component_link_t>;
-    using intern_component_t = std::vector<std::unique_ptr<IComponent>>;
-    using component_pin_t = std::vector<std::size_t>;
-    using pin_list_t = std::initializer_list<std::size_t>;
+    using componentLink_t = std::pair<IComponent *, std::size_t>;
+    using internComponent_t = std::vector<std::unique_ptr<IComponent>>;
+    using componentPin_t = std::vector<std::size_t>;
+    using pinList_t = std::initializer_list<std::size_t>;
 }
 
 #endif /* !TYPES_HPP_ */

@@ -7,7 +7,7 @@
 
 #include "ComponentNameUnknownException.hpp"
 
-nts::ComponentNameUnknownException::ComponentNameUnknownException(std::size_t line, const std::string &name) noexcept:
-    ParserException("Component name error", line, "Unknown component name \"" + name + "\"")
+nts::ComponentNameUnknownException::ComponentNameUnknownException(std::size_t line, const std::string &error_msg) noexcept:
+    ParserException("Component name error", line, error_msg)
 {
 }

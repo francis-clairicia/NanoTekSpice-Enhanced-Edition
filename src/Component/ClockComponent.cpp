@@ -15,8 +15,12 @@ nts::ClockComponent::ClockComponent():
 
 void nts::ClockComponent::simulate(std::size_t tick)
 {
+    if (m_value == nts::UNDEFINED)
+        return;
+    bool value = m_value;
     while (m_actual_tick < tick) {
-        m_value = (m_value == nts::UNDEFINED) ? nts::FALSE : static_cast<nts::Tristate>(!m_value);
+        value = !value;
         ++m_actual_tick;
     }
+    m_value = static_cast<nts::Tristate>(value);
 }

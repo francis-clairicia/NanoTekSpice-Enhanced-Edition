@@ -10,7 +10,7 @@
 
 #include <list>
 #include <vector>
-#include "ComponentFactory.hpp"
+#include "Circuit.hpp"
 
 namespace nts
 {
@@ -33,7 +33,7 @@ namespace nts
             static const std::string LINK_DECLARATION;
 
         public:
-            Parser(const std::string &circuit_file, nts::ComponentFactory &factory);
+            Parser(const std::string &circuit_file, nts::Circuit &circuit);
             ~Parser();
 
             void parse() const;
@@ -46,7 +46,7 @@ namespace nts
 
         private:
             std::string m_file;
-            nts::ComponentFactory &m_factory;
+            nts::Circuit &m_circuit;
     };
 }
 

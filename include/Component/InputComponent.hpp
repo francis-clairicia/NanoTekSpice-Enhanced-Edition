@@ -8,18 +8,19 @@
 #ifndef INPUTCOMPONENT_HPP_
 #define INPUTCOMPONENT_HPP_
 
-#include "IOComponent.hpp"
+#include "SinglePinComponent.hpp"
 
 namespace nts
 {
-    class InputComponent: public nts::IOComponent {
+    class InputComponent: public nts::SinglePinComponent {
         public:
             InputComponent() noexcept;
 
+            void simulate(std::size_t tick) override;
             nts::Tristate compute(std::size_t pin) final;
             void dump() const override;
 
-            virtual void setValue(const std::string &value);
+            virtual void setValue(nts::Tristate value);
     };  
 }
 

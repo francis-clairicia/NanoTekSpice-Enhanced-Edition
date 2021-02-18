@@ -16,7 +16,7 @@ nts::ConstComponent::ConstComponent(const std::string &type, nts::Tristate value
     m_type = type;
 }
 
-void nts::ConstComponent::setValue(const std::string &value __attribute__((unused)))
+void nts::ConstComponent::setValue(nts::Tristate value __attribute__((unused)))
 {
     throw nts::ConstComponentException("Cannot set value to a \"" + m_type + "\" component");
 }

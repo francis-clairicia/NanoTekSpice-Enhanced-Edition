@@ -9,7 +9,11 @@
 #include "BadPinException.hpp"
 
 nts::OutputComponent::OutputComponent() noexcept:
-    IOComponent("output")
+    SinglePinComponent("output")
+{
+}
+
+void nts::OutputComponent::simulate(std::size_t tick __attribute__((unused)))
 {
 }
 

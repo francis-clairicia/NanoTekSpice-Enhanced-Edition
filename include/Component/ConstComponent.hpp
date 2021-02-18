@@ -16,9 +16,7 @@ namespace nts
         public:
             ConstComponent(const std::string &type, nts::Tristate value);
 
-            void setValue(const std::string &value) final;
-        protected:
-        private:
+            void setValue(nts::Tristate value) final;
     };
 }
 

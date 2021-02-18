@@ -8,14 +8,15 @@
 #ifndef OUTPUTCOMPONENT_HPP_
 #define OUTPUTCOMPONENT_HPP_
 
-#include "IOComponent.hpp"
+#include "SinglePinComponent.hpp"
 
 namespace nts
 {
-    class OutputComponent: public nts::IOComponent {
+    class OutputComponent: public nts::SinglePinComponent {
         public:
             OutputComponent() noexcept;
 
+            void simulate(std::size_t tick) override;
             nts::Tristate compute(std::size_t pin) final;
     };
 }

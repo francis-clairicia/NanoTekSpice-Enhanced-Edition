@@ -14,7 +14,7 @@ namespace nts
 {
     class AComponent: public nts::IComponent {
         public:
-            AComponent(const std::string &type, std::size_t nb_pins, const pin_list_t &input_pins, const pin_list_t &output_pins) noexcept;
+            AComponent(const std::string &type, std::size_t nb_pins, const pinList_t &input_pins, const pinList_t &output_pins) noexcept;
 
             nts::Tristate compute(std::size_t pin) final;
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
@@ -25,11 +25,11 @@ namespace nts
             virtual void dumpInternalComponents() const = 0;
 
         protected:
-            std::string             m_type;
-            component_vector_link_t m_internal_links;
-            component_vector_link_t m_external_links;
-            const component_pin_t   m_input_pins;
-            const component_pin_t   m_output_pins;
+            std::string                  m_type;
+            std::vector<componentLink_t> m_internal_links;
+            std::vector<componentLink_t> m_external_links;
+            const componentPin_t         m_input_pins;
+            const componentPin_t         m_output_pins;
     };
 }
 

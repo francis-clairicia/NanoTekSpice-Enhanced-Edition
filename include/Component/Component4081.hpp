@@ -23,7 +23,7 @@ namespace nts
             void dumpInternalComponents() const final;
 
         private:
-            intern_component_t m_components;
+            internComponent_t m_components;
     };
 }
 
