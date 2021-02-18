@@ -20,7 +20,7 @@ Outputs:
     Pin 5: output Si
 */
 
-nts::SumComponent::SumComponent() noexcept: ACalculationComponent("SUM Component", 5, {1, 2, 3}, {4, 5})
+nts::SumComponent::SumComponent() noexcept: ACalculationComponent("SUM", 5, {1, 2, 3}, {4, 5})
 {
 }
 

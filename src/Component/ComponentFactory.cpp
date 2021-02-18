@@ -52,7 +52,7 @@ nts::ComponentFactory::ComponentFactory(const nts::ComponentFactory &other __att
 
 std::unique_ptr<nts::IComponent> nts::ComponentFactory::createComponent(const std::string &type) const
 {
-    auto search = nts::ComponentFactory::COMPONENT_CREATOR.find(type);
+    const auto &search = nts::ComponentFactory::COMPONENT_CREATOR.find(type);
 
     if (search == nts::ComponentFactory::COMPONENT_CREATOR.end())
         throw nts::BadComponentTypeException(type);
@@ -84,7 +84,7 @@ const nts::ComponentFactory::input_component_map_t &nts::ComponentFactory::input
 
 nts::InputComponent &nts::ComponentFactory::inputs(const std::string &name) const
 {
-    auto search = m_input_components.find(name);
+    const auto &search = m_input_components.find(name);
 
     if (search == m_input_components.end())
         throw nts::BadComponentNameException(name);
@@ -98,7 +98,7 @@ const nts::ComponentFactory::output_component_map_t &nts::ComponentFactory::outp
 
 nts::OutputComponent &nts::ComponentFactory::outputs(const std::string &name) const
 {
-    auto search = m_output_components.find(name);
+    const auto &search = m_output_components.find(name);
 
     if (search == m_output_components.end())
         throw nts::BadComponentNameException(name);
@@ -109,10 +109,10 @@ void nts::ComponentFactory::display(std::size_t tick) const noexcept
 {
     std::cout << "tick: " << tick << std::endl;
     std::cout << "input(s):" << std::endl;
-    for (auto &component : m_input_components)
+    for (const auto &component : m_input_components)
         std::cout << std::string(2, ' ') << component.first << ": " << component.second.getValueAsString() << std::endl;
     std::cout << "output(s):" << std::endl;
-    for (auto &component : m_output_components)
+    for (const auto &component : m_output_components)
         std::cout << std::string(2, ' ') << component.first << ": " << component.second.getValueAsString() << std::endl;
 }
 
@@ -129,7 +129,7 @@ void nts::ComponentFactory::dump() const noexcept
 {
     std::cout << "Chipsets dump:" << std::endl;
     std::size_t index = 0;
-    for (auto &pair : m_components) {
+    for (const auto &pair : m_components) {
         if (index++)
             std::cout << std::endl;
         std::cout << "==== '" << pair.first << "' component ====" << std::endl;
@@ -144,7 +144,7 @@ nts::ComponentFactory &nts::ComponentFactory::operator=(const nts::ComponentFact
 
 const std::unique_ptr<nts::IComponent> &nts::ComponentFactory::operator[](const std::string &key) const
 {
-    auto search = m_components.find(key);
+    const auto &search = m_components.find(key);
 
     if (search == m_components.end())
         throw nts::BadComponentNameException(key);

@@ -20,11 +20,11 @@ nts::Tristate nts::AComponent::compute(std::size_t pin)
     if (pin == 0 || pin > m_external_links.size())
         throw BadPinException(m_type, pin);
     if (std::find(m_input_pins.begin(), m_input_pins.end(), pin) != m_input_pins.end()) {
-        auto pair = m_external_links.at(pin - 1);
+        component_link_t pair = m_external_links.at(pin - 1);
         return (pair.first) ? pair.first->compute(pair.second) : nts::UNDEFINED;
     }
     if (std::find(m_output_pins.begin(), m_output_pins.end(), pin) != m_output_pins.end()) {
-        auto pair = m_internal_links.at(pin - 1);
+        component_link_t pair = m_internal_links.at(pin - 1);
         return (pair.first) ? pair.first->compute(pair.second) : nts::UNDEFINED;
     }
     return nts::UNDEFINED;
@@ -55,7 +55,7 @@ void nts::AComponent::dumpExternalLinks() const
     std::cout << m_type << " component:" << std::endl;
 
     std::size_t index = 0;
-    for (auto &pair : m_external_links) {
+    for (const auto &pair : m_external_links) {
         std::cout << "-> Pin " << ++index << ": ";
         if (pair.first) {
             std::cout << "linked to pin " << pair.second << " of a component";
@@ -69,6 +69,15 @@ void nts::AComponent::dumpExternalLinks() const
 void nts::AComponent::dumpInternalLinks() const
 {
     std::cout << "Internal components:" << std::endl;
-    for (auto &component : m_components)
+    for (const auto &component : m_components)
         component->dump();
+    std::cout << "Internal linkage:" << std::endl;
+
+    std::size_t index = 0;
+    for (const auto &pair : m_internal_links) {
+        ++index;
+        if (pair.first) {
+            std::cout << "-> Pin " << index << ": " << "linked to pin " << pair.second << " of a component" << std::endl;
+        }
+    }
 }

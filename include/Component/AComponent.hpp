@@ -19,7 +19,8 @@ namespace nts
 {
     class AComponent: public nts::IComponent {
         public:
-            using component_link_t = std::vector<std::pair<IComponent *, std::size_t>>;
+            using component_link_t = std::pair<IComponent *, std::size_t>;
+            using component_vector_link_t = std::vector<component_link_t>;
             using intern_component_t = std::vector<std::unique_ptr<IComponent>>;
             using component_pin_t = std::vector<std::size_t>;
             using pin_list_t = std::initializer_list<std::size_t>;
@@ -37,12 +38,12 @@ namespace nts
             void dumpInternalLinks() const;
 
         protected:
-            std::string                m_type;
-            component_link_t      m_internal_links;
-            component_link_t      m_external_links;
-            intern_component_t    m_components;
-            const component_pin_t m_input_pins;
-            const component_pin_t m_output_pins;
+            std::string             m_type;
+            component_vector_link_t m_internal_links;
+            component_vector_link_t m_external_links;
+            intern_component_t      m_components;
+            const component_pin_t   m_input_pins;
+            const component_pin_t   m_output_pins;
     };
 }
 

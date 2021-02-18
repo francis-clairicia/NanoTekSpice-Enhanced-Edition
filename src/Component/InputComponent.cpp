@@ -30,7 +30,7 @@ void nts::InputComponent::dump() const
 
 void nts::InputComponent::setValue(const std::string &value)
 {
-    auto conversion = TRISTATE_CONVERTER.find(value);
+    const auto &conversion = TRISTATE_CONVERTER.find(value);
 
     if (conversion == TRISTATE_CONVERTER.end())
         throw InputValueException(value);

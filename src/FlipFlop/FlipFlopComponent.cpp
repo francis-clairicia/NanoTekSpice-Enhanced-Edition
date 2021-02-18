@@ -21,7 +21,7 @@ Outputs:
     Pin 2: /q (not q)
 */
 
-nts::FlipFlopComponent::FlipFlopComponent() noexcept: ACalculationComponent("FlipFlop Component", 6, {3, 4, 5, 6}, {1, 2})
+nts::FlipFlopComponent::FlipFlopComponent() noexcept: ACalculationComponent("FlipFlop", 6, {3, 4, 5, 6}, {1, 2})
 {
 }
 
