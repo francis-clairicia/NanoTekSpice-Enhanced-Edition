@@ -60,7 +60,7 @@ static void input_value_set(const std::string &input, nts::ComponentFactory &fac
     std::vector<std::string> args = string_split_by_delimiters(input, "=", true);
 
     std::for_each(args.begin(), args.end(), [](std::string &str){trim_trailing_whitespace(str);});
-    if (args.size() != 2 || args[0].empty() || args[1].empty()) {
+    if (args.size() != 2 || std::any_of(args.begin(), args.end(), [](const std::string &str){return str.empty();})) {
         throw nts::Exception("Invalid syntax");
     }
     factory.inputs(args[0]).setValue(args[1]);
