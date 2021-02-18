@@ -5,7 +5,6 @@
 ** OutputComponent
 */
 
-#include <iostream>
 #include "OutputComponent.hpp"
 #include "BadPinException.hpp"
 

@@ -5,8 +5,6 @@
 ** TwoInputsGate
 */
 
-#include <algorithm>
-#include <iostream>
 #include "TwoInputsGate.hpp"
 
 nts::TwoInputsGate::TwoInputsGate(const std::string &type) noexcept: AGate(type, 3, {1, 2}, 3)

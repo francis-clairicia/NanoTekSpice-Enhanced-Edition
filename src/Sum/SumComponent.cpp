@@ -5,7 +5,6 @@
 ** SumComponent
 */
 
-#include <algorithm>
 #include <iostream>
 #include "SumComponent.hpp"
 #include "GateAND.hpp"
@@ -59,4 +58,10 @@ void nts::SumComponent::simulate(std::size_t tick __attribute__((unused)))
 
 void nts::SumComponent::dumpInternalComponents() const
 {
+    std::cout << "Internal components:" << std::endl;
+    m_xor1->dump();
+    m_xor2->dump();
+    m_and1->dump();
+    m_and2->dump();
+    m_or->dump();
 }

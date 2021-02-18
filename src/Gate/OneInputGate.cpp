@@ -5,8 +5,6 @@
 ** OneInputGate
 */
 
-#include <algorithm>
-#include <iostream>
 #include "OneInputGate.hpp"
 
 nts::OneInputGate::OneInputGate(const std::string &type) noexcept: AGate(type, 2, {1}, 2)
