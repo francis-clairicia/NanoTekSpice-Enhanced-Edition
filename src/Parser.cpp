@@ -30,7 +30,7 @@ nts::Parser::~Parser()
 {
 }
 
-void nts::Parser::parse()
+void nts::Parser::parse() const
 {
     std::ifstream file(m_file);
 
@@ -53,18 +53,18 @@ void nts::Parser::readBuffer(const std::string &buffer, std::list<nts::Parser::L
     std::size_t sharp = 0;
     std::size_t index = 0;
 
-    for (auto line : splitted_buffer) {
+    for (auto &line : splitted_buffer) {
         ++index;
         sharp = line.find('#');
         if (sharp != std::string::npos)
             line = line.substr(0, sharp);
         trim_trailing_whitespace(line);
         if (!line.empty())
-            lines.push_back(nts::Parser::Line(index, line));
+            lines.push_back(nts::Parser::Line{.index = index, .content = line});
     }
 }
 
-void nts::Parser::initFactory(std::list<nts::Parser::Line> &lines)
+void nts::Parser::initFactory(std::list<nts::Parser::Line> &lines) const
 {
     if (lines.empty())
         throw nts::FileException(m_file, "There is no instructions inside file");
@@ -75,7 +75,7 @@ void nts::Parser::initFactory(std::list<nts::Parser::Line> &lines)
     bool links_declared = false;
     std::vector<std::string> line_tab;
     nts::Parser::Declaration declaration = nts::Parser::CHIPSETS;
-    std::unordered_map<nts::Parser::Declaration, void (nts::Parser::*)(std::size_t, std::vector<std::string> &)> initializer{
+    std::unordered_map<nts::Parser::Declaration, void (nts::Parser::*)(std::size_t, const std::vector<std::string> &) const> initializer{
         {nts::Parser::CHIPSETS, &nts::Parser::initChipset},
         {nts::Parser::LINKS, &nts::Parser::initLink},
     };
@@ -98,7 +98,7 @@ void nts::Parser::initFactory(std::list<nts::Parser::Line> &lines)
     }
 }
 
-void nts::Parser::initChipset(std::size_t line_index, std::vector<std::string> &line_tab)
+void nts::Parser::initChipset(std::size_t line_index, const std::vector<std::string> &line_tab) const
 {
     if (line_tab.size() != 2)
         throw nts::SyntaxException(line_index, "Chipset declaration must respect this form: type name");
@@ -116,7 +116,7 @@ void nts::Parser::initChipset(std::size_t line_index, std::vector<std::string> &
     }
 }
 
-void nts::Parser::initLink(std::size_t line_index, std::vector<std::string> &line_tab)
+void nts::Parser::initLink(std::size_t line_index, const std::vector<std::string> &line_tab) const
 {
     if (line_tab.size() != 2)
         throw nts::SyntaxException(line_index, "Link declaration must respect this for: name1:pin1 name2:pin2");
@@ -151,9 +151,4 @@ void nts::Parser::initLink(std::size_t line_index, std::vector<std::string> &lin
 
     chipset1->second->setLink(pin1, *(chipset2->second), pin2);
     chipset2->second->setLink(pin2, *(chipset1->second), pin1);
-}
-
-nts::Parser::Line::Line(std::size_t index, const std::string &content) noexcept:
-    index(index), content(content)
-{
 }

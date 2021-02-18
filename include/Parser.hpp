@@ -18,7 +18,6 @@ namespace nts
         public:
             struct Line
             {
-                Line(std::size_t index, const std::string &content) noexcept;
                 std::size_t index;
                 std::string content;
             };
@@ -37,13 +36,13 @@ namespace nts
             Parser(const std::string &circuit_file, nts::ComponentFactory &factory);
             ~Parser();
 
-            void parse();
+            void parse() const;
 
         private:
             void readBuffer(const std::string &buffer, std::list<nts::Parser::Line> &lines) const noexcept;
-            void initFactory(std::list<nts::Parser::Line> &lines);
-            void initChipset(std::size_t line_index, std::vector<std::string> &line_tab);
-            void initLink(std::size_t line_index, std::vector<std::string> &line_tab);
+            void initFactory(std::list<nts::Parser::Line> &lines) const;
+            void initChipset(std::size_t line_index, const std::vector<std::string> &line_tab) const;
+            void initLink(std::size_t line_index, const std::vector<std::string> &line_tab) const;
 
         private:
             std::string m_file;
