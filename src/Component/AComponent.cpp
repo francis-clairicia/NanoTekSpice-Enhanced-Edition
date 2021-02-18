@@ -34,7 +34,6 @@ void nts::AComponent::setLink(std::size_t pin, nts::IComponent &other, std::size
 {
     if (pin == 0 || pin > m_external_links.size())
         throw BadPinException(m_type, pin);
-    other.compute(otherPin);
     m_external_links[pin - 1] = std::make_pair(&other, otherPin);
 }
 
@@ -48,7 +47,6 @@ void nts::AComponent::setLinkInternal(std::size_t pin, nts::IComponent &other, s
 {
     if (pin == 0 || pin > m_internal_links.size())
         throw BadPinException(m_type, pin);
-    other.compute(otherPin);
     m_internal_links[pin - 1] = std::make_pair(&other, otherPin);
 }
 

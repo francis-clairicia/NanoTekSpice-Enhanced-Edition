@@ -11,6 +11,8 @@
 #include "FileException.hpp"
 #include "SyntaxException.hpp"
 #include "BadComponentTypeException.hpp"
+#include "BadPinException.hpp"
+#include "ComponentLinkException.hpp"
 #include "ComponentTypeUnknownException.hpp"
 #include "ComponentNameExistsException.hpp"
 #include "ComponentNameUnknownException.hpp"
@@ -149,6 +151,14 @@ void nts::Parser::initLink(std::size_t line_index, const std::vector<std::string
     std::size_t pin1 = std::strtoul(chipset_pin1.data(), &end, 10);
     std::size_t pin2 = std::strtoul(chipset_pin2.data(), &end, 10);
 
-    chipset1->second->setLink(pin1, *(chipset2->second), pin2);
-    chipset2->second->setLink(pin2, *(chipset1->second), pin1);
+    try {
+        chipset1->second->setLink(pin1, *(chipset2->second), pin2);
+    } catch (const nts::BadPinException &e) {
+        throw nts::ComponentLinkException(line_index, chipset1->first, e.what());
+    }
+    try {
+        chipset2->second->setLink(pin2, *(chipset1->second), pin1);
+    } catch (const nts::BadPinException &e) {
+        throw nts::ComponentLinkException(line_index, chipset2->first, e.what());
+    }
 }

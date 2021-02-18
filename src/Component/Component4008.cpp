@@ -18,24 +18,29 @@ nts::Component4008::Component4008() noexcept: AComponent("4008", 16, {1, 2, 3, 4
     m_components[0]->setLink(3, *this, 9);
     m_components[0]->setLink(4, *(m_components[1]), 3);
     m_components[0]->setLink(5, *this, 10);
+    setLinkInternal(10, *(m_components[0]), 5);
 
     m_components[1]->setLink(1, *this, 5);
     m_components[1]->setLink(2, *this, 4);
     m_components[1]->setLink(3, *(m_components[0]), 4);
     m_components[1]->setLink(4, *(m_components[2]), 3);
     m_components[1]->setLink(5, *this, 11);
+    setLinkInternal(11, *(m_components[1]), 5);
 
     m_components[2]->setLink(1, *this, 3);
     m_components[2]->setLink(2, *this, 2);
     m_components[2]->setLink(3, *(m_components[1]), 4);
     m_components[2]->setLink(4, *(m_components[3]), 3);
     m_components[2]->setLink(5, *this, 12);
+    setLinkInternal(12, *(m_components[2]), 5);
 
     m_components[3]->setLink(1, *this, 1);
     m_components[3]->setLink(2, *this, 15);
     m_components[3]->setLink(3, *(m_components[2]), 4);
     m_components[3]->setLink(4, *this, 14);
     m_components[3]->setLink(5, *this, 13);
+    setLinkInternal(13, *(m_components[3]), 5);
+    setLinkInternal(14, *(m_components[3]), 4);
 }
 
 nts::Component4008::~Component4008() noexcept
