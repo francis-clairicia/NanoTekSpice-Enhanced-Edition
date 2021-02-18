@@ -22,7 +22,7 @@ namespace nts
         protected:
             void dumpInternalComponents() const final;
 
-        protected:
+        private:
             std::unique_ptr<IComponent> m_xor1;
             std::unique_ptr<IComponent> m_xor2;
             std::unique_ptr<IComponent> m_and1;

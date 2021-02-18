@@ -22,7 +22,7 @@ namespace nts
         protected:
             void dumpInternalComponents() const final;
 
-        protected:
+        private:
             intern_component_t m_components;
     };
 }
