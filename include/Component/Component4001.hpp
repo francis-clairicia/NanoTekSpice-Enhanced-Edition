@@ -20,6 +20,9 @@ namespace nts
             void simulate(std::size_t tick) final;
 
         protected:
+            void dumpInternalComponents() const final;
+
+        protected:
             intern_component_t m_components;
     };
 }

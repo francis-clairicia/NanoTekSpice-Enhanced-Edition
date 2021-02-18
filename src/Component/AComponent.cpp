@@ -20,11 +20,11 @@ nts::Tristate nts::AComponent::compute(std::size_t pin)
     if (pin == 0 || pin > m_external_links.size())
         throw BadPinException(m_type, pin);
     if (std::find(m_input_pins.begin(), m_input_pins.end(), pin) != m_input_pins.end()) {
-        component_link_t pair = m_external_links.at(pin - 1);
+        const component_link_t &pair = m_external_links.at(pin - 1);
         return (pair.first) ? pair.first->compute(pair.second) : nts::UNDEFINED;
     }
     if (std::find(m_output_pins.begin(), m_output_pins.end(), pin) != m_output_pins.end()) {
-        component_link_t pair = m_internal_links.at(pin - 1);
+        const component_link_t &pair = m_internal_links.at(pin - 1);
         return (pair.first) ? pair.first->compute(pair.second) : nts::UNDEFINED;
     }
     return nts::UNDEFINED;
@@ -39,19 +39,6 @@ void nts::AComponent::setLink(std::size_t pin, nts::IComponent &other, std::size
 
 void nts::AComponent::dump() const
 {
-    dumpExternalLinks();
-    dumpInternalLinks();
-}
-
-void nts::AComponent::setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
-{
-    if (pin == 0 || pin > m_internal_links.size())
-        throw BadPinException(m_type, pin);
-    m_internal_links[pin - 1] = std::make_pair(&other, otherPin);
-}
-
-void nts::AComponent::dumpExternalLinks() const
-{
     std::cout << m_type << " component:" << std::endl;
 
     std::size_t index = 0;
@@ -64,17 +51,21 @@ void nts::AComponent::dumpExternalLinks() const
         }
         std::cout << std::endl;
     }
-}
-
-void nts::AComponent::dumpInternalLinks() const
-{
     std::cout << "Internal linkage:" << std::endl;
 
-    std::size_t index = 0;
+    index = 0;
     for (const auto &pair : m_internal_links) {
         ++index;
         if (pair.first) {
             std::cout << "-> Pin " << index << ": " << "linked to pin " << pair.second << " of a component" << std::endl;
         }
     }
+    dumpInternalComponents();
+}
+
+void nts::AComponent::setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
+{
+    if (pin == 0 || pin > m_internal_links.size())
+        throw BadPinException(m_type, pin);
+    m_internal_links[pin - 1] = std::make_pair(&other, otherPin);
 }

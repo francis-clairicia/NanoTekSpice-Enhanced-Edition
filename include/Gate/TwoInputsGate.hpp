@@ -8,21 +8,19 @@
 #ifndef TWOINPUTSGATE_HPP_
 #define TWOINPUTSGATE_HPP_
 
-#include "ACalculationComponent.hpp"
+#include "AGate.hpp"
 
 namespace nts
 {
-    class TwoInputsGate: public nts::ACalculationComponent {
+    class TwoInputsGate: public nts::AGate {
         public:
             TwoInputsGate(const std::string &type) noexcept;
             ~TwoInputsGate() override;
 
-            void simulate(std::size_t tick) override;
-
             virtual nts::Tristate operation(nts::Tristate a, nts::Tristate b) const = 0;
         
         protected:
-            nts::Tristate computeOutput(std::size_t pin) final;
+            nts::Tristate computeOutput() final;
     };
 }
 

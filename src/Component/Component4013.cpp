@@ -5,6 +5,7 @@
 ** Component4013
 */
 
+#include <iostream>
 #include "Component4013.hpp"
 #include "FlipFlopComponent.hpp"
 
@@ -39,3 +40,9 @@ void nts::Component4013::simulate(std::size_t tick __attribute__((unused)))
 {
 }
 
+void nts::Component4013::dumpInternalComponents() const
+{
+    std::cout << "Internal components:" << std::endl;
+    for (const auto &component : m_components)
+        component->dump();
+}

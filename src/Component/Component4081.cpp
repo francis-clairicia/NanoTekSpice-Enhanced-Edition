@@ -5,6 +5,7 @@
 ** Component4081
 */
 
+#include <iostream>
 #include "Component4081.hpp"
 #include "GateAND.hpp"
 
@@ -43,3 +44,9 @@ void nts::Component4081::simulate(std::size_t tick __attribute__((unused)))
 {
 }
 
+void nts::Component4081::dumpInternalComponents() const
+{
+    std::cout << "Internal components:" << std::endl;
+    for (const auto &component : m_components)
+        component->dump();
+}

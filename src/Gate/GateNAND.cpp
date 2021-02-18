@@ -7,7 +7,7 @@
 
 #include "GateNAND.hpp"
 
-nts::GateNAND::GateNAND() noexcept: TwoInputsGate("NAND gate")
+nts::GateNAND::GateNAND() noexcept: TwoInputsGate("NAND")
 {
 }
 

@@ -8,34 +8,21 @@
 #ifndef ACOMPONENT_HPP_
 #define ACOMPONENT_HPP_
 
-#include <initializer_list>
-#include <string>
-#include <vector>
-#include <utility>
-#include <memory>
-#include "IComponent.hpp"
+#include "types.hpp"
 
 namespace nts
 {
     class AComponent: public nts::IComponent {
         public:
-            using component_link_t = std::pair<IComponent *, std::size_t>;
-            using component_vector_link_t = std::vector<component_link_t>;
-            using intern_component_t = std::vector<std::unique_ptr<IComponent>>;
-            using component_pin_t = std::vector<std::size_t>;
-            using pin_list_t = std::initializer_list<std::size_t>;
-
-        public:
             AComponent(const std::string &type, std::size_t nb_pins, const pin_list_t &input_pins, const pin_list_t &output_pins) noexcept;
 
-            nts::Tristate compute(std::size_t pin) override;
+            nts::Tristate compute(std::size_t pin) final;
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
-            void dump() const override;
+            void dump() const final;
         
         protected:
             void setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin);
-            void dumpExternalLinks() const;
-            void dumpInternalLinks() const;
+            virtual void dumpInternalComponents() const = 0;
 
         protected:
             std::string             m_type;

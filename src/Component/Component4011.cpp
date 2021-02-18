@@ -5,6 +5,7 @@
 ** Component4011
 */
 
+#include <iostream>
 #include "Component4011.hpp"
 #include "GateNAND.hpp"
 
@@ -43,3 +44,9 @@ void nts::Component4011::simulate(std::size_t tick __attribute__((unused)))
 {
 }
 
+void nts::Component4011::dumpInternalComponents() const
+{
+    std::cout << "Internal components:" << std::endl;
+    for (const auto &component : m_components)
+        component->dump();
+}

@@ -5,6 +5,7 @@
 ** Component4008
 */
 
+#include <iostream>
 #include "Component4008.hpp"
 #include "SumComponent.hpp"
 
@@ -49,4 +50,11 @@ nts::Component4008::~Component4008() noexcept
 
 void nts::Component4008::simulate(std::size_t ticks __attribute__((unused)))
 {
+}
+
+void nts::Component4008::dumpInternalComponents() const
+{
+    std::cout << "Internal components:" << std::endl;
+    for (const auto &component : m_components)
+        component->dump();
 }

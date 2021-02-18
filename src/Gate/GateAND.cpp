@@ -7,7 +7,7 @@
 
 #include "GateAND.hpp"
 
-nts::GateAND::GateAND() noexcept: TwoInputsGate("AND gate")
+nts::GateAND::GateAND() noexcept: TwoInputsGate("AND")
 {
 }
 
