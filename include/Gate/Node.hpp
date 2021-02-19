@@ -8,23 +8,11 @@
 #ifndef NODE_HPP_
 #define NODE_HPP_
 
-#include "TwoInputsGate.hpp"
+#include "GateOR.hpp"
 
 namespace nts
 {
-    class Node: public nts::TwoInputsGate {
-        public:
-            enum Pin
-            {
-                INPUT1 = 1,
-                INPUT2 = 2,
-                OUTPUT = 3
-            };
-
-        public:
-            Node() noexcept;
-            nts::Tristate operation(nts::Tristate a, nts::Tristate b) const final;
-    };
+    using Node = GateOR;
 }
 
 #endif /* !NODE_HPP_ */

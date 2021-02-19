@@ -82,7 +82,6 @@ int nts::nanotekspice(const std::string &circuit_file)
     };
 
     parser.parse();
-    circuit.simulate(0);
     while (command_prompt(input, tty)) {
         trim_trailing_whitespace(input);
         if (input.empty())

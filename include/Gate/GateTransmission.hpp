@@ -8,11 +8,12 @@
 #ifndef GATETRANSMISSION_HPP_
 #define GATETRANSMISSION_HPP_
 
-#include "TwoInputsGate.hpp"
+#include <queue>
+#include "AGate.hpp"
 
 namespace nts
 {
-    class GateTransmission: public nts::TwoInputsGate {
+    class GateTransmission: public nts::AGate {
         public:
             enum Pin
             {
@@ -24,7 +25,11 @@ namespace nts
         public:
             GateTransmission() noexcept;
 
-            nts::Tristate operation(nts::Tristate a, nts::Tristate control) const final;
+        protected:
+            nts::Tristate computeOutput() final;
+
+        private:
+            std::queue<nts::Tristate> m_buffer;
     };
 }
 
