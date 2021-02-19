@@ -14,6 +14,13 @@ namespace nts
 {
     class GateNOT: public nts::OneInputGate {
         public:
+            enum Pin
+            {
+                INPUT  = 1,
+                OUTPUT = 2,
+            };
+
+        public:
             GateNOT() noexcept;
             nts::Tristate operation(nts::Tristate a) const final;
     };

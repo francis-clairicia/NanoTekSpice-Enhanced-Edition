@@ -14,6 +14,14 @@ namespace nts
 {
     class GateTransmission: public nts::TwoInputsGate {
         public:
+            enum Pin
+            {
+                INPUT   = 1,
+                CONTROL = 2,
+                OUTPUT  = 3
+            };
+
+        public:
             GateTransmission() noexcept;
 
             nts::Tristate operation(nts::Tristate a, nts::Tristate control) const final;

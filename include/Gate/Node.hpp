@@ -2,17 +2,17 @@
 ** EPITECH PROJECT, 2021
 ** B-OOP-400-BDX-4-1-tekspice-francis.clairicia-rose-claire-josephine
 ** File description:
-** GateAND
+** Node
 */
 
-#ifndef GATEAND_HPP_
-#define GATEAND_HPP_
+#ifndef NODE_HPP_
+#define NODE_HPP_
 
 #include "TwoInputsGate.hpp"
 
 namespace nts
 {
-    class GateAND: public nts::TwoInputsGate {
+    class Node: public nts::TwoInputsGate {
         public:
             enum Pin
             {
@@ -22,9 +22,9 @@ namespace nts
             };
 
         public:
-            GateAND() noexcept;
+            Node() noexcept;
             nts::Tristate operation(nts::Tristate a, nts::Tristate b) const final;
     };
 }
 
-#endif /* !GATEAND_HPP_ */
+#endif /* !NODE_HPP_ */

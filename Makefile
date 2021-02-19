@@ -35,11 +35,11 @@ SRC_COMPONENTS		=	src/Component/Circuit.cpp							\
 						src/Component/InputComponent.cpp					\
 						src/Component/OutputComponent.cpp					\
 						src/Component/ClockComponent.cpp					\
-						src/Component/ConstComponent.cpp					\
 						src/Component/AComponent.cpp						\
 						src/Component/Component4001.cpp						\
 						src/Component/Component4008.cpp						\
 						src/Component/Component4011.cpp						\
+						src/Component/Component4013.cpp						\
 						src/Component/Component4030.cpp						\
 						src/Component/Component4069.cpp						\
 						src/Component/Component4071.cpp						\
@@ -54,7 +54,8 @@ SRC_GATES			=	src/Gate/AGate.cpp									\
 						src/Gate/GateNOR.cpp								\
 						src/Gate/GateNAND.cpp								\
 						src/Gate/GateNOT.cpp								\
-						src/Gate/GateTransmission.cpp
+						src/Gate/GateTransmission.cpp						\
+						src/Gate/Node.cpp
 
 SRC_SUM				=	src/Sum/SumComponent.cpp
 
@@ -67,13 +68,15 @@ SRC					=	$(SRC_MAIN)											\
 						$(SRC_UTILS)										\
 						$(SRC_COMPONENTS)									\
 						$(SRC_GATES)										\
-						$(SRC_SUM)
+						$(SRC_SUM)											\
+						$(SRC_FLIPFLOP)
 
 SRC_TEST			=	$(SRC_COMPONENTS)									\
 						$(SRC_GATES)										\
 						$(SRC_EXCEPTIONS)									\
 						$(SRC_UTILS)										\
-						$(SRC_SUM)
+						$(SRC_SUM)											\
+						$(SRC_FLIPFLOP)
 
 CXXFLAGS			=	-Wall -Wextra
 

@@ -14,29 +14,26 @@ nts::Component4008::Component4008() noexcept: AComponent("4008", 16, {1, 2, 3, 4
     for (std::size_t index = 0; index < 4; ++index)
         m_components.push_back(std::make_unique<SumComponent>());
 
-    m_components[0]->setLink(1, *this, 7);
-    m_components[0]->setLink(2, *this, 6);
-    m_components[0]->setLink(3, *this, 9);
-    m_components[0]->setLink(4, *(m_components[1]), 3);
-    setLinkInternal(10, *(m_components[0]), 5);
+    m_components[0]->setLink(SumComponent::Ai, *this, 7);
+    m_components[0]->setLink(SumComponent::Bi, *this, 6);
+    m_components[0]->setLink(SumComponent::Ci, *this, 9);
+    setLinkInternal(10, *(m_components[0]), SumComponent::Si);
 
-    m_components[1]->setLink(1, *this, 5);
-    m_components[1]->setLink(2, *this, 4);
-    m_components[1]->setLink(3, *(m_components[0]), 4);
-    m_components[1]->setLink(4, *(m_components[2]), 3);
-    setLinkInternal(11, *(m_components[1]), 5);
+    m_components[1]->setLink(SumComponent::Ai, *this, 5);
+    m_components[1]->setLink(SumComponent::Bi, *this, 4);
+    m_components[1]->setLink(SumComponent::Ci, *(m_components[0]), SumComponent::Co);
+    setLinkInternal(11, *(m_components[1]), SumComponent::Si);
 
-    m_components[2]->setLink(1, *this, 3);
-    m_components[2]->setLink(2, *this, 2);
-    m_components[2]->setLink(3, *(m_components[1]), 4);
-    m_components[2]->setLink(4, *(m_components[3]), 3);
-    setLinkInternal(12, *(m_components[2]), 5);
+    m_components[2]->setLink(SumComponent::Ai, *this, 3);
+    m_components[2]->setLink(SumComponent::Bi, *this, 2);
+    m_components[2]->setLink(SumComponent::Ci, *(m_components[1]), SumComponent::Co);
+    setLinkInternal(12, *(m_components[2]), SumComponent::Si);
 
-    m_components[3]->setLink(1, *this, 1);
-    m_components[3]->setLink(2, *this, 15);
-    m_components[3]->setLink(3, *(m_components[2]), 4);
-    setLinkInternal(13, *(m_components[3]), 5);
-    setLinkInternal(14, *(m_components[3]), 4);
+    m_components[3]->setLink(SumComponent::Ai, *this, 1);
+    m_components[3]->setLink(SumComponent::Bi, *this, 15);
+    m_components[3]->setLink(SumComponent::Ci, *(m_components[2]), SumComponent::Co);
+    setLinkInternal(13, *(m_components[3]), SumComponent::Si);
+    setLinkInternal(14, *(m_components[3]), SumComponent::Co);
 }
 
 nts::Component4008::~Component4008() noexcept

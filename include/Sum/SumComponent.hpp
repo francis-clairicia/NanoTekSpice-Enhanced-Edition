@@ -14,6 +14,16 @@ namespace nts
 {
     class SumComponent: public nts::AComponent {
         public:
+            enum Pin
+            {
+                Ai = 1,
+                Bi = 2,
+                Ci = 3,
+                Co = 4,
+                Si = 5
+            };
+
+        public:
             SumComponent() noexcept;
             ~SumComponent();
 

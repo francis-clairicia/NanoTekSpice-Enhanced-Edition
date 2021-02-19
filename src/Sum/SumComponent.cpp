@@ -23,29 +23,29 @@ Outputs:
 */
 
 nts::SumComponent::SumComponent() noexcept:
-    AComponent("SUM", 5, {1, 2, 3}, {4, 5}),
+    AComponent("SUM", 5, {Ai, Bi, Ci}, {Co, Si}),
     m_xor1(std::make_unique<GateXOR>()),
     m_xor2(std::make_unique<GateXOR>()),
     m_and1(std::make_unique<GateAND>()),
     m_and2(std::make_unique<GateAND>()),
     m_or(std::make_unique<GateOR>())
 {
-    m_xor1->setLink(1, *this, 1);
-    m_xor1->setLink(2, *this, 2);
+    m_xor1->setLink(GateXOR::INPUT1, *this, SumComponent::Ai);
+    m_xor1->setLink(GateXOR::INPUT2, *this, SumComponent::Bi);
 
-    m_xor2->setLink(1, *m_xor1, 3);
-    m_xor2->setLink(2, *this, 3);
-    setLinkInternal(5, *m_xor2, 3);
+    m_xor2->setLink(GateXOR::INPUT1, *m_xor1, GateXOR::OUTPUT);
+    m_xor2->setLink(GateXOR::INPUT2, *this, SumComponent::Ci);
+    setLinkInternal(SumComponent::Si, *m_xor2, GateXOR::OUTPUT);
 
-    m_and1->setLink(1, *m_xor1, 3);
-    m_and1->setLink(2, *this, 3);
+    m_and1->setLink(GateAND::INPUT1, *m_xor1, GateXOR::OUTPUT);
+    m_and1->setLink(GateAND::INPUT2, *this, SumComponent::Ci);
 
-    m_and2->setLink(1, *this, 1);
-    m_and2->setLink(2, *this, 2);
+    m_and2->setLink(GateAND::INPUT1, *this, SumComponent::Ai);
+    m_and2->setLink(GateAND::INPUT2, *this, SumComponent::Bi);
 
-    m_or->setLink(1, *m_and1, 3);
-    m_or->setLink(2, *m_and2, 3);
-    setLinkInternal(4, *m_or, 3);
+    m_or->setLink(GateOR::INPUT1, *m_and1, GateAND::OUTPUT);
+    m_or->setLink(GateOR::INPUT2, *m_and2, GateAND::OUTPUT);
+    setLinkInternal(SumComponent::Co, *m_or, GateOR::OUTPUT);
 }
 
 nts::SumComponent::~SumComponent()

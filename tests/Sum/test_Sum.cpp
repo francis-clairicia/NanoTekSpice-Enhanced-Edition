@@ -17,69 +17,65 @@ static nts::Tristate compute(nts::SumComponent &sum,
 {
     static std::size_t tick = 0;
 
-    sum.setLink(1, a, 1);
-    sum.setLink(2, b, 1);
-    sum.setLink(3, c, 1);
+    sum.setLink(nts::SumComponent::Ai, a, 1);
+    sum.setLink(nts::SumComponent::Bi, b, 1);
+    sum.setLink(nts::SumComponent::Ci, c, 1);
     sum.simulate(++tick);
     return sum.compute(output_pin);
 }
 
 Test(SumComponent, Co_truth_table)
 {
-    nts::ConstComponent c_true("true", nts::TRUE);
-    nts::ConstComponent c_false("false", nts::FALSE);
+    nts::TrueComponent c_true;
+    nts::FalseComponent c_false;
     nts::SumComponent sum;
-    std::size_t Co_output = 4;
 
-    cr_assert_eq(compute(sum, c_false, c_false, c_false, Co_output), nts::FALSE);
-    cr_assert_eq(compute(sum, c_true,  c_false, c_false, Co_output), nts::FALSE);
-    cr_assert_eq(compute(sum, c_false, c_true,  c_false, Co_output), nts::FALSE);
-    cr_assert_eq(compute(sum, c_true,  c_true,  c_false, Co_output), nts::TRUE);
-    cr_assert_eq(compute(sum, c_false, c_false, c_true,  Co_output), nts::FALSE);
-    cr_assert_eq(compute(sum, c_true,  c_false, c_true,  Co_output), nts::TRUE);
-    cr_assert_eq(compute(sum, c_false, c_true,  c_true,  Co_output), nts::TRUE);
-    cr_assert_eq(compute(sum, c_true,  c_true,  c_true,  Co_output), nts::TRUE);
+    cr_assert_eq(compute(sum, c_false, c_false, c_false, nts::SumComponent::Co), nts::FALSE);
+    cr_assert_eq(compute(sum, c_true,  c_false, c_false, nts::SumComponent::Co), nts::FALSE);
+    cr_assert_eq(compute(sum, c_false, c_true,  c_false, nts::SumComponent::Co), nts::FALSE);
+    cr_assert_eq(compute(sum, c_true,  c_true,  c_false, nts::SumComponent::Co), nts::TRUE);
+    cr_assert_eq(compute(sum, c_false, c_false, c_true,  nts::SumComponent::Co), nts::FALSE);
+    cr_assert_eq(compute(sum, c_true,  c_false, c_true,  nts::SumComponent::Co), nts::TRUE);
+    cr_assert_eq(compute(sum, c_false, c_true,  c_true,  nts::SumComponent::Co), nts::TRUE);
+    cr_assert_eq(compute(sum, c_true,  c_true,  c_true,  nts::SumComponent::Co), nts::TRUE);
 }
 
 Test(SumComponent, Co_handle_undefined_value)
 {
-    nts::ConstComponent c_true("true", nts::TRUE);
-    nts::ConstComponent c_false("false", nts::FALSE);
+    nts::TrueComponent c_true;
+    nts::FalseComponent c_false;
     nts::InputComponent c_undefined;
     nts::SumComponent sum;
-    std::size_t Co_output = 4;
 
-    cr_assert_eq(compute(sum, c_undefined, c_false,     c_false,     Co_output), nts::UNDEFINED);
-    cr_assert_eq(compute(sum, c_true,      c_undefined, c_false,     Co_output), nts::UNDEFINED);
-    cr_assert_eq(compute(sum, c_false,     c_true,      c_undefined, Co_output), nts::UNDEFINED);
+    cr_assert_eq(compute(sum, c_undefined, c_false,     c_false,     nts::SumComponent::Co), nts::UNDEFINED);
+    cr_assert_eq(compute(sum, c_true,      c_undefined, c_false,     nts::SumComponent::Co), nts::UNDEFINED);
+    cr_assert_eq(compute(sum, c_false,     c_true,      c_undefined, nts::SumComponent::Co), nts::UNDEFINED);
 }
 
 Test(SumComponent, S_truth_table)
 {
-    nts::ConstComponent c_true("true", nts::TRUE);
-    nts::ConstComponent c_false("false", nts::FALSE);
+    nts::TrueComponent c_true;
+    nts::FalseComponent c_false;
     nts::SumComponent sum;
-    std::size_t S_output = 5;
 
-    cr_assert_eq(compute(sum, c_false, c_false, c_false, S_output), nts::FALSE);
-    cr_assert_eq(compute(sum, c_true,  c_false, c_false, S_output), nts::TRUE);
-    cr_assert_eq(compute(sum, c_false, c_true,  c_false, S_output), nts::TRUE);
-    cr_assert_eq(compute(sum, c_true,  c_true,  c_false, S_output), nts::FALSE);
-    cr_assert_eq(compute(sum, c_false, c_false, c_true,  S_output), nts::TRUE);
-    cr_assert_eq(compute(sum, c_true,  c_false, c_true,  S_output), nts::FALSE);
-    cr_assert_eq(compute(sum, c_false, c_true,  c_true,  S_output), nts::FALSE);
-    cr_assert_eq(compute(sum, c_true,  c_true,  c_true,  S_output), nts::TRUE);
+    cr_assert_eq(compute(sum, c_false, c_false, c_false, nts::SumComponent::Si), nts::FALSE);
+    cr_assert_eq(compute(sum, c_true,  c_false, c_false, nts::SumComponent::Si), nts::TRUE);
+    cr_assert_eq(compute(sum, c_false, c_true,  c_false, nts::SumComponent::Si), nts::TRUE);
+    cr_assert_eq(compute(sum, c_true,  c_true,  c_false, nts::SumComponent::Si), nts::FALSE);
+    cr_assert_eq(compute(sum, c_false, c_false, c_true,  nts::SumComponent::Si), nts::TRUE);
+    cr_assert_eq(compute(sum, c_true,  c_false, c_true,  nts::SumComponent::Si), nts::FALSE);
+    cr_assert_eq(compute(sum, c_false, c_true,  c_true,  nts::SumComponent::Si), nts::FALSE);
+    cr_assert_eq(compute(sum, c_true,  c_true,  c_true,  nts::SumComponent::Si), nts::TRUE);
 }
 
 Test(SumComponent, S_handle_undefined_value)
 {
-    nts::ConstComponent c_true("true", nts::TRUE);
-    nts::ConstComponent c_false("false", nts::FALSE);
+    nts::TrueComponent c_true;
+    nts::FalseComponent c_false;
     nts::InputComponent c_undefined;
     nts::SumComponent sum;
-    std::size_t S_output = 5;
 
-    cr_assert_eq(compute(sum, c_undefined, c_false,     c_false,     S_output), nts::UNDEFINED);
-    cr_assert_eq(compute(sum, c_true,      c_undefined, c_false,     S_output), nts::UNDEFINED);
-    cr_assert_eq(compute(sum, c_false,     c_true,      c_undefined, S_output), nts::UNDEFINED);
+    cr_assert_eq(compute(sum, c_undefined, c_false,     c_false,     nts::SumComponent::Si), nts::UNDEFINED);
+    cr_assert_eq(compute(sum, c_true,      c_undefined, c_false,     nts::SumComponent::Si), nts::UNDEFINED);
+    cr_assert_eq(compute(sum, c_false,     c_true,      c_undefined, nts::SumComponent::Si), nts::UNDEFINED);
 }
