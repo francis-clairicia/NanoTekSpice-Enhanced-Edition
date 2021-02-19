@@ -13,7 +13,9 @@ nts::GateNAND::GateNAND() noexcept: TwoInputsGate("NAND")
 
 nts::Tristate nts::GateNAND::operation(nts::Tristate a, nts::Tristate b) const
 {
+    if (a == nts::FALSE || b == nts::FALSE)
+        return nts::TRUE;
     if (a == nts::UNDEFINED || b == nts::UNDEFINED)
         return nts::UNDEFINED;
-    return static_cast<nts::Tristate>(!(a && b));
+    return nts::FALSE;
 }

@@ -13,7 +13,9 @@ nts::GateOR::GateOR() noexcept: TwoInputsGate("OR")
 
 nts::Tristate nts::GateOR::operation(nts::Tristate a, nts::Tristate b) const
 {
+    if (a == nts::TRUE || b == nts::TRUE)
+        return nts::TRUE;
     if (a == nts::UNDEFINED || b == nts::UNDEFINED)
         return nts::UNDEFINED;
-    return static_cast<nts::Tristate>(a || b);
+    return nts::FALSE;
 }

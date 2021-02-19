@@ -13,7 +13,9 @@ nts::GateTransmission::GateTransmission() noexcept: TwoInputsGate("Transmission"
 
 nts::Tristate nts::GateTransmission::operation(nts::Tristate a, nts::Tristate control) const
 {
-    if (a == nts::UNDEFINED || control == nts::UNDEFINED)
-        return nts::UNDEFINED;
-    return (!control) ? nts::UNDEFINED : a;
+    if (control == nts::TRUE)
+        return a;
+    if (control == nts::FALSE)
+        return nts::FALSE;
+    return nts::UNDEFINED;
 }

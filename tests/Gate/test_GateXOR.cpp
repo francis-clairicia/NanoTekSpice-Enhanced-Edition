@@ -22,6 +22,9 @@ Test(GateXOR, handle_undefined_value)
 {
     nts::GateXOR gate;
 
-    cr_assert_eq(gate.operation(nts::UNDEFINED, nts::FALSE), nts::UNDEFINED);
-    cr_assert_eq(gate.operation(nts::TRUE, nts::UNDEFINED),  nts::UNDEFINED);
+    cr_assert_eq(gate.operation(nts::UNDEFINED, nts::UNDEFINED), nts::UNDEFINED);
+    cr_assert_eq(gate.operation(nts::UNDEFINED, nts::FALSE),     nts::UNDEFINED);
+    cr_assert_eq(gate.operation(nts::FALSE,     nts::UNDEFINED), nts::UNDEFINED);
+    cr_assert_eq(gate.operation(nts::UNDEFINED, nts::TRUE),      nts::UNDEFINED);
+    cr_assert_eq(gate.operation(nts::TRUE,      nts::UNDEFINED), nts::UNDEFINED);
 }

@@ -45,7 +45,7 @@ nts::FlipFlopComponent::FlipFlopComponent() noexcept:
 
     // Link transmission1 to DATA
     m_tg1->setLink(GateTransmission::INPUT, *this, DATA);
-    m_tg1->setLink(GateTransmission::CONTROL, *this, CLOCK);
+    m_tg1->setLink(GateTransmission::CONTROL, *m_not_clock, GateNOT::OUTPUT);
 
     // First NOR with DATA transmission and set
     m_nor1->setLink(GateNOR::INPUT1, *this, SET);
@@ -77,7 +77,7 @@ nts::FlipFlopComponent::FlipFlopComponent() noexcept:
 
     // Transmission 4 after NOR4
     m_tg4->setLink(GateTransmission::INPUT, *m_nor4, GateNOR::OUTPUT);
-    m_tg4->setLink(GateTransmission::CONTROL, *this, CLOCK);
+    m_tg4->setLink(GateTransmission::CONTROL, *m_not_clock, GateNOT::OUTPUT);
 
     // Q output
     m_node2->setLink(Node::INPUT1, *m_tg3, GateTransmission::OUTPUT);
