@@ -30,6 +30,7 @@ nts::FlipFlopComponent::FlipFlopComponent() noexcept:
     m_tg2(std::make_unique<GateTransmission>()),
     m_tg3(std::make_unique<GateTransmission>()),
     m_tg4(std::make_unique<GateTransmission>()),
+    m_not_clock(std::make_unique<GateNOT>()),
     m_not1(std::make_unique<GateNOT>()),
     m_not2(std::make_unique<GateNOT>()),
     m_nor1(std::make_unique<GateNOR>()),
@@ -39,6 +40,9 @@ nts::FlipFlopComponent::FlipFlopComponent() noexcept:
     m_node1(std::make_unique<Node>()),
     m_node2(std::make_unique<Node>())
 {
+    // Clock inverter
+    m_not_clock->setLink(GateNOT::INPUT, *this, CLOCK);
+
     // Link transmission1 to DATA
     m_tg1->setLink(GateTransmission::INPUT, *this, DATA);
     m_tg1->setLink(GateTransmission::CONTROL, *this, CLOCK);
@@ -59,8 +63,8 @@ nts::FlipFlopComponent::FlipFlopComponent() noexcept:
     m_tg2->setLink(GateTransmission::CONTROL, *this, CLOCK);
     m_node1->setLink(Node::INPUT2, *m_tg2, GateTransmission::OUTPUT);
 
-    // Transmission 3 from NOR 2 to NOR 3
-    m_tg3->setLink(GateTransmission::INPUT, *m_nor2, GateNOR::OUTPUT);
+    // Transmission 3 from NOR 1 to NOR 3
+    m_tg3->setLink(GateTransmission::INPUT, *m_nor1, GateNOR::OUTPUT);
     m_tg3->setLink(GateTransmission::CONTROL, *this, CLOCK);
 
     // 3rd NOR with TG3 and RESET
@@ -78,14 +82,12 @@ nts::FlipFlopComponent::FlipFlopComponent() noexcept:
     // Q output
     m_node2->setLink(Node::INPUT1, *m_tg3, GateTransmission::OUTPUT);
     m_node2->setLink(Node::INPUT2, *m_tg4, GateTransmission::OUTPUT);
-    // m_not1->setLink(GateNOT::INPUT, *m_node2, Node::OUTPUT);
-    // setLinkInternal(Q, *m_not1, GateNOT::OUTPUT);
-    setLinkInternal(Q, *m_node2, Node::OUTPUT);
+    m_not1->setLink(GateNOT::INPUT, *m_node2, Node::OUTPUT);
+    setLinkInternal(Q, *m_not1, GateNOT::OUTPUT);
 
     // /Q output
-    // m_not2->setLink(GateNOT::INPUT, *m_nor3, GateNOR::OUTPUT);
-    // setLinkInternal(Qn, *m_not2, GateNOT::OUTPUT);
-    setLinkInternal(Qn, *m_nor3, GateNOR::OUTPUT);
+    m_not2->setLink(GateNOT::INPUT, *m_nor3, GateNOR::OUTPUT);
+    setLinkInternal(Qn, *m_not2, GateNOT::OUTPUT);
 }
 
 nts::FlipFlopComponent::~FlipFlopComponent()
@@ -98,12 +100,15 @@ void nts::FlipFlopComponent::simulate(std::size_t tick)
     m_tg2->simulate(tick);
     m_tg3->simulate(tick);
     m_tg4->simulate(tick);
+    m_not_clock->simulate(tick);
     m_not1->simulate(tick);
     m_not2->simulate(tick);
     m_nor1->simulate(tick);
     m_nor2->simulate(tick);
     m_nor3->simulate(tick);
     m_nor4->simulate(tick);
+    m_node1->simulate(tick);
+    m_node2->simulate(tick);
 }
 
 void nts::FlipFlopComponent::dumpInternalComponents() const
@@ -113,6 +118,7 @@ void nts::FlipFlopComponent::dumpInternalComponents() const
     m_tg2->dump();
     m_tg3->dump();
     m_tg4->dump();
+    m_not_clock->dump();
     m_not1->dump();
     m_not2->dump();
     m_nor1->dump();
