@@ -7,22 +7,17 @@
 
 #include "GateTransmission.hpp"
 
-nts::GateTransmission::GateTransmission() noexcept:
-    AGate("Transmission", 3, {INPUT, CONTROL}, OUTPUT),
-    m_buffer{}
+nts::GateTransmission::GateTransmission() noexcept: TwoInputsGate("Transmission")
 {
 }
 
-nts::Tristate nts::GateTransmission::computeOutput()
+nts::Tristate nts::GateTransmission::operation(nts::Tristate input, nts::Tristate control) const
 {
-    nts::Tristate control = compute(CONTROL);
-    nts::Tristate input = compute(INPUT);
-
     if (control == nts::TRUE) {
         return input;
     }
     if (control == nts::FALSE) {
         return nts::FALSE;
     }
-    return m_value;
+    return nts::UNDEFINED;
 }
