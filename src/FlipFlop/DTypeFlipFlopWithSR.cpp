@@ -30,9 +30,9 @@ nts::DTypeFlipFlopWithSR::DTypeFlipFlopWithSR() noexcept:
     m_tg2(std::make_unique<GateTransmission>()),
     m_tg3(std::make_unique<GateTransmission>()),
     m_tg4(std::make_unique<GateTransmission>()),
-    m_not_clock(std::make_unique<GateNOT>()),
-    m_not1(std::make_unique<GateNOT>()),
-    m_not2(std::make_unique<GateNOT>()),
+    m_inverter_clock(std::make_unique<GateNOT>()),
+    m_inverter1(std::make_unique<GateNOT>()),
+    m_inverter2(std::make_unique<GateNOT>()),
     m_nor1(std::make_unique<GateNOR>()),
     m_nor2(std::make_unique<GateNOR>()),
     m_nor3(std::make_unique<GateNOR>()),
@@ -43,11 +43,11 @@ nts::DTypeFlipFlopWithSR::DTypeFlipFlopWithSR() noexcept:
     m_memoryQn(std::make_unique<MemoryGate>())
 {
     // Clock inverter
-    m_not_clock->setLink(GateNOT::INPUT, *this, CLOCK);
+    m_inverter_clock->setLink(GateNOT::INPUT, *this, CLOCK);
 
     // Link transmission1 to DATA
     m_tg1->setLink(GateTransmission::INPUT, *this, DATA);
-    m_tg1->setLink(GateTransmission::CONTROL, *m_not_clock, GateNOT::OUTPUT);
+    m_tg1->setLink(GateTransmission::CONTROL, *m_inverter_clock, GateNOT::OUTPUT);
 
     // First NOR with DATA transmission and set
     m_nor1->setLink(GateNOR::INPUT1, *this, SET);
@@ -79,21 +79,21 @@ nts::DTypeFlipFlopWithSR::DTypeFlipFlopWithSR() noexcept:
 
     // Transmission 4 after NOR4
     m_tg4->setLink(GateTransmission::INPUT, *m_nor4, GateNOR::OUTPUT);
-    m_tg4->setLink(GateTransmission::CONTROL, *m_not_clock, GateNOT::OUTPUT);
+    m_tg4->setLink(GateTransmission::CONTROL, *m_inverter_clock, GateNOT::OUTPUT);
 
     // Q output
     m_node2->setLink(Node::INPUT1, *m_tg3, GateTransmission::OUTPUT);
     m_node2->setLink(Node::INPUT2, *m_tg4, GateTransmission::OUTPUT);
-    m_not1->setLink(GateNOT::INPUT, *m_node2, Node::OUTPUT);
-    m_memoryQ->setLink(MemoryGate::INPUT, *m_not1, GateNOT::OUTPUT);
+    m_inverter1->setLink(GateNOT::INPUT, *m_node2, Node::OUTPUT);
+    m_memoryQ->setLink(MemoryGate::INPUT, *m_inverter1, GateNOT::OUTPUT);
     m_memoryQ->setLink(MemoryGate::CLOCK, *this, CLOCK);
     m_memoryQ->setLink(MemoryGate::RESET, *this, RESET);
     m_memoryQ->setLink(MemoryGate::SET, *this, SET);
     setLinkInternal(Q, *m_memoryQ, MemoryGate::OUTPUT);
 
     // /Q (Qn) output
-    m_not2->setLink(GateNOT::INPUT, *m_nor3, GateNOR::OUTPUT);
-    m_memoryQn->setLink(MemoryGate::INPUT, *m_not2, GateNOT::OUTPUT);
+    m_inverter2->setLink(GateNOT::INPUT, *m_nor3, GateNOR::OUTPUT);
+    m_memoryQn->setLink(MemoryGate::INPUT, *m_inverter2, GateNOT::OUTPUT);
     m_memoryQn->setLink(MemoryGate::CLOCK, *this, CLOCK);
     m_memoryQn->setLink(MemoryGate::RESET, *this, RESET);
     m_memoryQn->setLink(MemoryGate::SET, *this, SET);
@@ -110,9 +110,9 @@ void nts::DTypeFlipFlopWithSR::simulate(std::size_t tick)
     m_tg2->simulate(tick);
     m_tg3->simulate(tick);
     m_tg4->simulate(tick);
-    m_not_clock->simulate(tick);
-    m_not1->simulate(tick);
-    m_not2->simulate(tick);
+    m_inverter_clock->simulate(tick);
+    m_inverter1->simulate(tick);
+    m_inverter2->simulate(tick);
     m_nor1->simulate(tick);
     m_nor2->simulate(tick);
     m_nor3->simulate(tick);
@@ -130,9 +130,9 @@ void nts::DTypeFlipFlopWithSR::dumpInternalComponents() const
     m_tg2->dump();
     m_tg3->dump();
     m_tg4->dump();
-    m_not_clock->dump();
-    m_not1->dump();
-    m_not2->dump();
+    m_inverter_clock->dump();
+    m_inverter1->dump();
+    m_inverter2->dump();
     m_nor1->dump();
     m_nor2->dump();
     m_nor3->dump();

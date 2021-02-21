@@ -39,9 +39,9 @@ namespace nts
             std::unique_ptr<IComponent> m_tg2;
             std::unique_ptr<IComponent> m_tg3;
             std::unique_ptr<IComponent> m_tg4;
-            std::unique_ptr<IComponent> m_not_clock;
-            std::unique_ptr<IComponent> m_not1;
-            std::unique_ptr<IComponent> m_not2;
+            std::unique_ptr<IComponent> m_inverter_clock;
+            std::unique_ptr<IComponent> m_inverter1;
+            std::unique_ptr<IComponent> m_inverter2;
             std::unique_ptr<IComponent> m_nor1;
             std::unique_ptr<IComponent> m_nor2;
             std::unique_ptr<IComponent> m_nor3;
