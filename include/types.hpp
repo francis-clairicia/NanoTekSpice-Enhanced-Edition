@@ -11,13 +11,17 @@
 #include <initializer_list>
 #include <string>
 #include <vector>
-#include <utility>
 #include <memory>
 #include "IComponent.hpp"
 
 namespace nts
 {
-    using componentLink_t = std::pair<IComponent *, std::size_t>;
+    struct Link
+    {
+        IComponent *component;
+        std::size_t pin;
+    };
+
     using internComponent_t = std::vector<std::unique_ptr<IComponent>>;
     using componentPin_t = std::vector<std::size_t>;
     using pinList_t = std::initializer_list<std::size_t>;

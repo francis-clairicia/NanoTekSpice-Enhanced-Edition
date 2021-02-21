@@ -20,12 +20,12 @@ nts::Tristate nts::AComponent::compute(std::size_t pin)
     if (pin == 0 || pin > m_external_links.size())
         throw BadPinException(m_type, pin);
     if (std::find(m_input_pins.begin(), m_input_pins.end(), pin) != m_input_pins.end()) {
-        const componentLink_t &pair = m_external_links.at(pin - 1);
-        return (pair.first) ? pair.first->compute(pair.second) : nts::UNDEFINED;
+        const Link &link = m_external_links.at(pin - 1);
+        return (link.component) ? link.component->compute(link.pin) : nts::UNDEFINED;
     }
     if (std::find(m_output_pins.begin(), m_output_pins.end(), pin) != m_output_pins.end()) {
-        const componentLink_t &pair = m_internal_links.at(pin - 1);
-        return (pair.first) ? pair.first->compute(pair.second) : nts::UNDEFINED;
+        const Link &link = m_internal_links.at(pin - 1);
+        return (link.component) ? link.component->compute(link.pin) : nts::UNDEFINED;
     }
     return nts::UNDEFINED;
 }
@@ -34,7 +34,8 @@ void nts::AComponent::setLink(std::size_t pin, nts::IComponent &other, std::size
 {
     if (pin == 0 || pin > m_external_links.size())
         throw BadPinException(m_type, pin);
-    m_external_links[pin - 1] = std::make_pair(&other, otherPin);
+    m_external_links[pin - 1].component = &other;
+    m_external_links[pin - 1].pin = otherPin;
 }
 
 void nts::AComponent::dump() const
@@ -42,10 +43,10 @@ void nts::AComponent::dump() const
     std::cout << m_type << " component:" << std::endl;
 
     std::size_t index = 0;
-    for (const auto &pair : m_external_links) {
+    for (const auto &link : m_external_links) {
         std::cout << "-> Pin " << ++index << ": ";
-        if (pair.first) {
-            std::cout << "linked to pin " << pair.second << " of a component";
+        if (link.component) {
+            std::cout << "linked to pin " << link.pin << " of a component";
         } else {
             std::cout << "not linked";
         }
@@ -54,10 +55,10 @@ void nts::AComponent::dump() const
     std::cout << "Internal linkage:" << std::endl;
 
     index = 0;
-    for (const auto &pair : m_internal_links) {
+    for (const auto &link : m_internal_links) {
         ++index;
-        if (pair.first) {
-            std::cout << "-> Pin " << index << ": " << "linked to pin " << pair.second << " of a component" << std::endl;
+        if (link.component) {
+            std::cout << "-> Pin " << index << ": " << "linked to pin " << link.pin << " of a component" << std::endl;
         }
     }
     dumpInternalComponents();
@@ -67,5 +68,6 @@ void nts::AComponent::setLinkInternal(std::size_t pin, nts::IComponent &other, s
 {
     if (pin == 0 || pin > m_internal_links.size())
         throw BadPinException(m_type, pin);
-    m_internal_links[pin - 1] = std::make_pair(&other, otherPin);
+    m_internal_links[pin - 1].component = &other;
+    m_internal_links[pin - 1].pin = otherPin;
 }

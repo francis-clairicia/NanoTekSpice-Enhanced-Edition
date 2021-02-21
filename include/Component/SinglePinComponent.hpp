@@ -8,9 +8,8 @@
 #ifndef SINGLEPINCOMPONENT_HPP_
 #define SINGLEPINCOMPONENT_HPP_
 
-#include <string>
 #include <unordered_map>
-#include "IComponent.hpp"
+#include "types.hpp"
 
 namespace nts
 {
@@ -24,9 +23,8 @@ namespace nts
             const std::string &getValueAsString() const noexcept;
 
         protected:
-            IComponent *m_link;
-            std::size_t m_link_pin;
-            std::string m_type;
+            Link          m_link;
+            std::string   m_type;
             nts::Tristate m_value;
     };
 }

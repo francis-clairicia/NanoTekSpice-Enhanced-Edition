@@ -28,7 +28,8 @@ void nts::AGate::setLink(std::size_t pin, nts::IComponent &other, std::size_t ot
 {
     if (pin == 0 || pin > m_links.size())
         throw BadPinException(m_type, pin);
-    m_links[pin - 1] = std::make_pair(&other, otherPin);
+    m_links[pin - 1].component = &other;
+    m_links[pin - 1].pin = otherPin;
 }
 
 nts::Tristate nts::AGate::compute(std::size_t pin)
@@ -36,8 +37,8 @@ nts::Tristate nts::AGate::compute(std::size_t pin)
     if (pin == 0 || pin > m_links.size())
         throw BadPinException(m_type, pin);
     if (std::find(m_input_pins.begin(), m_input_pins.end(), pin) != m_input_pins.end()) {
-        const componentLink_t &pair = m_links.at(pin - 1);
-        return (pair.first) ? pair.first->compute(pair.second) : nts::UNDEFINED;
+        const Link &link = m_links.at(pin - 1);
+        return (link.component) ? link.component->compute(link.pin) : nts::UNDEFINED;
     }
     if (pin == m_output_pin) {
         if (!m_computed) {
@@ -54,11 +55,11 @@ void nts::AGate::dump() const
     std::cout << m_type << " gate component:" << std::endl;
 
     std::size_t index = 0;
-    for (const auto &pair : m_links) {
+    for (const auto &link : m_links) {
         std::cout << "-> Pin " << index << ": ";
         if (++index != m_output_pin) {
-            if (pair.first) {
-                std::cout << "linked to pin " << pair.second << " of a component";
+            if (link.component) {
+                std::cout << "linked to pin " << link.pin << " of a component";
             } else {
                 std::cout << "not linked";
             }

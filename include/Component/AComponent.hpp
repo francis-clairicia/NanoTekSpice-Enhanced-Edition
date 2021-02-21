@@ -25,11 +25,11 @@ namespace nts
             virtual void dumpInternalComponents() const = 0;
 
         protected:
-            std::string                  m_type;
-            std::vector<componentLink_t> m_internal_links;
-            std::vector<componentLink_t> m_external_links;
-            const componentPin_t         m_input_pins;
-            const componentPin_t         m_output_pins;
+            std::string          m_type;
+            std::vector<Link>    m_internal_links;
+            std::vector<Link>    m_external_links;
+            const componentPin_t m_input_pins;
+            const componentPin_t m_output_pins;
     };
 }
 

@@ -25,13 +25,13 @@ namespace nts
             virtual nts::Tristate computeOutput() = 0;
 
         protected:
-            nts::Tristate                m_value;
-            std::string                  m_type;
-            std::size_t                  m_actual_tick;
-            bool                         m_computed;
-            std::vector<componentLink_t> m_links;
-            const componentPin_t        m_input_pins;
-            std::size_t                  m_output_pin;
+            nts::Tristate        m_value;
+            std::string          m_type;
+            std::size_t          m_actual_tick;
+            bool                 m_computed;
+            std::vector<Link>    m_links;
+            const componentPin_t m_input_pins;
+            std::size_t          m_output_pin;
     };
 }
 
