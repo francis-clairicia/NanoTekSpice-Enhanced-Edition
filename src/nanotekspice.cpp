@@ -8,7 +8,6 @@
 #include <iostream>
 #include <algorithm>
 #include <csignal>
-#include <unistd.h>
 #include "Circuit.hpp"
 #include "Parser.hpp"
 #include "ExitException.hpp"
