@@ -15,10 +15,9 @@
 #include "nanotekspice.hpp"
 #include "string_operations.hpp"
 
-static std::istream &command_prompt(std::string &buffer, bool print_command_prompt)
+static std::istream &command_prompt(std::string &buffer)
 {
-    if (print_command_prompt)
-        std::cout << "> ";
+    std::cout << "> ";
     return std::getline(std::cin, buffer);
 }
 
@@ -71,7 +70,6 @@ int nts::nanotekspice(const std::string &circuit_file)
     nts::Circuit circuit;
     nts::Parser parser{circuit_file, circuit};
     std::string input;
-    bool tty = isatty(STDIN_FILENO);
     std::size_t tick = 0;
     std::unordered_map<std::string, void (*)(nts::Circuit &, std::size_t &)> commands{
         {"exit",     &exit_command},
@@ -82,7 +80,7 @@ int nts::nanotekspice(const std::string &circuit_file)
     };
 
     parser.parse();
-    while (command_prompt(input, tty)) {
+    while (command_prompt(input)) {
         trim_trailing_whitespace(input);
         if (input.empty())
             continue;
@@ -101,7 +99,7 @@ int nts::nanotekspice(const std::string &circuit_file)
             std::cerr << e.what() << std::endl;
         }
     }
-    if (tty && std::cin.eof())
+    if (std::cin.eof())
         std::cout << std::endl;
     return (0);
 }
