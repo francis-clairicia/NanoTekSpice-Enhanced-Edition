@@ -26,6 +26,8 @@ namespace nts
 
         protected:
             std::string          m_type;
+
+        private:
             std::vector<Link>    m_internal_links;
             std::vector<Link>    m_external_links;
             const componentPin_t m_input_pins;

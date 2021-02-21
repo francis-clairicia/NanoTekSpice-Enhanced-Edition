@@ -27,6 +27,8 @@ namespace nts
         protected:
             nts::Tristate        m_value;
             std::string          m_type;
+
+        private:
             std::size_t          m_actual_tick;
             bool                 m_computed;
             std::vector<Link>    m_links;
