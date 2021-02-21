@@ -2,18 +2,18 @@
 ** EPITECH PROJECT, 2021
 ** B-OOP-400-BDX-4-1-tekspice-francis.clairicia-rose-claire-josephine
 ** File description:
-** FlipFlopComponent
+** DTypeFlipFlopWithSR
 */
 
-#ifndef FLIPFLOPCOMPONENT_HPP_
-#define FLIPFLOPCOMPONENT_HPP_
+#ifndef DTYPEFLIPFLOPWITHSR_HPP_
+#define DTYPEFLIPFLOPWITHSR_HPP_
 
 #include "AComponent.hpp"
 #include "AGate.hpp"
 
 namespace nts
 {
-    class FlipFlopComponent: public nts::AComponent {
+    class DTypeFlipFlopWithSR: public nts::AComponent {
         public:
             enum Pin
             {
@@ -26,8 +26,8 @@ namespace nts
             };
 
         public:
-            FlipFlopComponent() noexcept;
-            ~FlipFlopComponent();
+            DTypeFlipFlopWithSR() noexcept;
+            ~DTypeFlipFlopWithSR();
 
             void simulate(std::size_t tick) final;
 
@@ -75,4 +75,4 @@ namespace nts
     };
 }
 
-#endif /* !FLIPFLOPCOMPONENT_HPP_ */
+#endif /* !DTYPEFLIPFLOPWITHSR_HPP_ */

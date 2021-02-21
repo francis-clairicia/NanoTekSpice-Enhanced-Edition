@@ -2,11 +2,11 @@
 ** EPITECH PROJECT, 2021
 ** B-OOP-400-BDX-4-1-tekspice-francis.clairicia-rose-claire-josephine
 ** File description:
-** FlipFlopComponent
+** DTypeFlipFlopWithSR
 */
 
 #include <iostream>
-#include "FlipFlopComponent.hpp"
+#include "DTypeFlipFlopWithSR.hpp"
 #include "GateTransmission.hpp"
 #include "GateNOT.hpp"
 #include "GateNOR.hpp"
@@ -24,7 +24,7 @@ Outputs:
     Pin 2: /q (not q)
 */
 
-nts::FlipFlopComponent::FlipFlopComponent() noexcept:
+nts::DTypeFlipFlopWithSR::DTypeFlipFlopWithSR() noexcept:
     AComponent("FlipFlop", 6, {CLOCK, RESET, DATA, SET}, {Q, Qn}),
     m_tg1(std::make_unique<GateTransmission>()),
     m_tg2(std::make_unique<GateTransmission>()),
@@ -100,11 +100,11 @@ nts::FlipFlopComponent::FlipFlopComponent() noexcept:
     setLinkInternal(Qn, *m_memoryQn, MemoryGate::OUTPUT);
 }
 
-nts::FlipFlopComponent::~FlipFlopComponent()
+nts::DTypeFlipFlopWithSR::~DTypeFlipFlopWithSR()
 {
 }
 
-void nts::FlipFlopComponent::simulate(std::size_t tick)
+void nts::DTypeFlipFlopWithSR::simulate(std::size_t tick)
 {
     m_tg1->simulate(tick);
     m_tg2->simulate(tick);
@@ -123,7 +123,7 @@ void nts::FlipFlopComponent::simulate(std::size_t tick)
     m_memoryQn->simulate(tick);
 }
 
-void nts::FlipFlopComponent::dumpInternalComponents() const
+void nts::DTypeFlipFlopWithSR::dumpInternalComponents() const
 {
     std::cout << "Internal components:" << std::endl;
     m_tg1->dump();
@@ -139,13 +139,13 @@ void nts::FlipFlopComponent::dumpInternalComponents() const
     m_nor4->dump();
 }
 
-nts::FlipFlopComponent::MemoryGate::MemoryGate() noexcept:
+nts::DTypeFlipFlopWithSR::MemoryGate::MemoryGate() noexcept:
     AGate("Memory", 5, {MemoryGate::INPUT, MemoryGate::CLOCK, MemoryGate::RESET, MemoryGate::SET}, MemoryGate::OUTPUT),
     m_buffer(nts::UNDEFINED)
 {
 }
 
-nts::Tristate nts::FlipFlopComponent::MemoryGate::computeOutput()
+nts::Tristate nts::DTypeFlipFlopWithSR::MemoryGate::computeOutput()
 {
     nts::Tristate input = compute(MemoryGate::INPUT);
     nts::Tristate clock = compute(MemoryGate::CLOCK);

@@ -6,10 +6,10 @@
 */
 
 #include <criterion/criterion.h>
-#include "FlipFlopComponent.hpp"
+#include "DTypeFlipFlopWithSR.hpp"
 #include "ConstComponent.hpp"
 
-static nts::Tristate compute(nts::FlipFlopComponent &flipflop,
+static nts::Tristate compute(nts::DTypeFlipFlopWithSR &flipflop,
                              nts::InputComponent &clock,
                              nts::InputComponent &data,
                              nts::InputComponent &reset,
@@ -18,56 +18,56 @@ static nts::Tristate compute(nts::FlipFlopComponent &flipflop,
 {
     static std::size_t tick = 0;
 
-    flipflop.setLink(nts::FlipFlopComponent::CLOCK, clock, 1);
-    flipflop.setLink(nts::FlipFlopComponent::DATA, data, 1);
-    flipflop.setLink(nts::FlipFlopComponent::RESET, reset, 1);
-    flipflop.setLink(nts::FlipFlopComponent::SET, set, 1);
+    flipflop.setLink(nts::DTypeFlipFlopWithSR::CLOCK, clock, 1);
+    flipflop.setLink(nts::DTypeFlipFlopWithSR::DATA, data, 1);
+    flipflop.setLink(nts::DTypeFlipFlopWithSR::RESET, reset, 1);
+    flipflop.setLink(nts::DTypeFlipFlopWithSR::SET, set, 1);
     flipflop.simulate(++tick);
     return flipflop.compute(output_pin);
 }
 
-Test(FlipFlopComponent, Q_truth_table_set_and_reset)
+Test(DTypeFlipFlopWithSR, Q_truth_table_set_and_reset)
 {
     nts::TrueComponent c_true;
     nts::FalseComponent c_false;
-    nts::FlipFlopComponent flipflop;
+    nts::DTypeFlipFlopWithSR flipflop;
 
-    cr_expect_eq(compute(flipflop, c_false, c_false, c_true,  c_false, nts::FlipFlopComponent::Q), nts::FALSE);
-    cr_expect_eq(compute(flipflop, c_false, c_false, c_false, c_true, nts::FlipFlopComponent::Q), nts::TRUE);
-    cr_expect_eq(compute(flipflop, c_false, c_false, c_true,  c_true, nts::FlipFlopComponent::Q), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_false, c_false, c_true,  c_false, nts::DTypeFlipFlopWithSR::Q), nts::FALSE);
+    cr_expect_eq(compute(flipflop, c_false, c_false, c_false, c_true, nts::DTypeFlipFlopWithSR::Q), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_false, c_false, c_true,  c_true, nts::DTypeFlipFlopWithSR::Q), nts::TRUE);
 
-    cr_expect_eq(compute(flipflop, c_false, c_true,  c_true,  c_false, nts::FlipFlopComponent::Q), nts::FALSE);
-    cr_expect_eq(compute(flipflop, c_false, c_true,  c_false, c_true, nts::FlipFlopComponent::Q), nts::TRUE);
-    cr_expect_eq(compute(flipflop, c_false, c_true,  c_true,  c_true, nts::FlipFlopComponent::Q), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_false, c_true,  c_true,  c_false, nts::DTypeFlipFlopWithSR::Q), nts::FALSE);
+    cr_expect_eq(compute(flipflop, c_false, c_true,  c_false, c_true, nts::DTypeFlipFlopWithSR::Q), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_false, c_true,  c_true,  c_true, nts::DTypeFlipFlopWithSR::Q), nts::TRUE);
 
-    cr_expect_eq(compute(flipflop, c_true,  c_false, c_true,  c_false, nts::FlipFlopComponent::Q), nts::FALSE);
-    cr_expect_eq(compute(flipflop, c_true,  c_false, c_false, c_true, nts::FlipFlopComponent::Q), nts::TRUE);
-    cr_expect_eq(compute(flipflop, c_true,  c_false, c_true,  c_true, nts::FlipFlopComponent::Q), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_true,  c_false, c_true,  c_false, nts::DTypeFlipFlopWithSR::Q), nts::FALSE);
+    cr_expect_eq(compute(flipflop, c_true,  c_false, c_false, c_true, nts::DTypeFlipFlopWithSR::Q), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_true,  c_false, c_true,  c_true, nts::DTypeFlipFlopWithSR::Q), nts::TRUE);
 
-    cr_expect_eq(compute(flipflop, c_true,  c_true,  c_true,  c_false, nts::FlipFlopComponent::Q), nts::FALSE);
-    cr_expect_eq(compute(flipflop, c_true,  c_true,  c_false, c_true, nts::FlipFlopComponent::Q), nts::TRUE);
-    cr_expect_eq(compute(flipflop, c_true,  c_true,  c_true,  c_true, nts::FlipFlopComponent::Q), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_true,  c_true,  c_true,  c_false, nts::DTypeFlipFlopWithSR::Q), nts::FALSE);
+    cr_expect_eq(compute(flipflop, c_true,  c_true,  c_false, c_true, nts::DTypeFlipFlopWithSR::Q), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_true,  c_true,  c_true,  c_true, nts::DTypeFlipFlopWithSR::Q), nts::TRUE);
 }
 
-Test(FlipFlopComponent, Qnot_truth_table_set_and_reset)
+Test(DTypeFlipFlopWithSR, Qnot_truth_table_set_and_reset)
 {
     nts::TrueComponent c_true;
     nts::FalseComponent c_false;
-    nts::FlipFlopComponent flipflop;
+    nts::DTypeFlipFlopWithSR flipflop;
 
-    cr_expect_eq(compute(flipflop, c_false, c_false, c_true,  c_false, nts::FlipFlopComponent::Qn), nts::TRUE);
-    cr_expect_eq(compute(flipflop, c_false, c_false, c_false, c_true, nts::FlipFlopComponent::Qn), nts::FALSE);
-    cr_expect_eq(compute(flipflop, c_false, c_false, c_true,  c_true, nts::FlipFlopComponent::Qn), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_false, c_false, c_true,  c_false, nts::DTypeFlipFlopWithSR::Qn), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_false, c_false, c_false, c_true, nts::DTypeFlipFlopWithSR::Qn), nts::FALSE);
+    cr_expect_eq(compute(flipflop, c_false, c_false, c_true,  c_true, nts::DTypeFlipFlopWithSR::Qn), nts::TRUE);
 
-    cr_expect_eq(compute(flipflop, c_false, c_true,  c_true,  c_false, nts::FlipFlopComponent::Qn), nts::TRUE);
-    cr_expect_eq(compute(flipflop, c_false, c_true,  c_false, c_true, nts::FlipFlopComponent::Qn), nts::FALSE);
-    cr_expect_eq(compute(flipflop, c_false, c_true,  c_true,  c_true, nts::FlipFlopComponent::Qn), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_false, c_true,  c_true,  c_false, nts::DTypeFlipFlopWithSR::Qn), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_false, c_true,  c_false, c_true, nts::DTypeFlipFlopWithSR::Qn), nts::FALSE);
+    cr_expect_eq(compute(flipflop, c_false, c_true,  c_true,  c_true, nts::DTypeFlipFlopWithSR::Qn), nts::TRUE);
 
-    cr_expect_eq(compute(flipflop, c_true,  c_false, c_true,  c_false, nts::FlipFlopComponent::Qn), nts::TRUE);
-    cr_expect_eq(compute(flipflop, c_true,  c_false, c_false, c_true, nts::FlipFlopComponent::Qn), nts::FALSE);
-    cr_expect_eq(compute(flipflop, c_true,  c_false, c_true,  c_true, nts::FlipFlopComponent::Qn), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_true,  c_false, c_true,  c_false, nts::DTypeFlipFlopWithSR::Qn), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_true,  c_false, c_false, c_true, nts::DTypeFlipFlopWithSR::Qn), nts::FALSE);
+    cr_expect_eq(compute(flipflop, c_true,  c_false, c_true,  c_true, nts::DTypeFlipFlopWithSR::Qn), nts::TRUE);
 
-    cr_expect_eq(compute(flipflop, c_true,  c_true,  c_true,  c_false, nts::FlipFlopComponent::Qn), nts::TRUE);
-    cr_expect_eq(compute(flipflop, c_true,  c_true,  c_false, c_true, nts::FlipFlopComponent::Qn), nts::FALSE);
-    cr_expect_eq(compute(flipflop, c_true,  c_true,  c_true,  c_true, nts::FlipFlopComponent::Qn), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_true,  c_true,  c_true,  c_false, nts::DTypeFlipFlopWithSR::Qn), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_true,  c_true,  c_false, c_true, nts::DTypeFlipFlopWithSR::Qn), nts::FALSE);
+    cr_expect_eq(compute(flipflop, c_true,  c_true,  c_true,  c_true, nts::DTypeFlipFlopWithSR::Qn), nts::TRUE);
 }

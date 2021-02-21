@@ -8,6 +8,7 @@
 #include "ClockComponent.hpp"
 
 nts::ClockComponent::ClockComponent():
+    InputComponent(),
     m_actual_tick(0)
 {
     m_type = "clock";

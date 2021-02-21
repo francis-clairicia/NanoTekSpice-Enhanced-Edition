@@ -58,7 +58,7 @@ SRC_GATES			=	src/Gate/AGate.cpp									\
 
 SRC_SUM				=	src/Sum/SumComponent.cpp
 
-SRC_FLIPFLOP		=	src/FlipFlop/FlipFlopComponent.cpp
+SRC_FLIPFLOP		=	src/FlipFlop/DTypeFlipFlopWithSR.cpp
 
 SRC					=	$(SRC_MAIN)											\
 						$(SRC_NANOTEKSPICE)									\
