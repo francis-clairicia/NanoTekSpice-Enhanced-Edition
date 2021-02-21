@@ -38,7 +38,9 @@ nts::FlipFlopComponent::FlipFlopComponent() noexcept:
     m_nor3(std::make_unique<GateNOR>()),
     m_nor4(std::make_unique<GateNOR>()),
     m_node1(std::make_unique<Node>()),
-    m_node2(std::make_unique<Node>())
+    m_node2(std::make_unique<Node>()),
+    m_memoryQ(std::make_unique<MemoryGate>()),
+    m_memoryQn(std::make_unique<MemoryGate>())
 {
     // Clock inverter
     m_not_clock->setLink(GateNOT::INPUT, *this, CLOCK);
@@ -83,11 +85,19 @@ nts::FlipFlopComponent::FlipFlopComponent() noexcept:
     m_node2->setLink(Node::INPUT1, *m_tg3, GateTransmission::OUTPUT);
     m_node2->setLink(Node::INPUT2, *m_tg4, GateTransmission::OUTPUT);
     m_not1->setLink(GateNOT::INPUT, *m_node2, Node::OUTPUT);
-    setLinkInternal(Q, *m_not1, GateNOT::OUTPUT);
+    m_memoryQ->setLink(MemoryGate::INPUT, *m_not1, GateNOT::OUTPUT);
+    m_memoryQ->setLink(MemoryGate::CLOCK, *this, CLOCK);
+    m_memoryQ->setLink(MemoryGate::RESET, *this, RESET);
+    m_memoryQ->setLink(MemoryGate::SET, *this, SET);
+    setLinkInternal(Q, *m_memoryQ, MemoryGate::OUTPUT);
 
-    // /Q output
+    // /Q (Qn) output
     m_not2->setLink(GateNOT::INPUT, *m_nor3, GateNOR::OUTPUT);
-    setLinkInternal(Qn, *m_not2, GateNOT::OUTPUT);
+    m_memoryQn->setLink(MemoryGate::INPUT, *m_not2, GateNOT::OUTPUT);
+    m_memoryQn->setLink(MemoryGate::CLOCK, *this, CLOCK);
+    m_memoryQn->setLink(MemoryGate::RESET, *this, RESET);
+    m_memoryQn->setLink(MemoryGate::SET, *this, SET);
+    setLinkInternal(Qn, *m_memoryQn, MemoryGate::OUTPUT);
 }
 
 nts::FlipFlopComponent::~FlipFlopComponent()
@@ -109,6 +119,8 @@ void nts::FlipFlopComponent::simulate(std::size_t tick)
     m_nor4->simulate(tick);
     m_node1->simulate(tick);
     m_node2->simulate(tick);
+    m_memoryQ->simulate(tick);
+    m_memoryQn->simulate(tick);
 }
 
 void nts::FlipFlopComponent::dumpInternalComponents() const
@@ -125,4 +137,24 @@ void nts::FlipFlopComponent::dumpInternalComponents() const
     m_nor2->dump();
     m_nor3->dump();
     m_nor4->dump();
+}
+
+nts::FlipFlopComponent::MemoryGate::MemoryGate() noexcept:
+    AGate("Memory", 5, {MemoryGate::INPUT, MemoryGate::CLOCK, MemoryGate::RESET, MemoryGate::SET}, MemoryGate::OUTPUT),
+    m_buffer(nts::UNDEFINED)
+{
+}
+
+nts::Tristate nts::FlipFlopComponent::MemoryGate::computeOutput()
+{
+    nts::Tristate input = compute(MemoryGate::INPUT);
+    nts::Tristate clock = compute(MemoryGate::CLOCK);
+    nts::Tristate reset = compute(MemoryGate::RESET);
+    nts::Tristate set = compute(MemoryGate::SET);
+
+    if (reset == nts::UNDEFINED || set == nts::UNDEFINED || clock == nts::UNDEFINED)
+        return nts::UNDEFINED;
+    if (reset == nts::TRUE || set == nts::TRUE || clock == nts::TRUE)
+        m_buffer = input;
+    return m_buffer;
 }

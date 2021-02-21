@@ -9,6 +9,7 @@
 #define FLIPFLOPCOMPONENT_HPP_
 
 #include "AComponent.hpp"
+#include "AGate.hpp"
 
 namespace nts
 {
@@ -22,6 +23,28 @@ namespace nts
                 RESET = 4,
                 DATA  = 5,
                 SET   = 6
+            };
+
+        private:
+            class MemoryGate: public nts::AGate {
+                public:
+                    enum Pin
+                    {
+                        INPUT  = 1,
+                        CLOCK  = 2,
+                        RESET  = 3,
+                        SET    = 4,
+                        OUTPUT = 5
+                    };
+
+                public:
+                    MemoryGate() noexcept;
+
+                protected:
+                    nts::Tristate computeOutput() final;
+
+                private:
+                    nts::Tristate m_buffer;
             };
 
         public:
@@ -47,6 +70,8 @@ namespace nts
             std::unique_ptr<IComponent> m_nor4;
             std::unique_ptr<IComponent> m_node1;
             std::unique_ptr<IComponent> m_node2;
+            std::unique_ptr<IComponent> m_memoryQ;
+            std::unique_ptr<IComponent> m_memoryQn;
     };
 }
 
