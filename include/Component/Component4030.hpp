@@ -8,23 +8,12 @@
 #ifndef COMPONENT4030_HPP_
 #define COMPONENT4030_HPP_
 
-#include "AComponent.hpp"
+#include "MultiTwoInputsGateComponent.hpp"
+#include "GateXOR.hpp"
 
 namespace nts
 {
-    class Component4030: public nts::AComponent {
-        public:
-            Component4030() noexcept;
-            ~Component4030() noexcept;
-
-            void simulate(std::size_t tick) final;
-
-        protected:
-            void dumpInternalComponents() const final;
-
-        private:
-            internComponent_t m_components;
-    };
+    using Component4030 = MultiTwoInputsGateComponent<Component4030Type, GateXOR>;
 }
 
 #endif /* !COMPONENT4030_HPP_ */

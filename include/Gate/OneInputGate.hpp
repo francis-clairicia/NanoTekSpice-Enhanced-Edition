@@ -14,7 +14,7 @@ namespace nts
 {
     class OneInputGate: public nts::AGate {
         public:
-            OneInputGate(const std::string &type) noexcept;
+            OneInputGate(nts::ComponentType type) noexcept;
             ~OneInputGate() override;
 
             virtual nts::Tristate operation(nts::Tristate a) const = 0;

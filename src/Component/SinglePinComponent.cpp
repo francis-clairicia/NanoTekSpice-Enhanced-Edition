@@ -15,7 +15,7 @@ static const std::unordered_map<nts::Tristate, std::string> TRISTATE_CONVERTER{
     {nts::UNDEFINED, "U"}
 };
 
-nts::SinglePinComponent::SinglePinComponent(const std::string &type) noexcept:
+nts::SinglePinComponent::SinglePinComponent(nts::ComponentType type) noexcept:
     m_link{.component = nullptr, .pin = 0},
     m_type(type),
     m_value(nts::UNDEFINED)
@@ -25,14 +25,14 @@ nts::SinglePinComponent::SinglePinComponent(const std::string &type) noexcept:
 void nts::SinglePinComponent::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
     if (pin != 1)
-        throw nts::BadPinException(m_type, pin);
+        throw nts::BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
     m_link.component = &other;
     m_link.pin = otherPin;
 }
 
 void nts::SinglePinComponent::dump() const
 {
-    std::cout << m_type << " component:" << std::endl;
+    std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << std::endl;
     std::cout << "-> Pin 1: ";
     if (m_link.component)
         std::cout << "linked to the pin " << m_link.pin << " of a component";

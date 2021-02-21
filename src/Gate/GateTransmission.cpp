@@ -7,7 +7,7 @@
 
 #include "GateTransmission.hpp"
 
-nts::GateTransmission::GateTransmission() noexcept: TwoInputsGate("Transmission")
+nts::GateTransmission::GateTransmission() noexcept: TwoInputsGate(GateTransmissionType)
 {
 }
 

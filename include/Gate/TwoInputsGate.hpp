@@ -14,7 +14,7 @@ namespace nts
 {
     class TwoInputsGate: public nts::AGate {
         public:
-            TwoInputsGate(const std::string &type) noexcept;
+            TwoInputsGate(nts::ComponentType type) noexcept;
             ~TwoInputsGate() override;
 
             virtual nts::Tristate operation(nts::Tristate a, nts::Tristate b) const = 0;

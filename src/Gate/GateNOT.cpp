@@ -7,7 +7,7 @@
 
 #include "GateNOT.hpp"
 
-nts::GateNOT::GateNOT() noexcept: OneInputGate("NOT")
+nts::GateNOT::GateNOT() noexcept: OneInputGate(GateNOTType)
 {
 }
 

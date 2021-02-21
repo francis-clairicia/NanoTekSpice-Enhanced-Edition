@@ -7,7 +7,7 @@
 
 #include "GateOR.hpp"
 
-nts::GateOR::GateOR() noexcept: TwoInputsGate("OR")
+nts::GateOR::GateOR() noexcept: TwoInputsGate(GateORType)
 {
 }
 

@@ -7,7 +7,7 @@
 
 #include "OneInputGate.hpp"
 
-nts::OneInputGate::OneInputGate(const std::string &type) noexcept: AGate(type, 2, {1}, 2)
+nts::OneInputGate::OneInputGate(nts::ComponentType type) noexcept: AGate(type, 2, {1}, 2)
 {
 }
 

@@ -8,23 +8,12 @@
 #ifndef COMPONENT4011_HPP_
 #define COMPONENT4011_HPP_
 
-#include "AComponent.hpp"
+#include "MultiTwoInputsGateComponent.hpp"
+#include "GateNAND.hpp"
 
 namespace nts
 {
-    class Component4011: public nts::AComponent {
-        public:
-            Component4011() noexcept;
-            ~Component4011() noexcept;
-
-            void simulate(std::size_t tick) final;
-
-        protected:
-            void dumpInternalComponents() const final;
-
-        private:
-            internComponent_t m_components;
-    };
+    using Component4011 = MultiTwoInputsGateComponent<Component4011Type, GateNAND>;
 }
 
 #endif /* !COMPONENT4011_HPP_ */

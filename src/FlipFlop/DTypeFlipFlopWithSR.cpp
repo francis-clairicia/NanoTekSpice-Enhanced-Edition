@@ -25,7 +25,7 @@ Outputs:
 */
 
 nts::DTypeFlipFlopWithSR::DTypeFlipFlopWithSR() noexcept:
-    AComponent("FlipFlop", 6, {CLOCK, RESET, DATA, SET}, {Q, Qn}),
+    AComponent(DTypeFlipFlopWithSRType, 6, {CLOCK, RESET, DATA, SET}, {Q, Qn}),
     m_tg1(std::make_unique<GateTransmission>()),
     m_tg2(std::make_unique<GateTransmission>()),
     m_tg3(std::make_unique<GateTransmission>()),
@@ -140,7 +140,7 @@ void nts::DTypeFlipFlopWithSR::dumpInternalComponents() const
 }
 
 nts::DTypeFlipFlopWithSR::MemoryGate::MemoryGate() noexcept:
-    AGate("Memory", 5, {MemoryGate::INPUT, MemoryGate::CLOCK, MemoryGate::RESET, MemoryGate::SET}, MemoryGate::OUTPUT),
+    AGate(DTypeFlipFlopMemoryType, 5, {MemoryGate::INPUT, MemoryGate::CLOCK, MemoryGate::RESET, MemoryGate::SET}, MemoryGate::OUTPUT),
     m_buffer(nts::UNDEFINED)
 {
 }

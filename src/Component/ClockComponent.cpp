@@ -11,7 +11,7 @@ nts::ClockComponent::ClockComponent():
     InputComponent(),
     m_actual_tick(0)
 {
-    m_type = "clock";
+    m_type = ClockComponentType;
 }
 
 void nts::ClockComponent::simulate(std::size_t tick)

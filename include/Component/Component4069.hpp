@@ -8,23 +8,12 @@
 #ifndef COMPONENT4069_HPP_
 #define COMPONENT4069_HPP_
 
-#include "AComponent.hpp"
+#include "MultiOneInputGateComponent.hpp"
+#include "GateNOT.hpp"
 
 namespace nts
 {
-    class Component4069: public nts::AComponent {
-        public:
-            Component4069() noexcept;
-            ~Component4069() noexcept;
-
-            void simulate(std::size_t tick) final;
-
-        protected:
-            void dumpInternalComponents() const final;
-
-        private:
-            internComponent_t m_components;
-    };
+    using Component4069 = MultiOneInputGateComponent<Component4069Type, GateNOT>;
 }
 
 #endif /* !COMPONENT4069_HPP_ */

@@ -14,6 +14,12 @@ namespace nts
 {
     class OutputComponent: public nts::SinglePinComponent {
         public:
+            enum Pin
+            {
+                INPUT = 1
+            };
+
+        public:
             OutputComponent() noexcept;
 
             void simulate(std::size_t tick) override;

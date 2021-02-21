@@ -13,7 +13,7 @@
 
 namespace nts
 {
-    template<nts::Tristate Value>
+    template<nts::ComponentType Type, nts::Tristate Value>
     class ConstComponent: public nts::InputComponent {
         public:
             ConstComponent(): InputComponent()
@@ -21,17 +21,17 @@ namespace nts
                 if (Value == nts::UNDEFINED)
                     throw nts::ConstComponentException("the constant value of a ConstComponent should not be 'undefined'");
                 m_value = Value;
-                m_type = (Value == nts::TRUE) ? "true" : "false";
+                m_type = Type;
             }
 
             void setValue(nts::Tristate value __attribute__((unused))) final
             {
-                throw nts::ConstComponentException("Cannot set value to a \"" + m_type + "\" component");
+                throw nts::ConstComponentException("Cannot set value to a \"" + COMPONENT_TYPE_AS_STRING.at(m_type) + "\" component");
             }
     };
 
-    using TrueComponent = ConstComponent<nts::TRUE>;
-    using FalseComponent = ConstComponent<nts::FALSE>;
+    using TrueComponent = ConstComponent<nts::TrueComponentType, nts::TRUE>;
+    using FalseComponent = ConstComponent<nts::FalseComponentType, nts::FALSE>;
 }
 
 #endif /* !CONSTCOMPONENT_HPP_ */
