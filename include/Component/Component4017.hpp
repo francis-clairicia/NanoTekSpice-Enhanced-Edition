@@ -43,6 +43,11 @@ namespace nts
         
         private:
             std::unique_ptr<IComponent> m_ground;
+            std::unique_ptr<IComponent> m_buffer_last_flipflop;
+            std::unique_ptr<IComponent> m_buffer_flipflop_0_1;
+            std::unique_ptr<IComponent> m_buffer_flipflop_1_2;
+            std::unique_ptr<IComponent> m_buffer_flipflop_2_3;
+            std::unique_ptr<IComponent> m_buffer_flipflop_3_4;
             std::unique_ptr<IComponent> m_inverter_cp1;
             std::unique_ptr<IComponent> m_and_gate_clock;
             std::unique_ptr<IComponent> m_and_gate_data;

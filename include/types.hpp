@@ -53,6 +53,7 @@ namespace nts
         GateNOTType,
         GateORType,
         GateXORType,
+        BufferGateType,
         /* Sum */
         SumComponentType,
         /* FlipFlops */
@@ -81,6 +82,7 @@ namespace nts
         {GateNOTType,             "NOT"},
         {GateORType,              "OR"},
         {GateXORType,             "XOR"},
+        {BufferGateType,          "Buffer"},
         {SumComponentType,        "SUM"},
         {DTypeFlipFlopWithSRType, "D-type Flip Flop with S/R"},
     };

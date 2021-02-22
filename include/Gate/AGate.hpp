@@ -16,12 +16,13 @@ namespace nts
         public:
             AGate(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, const pinList_t & output_pins) noexcept;
 
-            void simulate(std::size_t tick) final;
+            void simulate(std::size_t tick) override;
             nts::Tristate compute(std::size_t pin) final;
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
             void dump() const final;
 
         protected:
+            bool isNextTick(std::size_t tick) const;
             virtual nts::Tristate computeOutput(std::size_t pin) = 0;
 
         protected:

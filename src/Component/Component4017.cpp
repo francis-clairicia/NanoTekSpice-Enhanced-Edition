@@ -10,12 +10,18 @@
 #include "GateOR.hpp"
 #include "GateNOT.hpp"
 #include "GateNOR.hpp"
+#include "BufferGate.hpp"
 #include "ConstComponent.hpp"
 #include "DTypeFlipFlopWithSR.hpp"
 
 nts::Component4017::Component4017() noexcept:
     AComponent(Component4017Type, 16, {CP0, CP1, MR}, {Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q5_9}),
     m_ground(std::make_unique<FalseComponent>()),
+    m_buffer_last_flipflop(std::make_unique<BufferGate>()),
+    m_buffer_flipflop_0_1(std::make_unique<BufferGate>()),
+    m_buffer_flipflop_1_2(std::make_unique<BufferGate>()),
+    m_buffer_flipflop_2_3(std::make_unique<BufferGate>()),
+    m_buffer_flipflop_3_4(std::make_unique<BufferGate>()),
     m_inverter_cp1(std::make_unique<GateNOT>()),
     m_and_gate_clock(std::make_unique<GateAND>()),
     m_and_gate_data(std::make_unique<GateAND>()),
@@ -36,47 +42,54 @@ nts::Component4017::Component4017() noexcept:
         flipflop->setLink(DTypeFlipFlopWithSR::SET, *m_ground, FalseComponent::OUTPUT);
     }
 
-    m_flipflops[0]->setLink(DTypeFlipFlopWithSR::DATA, *m_flipflops.back(), DTypeFlipFlopWithSR::Qn);
-    m_flipflops[1]->setLink(DTypeFlipFlopWithSR::DATA, *m_flipflops[0], DTypeFlipFlopWithSR::Q);
+    m_buffer_last_flipflop->setLink(BufferGate::INPUT, *m_flipflops.back(), DTypeFlipFlopWithSR::Qn);
+    m_flipflops[0]->setLink(DTypeFlipFlopWithSR::DATA, *m_buffer_last_flipflop, BufferGate::OUTPUT);
 
-    m_or_gate_data->setLink(GateOR::INPUT1, *m_flipflops[2], DTypeFlipFlopWithSR::Q);
-    m_or_gate_data->setLink(GateOR::INPUT2, *m_flipflops[0], DTypeFlipFlopWithSR::Q);
+    m_buffer_flipflop_0_1->setLink(BufferGate::INPUT, *m_flipflops[0], DTypeFlipFlopWithSR::Q);
+    m_flipflops[1]->setLink(DTypeFlipFlopWithSR::DATA, *m_buffer_flipflop_0_1, BufferGate::OUTPUT);
+
+    m_or_gate_data->setLink(GateOR::INPUT1, *m_buffer_flipflop_2_3, BufferGate::OUTPUT);
+    m_or_gate_data->setLink(GateOR::INPUT2, *m_buffer_flipflop_0_1, BufferGate::OUTPUT);
+
+    m_buffer_flipflop_1_2->setLink(BufferGate::INPUT, *m_flipflops[1], DTypeFlipFlopWithSR::Q);
     m_and_gate_data->setLink(GateAND::INPUT1, *m_or_gate_data, GateOR::OUTPUT);
-    m_and_gate_data->setLink(GateAND::INPUT2, *m_flipflops[1], DTypeFlipFlopWithSR::Q);
+    m_and_gate_data->setLink(GateAND::INPUT2, *m_buffer_flipflop_1_2, BufferGate::OUTPUT);
 
     m_flipflops[2]->setLink(DTypeFlipFlopWithSR::DATA, *m_and_gate_data, GateAND::OUTPUT);
-    m_flipflops[3]->setLink(DTypeFlipFlopWithSR::DATA, *m_flipflops[2], DTypeFlipFlopWithSR::Q);
-    m_flipflops[4]->setLink(DTypeFlipFlopWithSR::DATA, *m_flipflops[3], DTypeFlipFlopWithSR::Q);
+    m_buffer_flipflop_2_3->setLink(BufferGate::INPUT, *m_flipflops[2], DTypeFlipFlopWithSR::Q);
+    m_flipflops[3]->setLink(DTypeFlipFlopWithSR::DATA, *m_buffer_flipflop_2_3, BufferGate::OUTPUT);
+    m_buffer_flipflop_3_4->setLink(BufferGate::INPUT, *m_flipflops[3], DTypeFlipFlopWithSR::Q);
+    m_flipflops[4]->setLink(DTypeFlipFlopWithSR::DATA, *m_buffer_flipflop_3_4, BufferGate::OUTPUT);
 
     m_nor[0]->setLink(GateNOR::INPUT1, *m_flipflops[4], DTypeFlipFlopWithSR::Q);
     m_nor[0]->setLink(GateNOR::INPUT2, *m_flipflops[0], DTypeFlipFlopWithSR::Q);
 
-    m_nor[1]->setLink(GateNOR::INPUT1, *m_flipflops[1], DTypeFlipFlopWithSR::Q);
-    m_nor[1]->setLink(GateNOR::INPUT2, *m_flipflops[0], DTypeFlipFlopWithSR::Qn);
+    m_nor[1]->setLink(GateNOR::INPUT1, *m_flipflops[0], DTypeFlipFlopWithSR::Qn);
+    m_nor[1]->setLink(GateNOR::INPUT2, *m_flipflops[1], DTypeFlipFlopWithSR::Q);
 
-    m_nor[2]->setLink(GateNOR::INPUT1, *m_flipflops[1], DTypeFlipFlopWithSR::Qn);
-    m_nor[2]->setLink(GateNOR::INPUT2, *m_flipflops[2], DTypeFlipFlopWithSR::Q);
+    m_nor[2]->setLink(GateNOR::INPUT1, *m_flipflops[2], DTypeFlipFlopWithSR::Q);
+    m_nor[2]->setLink(GateNOR::INPUT2, *m_flipflops[1], DTypeFlipFlopWithSR::Qn);
 
-    m_nor[3]->setLink(GateNOR::INPUT1, *m_flipflops[3], DTypeFlipFlopWithSR::Q);
-    m_nor[3]->setLink(GateNOR::INPUT2, *m_flipflops[2], DTypeFlipFlopWithSR::Qn);
+    m_nor[3]->setLink(GateNOR::INPUT1, *m_flipflops[2], DTypeFlipFlopWithSR::Qn);
+    m_nor[3]->setLink(GateNOR::INPUT2, *m_flipflops[3], DTypeFlipFlopWithSR::Q);
 
-    m_nor[4]->setLink(GateNOR::INPUT1, *m_flipflops[4], DTypeFlipFlopWithSR::Q);
-    m_nor[4]->setLink(GateNOR::INPUT2, *m_flipflops[3], DTypeFlipFlopWithSR::Qn);
+    m_nor[4]->setLink(GateNOR::INPUT1, *m_flipflops[3], DTypeFlipFlopWithSR::Qn);
+    m_nor[4]->setLink(GateNOR::INPUT2, *m_flipflops[4], DTypeFlipFlopWithSR::Q);
 
-    m_nor[5]->setLink(GateNOR::INPUT1, *m_flipflops[0], DTypeFlipFlopWithSR::Qn);
-    m_nor[5]->setLink(GateNOR::INPUT2, *m_flipflops[4], DTypeFlipFlopWithSR::Qn);
+    m_nor[5]->setLink(GateNOR::INPUT1, *m_flipflops[4], DTypeFlipFlopWithSR::Qn);
+    m_nor[5]->setLink(GateNOR::INPUT2, *m_flipflops[0], DTypeFlipFlopWithSR::Qn);
 
-    m_nor[6]->setLink(GateNOR::INPUT1, *m_flipflops[0], DTypeFlipFlopWithSR::Q);
-    m_nor[6]->setLink(GateNOR::INPUT2, *m_flipflops[1], DTypeFlipFlopWithSR::Qn);
+    m_nor[6]->setLink(GateNOR::INPUT1, *m_flipflops[1], DTypeFlipFlopWithSR::Qn);
+    m_nor[6]->setLink(GateNOR::INPUT2, *m_flipflops[0], DTypeFlipFlopWithSR::Q);
 
-    m_nor[7]->setLink(GateNOR::INPUT1, *m_flipflops[1], DTypeFlipFlopWithSR::Q);
-    m_nor[7]->setLink(GateNOR::INPUT2, *m_flipflops[2], DTypeFlipFlopWithSR::Qn);
+    m_nor[7]->setLink(GateNOR::INPUT1, *m_flipflops[2], DTypeFlipFlopWithSR::Qn);
+    m_nor[7]->setLink(GateNOR::INPUT2, *m_flipflops[1], DTypeFlipFlopWithSR::Q);
 
-    m_nor[8]->setLink(GateNOR::INPUT1, *m_flipflops[3], DTypeFlipFlopWithSR::Qn);
-    m_nor[8]->setLink(GateNOR::INPUT2, *m_flipflops[2], DTypeFlipFlopWithSR::Q);
+    m_nor[8]->setLink(GateNOR::INPUT1, *m_flipflops[2], DTypeFlipFlopWithSR::Q);
+    m_nor[8]->setLink(GateNOR::INPUT2, *m_flipflops[3], DTypeFlipFlopWithSR::Qn);
 
-    m_nor[9]->setLink(GateNOR::INPUT1, *m_flipflops[3], DTypeFlipFlopWithSR::Q);
-    m_nor[9]->setLink(GateNOR::INPUT2, *m_flipflops[4], DTypeFlipFlopWithSR::Qn);
+    m_nor[9]->setLink(GateNOR::INPUT1, *m_flipflops[4], DTypeFlipFlopWithSR::Qn);
+    m_nor[9]->setLink(GateNOR::INPUT2, *m_flipflops[3], DTypeFlipFlopWithSR::Q);
 
     for (std::size_t index = 0; index < m_nor.size(); ++index)
         setLinkInternal(m_output_pins[index], *m_nor[index], GateNOR::OUTPUT);
@@ -89,6 +102,11 @@ nts::Component4017::~Component4017() noexcept
 
 void nts::Component4017::simulate(std::size_t tick)
 {
+    m_buffer_last_flipflop->simulate(tick);
+    m_buffer_flipflop_0_1->simulate(tick);
+    m_buffer_flipflop_1_2->simulate(tick);
+    m_buffer_flipflop_2_3->simulate(tick);
+    m_buffer_flipflop_3_4->simulate(tick);
     m_inverter_cp1->simulate(tick);
     m_and_gate_clock->simulate(tick);
     m_and_gate_data->simulate(tick);

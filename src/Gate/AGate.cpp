@@ -20,7 +20,7 @@ nts::AGate::AGate(nts::ComponentType type, std::size_t nb_pins, const pinList_t 
 
 void nts::AGate::simulate(std::size_t tick)
 {
-    if (m_actual_tick < tick) {
+    if (isNextTick(tick)) {
         m_computed_pins.clear();
         m_actual_tick = tick;
         m_computed = false;
@@ -71,4 +71,9 @@ void nts::AGate::dump() const
         }
         std::cout << std::endl;
     }
+}
+
+bool nts::AGate::isNextTick(std::size_t tick) const
+{
+    return m_actual_tick < tick;
 }
