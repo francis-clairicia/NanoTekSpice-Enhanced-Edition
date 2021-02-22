@@ -14,7 +14,7 @@ namespace nts
 {
     class AGate: public nts::IComponent {
         public:
-            AGate(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, std::size_t output_pin) noexcept;
+            AGate(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, const pinList_t & output_pins) noexcept;
 
             void simulate(std::size_t tick) final;
             nts::Tristate compute(std::size_t pin) final;
@@ -22,18 +22,19 @@ namespace nts
             void dump() const final;
 
         protected:
-            virtual nts::Tristate computeOutput() = 0;
+            virtual nts::Tristate computeOutput(std::size_t pin) = 0;
 
         protected:
-            nts::Tristate        m_value;
-            nts::ComponentType   m_type;
+            std::unordered_map<std::size_t, nts::Tristate> m_value;
+            nts::ComponentType                             m_type;
+            bool                                           m_computed;
 
         private:
             std::size_t               m_actual_tick;
-            bool                      m_computed;
+            nts::componentPin_t       m_computed_pins;
             std::vector<nts::Link>    m_links;
             const nts::componentPin_t m_input_pins;
-            std::size_t               m_output_pin;
+            const nts::componentPin_t m_output_pins;
     };
 }
 

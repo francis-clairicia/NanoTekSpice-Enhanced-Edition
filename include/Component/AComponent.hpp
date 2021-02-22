@@ -26,12 +26,12 @@ namespace nts
 
         protected:
             nts::ComponentType   m_type;
+            const nts::componentPin_t m_input_pins;
+            const nts::componentPin_t m_output_pins;
 
         private:
             std::vector<nts::Link>    m_internal_links;
             std::vector<nts::Link>    m_external_links;
-            const nts::componentPin_t m_input_pins;
-            const nts::componentPin_t m_output_pins;
     };
 }
 

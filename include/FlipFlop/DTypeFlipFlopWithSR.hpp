@@ -36,9 +36,8 @@ namespace nts
 
         private:
             std::unique_ptr<IComponent> m_gateQ;
-            std::unique_ptr<IComponent> m_gateQn;
 
-        private:
+        public:
             class QGate: public nts::AGate {
                 public:
                     enum Pin
@@ -47,18 +46,19 @@ namespace nts
                         CLOCK  = 2,
                         RESET  = 3,
                         SET    = 4,
-                        OUTPUT = 5
+                        Q      = 5,
+                        Qn     = 6
                     };
 
                 public:
-                    QGate(bool invert) noexcept;
+                    QGate() noexcept;
 
                 protected:
-                    nts::Tristate computeOutput() final;
+                    nts::Tristate computeOutput(std::size_t pin) final;
 
                 private:
-                    nts::Tristate m_buffer;
-                    bool          m_invert;
+                    nts::Tristate m_Q_buffer;
+                    nts::Tristate m_Qn_buffer;
             };
     };
 }

@@ -11,7 +11,7 @@
 #include "BadPinException.hpp"
 
 nts::AComponent::AComponent(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, const pinList_t &output_pins) noexcept:
-    m_type{type}, m_internal_links{nb_pins}, m_external_links{nb_pins}, m_input_pins{input_pins}, m_output_pins{output_pins}
+    m_type{type}, m_input_pins{input_pins}, m_output_pins{output_pins}, m_internal_links{nb_pins}, m_external_links{nb_pins}
 {
 }
 
