@@ -35,28 +35,15 @@ namespace nts
             void dumpInternalComponents() const final;
 
         private:
-            std::unique_ptr<IComponent> m_tg1;
-            std::unique_ptr<IComponent> m_tg2;
-            std::unique_ptr<IComponent> m_tg3;
-            std::unique_ptr<IComponent> m_tg4;
-            std::unique_ptr<IComponent> m_inverter_clock;
-            std::unique_ptr<IComponent> m_inverter1;
-            std::unique_ptr<IComponent> m_inverter2;
-            std::unique_ptr<IComponent> m_nor1;
-            std::unique_ptr<IComponent> m_nor2;
-            std::unique_ptr<IComponent> m_nor3;
-            std::unique_ptr<IComponent> m_nor4;
-            std::unique_ptr<IComponent> m_node1;
-            std::unique_ptr<IComponent> m_node2;
-            std::unique_ptr<IComponent> m_memoryQ;
-            std::unique_ptr<IComponent> m_memoryQn;
+            std::unique_ptr<IComponent> m_gateQ;
+            std::unique_ptr<IComponent> m_gateQn;
 
         private:
-            class MemoryGate: public nts::AGate {
+            class QGate: public nts::AGate {
                 public:
                     enum Pin
                     {
-                        INPUT  = 1,
+                        DATA   = 1,
                         CLOCK  = 2,
                         RESET  = 3,
                         SET    = 4,
@@ -64,13 +51,14 @@ namespace nts
                     };
 
                 public:
-                    MemoryGate() noexcept;
+                    QGate(bool invert) noexcept;
 
                 protected:
                     nts::Tristate computeOutput() final;
 
                 private:
                     nts::Tristate m_buffer;
+                    bool          m_invert;
             };
     };
 }

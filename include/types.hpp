@@ -29,6 +29,8 @@ namespace nts
 
     enum ComponentType
     {
+        /* Third-party components */
+        ThirdPartyComponentType = -1,
         /* Default components */
         InputComponentType,
         OutputComponentType,
@@ -49,17 +51,15 @@ namespace nts
         GateNORType,
         GateNOTType,
         GateORType,
-        GateTransmissionType,
         GateXORType,
         /* Sum */
         SumComponentType,
         /* FlipFlops */
-        DTypeFlipFlopWithSRType,
-        //D-Type FlipFlop memory
-        DTypeFlipFlopMemoryType
+        DTypeFlipFlopWithSRType
     };
 
     const std::unordered_map<ComponentType, std::string> COMPONENT_TYPE_AS_STRING{
+        {ThirdPartyComponentType,     "A"},
         {InputComponentType,      "input"},
         {OutputComponentType,     "output"},
         {ClockComponentType,      "clock"},
@@ -78,11 +78,9 @@ namespace nts
         {GateNORType,             "NOR"},
         {GateNOTType,             "NOT"},
         {GateORType,              "OR"},
-        {GateTransmissionType,    "Transmission"},
         {GateXORType,             "XOR"},
         {SumComponentType,        "SUM"},
         {DTypeFlipFlopWithSRType, "D-type Flip Flop with S/R"},
-        {DTypeFlipFlopMemoryType, "D-type Flip Flop Memory"},
     };
 }
 

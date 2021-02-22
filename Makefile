@@ -47,8 +47,7 @@ SRC_GATES			=	src/Gate/AGate.cpp									\
 						src/Gate/GateXOR.cpp								\
 						src/Gate/GateNOR.cpp								\
 						src/Gate/GateNAND.cpp								\
-						src/Gate/GateNOT.cpp								\
-						src/Gate/GateTransmission.cpp
+						src/Gate/GateNOT.cpp
 
 SRC_SUM				=	src/Sum/SumComponent.cpp
 
