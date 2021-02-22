@@ -60,7 +60,7 @@ nts::Tristate nts::DTypeFlipFlopWithSR::QGate::computeOutput(std::size_t pin)
         nts::Tristate reset = compute(QGate::RESET);
         nts::Tristate set = compute(QGate::SET);
 
-        if (reset == nts::UNDEFINED || set == nts::UNDEFINED || clock == nts::UNDEFINED)
+        if (reset == nts::UNDEFINED || set == nts::UNDEFINED)
             return nts::UNDEFINED;
         if (reset == nts::TRUE && set == nts::TRUE) {
             m_Q_buffer = nts::TRUE;
@@ -74,6 +74,9 @@ nts::Tristate nts::DTypeFlipFlopWithSR::QGate::computeOutput(std::size_t pin)
         } else if (clock == nts::TRUE) {
             m_Q_buffer = data;
             m_Qn_buffer = static_cast<nts::Tristate>(!data);
+        } else if (clock == nts::FALSE) {
+            m_Q_buffer = static_cast<nts::Tristate>(!data);
+            m_Qn_buffer = data;
         }
     }
     if (pin == Q)

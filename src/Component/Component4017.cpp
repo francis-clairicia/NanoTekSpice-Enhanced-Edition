@@ -5,6 +5,7 @@
 ** Component4017
 */
 
+#include <iostream>
 #include "Component4017.hpp"
 #include "GateAND.hpp"
 #include "GateOR.hpp"
@@ -119,6 +120,7 @@ void nts::Component4017::simulate(std::size_t tick)
 
 void nts::Component4017::dumpInternalComponents() const
 {
+    std::cout << "Internal components:" << std::endl;
     m_inverter_cp1->dump();
     m_and_gate_clock->dump();
     m_and_gate_data->dump();

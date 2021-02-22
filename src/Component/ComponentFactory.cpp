@@ -5,7 +5,6 @@
 ** ComponentFactory
 */
 
-#include <iostream>
 #include "ComponentFactory.hpp"
 #include "ClockComponent.hpp"
 #include "ConstComponent.hpp"

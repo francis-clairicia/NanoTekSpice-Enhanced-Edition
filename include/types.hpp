@@ -61,7 +61,7 @@ namespace nts
     };
 
     const std::unordered_map<ComponentType, std::string> COMPONENT_TYPE_AS_STRING{
-        {ThirdPartyComponentType,     "A"},
+        {ThirdPartyComponentType, "A"},
         {InputComponentType,      "input"},
         {OutputComponentType,     "output"},
         {ClockComponentType,      "clock"},
