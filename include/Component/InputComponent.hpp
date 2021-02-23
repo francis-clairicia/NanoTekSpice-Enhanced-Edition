@@ -27,6 +27,10 @@ namespace nts
             void dump() const override;
 
             virtual void setValue(nts::Tristate value);
+
+        protected:
+            std::size_t   m_actual_tick;
+            nts::Tristate m_value_for_next_tick;
     };  
 }
 

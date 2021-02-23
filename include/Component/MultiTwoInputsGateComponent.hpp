@@ -9,12 +9,12 @@
 #define MULTITWOINPUTSGATECOMPONENT_HPP_
 
 #include <iostream>
-#include "AComponent.hpp"
+#include "Component.hpp"
 
 namespace nts
 {
     template<nts::ComponentType Type, typename Gate>
-    class MultiTwoInputsGateComponent: public nts::AComponent {
+    class MultiTwoInputsGateComponent: public nts::Component {
         public:
             enum Pin
             {
@@ -34,7 +34,7 @@ namespace nts
 
         public:
             MultiTwoInputsGateComponent() noexcept:
-                AComponent(Type, 14, {
+                Component(Type, 14, {
                     INPUT_1A,
                     INPUT_1B,
                     INPUT_2A,
@@ -72,12 +72,6 @@ namespace nts
             }
 
             ~MultiTwoInputsGateComponent() noexcept = default;
-
-            void simulate(std::size_t tick) final
-            {
-                for (const auto &component : m_components)
-                    component->simulate(tick);
-            }
 
         protected:
             void dumpInternalComponents() const final

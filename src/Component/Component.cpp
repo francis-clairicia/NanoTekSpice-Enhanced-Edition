@@ -2,20 +2,38 @@
 ** EPITECH PROJECT, 2021
 ** B-OOP-400-BDX-4-1-tekspice-francis.clairicia-rose-claire-josephine
 ** File description:
-** AComponent
+** Component
 */
 
 #include <algorithm>
 #include <iostream>
-#include "AComponent.hpp"
+#include "Component.hpp"
 #include "BadPinException.hpp"
 
-nts::AComponent::AComponent(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, const pinList_t &output_pins) noexcept:
-    m_type{type}, m_input_pins{input_pins}, m_output_pins{output_pins}, m_internal_links{nb_pins}, m_external_links{nb_pins}
+nts::Component::Component(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, const pinList_t &output_pins) noexcept:
+    m_type{type}, m_input_pins{input_pins}, m_output_pins{output_pins},
+    m_actual_tick{0}, m_internal_links{nb_pins}, m_external_links{nb_pins}
 {
 }
 
-nts::Tristate nts::AComponent::compute(std::size_t pin)
+void nts::Component::simulate(std::size_t tick)
+{
+    if (m_actual_tick != tick) {
+        m_actual_tick = tick;
+        std::for_each(m_input_pins.begin(), m_input_pins.end(), [this, &tick](std::size_t pin){
+            if (m_external_links[pin - 1].component) {
+                m_external_links[pin - 1].component->simulate(tick);
+            }
+        });
+        std::for_each(m_internal_links.begin(), m_internal_links.end(), [&tick](nts::Link &link){
+            if (link.component) {
+                link.component->simulate(tick);
+            }
+        });
+    }
+}
+
+nts::Tristate nts::Component::compute(std::size_t pin)
 {
     if (pin == 0 || pin > m_external_links.size())
         throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
@@ -30,7 +48,7 @@ nts::Tristate nts::AComponent::compute(std::size_t pin)
     return nts::UNDEFINED;
 }
 
-void nts::AComponent::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
+void nts::Component::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
     if (pin == 0 || pin > m_external_links.size())
         throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
@@ -38,7 +56,7 @@ void nts::AComponent::setLink(std::size_t pin, nts::IComponent &other, std::size
     m_external_links[pin - 1].pin = otherPin;
 }
 
-void nts::AComponent::dump() const
+void nts::Component::dump() const
 {
     std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << std::endl;
 
@@ -64,11 +82,11 @@ void nts::AComponent::dump() const
     dumpInternalComponents();
 }
 
-void nts::AComponent::dumpInternalComponents() const
+void nts::Component::dumpInternalComponents() const
 {
 }
 
-void nts::AComponent::setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
+void nts::Component::setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
     if (pin == 0 || pin > m_internal_links.size())
         throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);

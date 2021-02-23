@@ -11,3 +11,4 @@ vgcore.*
 
 *.nts
 docs
+log.bin

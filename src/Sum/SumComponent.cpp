@@ -23,7 +23,7 @@ Outputs:
 */
 
 nts::SumComponent::SumComponent() noexcept:
-    AComponent(SumComponentType, 5, {Ai, Bi, Ci}, {Co, Si}),
+    Component(SumComponentType, 5, {Ai, Bi, Ci}, {Co, Si}),
     m_xor1(std::make_unique<GateXOR>()),
     m_xor2(std::make_unique<GateXOR>()),
     m_and1(std::make_unique<GateAND>()),
@@ -50,15 +50,6 @@ nts::SumComponent::SumComponent() noexcept:
 
 nts::SumComponent::~SumComponent()
 {
-}
-
-void nts::SumComponent::simulate(std::size_t tick)
-{
-    m_xor1->simulate(tick);
-    m_xor2->simulate(tick);
-    m_and1->simulate(tick);
-    m_and2->simulate(tick);
-    m_or->simulate(tick);
 }
 
 void nts::SumComponent::dumpInternalComponents() const

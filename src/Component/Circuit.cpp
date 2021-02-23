@@ -11,10 +11,16 @@
 #include "BadComponentNameException.hpp"
 #include "InputValueException.hpp"
 
-static const std::unordered_map<std::string, nts::Tristate> TRISTATE_CONVERTER{
+static const std::unordered_map<std::string, nts::Tristate> STR_TO_TRISTATE{
     {"0", nts::FALSE},
     {"1", nts::TRUE},
     {"U", nts::UNDEFINED}
+};
+
+static const std::unordered_map<nts::Tristate, std::string> TRISTATE_TO_STR{
+    {nts::FALSE,     "0"},
+    {nts::TRUE,      "1"},
+    {nts::UNDEFINED, "U"}
 };
 
 nts::Circuit::Circuit() noexcept:
@@ -83,34 +89,34 @@ nts::OutputComponent &nts::Circuit::outputs(const std::string &name) const
 
 void nts::Circuit::setValueForNextTick(const std::string &name, const std::string &value)
 {
-    if (m_input_components.find(name) == m_input_components.end())
+    const auto &component = m_input_components.find(name);
+    if (component == m_input_components.end())
         throw nts::BadComponentNameException(name);
-    const auto &search = TRISTATE_CONVERTER.find(value);
-    if (search == TRISTATE_CONVERTER.end())
+    const auto &input = STR_TO_TRISTATE.find(value);
+    if (input == STR_TO_TRISTATE.end())
         throw nts::InputValueException(value);
-    m_value_to_set[name] = value;
+    component->second.setValue(input->second);
 }
 
 void nts::Circuit::display(std::size_t tick) const noexcept
 {
     std::cout << "tick: " << tick << std::endl;
     std::cout << "input(s):" << std::endl;
-    for (const auto &component : m_input_components)
-        std::cout << std::string(2, ' ') << component.first << ": " << component.second.getValueAsString() << std::endl;
+    for (const auto &component : m_input_components) {
+        std::cout << std::string(2, ' ') << component.first << ": ";
+        std::cout << TRISTATE_TO_STR.at(component.second.compute(InputComponent::OUTPUT)) << std::endl;
+    }
     std::cout << "output(s):" << std::endl;
-    for (const auto &component : m_output_components)
-        std::cout << std::string(2, ' ') << component.first << ": " << component.second.getValueAsString() << std::endl;
+    for (const auto &component : m_output_components) {
+        std::cout << std::string(2, ' ') << component.first << ": ";
+        std::cout << TRISTATE_TO_STR.at(component.second.compute(OutputComponent::INPUT)) << std::endl;
+    }
 }
 
 void nts::Circuit::simulate(std::size_t tick)
 {
     for (auto &component : m_components)
         component.second->simulate(tick);
-    for (const auto &pair : m_value_to_set)
-        m_input_components.at(pair.first).setValue(TRISTATE_CONVERTER.at(pair.second));
-    m_value_to_set.clear();
-    for (auto &component : m_output_components)
-        component.second.compute(1);
 }
 
 void nts::Circuit::dump() const noexcept

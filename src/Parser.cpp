@@ -37,7 +37,7 @@ void nts::Parser::parse() const
 {
     std::ifstream file(m_file);
 
-    if (!file.is_open())
+    if (!file)
         throw FileException(m_file, "Cannot open file");
 
     std::string buffer((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());

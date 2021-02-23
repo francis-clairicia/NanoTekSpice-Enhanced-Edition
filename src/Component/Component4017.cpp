@@ -19,16 +19,12 @@ nts::Component4017::Component4017() noexcept:
     m_invert_cp1->setLink(GateNOT::INPUT, *this, CP1);
     m_and_gate_clock->setLink(GateAND::INPUT1, *this, CP0);
     m_and_gate_clock->setLink(GateAND::INPUT2, *m_invert_cp1, GateNOT::OUTPUT);
+    addInternalComponent(*m_invert_cp1);
+    addInternalComponent(*m_and_gate_clock);
 }
 
 nts::Component4017::~Component4017() noexcept
 {
-}
-
-void nts::Component4017::simulateInternalComponents(std::size_t tick)
-{
-    m_invert_cp1->simulate(tick);
-    m_and_gate_clock->simulate(tick);
 }
 
 void nts::Component4017::computeOutputs()

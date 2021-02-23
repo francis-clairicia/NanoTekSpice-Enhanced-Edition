@@ -37,7 +37,6 @@ namespace nts
             ~Component4017() noexcept;
 
         protected:
-            void simulateInternalComponents(std::size_t tick) final;
             void computeOutputs() final;
 
         private:

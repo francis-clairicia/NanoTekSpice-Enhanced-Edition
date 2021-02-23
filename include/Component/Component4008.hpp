@@ -8,11 +8,11 @@
 #ifndef COMPONENT4008_HPP_
 #define COMPONENT4008_HPP_
 
-#include "AComponent.hpp"
+#include "Component.hpp"
 
 namespace nts
 {
-    class Component4008: public nts::AComponent {
+    class Component4008: public nts::Component {
         public:
             enum Pin
             {
@@ -35,8 +35,6 @@ namespace nts
         public:
             Component4008() noexcept;
             ~Component4008() noexcept;
-
-            void simulate(std::size_t tick) final;
 
         protected:
             void dumpInternalComponents() const final;

@@ -10,7 +10,7 @@
 #include "SumComponent.hpp"
 
 nts::Component4008::Component4008() noexcept:
-    AComponent(Component4008Type, 16, {
+    Component(Component4008Type, 16, {
         A1, B1, A2, B2, A3, B3, A4, B4, Cin
     }, {
         S1, S2, S3, S4, Cout
@@ -43,12 +43,6 @@ nts::Component4008::Component4008() noexcept:
 
 nts::Component4008::~Component4008() noexcept
 {
-}
-
-void nts::Component4008::simulate(std::size_t tick)
-{
-    for (const auto &component : m_components)
-        component->simulate(tick);
 }
 
 void nts::Component4008::dumpInternalComponents() const

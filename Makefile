@@ -35,7 +35,8 @@ SRC_COMPONENTS		=	src/Component/Circuit.cpp							\
 						src/Component/InputComponent.cpp					\
 						src/Component/OutputComponent.cpp					\
 						src/Component/ClockComponent.cpp					\
-						src/Component/AComponent.cpp						\
+						src/Component/LoggerComponent.cpp					\
+						src/Component/Component.cpp							\
 						src/Component/ACalculationComponent.cpp				\
 						src/Component/Component4008.cpp						\
 						src/Component/Component4013.cpp						\

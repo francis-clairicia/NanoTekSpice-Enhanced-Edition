@@ -9,21 +9,25 @@
 
 nts::ClockComponent::ClockComponent():
     InputComponent(),
-    m_actual_tick{0}
+    m_invert_value{true}
 {
     m_type = ClockComponentType;
 }
 
 void nts::ClockComponent::simulate(std::size_t tick)
 {
-    if (m_value == nts::UNDEFINED) {
+    if (m_actual_tick != tick) {
         m_actual_tick = tick;
-        return;
+        if (m_invert_value && m_value != nts::UNDEFINED)
+            m_value = static_cast<nts::Tristate>(!m_value);
+        else
+            m_value = m_value_for_next_tick;
+        m_invert_value = true;
     }
-    bool value = m_value;
-    while (m_actual_tick < tick) {
-        value = !value;
-        ++m_actual_tick;
-    }
-    m_value = static_cast<nts::Tristate>(value);
+}
+
+void nts::ClockComponent::setValue(nts::Tristate value)
+{
+    InputComponent::setValue(value);
+    m_invert_value = false;
 }

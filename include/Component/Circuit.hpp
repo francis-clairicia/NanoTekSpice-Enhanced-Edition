@@ -44,11 +44,10 @@ namespace nts
             const std::unique_ptr<nts::IComponent> &operator[](const std::string &key) const;
 
         private:
-            ComponentFactory                             m_factory;
-            componentMap_t                               m_components;
-            inputComponentMap_t                          m_input_components;
-            outputComponentMap_t                         m_output_components;
-            std::unordered_map<std::string, std::string> m_value_to_set;
+            ComponentFactory     m_factory;
+            componentMap_t       m_components;
+            inputComponentMap_t  m_input_components;
+            outputComponentMap_t m_output_components;
     };
 }
 

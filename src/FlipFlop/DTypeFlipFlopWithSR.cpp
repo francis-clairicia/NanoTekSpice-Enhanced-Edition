@@ -25,15 +25,11 @@ nts::DTypeFlipFlopWithSR::DTypeFlipFlopWithSR() noexcept:
     m_invert{std::make_unique<GateNOT>()}
 {
     m_invert->setLink(GateNOT::INPUT, *this, DATA);
+    addInternalComponent(*m_invert);
 }
 
 nts::DTypeFlipFlopWithSR::~DTypeFlipFlopWithSR()
 {
-}
-
-void nts::DTypeFlipFlopWithSR::simulateInternalComponents(std::size_t tick)
-{
-    m_invert->simulate(tick);
 }
 
 void nts::DTypeFlipFlopWithSR::computeOutputs()

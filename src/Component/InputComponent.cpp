@@ -10,12 +10,18 @@
 #include "BadPinException.hpp"
 
 nts::InputComponent::InputComponent() noexcept:
-    SinglePinComponent(InputComponentType)
+    SinglePinComponent(InputComponentType),
+    m_actual_tick{0},
+    m_value_for_next_tick{nts::UNDEFINED}
 {
 }
 
-void nts::InputComponent::simulate(std::size_t tick __attribute__((unused)))
+void nts::InputComponent::simulate(std::size_t tick)
 {
+    if (m_actual_tick != tick) {
+        m_actual_tick = tick;
+        m_value = m_value_for_next_tick;
+    }
 }
 
 nts::Tristate nts::InputComponent::compute(std::size_t pin)
@@ -28,10 +34,10 @@ nts::Tristate nts::InputComponent::compute(std::size_t pin)
 void nts::InputComponent::dump() const
 {
     nts::SinglePinComponent::dump();
-    std::cout << "-> Value: " << getValueAsString() << std::endl;
+    std::cout << "-> Value: " << m_value << std::endl;
 }
 
 void nts::InputComponent::setValue(nts::Tristate value)
 {
-    m_value = value;
+    m_value_for_next_tick = value;
 }

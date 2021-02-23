@@ -29,7 +29,6 @@ namespace nts
             ~DTypeFlipFlopWithSR();
 
         protected:
-            void simulateInternalComponents(std::size_t tick) final;
             void computeOutputs() final;
 
         private:

@@ -19,8 +19,6 @@ namespace nts
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
             void dump() const override;
 
-            const std::string &getValueAsString() const noexcept;
-
         protected:
             nts::Link          m_link;
             nts::ComponentType m_type;

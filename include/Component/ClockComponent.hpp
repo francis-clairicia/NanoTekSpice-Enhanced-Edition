@@ -17,9 +17,10 @@ namespace nts
             ClockComponent();
 
             void simulate(std::size_t tick) final;
+            void setValue(nts::Tristate value) final;
         
         private:
-            std::size_t m_actual_tick;
+            bool m_invert_value;
     };
 }
 

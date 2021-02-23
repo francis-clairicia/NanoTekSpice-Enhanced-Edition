@@ -9,12 +9,6 @@
 #include "SinglePinComponent.hpp"
 #include "BadPinException.hpp"
 
-static const std::unordered_map<nts::Tristate, std::string> TRISTATE_CONVERTER{
-    {nts::FALSE,     "0"},
-    {nts::TRUE,      "1"},
-    {nts::UNDEFINED, "U"}
-};
-
 nts::SinglePinComponent::SinglePinComponent(nts::ComponentType type) noexcept:
     m_link{.component = nullptr, .pin = 0},
     m_type{type},
@@ -39,9 +33,4 @@ void nts::SinglePinComponent::dump() const
     else
         std::cout << "not linked";
     std::cout << std::endl;
-}
-
-const std::string &nts::SinglePinComponent::getValueAsString() const noexcept
-{
-    return TRISTATE_CONVERTER.at(m_value);
 }

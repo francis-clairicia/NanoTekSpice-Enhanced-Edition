@@ -24,6 +24,10 @@ namespace nts
                 m_type = Type;
             }
 
+            void simulate(std::size_t tick __attribute__((unused))) final
+            {
+            }
+
             void setValue(nts::Tristate value __attribute__((unused))) final
             {
                 throw nts::ConstComponentException("Cannot set value to a \"" + COMPONENT_TYPE_AS_STRING.at(m_type) + "\" component");

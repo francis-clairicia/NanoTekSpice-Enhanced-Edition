@@ -8,11 +8,11 @@
 #ifndef SUMCOMPONENT_HPP_
 #define SUMCOMPONENT_HPP_
 
-#include "AComponent.hpp"
+#include "Component.hpp"
 
 namespace nts
 {
-    class SumComponent: public nts::AComponent {
+    class SumComponent: public nts::Component {
         public:
             enum Pin
             {
@@ -26,8 +26,6 @@ namespace nts
         public:
             SumComponent() noexcept;
             ~SumComponent();
-
-            void simulate(std::size_t tick) final;
 
         protected:
             void dumpInternalComponents() const final;

@@ -9,12 +9,12 @@
 #define MULTIONEINPUTGATECOMPONENT_HPP_
 
 #include <iostream>
-#include "AComponent.hpp"
+#include "Component.hpp"
 
 namespace nts
 {
     template<nts::ComponentType Type, typename Gate>
-    class MultiOneInputGateComponent: public nts::AComponent {
+    class MultiOneInputGateComponent: public nts::Component {
         public:
             enum Pin
             {
@@ -34,7 +34,7 @@ namespace nts
 
         public:
             MultiOneInputGateComponent() noexcept:
-                AComponent(Type, 14, {
+                Component(Type, 14, {
                     INPUT_1,
                     INPUT_2,
                     INPUT_3,
@@ -75,12 +75,6 @@ namespace nts
                 setLinkInternal(OUTPUT_6, *m_components.back(), Gate::OUTPUT);
             }
             ~MultiOneInputGateComponent() noexcept = default;
-
-            void simulate(std::size_t tick) final
-            {
-                for (const auto &component : m_components)
-                    component->simulate(tick);
-            }
 
         protected:
             void dumpInternalComponents() const final

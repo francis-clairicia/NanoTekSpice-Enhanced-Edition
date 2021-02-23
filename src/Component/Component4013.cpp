@@ -10,7 +10,7 @@
 #include "DTypeFlipFlopWithSR.hpp"
 
 nts::Component4013::Component4013() noexcept:
-    AComponent(Component4013Type, 14, {
+    Component(Component4013Type, 14, {
         CLOCK1, RESET1, DATA1, SET1, CLOCK2, RESET2, DATA2, SET2
     }, {
         Q1, Q1n, Q2, Q2n
@@ -35,12 +35,6 @@ nts::Component4013::Component4013() noexcept:
 
 nts::Component4013::~Component4013() noexcept
 {
-}
-
-void nts::Component4013::simulate(std::size_t tick)
-{
-    for (const auto &component : m_components)
-        component->simulate(tick);
 }
 
 void nts::Component4013::dumpInternalComponents() const

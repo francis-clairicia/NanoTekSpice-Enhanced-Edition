@@ -54,11 +54,12 @@ namespace nts
         GateNOTType,
         GateORType,
         GateXORType,
-        BufferGateType,
         /* Sum */
         SumComponentType,
         /* FlipFlops */
-        DTypeFlipFlopWithSRType
+        DTypeFlipFlopWithSRType,
+        /* Logger */
+        LoggerComponentType
     };
 
     const std::unordered_map<ComponentType, std::string> COMPONENT_TYPE_AS_STRING{
@@ -83,9 +84,9 @@ namespace nts
         {GateNOTType,             "NOT"},
         {GateORType,              "OR"},
         {GateXORType,             "XOR"},
-        {BufferGateType,          "Buffer"},
         {SumComponentType,        "SUM"},
         {DTypeFlipFlopWithSRType, "D-type Flip Flop with S/R"},
+        {LoggerComponentType,     "logger"},
     };
 }
 
