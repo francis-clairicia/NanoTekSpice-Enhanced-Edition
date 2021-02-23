@@ -14,14 +14,6 @@ namespace nts
 {
     class GateOR: public nts::TwoInputsGate {
         public:
-            enum Pin
-            {
-                INPUT1 = 1,
-                INPUT2 = 2,
-                OUTPUT = 3
-            };
-
-        public:
             GateOR() noexcept;
             nts::Tristate operation(nts::Tristate a, nts::Tristate b) const final;
     };

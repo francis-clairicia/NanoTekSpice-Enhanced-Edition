@@ -14,6 +14,13 @@ namespace nts
 {
     class OneInputGate: public nts::AGate {
         public:
+            enum Pin
+            {
+                INPUT  = 1,
+                OUTPUT = 2,
+            };
+
+        public:
             OneInputGate(nts::ComponentType type) noexcept;
             ~OneInputGate() override;
 
