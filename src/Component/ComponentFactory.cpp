@@ -15,6 +15,7 @@
 #include "Component4013.hpp"
 #include "Component4017.hpp"
 #include "Component4030.hpp"
+#include "Component4040.hpp"
 #include "Component4069.hpp"
 #include "Component4071.hpp"
 #include "Component4081.hpp"
@@ -34,6 +35,7 @@ static const std::unordered_map<std::string, std::unique_ptr<nts::IComponent> (*
     {"4013",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4013>();}},
     {"4017",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4017>();}},
     {"4030",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4030>();}},
+    {"4040",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4040>();}},
     {"4069",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4069>();}},
     {"4071",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4071>();}},
     {"4081",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4081>();}},

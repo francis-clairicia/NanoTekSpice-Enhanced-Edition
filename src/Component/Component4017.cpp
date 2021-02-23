@@ -38,7 +38,7 @@ void nts::Component4017::computeOutputs()
             pair.second = nts::UNDEFINED;
         return;
     }
-    if (clock == nts::FALSE)
+    if (master_reset == nts::FALSE && clock == nts::FALSE)
         return;
     m_shift = ((m_shift + 1) % pins.size()) * (!master_reset);
     for (std::size_t index = 0; index < pins.size(); ++index) {
