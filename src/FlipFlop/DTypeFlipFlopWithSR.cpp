@@ -6,6 +6,7 @@
 */
 
 #include "DTypeFlipFlopWithSR.hpp"
+#include "GateNOT.hpp"
 
 /*
 Inputs:
@@ -20,68 +21,44 @@ Outputs:
 */
 
 nts::DTypeFlipFlopWithSR::DTypeFlipFlopWithSR() noexcept:
-    AComponent(DTypeFlipFlopWithSRType, 6, {CLOCK, RESET, DATA, SET}, {Q, Qn}),
-    m_gateQ(std::make_unique<QGate>())
+    ACalculationComponent(DTypeFlipFlopWithSRType, 6, {CLOCK, RESET, DATA, SET}, {Q, Qn}),
+    m_invert{std::make_unique<GateNOT>()}
 {
-    m_gateQ->setLink(QGate::DATA, *this, DATA);
-    m_gateQ->setLink(QGate::CLOCK, *this, CLOCK);
-    m_gateQ->setLink(QGate::RESET, *this, RESET);
-    m_gateQ->setLink(QGate::SET, *this, SET);
-    setLinkInternal(Q, *m_gateQ, QGate::Q);
-    setLinkInternal(Qn, *m_gateQ, QGate::Qn);
+    m_invert->setLink(GateNOT::INPUT, *this, DATA);
 }
 
 nts::DTypeFlipFlopWithSR::~DTypeFlipFlopWithSR()
 {
 }
 
-void nts::DTypeFlipFlopWithSR::simulate(std::size_t tick)
+void nts::DTypeFlipFlopWithSR::simulateInternalComponents(std::size_t tick)
 {
-    m_gateQ->simulate(tick);
+    m_invert->simulate(tick);
 }
 
-void nts::DTypeFlipFlopWithSR::dumpInternalComponents() const
+void nts::DTypeFlipFlopWithSR::computeOutputs()
 {
-}
+    nts::Tristate data = compute(DATA);
+    nts::Tristate data_invert = m_invert->compute(GateNOT::OUTPUT);
+    nts::Tristate clock = compute(CLOCK);
+    nts::Tristate reset = compute(RESET);
+    nts::Tristate set = compute(SET);
 
-nts::DTypeFlipFlopWithSR::QGate::QGate() noexcept:
-    AGate(ThirdPartyComponentType, 6, {QGate::DATA, QGate::CLOCK, QGate::RESET, QGate::SET}, {QGate::Q, QGate::Qn}),
-    m_Q_buffer(nts::UNDEFINED), m_Qn_buffer(nts::UNDEFINED)
-{
-}
-
-nts::Tristate nts::DTypeFlipFlopWithSR::QGate::computeOutput(std::size_t pin)
-{
-    if (!m_computed) {
-        m_computed = true;
-
-        nts::Tristate data = compute(QGate::DATA);
-        nts::Tristate clock = compute(QGate::CLOCK);
-        nts::Tristate reset = compute(QGate::RESET);
-        nts::Tristate set = compute(QGate::SET);
-
-        if (reset == nts::UNDEFINED || set == nts::UNDEFINED)
-            return nts::UNDEFINED;
-        if (reset == nts::TRUE && set == nts::TRUE) {
-            m_Q_buffer = nts::TRUE;
-            m_Qn_buffer = nts::TRUE;
-        } else if (reset == nts::TRUE) {
-            m_Q_buffer = nts::FALSE;
-            m_Qn_buffer = nts::TRUE;
-        } else if (set == nts::TRUE) {
-            m_Q_buffer = nts::TRUE;
-            m_Qn_buffer = nts::FALSE;
-        } else if (clock == nts::TRUE) {
-            m_Q_buffer = data;
-            m_Qn_buffer = static_cast<nts::Tristate>(!data);
-        } else if (clock == nts::FALSE) {
-            m_Q_buffer = static_cast<nts::Tristate>(!data);
-            m_Qn_buffer = data;
-        }
+    if (reset == nts::UNDEFINED || set == nts::UNDEFINED) {
+        m_output_pins[Q] = nts::UNDEFINED;
+        m_output_pins[Qn] = nts::UNDEFINED;
+        return;
     }
-    if (pin == Q)
-        return m_Q_buffer;
-    if (pin == Qn)
-        return m_Qn_buffer;
-    return nts::UNDEFINED;
+    if (reset == nts::TRUE || set == nts::TRUE) {
+        m_output_pins[Q] = set;
+        m_output_pins[Qn] = reset;
+        return;
+    }
+    if (clock == nts::TRUE) {
+        m_output_pins[Q] = data;
+        m_output_pins[Qn] = data_invert;
+    } else if (clock == nts::UNDEFINED) {
+        m_output_pins[Q] = nts::UNDEFINED;
+        m_output_pins[Qn] = nts::UNDEFINED;
+    }
 }

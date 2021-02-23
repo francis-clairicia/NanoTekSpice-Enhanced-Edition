@@ -17,8 +17,8 @@ static const std::unordered_map<nts::Tristate, std::string> TRISTATE_CONVERTER{
 
 nts::SinglePinComponent::SinglePinComponent(nts::ComponentType type) noexcept:
     m_link{.component = nullptr, .pin = 0},
-    m_type(type),
-    m_value(nts::UNDEFINED)
+    m_type{type},
+    m_value{nts::UNDEFINED}
 {
 }
 

@@ -10,7 +10,11 @@
 #include "DTypeFlipFlopWithSR.hpp"
 
 nts::Component4013::Component4013() noexcept:
-    AComponent(Component4013Type, 14, {3, 4, 5, 6, 8, 9, 10, 11}, {1, 2, 12, 13})
+    AComponent(Component4013Type, 14, {
+        CLOCK1, RESET1, DATA1, SET1, CLOCK2, RESET2, DATA2, SET2
+    }, {
+        Q1, Q1n, Q2, Q2n
+    })
 {
     m_components.push_back(std::make_unique<DTypeFlipFlopWithSR>());
     m_components.back()->setLink(DTypeFlipFlopWithSR::CLOCK, *this, CLOCK1);

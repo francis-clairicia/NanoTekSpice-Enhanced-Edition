@@ -22,10 +22,10 @@ namespace nts
         
         protected:
             void setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin);
-            virtual void dumpInternalComponents() const = 0;
+            virtual void dumpInternalComponents() const;
 
         protected:
-            nts::ComponentType   m_type;
+            nts::ComponentType        m_type;
             const nts::componentPin_t m_input_pins;
             const nts::componentPin_t m_output_pins;
 

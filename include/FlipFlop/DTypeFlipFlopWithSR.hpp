@@ -8,12 +8,11 @@
 #ifndef DTYPEFLIPFLOPWITHSR_HPP_
 #define DTYPEFLIPFLOPWITHSR_HPP_
 
-#include "AComponent.hpp"
-#include "AGate.hpp"
+#include "ACalculationComponent.hpp"
 
 namespace nts
 {
-    class DTypeFlipFlopWithSR: public nts::AComponent {
+    class DTypeFlipFlopWithSR: public nts::ACalculationComponent {
         public:
             enum Pin
             {
@@ -29,37 +28,12 @@ namespace nts
             DTypeFlipFlopWithSR() noexcept;
             ~DTypeFlipFlopWithSR();
 
-            void simulate(std::size_t tick) final;
-
         protected:
-            void dumpInternalComponents() const final;
+            void simulateInternalComponents(std::size_t tick) final;
+            void computeOutputs() final;
 
         private:
-            std::unique_ptr<IComponent> m_gateQ;
-
-        public:
-            class QGate: public nts::AGate {
-                public:
-                    enum Pin
-                    {
-                        DATA   = 1,
-                        CLOCK  = 2,
-                        RESET  = 3,
-                        SET    = 4,
-                        Q      = 5,
-                        Qn     = 6
-                    };
-
-                public:
-                    QGate() noexcept;
-
-                protected:
-                    nts::Tristate computeOutput(std::size_t pin) final;
-
-                private:
-                    nts::Tristate m_Q_buffer;
-                    nts::Tristate m_Qn_buffer;
-            };
+            std::unique_ptr<IComponent> m_invert;
     };
 }
 

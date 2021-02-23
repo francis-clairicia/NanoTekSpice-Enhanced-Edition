@@ -26,6 +26,7 @@ namespace nts
     using internComponent_t = std::vector<std::unique_ptr<IComponent>>;
     using componentPin_t = std::vector<std::size_t>;
     using pinList_t = std::initializer_list<std::size_t>;
+    using pinMap_t = std::unordered_map<std::size_t, nts::Tristate>;
 
     enum ComponentType
     {

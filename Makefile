@@ -36,6 +36,7 @@ SRC_COMPONENTS		=	src/Component/Circuit.cpp							\
 						src/Component/OutputComponent.cpp					\
 						src/Component/ClockComponent.cpp					\
 						src/Component/AComponent.cpp						\
+						src/Component/ACalculationComponent.cpp				\
 						src/Component/Component4008.cpp						\
 						src/Component/Component4013.cpp						\
 						src/Component/Component4017.cpp
@@ -48,8 +49,7 @@ SRC_GATES			=	src/Gate/AGate.cpp									\
 						src/Gate/GateXOR.cpp								\
 						src/Gate/GateNOR.cpp								\
 						src/Gate/GateNAND.cpp								\
-						src/Gate/GateNOT.cpp								\
-						src/Gate/BufferGate.cpp
+						src/Gate/GateNOT.cpp
 
 SRC_SUM				=	src/Sum/SumComponent.cpp
 

@@ -64,6 +64,10 @@ void nts::AComponent::dump() const
     dumpInternalComponents();
 }
 
+void nts::AComponent::dumpInternalComponents() const
+{
+}
+
 void nts::AComponent::setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
     if (pin == 0 || pin > m_internal_links.size())

@@ -2,19 +2,19 @@
 ** EPITECH PROJECT, 2021
 ** B-OOP-400-BDX-4-1-tekspice-francis.clairicia-rose-claire-josephine
 ** File description:
-** AGate
+** ACalculationComponent
 */
 
-#ifndef AGATE_HPP_
-#define AGATE_HPP_
+#ifndef ACALCULATIONCOMPONENT_HPP_
+#define ACALCULATIONCOMPONENT_HPP_
 
 #include "types.hpp"
 
 namespace nts
 {
-    class AGate: public nts::IComponent {
+    class ACalculationComponent: public nts::IComponent {
         public:
-            AGate(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, std::size_t output_pin) noexcept;
+            ACalculationComponent(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, const pinList_t &output_pins) noexcept;
 
             void simulate(std::size_t tick) final;
             nts::Tristate compute(std::size_t pin) final;
@@ -22,19 +22,21 @@ namespace nts
             void dump() const final;
 
         protected:
-            virtual nts::Tristate computeOutput() = 0;
+            virtual void dumpInternalComponents() const;
+            virtual void simulateInternalComponents(std::size_t tick);
+            virtual void computeOutputs() = 0;
 
         protected:
-            nts::Tristate             m_value;
             nts::ComponentType        m_type;
+            const nts::componentPin_t m_input_pins;
+            nts::pinMap_t             m_output_pins;
 
         private:
             std::size_t               m_actual_tick;
             bool                      m_computed;
             std::vector<nts::Link>    m_links;
-            const nts::componentPin_t m_input_pins;
-            std::size_t               m_output_pin;
+            
     };
 }
 
-#endif /* !AGATE_HPP_ */
+#endif /* !ACALCULATIONCOMPONENT_HPP_ */

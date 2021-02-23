@@ -26,11 +26,22 @@ static nts::Tristate compute(nts::DTypeFlipFlopWithSR &flipflop,
     return flipflop.compute(output_pin);
 }
 
-Test(DTypeFlipFlopWithSR, Q_truth_table_set_and_reset)
+Test(DTypeFlipFlopWithSR, Q_truth_table)
 {
     nts::TrueComponent c_true;
     nts::FalseComponent c_false;
     nts::DTypeFlipFlopWithSR flipflop;
+
+    /* Memory initialized */
+    cr_expect_eq(compute(flipflop, c_false, c_false, c_false, c_false, nts::DTypeFlipFlopWithSR::Q), nts::UNDEFINED);
+    cr_expect_eq(compute(flipflop, c_false, c_true, c_false,  c_false, nts::DTypeFlipFlopWithSR::Q), nts::UNDEFINED);
+
+    cr_expect_eq(compute(flipflop, c_true, c_false, c_false, c_false, nts::DTypeFlipFlopWithSR::Q), nts::FALSE);
+    cr_expect_eq(compute(flipflop, c_true, c_true, c_false,  c_false, nts::DTypeFlipFlopWithSR::Q), nts::TRUE);
+
+    /* Keep in memory */
+    cr_expect_eq(compute(flipflop, c_false, c_false, c_false, c_false, nts::DTypeFlipFlopWithSR::Q), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_false, c_true, c_false,  c_false, nts::DTypeFlipFlopWithSR::Q), nts::TRUE);
 
     cr_expect_eq(compute(flipflop, c_false, c_false, c_true,  c_false, nts::DTypeFlipFlopWithSR::Q), nts::FALSE);
     cr_expect_eq(compute(flipflop, c_false, c_false, c_false, c_true, nts::DTypeFlipFlopWithSR::Q), nts::TRUE);
@@ -49,11 +60,22 @@ Test(DTypeFlipFlopWithSR, Q_truth_table_set_and_reset)
     cr_expect_eq(compute(flipflop, c_true,  c_true,  c_true,  c_true, nts::DTypeFlipFlopWithSR::Q), nts::TRUE);
 }
 
-Test(DTypeFlipFlopWithSR, Qnot_truth_table_set_and_reset)
+Test(DTypeFlipFlopWithSR, Qnot_truth_table)
 {
     nts::TrueComponent c_true;
     nts::FalseComponent c_false;
     nts::DTypeFlipFlopWithSR flipflop;
+
+    /* Memory initialized */
+    cr_expect_eq(compute(flipflop, c_false, c_false, c_false, c_false, nts::DTypeFlipFlopWithSR::Qn), nts::UNDEFINED);
+    cr_expect_eq(compute(flipflop, c_false, c_true, c_false,  c_false, nts::DTypeFlipFlopWithSR::Qn), nts::UNDEFINED);
+
+    cr_expect_eq(compute(flipflop, c_true, c_false, c_false, c_false, nts::DTypeFlipFlopWithSR::Qn), nts::TRUE);
+    cr_expect_eq(compute(flipflop, c_true, c_true, c_false,  c_false, nts::DTypeFlipFlopWithSR::Qn), nts::FALSE);
+
+    /* Keep in memory */
+    cr_expect_eq(compute(flipflop, c_false, c_false, c_false, c_false, nts::DTypeFlipFlopWithSR::Qn), nts::FALSE);
+    cr_expect_eq(compute(flipflop, c_false, c_true, c_false,  c_false, nts::DTypeFlipFlopWithSR::Qn), nts::FALSE);
 
     cr_expect_eq(compute(flipflop, c_false, c_false, c_true,  c_false, nts::DTypeFlipFlopWithSR::Qn), nts::TRUE);
     cr_expect_eq(compute(flipflop, c_false, c_false, c_false, c_true, nts::DTypeFlipFlopWithSR::Qn), nts::FALSE);

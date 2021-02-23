@@ -20,7 +20,7 @@ namespace nts
             virtual nts::Tristate operation(nts::Tristate a) const = 0;
         
         protected:
-            nts::Tristate computeOutput(std::size_t pin) final;
+            nts::Tristate computeOutput() final;
     };
 }
 

@@ -9,7 +9,7 @@
 
 nts::ClockComponent::ClockComponent():
     InputComponent(),
-    m_actual_tick(0)
+    m_actual_tick{0}
 {
     m_type = ClockComponentType;
 }
