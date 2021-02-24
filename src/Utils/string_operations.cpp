@@ -15,8 +15,10 @@ bool string_endswith(const std::string &str, const std::string &to_find)
 
 void trim_trailing_whitespace(std::string &str)
 {
-    str.erase(str.begin(), std::find_if(str.begin(), str.end(), [](unsigned char c) {return !std::isspace(c);}));
-    str.erase(std::find_if(str.rbegin(), str.rend(), [](unsigned char c) {return !std::isspace(c);}).base(), str.end());
+    auto predicate = [](unsigned char c) {return !std::isspace(c);};
+
+    str.erase(str.begin(), std::find_if(str.begin(), str.end(), predicate));
+    str.erase(std::find_if(str.rbegin(), str.rend(), predicate).base(), str.end());
 }
 
 std::vector<std::string> string_split_by_delimiters(const std::string &str, const std::string &delim, bool keep_empty_string)
