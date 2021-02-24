@@ -2,17 +2,17 @@
 ** EPITECH PROJECT, 2021
 ** B-OOP-400-BDX-4-1-tekspice-francis.clairicia-rose-claire-josephine
 ** File description:
-** OneInputGate
+** GateOneInput
 */
 
-#ifndef ONEINPUTGATE_HPP_
-#define ONEINPUTGATE_HPP_
+#ifndef GATEONEINPUT_HPP_
+#define GATEONEINPUT_HPP_
 
 #include "AGate.hpp"
 
 namespace nts
 {
-    class OneInputGate: public nts::AGate {
+    class GateOneInput: public nts::AGate {
         public:
             enum Pin
             {
@@ -21,8 +21,8 @@ namespace nts
             };
 
         public:
-            OneInputGate(nts::ComponentType type) noexcept;
-            ~OneInputGate() override;
+            GateOneInput(nts::ComponentType type) noexcept;
+            ~GateOneInput() override;
 
             virtual nts::Tristate operation(nts::Tristate a) const = 0;
         
@@ -31,4 +31,4 @@ namespace nts
     };
 }
 
-#endif /* !ONEINPUTGATE_HPP_ */
+#endif /* !GATEONEINPUT_HPP_ */

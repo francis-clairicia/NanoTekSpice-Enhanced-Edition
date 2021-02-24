@@ -2,19 +2,19 @@
 ** EPITECH PROJECT, 2021
 ** B-OOP-400-BDX-4-1-tekspice-francis.clairicia-rose-claire-josephine
 ** File description:
-** MultiOneInputGateComponent
+** ParallelGateOneInputComponent
 */
 
-#ifndef MULTIONEINPUTGATECOMPONENT_HPP_
-#define MULTIONEINPUTGATECOMPONENT_HPP_
+#ifndef PARALLELGATEONEINPUTCOMPONENT_HPP_
+#define PARALLELGATEONEINPUTCOMPONENT_HPP_
 
 #include <iostream>
-#include "Component.hpp"
+#include "BoxComponent.hpp"
 
 namespace nts
 {
     template<nts::ComponentType Type, typename Gate>
-    class MultiOneInputGateComponent: public nts::Component {
+    class ParallelGateOneInputComponent: public nts::BoxComponent {
         public:
             enum Pin
             {
@@ -33,8 +33,8 @@ namespace nts
             };
 
         public:
-            MultiOneInputGateComponent() noexcept:
-                Component(Type, 14, {
+            ParallelGateOneInputComponent() noexcept:
+                BoxComponent(Type, 14, {
                     INPUT_1,
                     INPUT_2,
                     INPUT_3,
@@ -74,7 +74,7 @@ namespace nts
                 m_components.back()->setLink(Gate::INPUT, *this, INPUT_6);
                 setLinkInternal(OUTPUT_6, *m_components.back(), Gate::OUTPUT);
             }
-            ~MultiOneInputGateComponent() noexcept = default;
+            ~ParallelGateOneInputComponent() noexcept = default;
 
         protected:
             void dumpInternalComponents() const final
@@ -89,4 +89,4 @@ namespace nts
     };
 }
 
-#endif /* !MULTIONEINPUTGATECOMPONENT_HPP_ */
+#endif /* !PARALLELGATEONEINPUTCOMPONENT_HPP_ */

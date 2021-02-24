@@ -10,7 +10,7 @@
 #include "DTypeFlipFlopWithSR.hpp"
 
 nts::Component4013::Component4013() noexcept:
-    Component(Component4013Type, 14, {
+    BoxComponent(ComponentType::C4013, 14, {
         CLOCK1, RESET1, DATA1, SET1, CLOCK2, RESET2, DATA2, SET2
     }, {
         Q1, Q1n, Q2, Q2n

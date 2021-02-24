@@ -8,7 +8,7 @@
 #include "OutputComponent.hpp"
 
 nts::OutputComponent::OutputComponent() noexcept:
-    SinglePinComponent(OutputComponentType)
+    SinglePinComponent(ComponentType::Output)
 {
 }
 

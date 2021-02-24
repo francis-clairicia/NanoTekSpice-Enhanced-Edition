@@ -2,21 +2,21 @@
 ** EPITECH PROJECT, 2021
 ** B-OOP-400-BDX-4-1-tekspice-francis.clairicia-rose-claire-josephine
 ** File description:
-** Component
+** BoxComponent
 */
 
 #include <algorithm>
 #include <iostream>
-#include "Component.hpp"
+#include "BoxComponent.hpp"
 #include "BadPinException.hpp"
 
-nts::Component::Component(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, const pinList_t &output_pins) noexcept:
+nts::BoxComponent::BoxComponent(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, const pinList_t &output_pins) noexcept:
     m_type{type}, m_input_pins{input_pins}, m_output_pins{output_pins},
     m_actual_tick{0}, m_internal_links{nb_pins}, m_external_links{nb_pins}
 {
 }
 
-void nts::Component::simulate(std::size_t tick)
+void nts::BoxComponent::simulate(std::size_t tick)
 {
     if (m_actual_tick != tick) {
         m_actual_tick = tick;
@@ -33,7 +33,7 @@ void nts::Component::simulate(std::size_t tick)
     }
 }
 
-nts::Tristate nts::Component::compute(std::size_t pin)
+nts::Tristate nts::BoxComponent::compute(std::size_t pin)
 {
     if (pin == 0 || pin > m_external_links.size())
         throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
@@ -48,7 +48,7 @@ nts::Tristate nts::Component::compute(std::size_t pin)
     return nts::UNDEFINED;
 }
 
-void nts::Component::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
+void nts::BoxComponent::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
     if (pin == 0 || pin > m_external_links.size())
         throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
@@ -56,7 +56,7 @@ void nts::Component::setLink(std::size_t pin, nts::IComponent &other, std::size_
     m_external_links[pin - 1].pin = otherPin;
 }
 
-void nts::Component::dump() const
+void nts::BoxComponent::dump() const
 {
     std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << std::endl;
 
@@ -82,11 +82,11 @@ void nts::Component::dump() const
     dumpInternalComponents();
 }
 
-void nts::Component::dumpInternalComponents() const
+void nts::BoxComponent::dumpInternalComponents() const
 {
 }
 
-void nts::Component::setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
+void nts::BoxComponent::setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
     if (pin == 0 || pin > m_internal_links.size())
         throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);

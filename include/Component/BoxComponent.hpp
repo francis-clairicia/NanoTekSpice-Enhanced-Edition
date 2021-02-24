@@ -2,19 +2,19 @@
 ** EPITECH PROJECT, 2021
 ** B-OOP-400-BDX-4-1-tekspice-francis.clairicia-rose-claire-josephine
 ** File description:
-** Component
+** BoxComponent
 */
 
-#ifndef COMPONENT_HPP_
-#define COMPONENT_HPP_
+#ifndef BOXCOMPONENT_HPP_
+#define BOXCOMPONENT_HPP_
 
 #include "types.hpp"
 
 namespace nts
 {
-    class Component: public nts::IComponent {
+    class BoxComponent: public nts::IComponent {
         public:
-            Component(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, const pinList_t &output_pins) noexcept;
+            BoxComponent(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, const pinList_t &output_pins) noexcept;
 
             void simulate(std::size_t tick) final;
             nts::Tristate compute(std::size_t pin) final;
@@ -37,4 +37,4 @@ namespace nts
     };
 }
 
-#endif /* !COMPONENT_HPP_ */
+#endif /* !BOXCOMPONENT_HPP_ */

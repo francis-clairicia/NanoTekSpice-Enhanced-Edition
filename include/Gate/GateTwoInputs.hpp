@@ -2,17 +2,17 @@
 ** EPITECH PROJECT, 2021
 ** B-OOP-400-BDX-4-1-tekspice-francis.clairicia-rose-claire-josephine
 ** File description:
-** TwoInputsGate
+** GateTwoInputs
 */
 
-#ifndef TWOINPUTSGATE_HPP_
-#define TWOINPUTSGATE_HPP_
+#ifndef GATETWOINPUTS_HPP_
+#define GATETWOINPUTS_HPP_
 
 #include "AGate.hpp"
 
 namespace nts
 {
-    class TwoInputsGate: public nts::AGate {
+    class GateTwoInputs: public nts::AGate {
         public:
             enum Pin
             {
@@ -22,8 +22,8 @@ namespace nts
             };
 
         public:
-            TwoInputsGate(nts::ComponentType type) noexcept;
-            ~TwoInputsGate() override;
+            GateTwoInputs(nts::ComponentType type) noexcept;
+            ~GateTwoInputs() override;
 
             virtual nts::Tristate operation(nts::Tristate a, nts::Tristate b) const = 0;
         
@@ -32,4 +32,4 @@ namespace nts
     };
 }
 
-#endif /* !TWOINPUTSGATE_HPP_ */
+#endif /* !GATETWOINPUTS_HPP_ */

@@ -10,7 +10,7 @@
 #include "get_map_keys.hpp"
 
 nts::Component4040::Component4040() noexcept:
-    ACalculationComponent(Component4040Type, 16, {
+    ACalculationComponent(ComponentType::C4040, 16, {
         CLOCK, RESET
     }, {
         Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12

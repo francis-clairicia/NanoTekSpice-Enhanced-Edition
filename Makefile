@@ -36,7 +36,7 @@ SRC_COMPONENTS		=	src/Component/Circuit.cpp							\
 						src/Component/OutputComponent.cpp					\
 						src/Component/ClockComponent.cpp					\
 						src/Component/LoggerComponent.cpp					\
-						src/Component/Component.cpp							\
+						src/Component/BoxComponent.cpp						\
 						src/Component/ACalculationComponent.cpp				\
 						src/Component/Component4008.cpp						\
 						src/Component/Component4013.cpp						\
@@ -44,8 +44,8 @@ SRC_COMPONENTS		=	src/Component/Circuit.cpp							\
 						src/Component/Component4040.cpp
 
 SRC_GATES			=	src/Gate/AGate.cpp									\
-						src/Gate/OneInputGate.cpp							\
-						src/Gate/TwoInputsGate.cpp							\
+						src/Gate/GateOneInput.cpp							\
+						src/Gate/GateTwoInputs.cpp							\
 						src/Gate/GateAND.cpp								\
 						src/Gate/GateOR.cpp									\
 						src/Gate/GateXOR.cpp								\

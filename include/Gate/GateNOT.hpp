@@ -8,11 +8,11 @@
 #ifndef GATENOT_HPP_
 #define GATENOT_HPP_
 
-#include "OneInputGate.hpp"
+#include "GateOneInput.hpp"
 
 namespace nts
 {
-    class GateNOT: public nts::OneInputGate {
+    class GateNOT: public nts::GateOneInput {
         public:
             GateNOT() noexcept;
             nts::Tristate operation(nts::Tristate a) const final;

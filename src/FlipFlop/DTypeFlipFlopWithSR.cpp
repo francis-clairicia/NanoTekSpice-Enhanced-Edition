@@ -21,7 +21,7 @@ Outputs:
 */
 
 nts::DTypeFlipFlopWithSR::DTypeFlipFlopWithSR() noexcept:
-    ACalculationComponent(DTypeFlipFlopWithSRType, 6, {CLOCK, RESET, DATA, SET}, {Q, Qn}),
+    ACalculationComponent(ComponentType::DTypeFlipFlopWithSR, 6, {CLOCK, RESET, DATA, SET}, {Q, Qn}),
     m_invert{std::make_unique<GateNOT>()}
 {
     m_invert->setLink(GateNOT::INPUT, *this, DATA);

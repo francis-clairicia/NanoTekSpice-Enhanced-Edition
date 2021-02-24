@@ -8,11 +8,11 @@
 #ifndef COMPONENT4013_HPP_
 #define COMPONENT4013_HPP_
 
-#include "Component.hpp"
+#include "BoxComponent.hpp"
 
 namespace nts
 {
-    class Component4013: public nts::Component {
+    class Component4013: public nts::BoxComponent {
         public:
             enum Pin
             {

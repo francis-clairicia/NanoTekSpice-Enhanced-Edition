@@ -8,11 +8,11 @@
 #ifndef SUMCOMPONENT_HPP_
 #define SUMCOMPONENT_HPP_
 
-#include "Component.hpp"
+#include "BoxComponent.hpp"
 
 namespace nts
 {
-    class SumComponent: public nts::Component {
+    class SumComponent: public nts::BoxComponent {
         public:
             enum Pin
             {

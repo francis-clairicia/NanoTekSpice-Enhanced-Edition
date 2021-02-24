@@ -8,11 +8,11 @@
 #ifndef GATEOR_HPP_
 #define GATEOR_HPP_
 
-#include "TwoInputsGate.hpp"
+#include "GateTwoInputs.hpp"
 
 namespace nts
 {
-    class GateOR: public nts::TwoInputsGate {
+    class GateOR: public nts::GateTwoInputs {
         public:
             GateOR() noexcept;
             nts::Tristate operation(nts::Tristate a, nts::Tristate b) const final;

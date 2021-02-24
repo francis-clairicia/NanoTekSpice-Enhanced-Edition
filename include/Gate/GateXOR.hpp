@@ -8,11 +8,11 @@
 #ifndef GATEXOR_HPP_
 #define GATEXOR_HPP_
 
-#include "TwoInputsGate.hpp"
+#include "GateTwoInputs.hpp"
 
 namespace nts
 {
-    class GateXOR: public nts::TwoInputsGate {
+    class GateXOR: public nts::GateTwoInputs {
         public:
             GateXOR() noexcept;
             nts::Tristate operation(nts::Tristate a, nts::Tristate b) const final;

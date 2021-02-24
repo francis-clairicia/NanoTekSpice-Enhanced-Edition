@@ -34,8 +34,8 @@ namespace nts
             }
     };
 
-    using TrueComponent = ConstComponent<nts::TrueComponentType, nts::TRUE>;
-    using FalseComponent = ConstComponent<nts::FalseComponentType, nts::FALSE>;
+    using TrueComponent = ConstComponent<nts::ComponentType::True, nts::TRUE>;
+    using FalseComponent = ConstComponent<nts::ComponentType::False, nts::FALSE>;
 }
 
 #endif /* !CONSTCOMPONENT_HPP_ */

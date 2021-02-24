@@ -11,7 +11,7 @@
 #include "GateAND.hpp"
 
 nts::Component4017::Component4017() noexcept:
-    ACalculationComponent(Component4017Type, 16, {CP0, CP1, MR}, {Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q5_9}),
+    ACalculationComponent(ComponentType::C4017, 16, {CP0, CP1, MR}, {Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q5_9}),
     m_invert_cp1{std::make_unique<GateNOT>()},
     m_and_gate_clock{std::make_unique<GateAND>()},
     m_shift{0}

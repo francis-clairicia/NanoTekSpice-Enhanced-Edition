@@ -7,7 +7,7 @@
 
 #include "GateXOR.hpp"
 
-nts::GateXOR::GateXOR() noexcept: TwoInputsGate(GateXORType)
+nts::GateXOR::GateXOR() noexcept: GateTwoInputs(ComponentType::GateXOR)
 {
 }
 

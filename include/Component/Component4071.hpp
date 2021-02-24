@@ -8,12 +8,12 @@
 #ifndef COMPONENT4071_HPP_
 #define COMPONENT4071_HPP_
 
-#include "MultiTwoInputsGateComponent.hpp"
+#include "ParallelGateTwoInputsComponent.hpp"
 #include "GateOR.hpp"
 
 namespace nts
 {
-    using Component4071 = MultiTwoInputsGateComponent<Component4071Type, GateOR>;
+    using Component4071 = ParallelGateTwoInputsComponent<ComponentType::C4071, GateOR>;
 }
 
 #endif /* !COMPONENT4071_HPP_ */

@@ -23,7 +23,7 @@ Outputs:
 */
 
 nts::SumComponent::SumComponent() noexcept:
-    Component(SumComponentType, 5, {Ai, Bi, Ci}, {Co, Si}),
+    BoxComponent(ComponentType::Sum, 5, {Ai, Bi, Ci}, {Co, Si}),
     m_xor1(std::make_unique<GateXOR>()),
     m_xor2(std::make_unique<GateXOR>()),
     m_and1(std::make_unique<GateAND>()),
