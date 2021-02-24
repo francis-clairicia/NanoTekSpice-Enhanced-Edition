@@ -8,6 +8,7 @@
 #include <iostream>
 #include <algorithm>
 #include <csignal>
+#include <unistd.h>
 #include "Circuit.hpp"
 #include "Parser.hpp"
 #include "ExitException.hpp"
@@ -98,6 +99,7 @@ int nts::nanotekspice(const std::string &circuit_file)
             std::cerr << e.what() << std::endl;
         }
     }
-    std::cout << std::endl;
+    if (!isatty(STDIN_FILENO) || std::cin.eof())
+        std::cout << std::endl;
     return (0);
 }
