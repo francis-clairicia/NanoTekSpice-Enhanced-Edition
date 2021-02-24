@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include "InputComponent.hpp"
-#include "BadPinException.hpp"
 
 nts::InputComponent::InputComponent() noexcept:
     SinglePinComponent(InputComponentType),
@@ -22,13 +21,6 @@ void nts::InputComponent::simulate(std::size_t tick)
         m_actual_tick = tick;
         m_value = m_value_for_next_tick;
     }
-}
-
-nts::Tristate nts::InputComponent::compute(std::size_t pin)
-{
-    if (pin != OUTPUT)
-        throw nts::BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
-    return m_value;
 }
 
 void nts::InputComponent::dump() const

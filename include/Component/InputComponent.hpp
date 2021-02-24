@@ -23,7 +23,6 @@ namespace nts
             InputComponent() noexcept;
 
             void simulate(std::size_t tick) override;
-            nts::Tristate compute(std::size_t pin) final;
             void dump() const override;
 
             virtual void setValue(nts::Tristate value);

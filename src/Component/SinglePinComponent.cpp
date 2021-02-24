@@ -16,6 +16,13 @@ nts::SinglePinComponent::SinglePinComponent(nts::ComponentType type) noexcept:
 {
 }
 
+nts::Tristate nts::SinglePinComponent::compute(std::size_t pin)
+{
+    if (pin != 1)
+        throw nts::BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
+    return m_value;
+}
+
 void nts::SinglePinComponent::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
     if (pin != 1)

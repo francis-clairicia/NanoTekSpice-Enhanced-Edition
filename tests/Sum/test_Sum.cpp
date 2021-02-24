@@ -10,9 +10,9 @@
 #include "ConstComponent.hpp"
 
 static nts::Tristate compute(nts::SumComponent &sum,
-                             nts::InputComponent &a,
-                             nts::InputComponent &b,
-                             nts::InputComponent &c,
+                             nts::IComponent &a,
+                             nts::IComponent &b,
+                             nts::IComponent &c,
                              std::size_t output_pin)
 {
     static std::size_t tick = 0;

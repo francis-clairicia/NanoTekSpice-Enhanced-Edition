@@ -23,7 +23,6 @@ namespace nts
             OutputComponent() noexcept;
 
             void simulate(std::size_t tick) override;
-            nts::Tristate compute(std::size_t pin) final;
     };
 }
 

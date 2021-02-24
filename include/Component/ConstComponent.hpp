@@ -8,29 +8,29 @@
 #ifndef CONSTCOMPONENT_HPP_
 #define CONSTCOMPONENT_HPP_
 
-#include "InputComponent.hpp"
+#include "SinglePinComponent.hpp"
 #include "ConstComponentException.hpp"
 
 namespace nts
 {
     template<nts::ComponentType Type, nts::Tristate Value>
-    class ConstComponent: public nts::InputComponent {
+    class ConstComponent: public nts::SinglePinComponent {
         public:
-            ConstComponent(): InputComponent()
+            enum Pin
+            {
+                OUTPUT = 1
+            };
+
+        public:
+            ConstComponent(): SinglePinComponent(Type)
             {
                 if (Value == nts::UNDEFINED)
                     throw nts::ConstComponentException("the constant value of a ConstComponent should not be 'undefined'");
                 m_value = Value;
-                m_type = Type;
             }
 
             void simulate(std::size_t tick __attribute__((unused))) final
             {
-            }
-
-            void setValue(nts::Tristate value __attribute__((unused))) final
-            {
-                throw nts::ConstComponentException("Cannot set value to a \"" + COMPONENT_TYPE_AS_STRING.at(m_type) + "\" component");
             }
     };
 

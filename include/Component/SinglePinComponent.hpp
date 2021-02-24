@@ -16,6 +16,7 @@ namespace nts
         public:
             SinglePinComponent(nts::ComponentType type) noexcept;
 
+            nts::Tristate compute(std::size_t pin) final;
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
             void dump() const override;
 

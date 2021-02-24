@@ -10,10 +10,10 @@
 #include "ConstComponent.hpp"
 
 static nts::Tristate compute(nts::DTypeFlipFlopWithSR &flipflop,
-                             nts::InputComponent &clock,
-                             nts::InputComponent &data,
-                             nts::InputComponent &reset,
-                             nts::InputComponent &set,
+                             nts::IComponent &clock,
+                             nts::IComponent &data,
+                             nts::IComponent &reset,
+                             nts::IComponent &set,
                              std::size_t output_pin)
 {
     static std::size_t tick = 0;
