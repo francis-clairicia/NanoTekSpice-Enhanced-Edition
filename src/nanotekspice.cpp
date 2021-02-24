@@ -98,7 +98,6 @@ int nts::nanotekspice(const std::string &circuit_file)
             std::cerr << e.what() << std::endl;
         }
     }
-    if (std::cin.eof())
-        std::cout << std::endl;
+    std::cout << std::endl;
     return (0);
 }
