@@ -18,7 +18,6 @@ SRC_EXCEPTIONS		=	src/Exception/BadComponentNameException.cpp			\
 						src/Exception/ComponentTypeUnknownException.cpp		\
 						src/Exception/ConstComponentException.cpp			\
 						src/Exception/Exception.cpp							\
-						src/Exception/ExitException.cpp						\
 						src/Exception/FileException.cpp						\
 						src/Exception/InputValueException.cpp				\
 						src/Exception/NoChipsetException.cpp				\

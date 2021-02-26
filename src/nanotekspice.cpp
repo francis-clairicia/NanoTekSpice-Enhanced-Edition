@@ -8,10 +8,9 @@
 #include <iostream>
 #include <algorithm>
 #include <csignal>
-#include <unistd.h>
 #include "Circuit.hpp"
 #include "Parser.hpp"
-#include "ExitException.hpp"
+#include "Exception.hpp"
 #include "nanotekspice.hpp"
 #include "string_operations.hpp"
 
@@ -19,11 +18,6 @@ static std::istream &command_prompt(std::string &buffer)
 {
     std::cout << "> ";
     return std::getline(std::cin, buffer);
-}
-
-static void exit_command(nts::Circuit &circuit __attribute__((unused)), std::size_t &tick __attribute__((unused)))
-{
-    throw nts::ExitException();
 }
 
 static void display_command(nts::Circuit &circuit, std::size_t &tick)
@@ -72,7 +66,6 @@ int nts::nanotekspice(const std::string &circuit_file)
     std::string input;
     std::size_t tick = 0;
     std::unordered_map<std::string, void (*)(nts::Circuit &, std::size_t &)> commands{
-        {"exit",     &exit_command},
         {"display",  &display_command},
         {"simulate", &simulate_command},
         {"loop",     &loop_command},
@@ -80,10 +73,13 @@ int nts::nanotekspice(const std::string &circuit_file)
     };
 
     parser.parse();
+    circuit.simulate(0);
     while (command_prompt(input)) {
         trim_trailing_whitespace(input);
         if (input.empty())
             continue;
+        if (input.compare("exit") == 0)
+            return 0;
         try {
             const auto &search = commands.find(input);
             if (search != commands.end()) {
@@ -93,13 +89,10 @@ int nts::nanotekspice(const std::string &circuit_file)
             } else {
                 std::cerr << "Unknown command \"" << input << "\"" << std::endl;
             }
-        } catch (const nts::ExitException &) {
-            break;
         } catch (const nts::Exception &e){
             std::cerr << e.what() << std::endl;
         }
     }
-    if (!isatty(STDIN_FILENO) || std::cin.eof())
-        std::cout << std::endl;
+    std::cout << std::endl;
     return (0);
 }
