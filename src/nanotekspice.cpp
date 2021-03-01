@@ -79,7 +79,7 @@ int nts::nanotekspice(const std::string &circuit_file)
         if (input.empty())
             continue;
         if (input.compare("exit") == 0)
-            return 0;
+            break;
         try {
             const auto &search = commands.find(input);
             if (search != commands.end()) {
