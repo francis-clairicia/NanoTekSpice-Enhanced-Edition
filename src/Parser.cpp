@@ -53,14 +53,11 @@ void nts::Parser::parse() const
 void nts::Parser::readBuffer(const std::string &buffer, std::list<nts::Parser::Line> &lines) const noexcept
 {
     std::vector<std::string> splitted_buffer = string_split_by_delimiters(buffer, "\r\n", true);
-    std::size_t sharp = 0;
     std::size_t index = 0;
 
     for (auto &line : splitted_buffer) {
         ++index;
-        sharp = line.find('#');
-        if (sharp != std::string::npos)
-            line = line.substr(0, sharp);
+        line = line.substr(0, line.find('#'));
         trim_trailing_whitespace(line);
         if (!line.empty())
             lines.push_back(nts::Parser::Line{.index = index, .content = line});
@@ -122,13 +119,13 @@ void nts::Parser::initChipset(std::size_t line_index, const std::vector<std::str
 void nts::Parser::initLink(std::size_t line_index, const std::vector<std::string> &line_tab) const
 {
     if (line_tab.size() != 2)
-        throw nts::SyntaxException(line_index, "Link declaration must respect this for: name1:pin1 name2:pin2");
+        throw nts::SyntaxException(line_index, "Link declaration must respect this form: name1:pin1 name2:pin2");
 
     std::vector<std::string> chipset_link1 = string_split_by_delimiters(line_tab[0], ":", true);
     std::vector<std::string> chipset_link2 = string_split_by_delimiters(line_tab[1], ":", true);
 
     if (chipset_link1.size() != 2 || chipset_link2.size() != 2)
-        throw nts::SyntaxException(line_index, "Link declaration must respect this for: name1:pin1 name2:pin2");
+        throw nts::SyntaxException(line_index, "Link declaration must respect this form: name1:pin1 name2:pin2");
     
     const std::string &chipset_name1 = chipset_link1[0];
     const std::string &chipset_pin1 = chipset_link1[1];
@@ -140,19 +137,18 @@ void nts::Parser::initLink(std::size_t line_index, const std::vector<std::string
     if (!string_is_number(chipset_pin2))
         throw nts::SyntaxException(line_index, "\"" + chipset_pin2 + "\" is not a positive number");
 
-    char *end = NULL;
-    std::size_t pin1 = std::strtoul(chipset_pin1.data(), &end, 10);
-    std::size_t pin2 = std::strtoul(chipset_pin2.data(), &end, 10);
+    std::size_t pin1 = std::strtoul(chipset_pin1.data(), nullptr, 10);
+    std::size_t pin2 = std::strtoul(chipset_pin2.data(), nullptr, 10);
 
     try {
-        m_circuit[chipset_name1]->setLink(pin1, *(m_circuit[chipset_name2]), pin2);
+        m_circuit[chipset_name1].setLink(pin1, m_circuit[chipset_name2], pin2);
     } catch (const nts::BadComponentNameException &e) {
         throw nts::ComponentNameUnknownException(line_index, e.what());
     } catch (const nts::BadPinException &e) {
         throw nts::ComponentLinkException(line_index, chipset_name1, e.what());
     }
     try {
-        m_circuit[chipset_name2]->setLink(pin2, *(m_circuit[chipset_name1]), pin1);
+        m_circuit[chipset_name2].setLink(pin2, m_circuit[chipset_name1], pin1);
     } catch (const nts::BadPinException &e) {
         throw nts::ComponentLinkException(line_index, chipset_name2, e.what());
     }

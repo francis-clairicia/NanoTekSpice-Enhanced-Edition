@@ -41,7 +41,7 @@ namespace nts
             void dump() const noexcept;
 
             nts::Circuit &operator=(const nts::Circuit &rhs) noexcept;
-            const std::unique_ptr<nts::IComponent> &operator[](const std::string &key) const;
+            nts::IComponent &operator[](const std::string &key) const;
 
         private:
             ComponentFactory     m_factory;

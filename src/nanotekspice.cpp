@@ -84,7 +84,7 @@ int nts::nanotekspice(const std::string &circuit_file)
             const auto &search = commands.find(input);
             if (search != commands.end()) {
                 search->second(circuit, tick);
-            } else if (input.find('=') != std::string::npos){
+            } else if (input.find('=') != std::string::npos) {
                 input_value_set(input, circuit);
             } else {
                 std::cerr << "Unknown command \"" << input << "\"" << std::endl;

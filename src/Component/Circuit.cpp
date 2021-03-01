@@ -136,11 +136,11 @@ nts::Circuit &nts::Circuit::operator=(const nts::Circuit &rhs __attribute__((unu
     return *this;
 }
 
-const std::unique_ptr<nts::IComponent> &nts::Circuit::operator[](const std::string &key) const
+nts::IComponent &nts::Circuit::operator[](const std::string &key) const
 {
     const auto &search = m_components.find(key);
 
     if (search == m_components.end())
         throw nts::BadComponentNameException(key);
-    return search->second;
+    return *(search->second);
 }
