@@ -40,7 +40,8 @@ SRC_COMPONENTS		=	src/Component/ComponentFactory.cpp					\
 						src/Component/Component4008.cpp						\
 						src/Component/Component4013.cpp						\
 						src/Component/Component4017.cpp						\
-						src/Component/Component4040.cpp
+						src/Component/Component4040.cpp						\
+						src/Component/Component4512.cpp
 
 SRC_GATES			=	src/Gate/AGate.cpp									\
 						src/Gate/GateOneInput.cpp							\

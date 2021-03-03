@@ -48,6 +48,7 @@ namespace nts
         C4069,
         C4071,
         C4081,
+        C4512,
         /* Gates */
         GateAND,
         GateNAND,
@@ -80,6 +81,7 @@ namespace nts
         {ComponentType::C4069,               "4069"},
         {ComponentType::C4071,               "4071"},
         {ComponentType::C4081,               "4081"},
+        {ComponentType::C4512,               "4512"},
         {ComponentType::GateAND,             "AND"},
         {ComponentType::GateNAND,            "NAND"},
         {ComponentType::GateNOR,             "NOR"},

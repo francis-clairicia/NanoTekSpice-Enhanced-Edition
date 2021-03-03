@@ -5,6 +5,7 @@
 ** LoggerComponent
 */
 
+#include <array>
 #include "LoggerComponent.hpp"
 #include "FileException.hpp"
 
@@ -26,18 +27,19 @@ void nts::LoggerComponent::computeOutputs()
     char character = 0;
     nts::Tristate clock = compute(CLOCK);
     nts::Tristate inhibit = compute(INHIBIT);
-    nts::Tristate input;
+    std::array<nts::Tristate, 8> inputs;
 
     if (clock == nts::UNDEFINED || inhibit == nts::UNDEFINED)
         return;
     if (clock == nts::FALSE || inhibit == nts::TRUE)
         return;
     
-    for (std::size_t bit = 0; bit < 8; ++bit) {
-        input = compute(m_input_pins[bit]);
-        if (input == nts::UNDEFINED)
+    for (std::size_t bit = 0; bit < inputs.size(); ++bit)
+        inputs[bit] = compute(m_input_pins[bit]);
+    for (std::size_t bit = 0; bit < inputs.size(); ++bit) {
+        if (inputs[bit] == nts::UNDEFINED)
             return;
-        character |= input << bit;
+        character |= inputs[bit] << bit;
     }
     
     std::ofstream output_stream{LOG_FILE, std::ios_base::out | std::ios_base::app | std::ios_base::binary};

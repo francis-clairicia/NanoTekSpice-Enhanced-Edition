@@ -40,7 +40,7 @@ void nts::Component4040::computeOutputs()
     if (reset == nts::FALSE && clock == nts::FALSE)
         return;
     
-    m_counter = ((m_counter + 1) % nb_pins) * (!reset);
+    m_counter = (m_counter + 1) * (!reset);
     for (std::size_t bit = 0; bit < nb_pins; ++bit)
-        m_output_pins[pins.at(nb_pins - 1 - bit)] = static_cast<nts::Tristate>((m_counter & (1 << bit)) >> bit);
+        m_output_pins[pins.at(nb_pins - 1 - bit)] = static_cast<nts::Tristate>((m_counter & (1UL << bit)) >> bit);
 }

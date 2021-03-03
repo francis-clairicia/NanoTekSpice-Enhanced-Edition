@@ -19,6 +19,7 @@
 #include "Component4069.hpp"
 #include "Component4071.hpp"
 #include "Component4081.hpp"
+#include "Component4512.hpp"
 #include "LoggerComponent.hpp"
 #include "BadComponentTypeException.hpp"
 #include "BadComponentNameException.hpp"
@@ -39,6 +40,7 @@ static const std::unordered_map<std::string, std::unique_ptr<nts::IComponent> (*
     {"4069",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4069>();}},
     {"4071",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4071>();}},
     {"4081",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4081>();}},
+    {"4512",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4512>();}},
     {"logger", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::LoggerComponent>();}},
 };
 
