@@ -90,6 +90,6 @@ int nts::nanotekspice(const std::string &circuit_file)
             std::cerr << e.what() << std::endl;
         }
     }
-    std::cout << std::endl;
+    std::cout << std::endl << std::endl;
     return (0);
 }
