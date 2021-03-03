@@ -21,9 +21,9 @@ namespace nts
             void dump() const override;
 
         protected:
-            nts::Link          m_link;
-            nts::ComponentType m_type;
-            nts::Tristate      m_value;
+            nts::Link                m_link;
+            const nts::ComponentType m_type;
+            nts::Tristate            m_value;
     };
 }
 

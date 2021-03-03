@@ -20,7 +20,7 @@ namespace nts
             };
 
         public:
-            InputComponent() noexcept;
+            InputComponent(nts::ComponentType type = ComponentType::Input) noexcept;
 
             void simulate(std::size_t tick) override;
             void dump() const override;

@@ -26,7 +26,7 @@ namespace nts
             virtual void dumpInternalComponents() const;
 
         protected:
-            nts::ComponentType        m_type;
+            const nts::ComponentType  m_type;
             const nts::componentPin_t m_input_pins;
             const nts::componentPin_t m_output_pins;
 

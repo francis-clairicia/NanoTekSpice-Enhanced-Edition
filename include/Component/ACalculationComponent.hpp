@@ -27,7 +27,7 @@ namespace nts
             virtual void computeOutputs() = 0;
 
         protected:
-            nts::ComponentType        m_type;
+            const nts::ComponentType  m_type;
             const nts::componentPin_t m_input_pins;
             nts::pinMap_t             m_output_pins;
 

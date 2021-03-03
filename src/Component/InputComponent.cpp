@@ -8,8 +8,8 @@
 #include <iostream>
 #include "InputComponent.hpp"
 
-nts::InputComponent::InputComponent() noexcept:
-    SinglePinComponent(ComponentType::Input),
+nts::InputComponent::InputComponent(nts::ComponentType type) noexcept:
+    SinglePinComponent(type),
     m_actual_tick{0},
     m_value_for_next_tick{nts::UNDEFINED}
 {

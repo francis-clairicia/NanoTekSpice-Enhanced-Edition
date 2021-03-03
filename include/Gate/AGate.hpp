@@ -26,7 +26,7 @@ namespace nts
 
         protected:
             nts::Tristate             m_value;
-            nts::ComponentType        m_type;
+            const nts::ComponentType  m_type;
 
         private:
             std::size_t               m_actual_tick;

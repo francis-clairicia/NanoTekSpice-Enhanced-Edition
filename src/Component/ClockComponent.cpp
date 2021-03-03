@@ -8,10 +8,9 @@
 #include "ClockComponent.hpp"
 
 nts::ClockComponent::ClockComponent():
-    InputComponent(),
+    InputComponent(ComponentType::Clock),
     m_invert_value{true}
 {
-    m_type = ComponentType::Clock;
 }
 
 void nts::ClockComponent::simulate(std::size_t tick)
