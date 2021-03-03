@@ -14,7 +14,8 @@ nts::ACalculationComponent::ACalculationComponent(nts::ComponentType type,
                                                   std::size_t nb_pins,
                                                   const pinList_t &input_pins,
                                                   const pinList_t &output_pins) noexcept:
-    m_type{type}, m_input_pins{input_pins}, m_actual_tick{0}, m_links{nb_pins}, m_internal_components{}
+    m_type{type}, m_input_pins{input_pins},
+    m_actual_tick{0}, m_computed{false}, m_links{nb_pins}
 {
     for (std::size_t pin : output_pins)
         m_output_pins[pin] = nts::UNDEFINED;
@@ -24,15 +25,9 @@ void nts::ACalculationComponent::simulate(std::size_t tick)
 {
     if (m_actual_tick != tick) {
         m_actual_tick = tick;
-        std::for_each(m_input_pins.begin(), m_input_pins.end(), [this, &tick](std::size_t pin){
-            if (m_links[pin - 1].component) {
-                m_links[pin - 1].component->simulate(tick);
-            }
-        });
-        std::for_each(m_internal_components.begin(), m_internal_components.end(), [&tick](nts::IComponent *component){
-            component->simulate(tick);
-        });
-        computeOutputs();
+        m_computed = false;
+        if (m_output_pins.empty())
+            computeOutputs();
     }
 }
 
@@ -50,9 +45,17 @@ nts::Tristate nts::ACalculationComponent::compute(std::size_t pin)
         throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
     if (std::find(m_input_pins.begin(), m_input_pins.end(), pin) != m_input_pins.end()) {
         const Link &link = m_links.at(pin - 1);
-        return (link.component) ? link.component->compute(link.pin) : nts::UNDEFINED;
+        if (link.component) {
+            link.component->simulate(m_actual_tick);
+            return link.component->compute(link.pin);
+        }
+        return nts::UNDEFINED;
     }
     if (m_output_pins.find(pin) != m_output_pins.end()) {
+        if (!m_computed) {
+            m_computed = true;
+            computeOutputs();
+        }
         return m_output_pins.at(pin);
     }
     return nts::UNDEFINED;
@@ -76,14 +79,10 @@ void nts::ACalculationComponent::dump() const
         }
         std::cout << std::endl;
     }
-    if (!m_internal_components.empty()) {
-        std::cout << "Internal components:" << std::endl;
-        for (const auto &component : m_internal_components)
-            component->dump();
-    }
 }
 
-void nts::ACalculationComponent::addInternalComponent(IComponent &component)
+nts::Tristate nts::ACalculationComponent::computeInternalComponent(IComponent &component, std::size_t pin) const
 {
-    m_internal_components.push_back(&component);
+    component.simulate(m_actual_tick);
+    return component.compute(pin);
 }

@@ -23,7 +23,7 @@ namespace nts
             void dump() const final;
 
         protected:
-            void addInternalComponent(IComponent &component);
+            nts::Tristate computeInternalComponent(IComponent &component, std::size_t pin) const;
             virtual void computeOutputs() = 0;
 
         protected:
@@ -33,8 +33,8 @@ namespace nts
 
         private:
             std::size_t               m_actual_tick;
+            bool                      m_computed;
             std::vector<nts::Link>    m_links;
-            std::vector<IComponent *> m_internal_components;
             
     };
 }

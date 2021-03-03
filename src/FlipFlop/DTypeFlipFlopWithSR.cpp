@@ -25,7 +25,6 @@ nts::DTypeFlipFlopWithSR::DTypeFlipFlopWithSR() noexcept:
     m_invert{std::make_unique<GateNOT>()}
 {
     m_invert->setLink(GateNOT::INPUT, *this, DATA);
-    addInternalComponent(*m_invert);
 }
 
 nts::DTypeFlipFlopWithSR::~DTypeFlipFlopWithSR()
@@ -35,7 +34,7 @@ nts::DTypeFlipFlopWithSR::~DTypeFlipFlopWithSR()
 void nts::DTypeFlipFlopWithSR::computeOutputs()
 {
     nts::Tristate data = compute(DATA);
-    nts::Tristate data_invert = m_invert->compute(GateNOT::OUTPUT);
+    nts::Tristate data_invert = computeInternalComponent(*m_invert, GateNOT::OUTPUT);
     nts::Tristate clock = compute(CLOCK);
     nts::Tristate reset = compute(RESET);
     nts::Tristate set = compute(SET);

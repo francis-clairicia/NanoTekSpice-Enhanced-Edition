@@ -19,7 +19,6 @@ nts::Component4040::Component4040() noexcept:
     m_counter{0}
 {
     m_invert_clock->setLink(GateNOT::INPUT, *this, CLOCK);
-    addInternalComponent(*m_invert_clock);
 }
 
 nts::Component4040::~Component4040() noexcept
@@ -28,7 +27,7 @@ nts::Component4040::~Component4040() noexcept
 
 void nts::Component4040::computeOutputs()
 {
-    nts::Tristate clock = m_invert_clock->compute(GateNOT::OUTPUT);
+    nts::Tristate clock = computeInternalComponent(*m_invert_clock, GateNOT::OUTPUT);
     nts::Tristate reset = compute(RESET);
     nts::componentPin_t pins{get_map_keys(m_output_pins)};
     std::size_t nb_pins = m_output_pins.size();

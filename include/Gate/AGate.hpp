@@ -30,6 +30,7 @@ namespace nts
 
         private:
             std::size_t               m_actual_tick;
+            bool                      m_computed;
             std::vector<nts::Link>    m_links;
             const nts::componentPin_t m_input_pins;
             std::size_t               m_output_pin;

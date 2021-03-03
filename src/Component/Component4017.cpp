@@ -19,8 +19,6 @@ nts::Component4017::Component4017() noexcept:
     m_invert_cp1->setLink(GateNOT::INPUT, *this, CP1);
     m_and_gate_clock->setLink(GateAND::INPUT1, *this, CP0);
     m_and_gate_clock->setLink(GateAND::INPUT2, *m_invert_cp1, GateNOT::OUTPUT);
-    addInternalComponent(*m_invert_cp1);
-    addInternalComponent(*m_and_gate_clock);
 }
 
 nts::Component4017::~Component4017() noexcept
@@ -30,7 +28,7 @@ nts::Component4017::~Component4017() noexcept
 void nts::Component4017::computeOutputs()
 {
     nts::Tristate master_reset = compute(MR);
-    nts::Tristate clock = m_and_gate_clock->compute(GateAND::OUTPUT);
+    nts::Tristate clock = computeInternalComponent(*m_and_gate_clock, GateAND::OUTPUT);
     nts::componentPin_t pins{Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9};
 
     if (master_reset == nts::UNDEFINED || (master_reset == nts::FALSE && clock == nts::UNDEFINED)) {

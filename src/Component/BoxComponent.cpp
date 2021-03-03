@@ -18,19 +18,7 @@ nts::BoxComponent::BoxComponent(nts::ComponentType type, std::size_t nb_pins, co
 
 void nts::BoxComponent::simulate(std::size_t tick)
 {
-    if (m_actual_tick != tick) {
-        m_actual_tick = tick;
-        std::for_each(m_input_pins.begin(), m_input_pins.end(), [this, &tick](std::size_t pin){
-            if (m_external_links[pin - 1].component) {
-                m_external_links[pin - 1].component->simulate(tick);
-            }
-        });
-        std::for_each(m_internal_links.begin(), m_internal_links.end(), [&tick](nts::Link &link){
-            if (link.component) {
-                link.component->simulate(tick);
-            }
-        });
-    }
+    m_actual_tick = tick;
 }
 
 nts::Tristate nts::BoxComponent::compute(std::size_t pin)
@@ -39,11 +27,19 @@ nts::Tristate nts::BoxComponent::compute(std::size_t pin)
         throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
     if (std::find(m_input_pins.begin(), m_input_pins.end(), pin) != m_input_pins.end()) {
         const Link &link = m_external_links.at(pin - 1);
-        return (link.component) ? link.component->compute(link.pin) : nts::UNDEFINED;
+        if (link.component) {
+            link.component->simulate(m_actual_tick);
+            return link.component->compute(link.pin);
+        }
+        return nts::UNDEFINED;
     }
     if (std::find(m_output_pins.begin(), m_output_pins.end(), pin) != m_output_pins.end()) {
         const Link &link = m_internal_links.at(pin - 1);
-        return (link.component) ? link.component->compute(link.pin) : nts::UNDEFINED;
+        if (link.component) {
+            link.component->simulate(m_actual_tick);
+            return link.component->compute(link.pin);
+        }
+        return nts::UNDEFINED;
     }
     return nts::UNDEFINED;
 }
