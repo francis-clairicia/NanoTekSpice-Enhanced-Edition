@@ -90,12 +90,12 @@ NAME				=	nanotekspice
 all:	$(NAME)
 
 $(NAME):	CXXFLAGS += -O2
-$(NAME):	$(LDLIBS) $(OBJ)
+$(NAME):	$(OBJ)
 	$(CXX) -o $(NAME) $(OBJ) $(LDFLAGS) $(LDLIBS)
 
 tests_run:	CXXFLAGS += --coverage
 tests_run:	LDLIBS += -lcriterion
-tests_run:	$(LDLIBS)
+tests_run:
 	@find -name "*.gc*" -delete
 	$(CXX) -o unit_tests $(SRC_TEST) tests/**/*.cpp $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS)
 	-./unit_tests --verbose
@@ -104,7 +104,7 @@ tests_run:	$(LDLIBS)
 	mv *.gc* coverage/
 
 debug:	CXXFLAGS += -g
-debug:	$(LDLIBS)
+debug:
 	$(CXX) -o debug $(SRC) $(LDFLAGS) $(LDLIBS) $(CXXFLAGS) $(CPPFLAGS)
 
 clean:
@@ -112,7 +112,7 @@ clean:
 	$(RM) debug unit_tests *.gc*
 
 fclean:	clean
-	rm -f $(NAME)
+	$(RM) $(NAME)
 
 re::	fclean
 re::	all
