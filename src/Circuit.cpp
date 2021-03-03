@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "Circuit.hpp"
+#include "Parser.hpp"
 #include "BadComponentTypeException.hpp"
 #include "BadComponentNameException.hpp"
 #include "InputValueException.hpp"
@@ -28,11 +29,15 @@ nts::Circuit::Circuit() noexcept:
 {
 }
 
-nts::Circuit::~Circuit() noexcept
+nts::Circuit::Circuit(const std::string &filepath):
+    m_components{}, m_input_components{}, m_output_components{}
 {
+    nts::Parser parser{filepath, *this};
+
+    parser.parse();
 }
 
-nts::Circuit::Circuit(const nts::Circuit &other __attribute__((unused))) noexcept
+nts::Circuit::~Circuit() noexcept
 {
 }
 
@@ -131,11 +136,6 @@ void nts::Circuit::dump() const noexcept
         std::cout << "==== '" << pair.first << "' component ====" << std::endl;
         pair.second->dump();
     }
-}
-
-nts::Circuit &nts::Circuit::operator=(const nts::Circuit &rhs __attribute__((unused))) noexcept
-{
-    return *this;
 }
 
 nts::IComponent &nts::Circuit::operator[](const std::string &key) const

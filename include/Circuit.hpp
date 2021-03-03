@@ -23,7 +23,9 @@ namespace nts
 
         public:
             Circuit() noexcept;
-            Circuit(const nts::Circuit &other) noexcept;
+            Circuit(const std::string &filepath);
+            Circuit(const nts::Circuit &other) noexcept = delete;
+            Circuit(nts::Circuit &&other) noexcept = delete;
             ~Circuit() noexcept;
 
             void addComponent(const std::string &type, const std::string &name);
@@ -40,7 +42,7 @@ namespace nts
             void simulate(std::size_t tick);
             void dump() const noexcept;
 
-            nts::Circuit &operator=(const nts::Circuit &rhs) noexcept;
+            nts::Circuit &operator=(const nts::Circuit &rhs) noexcept = delete;
             nts::IComponent &operator[](const std::string &key) const;
 
         private:

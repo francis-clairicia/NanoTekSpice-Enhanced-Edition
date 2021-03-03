@@ -9,7 +9,6 @@
 #include <algorithm>
 #include <csignal>
 #include "Circuit.hpp"
-#include "Parser.hpp"
 #include "Exception.hpp"
 #include "nanotekspice.hpp"
 #include "string_operations.hpp"
@@ -61,8 +60,7 @@ static void input_value_set(const std::string &input, nts::Circuit &circuit)
 
 int nts::nanotekspice(const std::string &circuit_file)
 {
-    nts::Circuit circuit;
-    nts::Parser parser{circuit_file, circuit};
+    nts::Circuit circuit{circuit_file};
     std::string input;
     std::size_t tick = 0;
     std::unordered_map<std::string, void (*)(nts::Circuit &, std::size_t &)> commands{
@@ -72,8 +70,7 @@ int nts::nanotekspice(const std::string &circuit_file)
         {"dump",     &dump_command},
     };
 
-    parser.parse();
-    circuit.simulate(0);
+    circuit.simulate(tick);
     while (command_prompt(input)) {
         trim_trailing_whitespace(input);
         if (input.empty())
