@@ -64,34 +64,6 @@ bool nts::Circuit::empty() const noexcept
     return m_components.empty();
 }
 
-const nts::Circuit::inputComponentMap_t &nts::Circuit::inputs() const noexcept
-{
-    return m_input_components;
-}
-
-nts::InputComponent &nts::Circuit::inputs(const std::string &name) const
-{
-    const auto &search = m_input_components.find(name);
-
-    if (search == m_input_components.end())
-        throw nts::BadComponentNameException(name);
-    return (search->second);
-}
-
-const nts::Circuit::outputComponentMap_t &nts::Circuit::outputs() const noexcept
-{
-    return m_output_components;
-}
-
-nts::OutputComponent &nts::Circuit::outputs(const std::string &name) const
-{
-    const auto &search = m_output_components.find(name);
-
-    if (search == m_output_components.end())
-        throw nts::BadComponentNameException(name);
-    return (search->second);
-}
-
 void nts::Circuit::setValueForNextTick(const std::string &name, const std::string &value)
 {
     const auto &component = m_input_components.find(name);

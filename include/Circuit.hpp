@@ -32,11 +32,6 @@ namespace nts
             bool hasComponent(const std::string &name) const noexcept;
             bool empty() const noexcept;
 
-            const inputComponentMap_t &inputs() const noexcept;
-            InputComponent &inputs(const std::string &name) const;
-            const outputComponentMap_t &outputs() const noexcept;
-            OutputComponent &outputs(const std::string &name) const;
-
             void setValueForNextTick(const std::string &name, const std::string &value);
             void display(std::size_t tick) const noexcept;
             void simulate(std::size_t tick);
