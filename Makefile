@@ -24,12 +24,12 @@ SRC_EXCEPTIONS		=	src/Exception/BadComponentNameException.cpp			\
 						src/Exception/ParserException.cpp					\
 						src/Exception/SyntaxException.cpp
 
-SRC_PARSER			=	src/Parser.cpp
+SRC_CIRCUIT			=	src/Circuit.cpp										\
+						src/Parser.cpp
 
 SRC_UTILS			=	src/Utils/string_operations.cpp
 
-SRC_COMPONENTS		=	src/Component/Circuit.cpp							\
-						src/Component/ComponentFactory.cpp					\
+SRC_COMPONENTS		=	src/Component/ComponentFactory.cpp					\
 						src/Component/SinglePinComponent.cpp				\
 						src/Component/InputComponent.cpp					\
 						src/Component/OutputComponent.cpp					\
@@ -59,7 +59,7 @@ SRC_FLIPFLOP		=	src/FlipFlop/DTypeFlipFlopWithSR.cpp
 SRC					=	$(SRC_MAIN)											\
 						$(SRC_NANOTEKSPICE)									\
 						$(SRC_EXCEPTIONS)									\
-						$(SRC_PARSER)										\
+						$(SRC_CIRCUIT)										\
 						$(SRC_UTILS)										\
 						$(SRC_COMPONENTS)									\
 						$(SRC_GATES)										\
