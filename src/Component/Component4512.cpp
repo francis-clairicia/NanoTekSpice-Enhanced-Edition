@@ -32,11 +32,11 @@ void nts::Component4512::computeOutputs()
     nts::Tristate input_c = compute(INPUT_C);
     nts::Tristate inhibit = compute(INHIBIT);
     nts::Tristate not_output_enabled = computeInternalComponent(*m_invert_oe, GateNOT::OUTPUT);
-    std::unordered_map<std::size_t, nts::Tristate> x_inputs_map;
-    std::array<std::size_t, 8> x_inputs_list{X0, X1, X2, X3, X4, X5, X6, X7};
+    std::array<nts::Tristate, 8> x_inputs;
 
-    for (std::size_t pin : x_inputs_list)
-        x_inputs_map[pin] = compute(pin);
+    std::size_t index = 0;
+    for (std::size_t pin : {X0, X1, X2, X3, X4, X5, X6, X7})
+        x_inputs[index++] = compute(pin);
     if (not_output_enabled == nts::TRUE || not_output_enabled == nts::UNDEFINED || inhibit == nts::UNDEFINED) {
         m_output_pins[OUTPUT_Z] = nts::UNDEFINED;
         return;
@@ -50,6 +50,6 @@ void nts::Component4512::computeOutputs()
         return;
     }
     address = (input_c << 2) | (input_b << 1) | input_a;
-    m_output_pins[OUTPUT_Z] = x_inputs_map.at(x_inputs_list.at(address));
+    m_output_pins[OUTPUT_Z] = x_inputs.at(address);
 
 }
