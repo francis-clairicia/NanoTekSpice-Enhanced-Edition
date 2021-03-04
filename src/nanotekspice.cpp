@@ -8,6 +8,7 @@
 #include <iostream>
 #include <algorithm>
 #include <csignal>
+#include <string_view>
 #include "Circuit.hpp"
 #include "Exception.hpp"
 #include "nanotekspice.hpp"
@@ -63,7 +64,7 @@ int nts::nanotekspice(const std::string &circuit_file)
     nts::Circuit circuit{circuit_file};
     std::string input;
     std::size_t tick = 0;
-    std::unordered_map<std::string, void (*)(nts::Circuit &, std::size_t &)> commands{
+    const std::unordered_map<const std::string_view, void (*)(nts::Circuit &, std::size_t &)> commands{
         {"display",  &display_command},
         {"simulate", &simulate_command},
         {"loop",     &loop_command},

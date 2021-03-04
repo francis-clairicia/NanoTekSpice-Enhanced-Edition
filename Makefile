@@ -74,7 +74,7 @@ SRC_TEST			=	$(SRC_COMPONENTS)									\
 						$(SRC_SUM)											\
 						$(SRC_FLIPFLOP)
 
-CXXFLAGS			=	-Wall -Wextra
+CXXFLAGS			=	-Wall -Wextra -std=c++17
 
 CPPFLAGS			=	-I./include/										\
 						-I./include/Exception/								\
