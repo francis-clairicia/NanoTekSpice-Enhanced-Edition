@@ -77,16 +77,16 @@ void nts::Circuit::setValueForNextTick(const std::string &name, const std::strin
 
 void nts::Circuit::display(std::size_t tick) const noexcept
 {
-    std::cout << "tick: " << tick << std::endl;
-    std::cout << "input(s):" << std::endl;
+    std::cout << "tick: " << tick << "\n";
+    std::cout << "input(s):" << "\n";
     for (const auto &component : m_input_components) {
         std::cout << std::string(2, ' ') << component.first << ": ";
-        std::cout << TRISTATE_TO_STR.at(component.second.compute(InputComponent::OUTPUT)) << std::endl;
+        std::cout << TRISTATE_TO_STR.at(component.second.compute(InputComponent::OUTPUT)) << "\n";
     }
-    std::cout << "output(s):" << std::endl;
+    std::cout << "output(s):" << "\n";
     for (const auto &component : m_output_components) {
         std::cout << std::string(2, ' ') << component.first << ": ";
-        std::cout << TRISTATE_TO_STR.at(component.second.compute(OutputComponent::INPUT)) << std::endl;
+        std::cout << TRISTATE_TO_STR.at(component.second.compute(OutputComponent::INPUT)) << "\n";
     }
 }
 
@@ -100,12 +100,12 @@ void nts::Circuit::simulate(std::size_t tick)
 
 void nts::Circuit::dump() const noexcept
 {
-    std::cout << "Chipsets dump:" << std::endl;
+    std::cout << "Chipsets dump:" << "\n";
     std::size_t index = 0;
     for (const auto &pair : m_components) {
         if (index++)
-            std::cout << std::endl;
-        std::cout << "==== '" << pair.first << "' component ====" << std::endl;
+            std::cout << "\n";
+        std::cout << "==== '" << pair.first << "' component ====" << "\n";
         pair.second->dump();
     }
 }

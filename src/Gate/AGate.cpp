@@ -56,7 +56,7 @@ nts::Tristate nts::AGate::compute(std::size_t pin)
 
 void nts::AGate::dump() const
 {
-    std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " gate component:" << std::endl;
+    std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " gate component:" << "\n";
 
     std::size_t index = 0;
     for (const auto &link : m_links) {
@@ -70,6 +70,6 @@ void nts::AGate::dump() const
         } else {
             std::cout << "Output pin";
         }
-        std::cout << std::endl;
+        std::cout << "\n";
     }
 }

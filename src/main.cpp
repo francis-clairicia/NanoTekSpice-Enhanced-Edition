@@ -12,10 +12,10 @@
 
 static void print_help(std::ostream &output)
 {
-    output << "USAGE:\t./nanotekspice circuit" << std::endl;
-    output << std::endl;
-    output << "Positional arguments:" << std::endl;
-    output << "\tcircuit\t\tPath to a .nts circuit file" << std::endl;
+    output << "USAGE:\t./nanotekspice circuit" << "\n";
+    output << "\n";
+    output << "Positional arguments:" << "\n";
+    output << "\tcircuit\t\tPath to a .nts circuit file" << "\n";
 }
 
 int main(int ac, char const * const *av)
@@ -34,7 +34,7 @@ int main(int ac, char const * const *av)
     try {
         output = nts::nanotekspice(av[1]);
     } catch (const nts::Exception &e) {
-        std::cerr << e.what() << std::endl;
+        std::cerr << e.what() << "\n";
         output = 84;
     }
 

@@ -54,7 +54,7 @@ void nts::BoxComponent::setLink(std::size_t pin, nts::IComponent &other, std::si
 
 void nts::BoxComponent::dump() const
 {
-    std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << std::endl;
+    std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << "\n";
 
     std::size_t index = 0;
     for (const auto &link : m_external_links) {
@@ -64,15 +64,15 @@ void nts::BoxComponent::dump() const
         } else {
             std::cout << "not linked";
         }
-        std::cout << std::endl;
+        std::cout << "\n";
     }
-    std::cout << "Internal linkage:" << std::endl;
+    std::cout << "Internal linkage:" << "\n";
 
     index = 0;
     for (const auto &link : m_internal_links) {
         ++index;
         if (link.component) {
-            std::cout << "-> Pin " << index << ": " << "linked to pin " << link.pin << " of a component" << std::endl;
+            std::cout << "-> Pin " << index << ": " << "linked to pin " << link.pin << " of a component" << "\n";
         }
     }
     dumpInternalComponents();

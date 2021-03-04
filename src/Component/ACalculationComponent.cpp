@@ -63,7 +63,7 @@ nts::Tristate nts::ACalculationComponent::compute(std::size_t pin)
 
 void nts::ACalculationComponent::dump() const
 {
-    std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << std::endl;
+    std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << "\n";
 
     std::size_t index = 0;
     for (const auto &link : m_links) {
@@ -77,7 +77,7 @@ void nts::ACalculationComponent::dump() const
         } else {
             std::cout << "Output pin";
         }
-        std::cout << std::endl;
+        std::cout << "\n";
     }
 }
 

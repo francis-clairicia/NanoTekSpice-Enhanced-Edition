@@ -26,7 +26,7 @@ void nts::InputComponent::simulate(std::size_t tick)
 void nts::InputComponent::dump() const
 {
     nts::SinglePinComponent::dump();
-    std::cout << "-> Value: " << m_value << std::endl;
+    std::cout << "-> Value: " << m_value << "\n";
 }
 
 void nts::InputComponent::setValue(nts::Tristate value)

@@ -54,7 +54,7 @@ nts::SumComponent::~SumComponent()
 
 void nts::SumComponent::dumpInternalComponents() const
 {
-    std::cout << "Internal components:" << std::endl;
+    std::cout << "Internal components:" << "\n";
     m_xor1->dump();
     m_xor2->dump();
     m_and1->dump();
