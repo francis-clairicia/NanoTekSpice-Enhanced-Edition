@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <csignal>
 #include <string_view>
+#include <unistd.h>
 #include "Circuit.hpp"
 #include "Exception.hpp"
 #include "nanotekspice.hpp"
@@ -77,7 +78,7 @@ int nts::nanotekspice(const std::string &circuit_file)
         if (input.empty())
             continue;
         if (input.compare("exit") == 0)
-            break;
+            return 0;
         try {
             if (input.find('=') != std::string::npos) {
                 input_value_set(input, circuit);
@@ -92,5 +93,7 @@ int nts::nanotekspice(const std::string &circuit_file)
             std::cerr << e.what() << '\n';
         }
     }
+    if (std::cin.eof() && isatty(STDIN_FILENO))
+        std::cout << '\n';
     return (0);
 }
