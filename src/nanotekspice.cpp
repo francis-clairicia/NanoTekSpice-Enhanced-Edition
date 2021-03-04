@@ -84,12 +84,12 @@ int nts::nanotekspice(const std::string &circuit_file)
             } else if (input.find('=') != std::string::npos) {
                 input_value_set(input, circuit);
             } else {
-                std::cerr << "Unknown command \"" << input << "\"" << "\n";
+                std::cerr << "Unknown command \"" << input << "\"" << '\n';
             }
         } catch (const nts::Exception &e){
-            std::cerr << e.what() << "\n";
+            std::cerr << e.what() << '\n';
         }
     }
-    std::cout << "\n";
+    std::cout << '\n';
     return (0);
 }

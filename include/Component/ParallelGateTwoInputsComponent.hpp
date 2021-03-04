@@ -76,7 +76,7 @@ namespace nts
         protected:
             void dumpInternalComponents() const final
             {
-                std::cout << "Internal components:" << "\n";
+                std::cout << "Internal components:" << '\n';
                 for (const auto &component : m_components)
                     component->dump();
             }

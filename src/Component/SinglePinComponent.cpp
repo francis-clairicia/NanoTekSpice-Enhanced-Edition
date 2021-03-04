@@ -33,11 +33,11 @@ void nts::SinglePinComponent::setLink(std::size_t pin, nts::IComponent &other, s
 
 void nts::SinglePinComponent::dump() const
 {
-    std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << "\n";
+    std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << '\n';
     std::cout << "-> Pin 1: ";
     if (m_link.component)
         std::cout << "linked to the pin " << m_link.pin << " of a component";
     else
         std::cout << "not linked";
-    std::cout << "\n";
+    std::cout << '\n';
 }
