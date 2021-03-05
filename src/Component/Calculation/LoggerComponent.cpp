@@ -37,7 +37,7 @@ void nts::LoggerComponent::computeOutputs()
         return;
     if (clock == nts::FALSE || inhibit == nts::TRUE)
         return;
-    
+
     for (std::size_t bit = 0; bit < inputs.size(); ++bit)
         inputs[bit] = compute(m_input_pins[bit]);
     for (std::size_t bit = 0; bit < inputs.size(); ++bit) {

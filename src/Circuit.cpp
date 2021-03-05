@@ -48,7 +48,7 @@ void nts::Circuit::addComponent(const std::string &type, const std::string &name
     InputComponent *input = dynamic_cast<InputComponent *>(m_components[name].get());
     if (input)
         m_input_components.emplace(name, *input);
-    
+
     OutputComponent *output = dynamic_cast<OutputComponent *>(m_components[name].get());
     if (output)
         m_output_components.emplace(name, *output);

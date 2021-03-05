@@ -126,7 +126,7 @@ void nts::Parser::initLink(std::size_t line_index, const std::vector<std::string
 
     if (chipset_link1.size() != 2 || chipset_link2.size() != 2)
         throw nts::SyntaxException(line_index, "Link declaration must respect this form: name1:pin1 name2:pin2");
-    
+
     const std::string &chipset_name1 = chipset_link1[0];
     const std::string &chipset_pin1 = chipset_link1[1];
     const std::string &chipset_name2 = chipset_link2[0];
