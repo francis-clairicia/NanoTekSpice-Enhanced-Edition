@@ -35,6 +35,9 @@ namespace nts
 
         protected:
             void computeOutputs() final;
+
+        private:
+            std::ofstream m_stream;
     };
 }
 

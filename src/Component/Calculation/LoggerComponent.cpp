@@ -14,12 +14,16 @@ static const std::string LOG_FILE{"./log.bin"};
 nts::LoggerComponent::LoggerComponent():
     ACalculationComponent(ComponentType::Logger, 10, {
         BIT0, BIT1, BIT2, BIT3, BIT4, BIT5, BIT6, BIT7, CLOCK, INHIBIT
-    }, {})
+    }, {}),
+    m_stream{LOG_FILE, std::ios_base::out | std::ios_base::binary}
 {
+    if (!m_stream)
+        throw FileException(LOG_FILE, "Cannot open file");
 }
 
 nts::LoggerComponent::~LoggerComponent() noexcept
 {
+    m_stream.close();
 }
 
 void nts::LoggerComponent::computeOutputs()
@@ -41,13 +45,9 @@ void nts::LoggerComponent::computeOutputs()
             return;
         character |= inputs[bit] << bit;
     }
-    
-    std::ofstream output_stream{LOG_FILE, std::ios_base::out | std::ios_base::app | std::ios_base::binary};
 
-    if (!output_stream)
-        throw FileException(LOG_FILE, "Cannot open file");
-    output_stream.put(character);
-    if (output_stream.bad())
+    m_stream.put(character);
+    m_stream.flush();
+    if (m_stream.bad())
         throw FileException(LOG_FILE, "Error on writing");
-    output_stream.close();
 }
