@@ -17,13 +17,7 @@
 
 namespace nts
 {
-    struct Link
-    {
-        IComponent *component;
-        std::size_t pin;
-    };
-
-    using internComponent_t = std::vector<std::unique_ptr<IComponent>>;
+    using internComponent_t = std::vector<std::unique_ptr<nts::IComponent>>;
     using componentPin_t = std::vector<std::size_t>;
     using pinList_t = std::initializer_list<std::size_t>;
     using pinMap_t = std::unordered_map<std::size_t, nts::Tristate>;

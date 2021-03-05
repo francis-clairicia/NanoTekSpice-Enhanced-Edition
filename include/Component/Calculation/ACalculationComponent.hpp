@@ -9,6 +9,7 @@
 #define ACALCULATIONCOMPONENT_HPP_
 
 #include "types.hpp"
+#include "Pin.hpp"
 
 namespace nts
 {
@@ -23,7 +24,7 @@ namespace nts
             void dump() const final;
 
         protected:
-            nts::Tristate computeInternalComponent(IComponent &component, std::size_t pin) const;
+            nts::Tristate computeInternalComponent(nts::IComponent &component, std::size_t pin) const;
             virtual void computeOutputs() = 0;
 
         protected:
@@ -34,7 +35,7 @@ namespace nts
         private:
             std::size_t               m_actual_tick;
             bool                      m_computed;
-            std::vector<nts::Link>    m_links;
+            std::vector<nts::Pin>     m_links;
             
     };
 }

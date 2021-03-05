@@ -9,6 +9,7 @@
 #define AGATE_HPP_
 
 #include "types.hpp"
+#include "Pin.hpp"
 
 namespace nts
 {
@@ -31,7 +32,7 @@ namespace nts
         private:
             std::size_t               m_actual_tick;
             bool                      m_computed;
-            std::vector<nts::Link>    m_links;
+            std::vector<nts::Pin>     m_links;
             const nts::componentPin_t m_input_pins;
             std::size_t               m_output_pin;
     };

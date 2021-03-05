@@ -14,7 +14,7 @@ namespace nts
 {
     class DTypeFlipFlopWithSR: public nts::ACalculationComponent {
         public:
-            enum Pin
+            enum PinName
             {
                 Q     = 1,
                 Qn    = 2,
@@ -32,7 +32,7 @@ namespace nts
             void computeOutputs() final;
 
         private:
-            std::unique_ptr<IComponent> m_invert;
+            std::unique_ptr<nts::IComponent> m_invert;
     };
 }
 

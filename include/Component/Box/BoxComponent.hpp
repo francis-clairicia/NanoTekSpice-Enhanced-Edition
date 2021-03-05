@@ -9,6 +9,7 @@
 #define BOXCOMPONENT_HPP_
 
 #include "types.hpp"
+#include "Pin.hpp"
 
 namespace nts
 {
@@ -32,8 +33,8 @@ namespace nts
 
         private:
             std::size_t               m_actual_tick;
-            std::vector<nts::Link>    m_internal_links;
-            std::vector<nts::Link>    m_external_links;
+            std::vector<nts::Pin>     m_internal_links;
+            std::vector<nts::Pin>     m_external_links;
     };
 }
 

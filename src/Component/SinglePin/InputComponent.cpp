@@ -10,7 +10,7 @@
 
 nts::InputComponent::InputComponent(nts::ComponentType type) noexcept:
     SinglePinComponent(type),
-    m_actual_tick{0},
+    m_actual_tick{~0UL},
     m_value_for_next_tick{nts::UNDEFINED}
 {
 }
@@ -21,12 +21,6 @@ void nts::InputComponent::simulate(std::size_t tick)
         m_actual_tick = tick;
         m_value = m_value_for_next_tick;
     }
-}
-
-void nts::InputComponent::dump() const
-{
-    nts::SinglePinComponent::dump();
-    std::cout << "-> Value: " << m_value << '\n';
 }
 
 void nts::InputComponent::setValue(nts::Tristate value)

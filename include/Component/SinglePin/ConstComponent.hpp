@@ -16,7 +16,7 @@ namespace nts
     template<nts::ComponentType Type, nts::Tristate Value>
     class ConstComponent: public nts::SinglePinComponent {
         public:
-            enum Pin
+            enum PinName
             {
                 OUTPUT = 1
             };

@@ -14,7 +14,7 @@ namespace nts
 {
     class Component4008: public nts::BoxComponent {
         public:
-            enum Pin
+            enum PinName
             {
                 A4   = 1,
                 B3   = 2,

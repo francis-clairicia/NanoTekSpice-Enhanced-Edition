@@ -14,7 +14,7 @@ namespace nts
 {
     class OutputComponent: public nts::SinglePinComponent {
         public:
-            enum Pin
+            enum PinName
             {
                 INPUT = 1
             };

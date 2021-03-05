@@ -14,7 +14,7 @@ namespace nts
 {
     class SumComponent: public nts::BoxComponent {
         public:
-            enum Pin
+            enum PinName
             {
                 Ai = 1,
                 Bi = 2,
@@ -31,11 +31,11 @@ namespace nts
             void dumpInternalComponents() const final;
 
         private:
-            std::unique_ptr<IComponent> m_xor1;
-            std::unique_ptr<IComponent> m_xor2;
-            std::unique_ptr<IComponent> m_and1;
-            std::unique_ptr<IComponent> m_and2;
-            std::unique_ptr<IComponent> m_or;
+            std::unique_ptr<nts::IComponent> m_xor1;
+            std::unique_ptr<nts::IComponent> m_xor2;
+            std::unique_ptr<nts::IComponent> m_and1;
+            std::unique_ptr<nts::IComponent> m_and2;
+            std::unique_ptr<nts::IComponent> m_or;
     };
 }
 

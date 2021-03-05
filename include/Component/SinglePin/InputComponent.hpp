@@ -14,7 +14,7 @@ namespace nts
 {
     class InputComponent: public nts::SinglePinComponent {
         public:
-            enum Pin
+            enum PinName
             {
                 OUTPUT = 1
             };
@@ -23,7 +23,6 @@ namespace nts
             InputComponent(nts::ComponentType type = ComponentType::Input) noexcept;
 
             void simulate(std::size_t tick) override;
-            void dump() const override;
 
             virtual void setValue(nts::Tristate value);
 

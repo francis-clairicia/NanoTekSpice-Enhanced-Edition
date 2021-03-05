@@ -16,7 +16,7 @@ namespace nts
     template<nts::ComponentType Type, typename Gate>
     class ParallelGateTwoInputsComponent: public nts::BoxComponent {
         public:
-            enum Pin
+            enum PinName
             {
                 INPUT_1A = 1,
                 INPUT_1B = 2,

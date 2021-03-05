@@ -14,11 +14,6 @@ nts::OutputComponent::OutputComponent(nts::ComponentType type) noexcept:
 
 void nts::OutputComponent::simulate(std::size_t tick)
 {
-    if (m_link.component) {
-        m_link.component->simulate(tick);
-        m_value = m_link.component->compute(m_link.pin);
-    } else {
-        m_value = nts::UNDEFINED;
-    }
+    m_value = m_pin.compute(tick);
 }
 

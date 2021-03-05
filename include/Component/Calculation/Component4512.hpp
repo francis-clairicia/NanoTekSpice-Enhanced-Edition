@@ -14,7 +14,7 @@ namespace nts
 {
     class Component4512: public nts::ACalculationComponent {
         public:
-            enum Pin
+            enum PinName
             {
                 X0       = 1,
                 X1       = 2,
@@ -40,7 +40,7 @@ namespace nts
             void computeOutputs() final;
 
         private:
-            std::unique_ptr<IComponent> m_invert_oe;
+            std::unique_ptr<nts::IComponent> m_invert_oe;
     };
 }
 

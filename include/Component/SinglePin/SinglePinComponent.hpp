@@ -9,6 +9,7 @@
 #define SINGLEPINCOMPONENT_HPP_
 
 #include "types.hpp"
+#include "Pin.hpp"
 
 namespace nts
 {
@@ -18,10 +19,10 @@ namespace nts
 
             nts::Tristate compute(std::size_t pin) final;
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
-            void dump() const override;
+            void dump() const final;
 
         protected:
-            nts::Link                m_link;
+            nts::Pin                 m_pin;
             const nts::ComponentType m_type;
             nts::Tristate            m_value;
     };

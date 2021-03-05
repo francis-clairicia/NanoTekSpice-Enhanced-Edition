@@ -15,7 +15,7 @@ namespace nts
 {
     class LoggerComponent: public nts::ACalculationComponent {
         public:
-            enum Pin
+            enum PinName
             {
                 BIT0    = 1,
                 BIT1    = 2,
@@ -35,6 +35,9 @@ namespace nts
 
         protected:
             void computeOutputs() final;
+
+        private:
+            std::ofstream m_stream;
     };
 }
 

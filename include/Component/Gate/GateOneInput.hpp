@@ -14,7 +14,7 @@ namespace nts
 {
     class GateOneInput: public nts::AGate {
         public:
-            enum Pin
+            enum PinName
             {
                 INPUT  = 1,
                 OUTPUT = 2,

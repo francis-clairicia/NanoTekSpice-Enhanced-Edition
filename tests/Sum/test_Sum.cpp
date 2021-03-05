@@ -8,50 +8,126 @@
 #include <criterion/criterion.h>
 #include "SumComponent.hpp"
 #include "ConstComponent.hpp"
-
-static nts::Tristate compute(nts::SumComponent &sum,
-                             nts::IComponent &a,
-                             nts::IComponent &b,
-                             nts::IComponent &c,
-                             std::size_t output_pin)
-{
-    static std::size_t tick = 0;
-
-    sum.setLink(nts::SumComponent::Ai, a, 1);
-    sum.setLink(nts::SumComponent::Bi, b, 1);
-    sum.setLink(nts::SumComponent::Ci, c, 1);
-    sum.simulate(++tick);
-    return sum.compute(output_pin);
-}
+#include "InputComponent.hpp"
 
 Test(SumComponent, Co_truth_table)
 {
-    nts::TrueComponent c_true;
-    nts::FalseComponent c_false;
+    nts::InputComponent in_a;
+    nts::InputComponent in_b;
+    nts::InputComponent in_c;
     nts::SumComponent sum;
+    std::size_t tick = 0;
 
-    cr_assert_eq(compute(sum, c_false, c_false, c_false, nts::SumComponent::Co), nts::FALSE);
-    cr_assert_eq(compute(sum, c_true,  c_false, c_false, nts::SumComponent::Co), nts::FALSE);
-    cr_assert_eq(compute(sum, c_false, c_true,  c_false, nts::SumComponent::Co), nts::FALSE);
-    cr_assert_eq(compute(sum, c_true,  c_true,  c_false, nts::SumComponent::Co), nts::TRUE);
-    cr_assert_eq(compute(sum, c_false, c_false, c_true,  nts::SumComponent::Co), nts::FALSE);
-    cr_assert_eq(compute(sum, c_true,  c_false, c_true,  nts::SumComponent::Co), nts::TRUE);
-    cr_assert_eq(compute(sum, c_false, c_true,  c_true,  nts::SumComponent::Co), nts::TRUE);
-    cr_assert_eq(compute(sum, c_true,  c_true,  c_true,  nts::SumComponent::Co), nts::TRUE);
+    sum.setLink(nts::SumComponent::Ai, in_a, nts::InputComponent::OUTPUT);
+    sum.setLink(nts::SumComponent::Bi, in_b, nts::InputComponent::OUTPUT);
+    sum.setLink(nts::SumComponent::Ci, in_c, nts::InputComponent::OUTPUT);
+
+    in_a.setValue(nts::FALSE);
+    in_b.setValue(nts::FALSE);
+    in_c.setValue(nts::FALSE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Co), nts::FALSE);
+
+    in_a.setValue(nts::TRUE);
+    in_b.setValue(nts::FALSE);
+    in_c.setValue(nts::FALSE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Co), nts::FALSE);
+
+    in_a.setValue(nts::FALSE);
+    in_b.setValue(nts::TRUE);
+    in_c.setValue(nts::FALSE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Co), nts::FALSE);
+
+    in_a.setValue(nts::TRUE);
+    in_b.setValue(nts::TRUE);
+    in_c.setValue(nts::FALSE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Co), nts::TRUE);
+
+    in_a.setValue(nts::FALSE);
+    in_b.setValue(nts::FALSE);
+    in_c.setValue(nts::TRUE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Co), nts::FALSE);
+
+    in_a.setValue(nts::TRUE);
+    in_b.setValue(nts::FALSE);
+    in_c.setValue(nts::TRUE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Co), nts::TRUE);
+
+    in_a.setValue(nts::FALSE);
+    in_b.setValue(nts::TRUE);
+    in_c.setValue(nts::TRUE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Co), nts::TRUE);
+
+    in_a.setValue(nts::TRUE);
+    in_b.setValue(nts::TRUE);
+    in_c.setValue(nts::TRUE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Co), nts::TRUE);
 }
 
 Test(SumComponent, S_truth_table)
 {
-    nts::TrueComponent c_true;
-    nts::FalseComponent c_false;
+    nts::InputComponent in_a;
+    nts::InputComponent in_b;
+    nts::InputComponent in_c;
     nts::SumComponent sum;
+    std::size_t tick = 0;
 
-    cr_assert_eq(compute(sum, c_false, c_false, c_false, nts::SumComponent::Si), nts::FALSE);
-    cr_assert_eq(compute(sum, c_true,  c_false, c_false, nts::SumComponent::Si), nts::TRUE);
-    cr_assert_eq(compute(sum, c_false, c_true,  c_false, nts::SumComponent::Si), nts::TRUE);
-    cr_assert_eq(compute(sum, c_true,  c_true,  c_false, nts::SumComponent::Si), nts::FALSE);
-    cr_assert_eq(compute(sum, c_false, c_false, c_true,  nts::SumComponent::Si), nts::TRUE);
-    cr_assert_eq(compute(sum, c_true,  c_false, c_true,  nts::SumComponent::Si), nts::FALSE);
-    cr_assert_eq(compute(sum, c_false, c_true,  c_true,  nts::SumComponent::Si), nts::FALSE);
-    cr_assert_eq(compute(sum, c_true,  c_true,  c_true,  nts::SumComponent::Si), nts::TRUE);
+    sum.setLink(nts::SumComponent::Ai, in_a, nts::InputComponent::OUTPUT);
+    sum.setLink(nts::SumComponent::Bi, in_b, nts::InputComponent::OUTPUT);
+    sum.setLink(nts::SumComponent::Ci, in_c, nts::InputComponent::OUTPUT);
+
+    in_a.setValue(nts::FALSE);
+    in_b.setValue(nts::FALSE);
+    in_c.setValue(nts::FALSE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Si), nts::FALSE);
+
+    in_a.setValue(nts::TRUE);
+    in_b.setValue(nts::FALSE);
+    in_c.setValue(nts::FALSE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Si), nts::TRUE);
+
+    in_a.setValue(nts::FALSE);
+    in_b.setValue(nts::TRUE);
+    in_c.setValue(nts::FALSE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Si), nts::TRUE);
+
+    in_a.setValue(nts::TRUE);
+    in_b.setValue(nts::TRUE);
+    in_c.setValue(nts::FALSE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Si), nts::FALSE);
+
+    in_a.setValue(nts::FALSE);
+    in_b.setValue(nts::FALSE);
+    in_c.setValue(nts::TRUE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Si), nts::TRUE);
+
+    in_a.setValue(nts::TRUE);
+    in_b.setValue(nts::FALSE);
+    in_c.setValue(nts::TRUE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Si), nts::FALSE);
+
+    in_a.setValue(nts::FALSE);
+    in_b.setValue(nts::TRUE);
+    in_c.setValue(nts::TRUE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Si), nts::FALSE);
+
+    in_a.setValue(nts::TRUE);
+    in_b.setValue(nts::TRUE);
+    in_c.setValue(nts::TRUE);
+    sum.simulate(tick++);
+    cr_assert_eq(sum.compute(nts::SumComponent::Si), nts::TRUE);
 }

@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2021
 ** B-OOP-400-BDX-4-1-tekspice-francis.clairicia-rose-claire-josephine
 ** File description:
-** IComponent
+** nts::IComponent
 */
 
 #ifndef ICOMPONENT_HPP_
