@@ -15,7 +15,6 @@ nts::LoggerComponent::LoggerComponent():
     ACalculationComponent(ComponentType::Logger, 10, {
         BIT0, BIT1, BIT2, BIT3, BIT4, BIT5, BIT6, BIT7, CLOCK, INHIBIT
     }, {}),
-    m_stream{LOG_FILE, std::ios_base::out | std::ios_base::binary}
 {
 }
 
