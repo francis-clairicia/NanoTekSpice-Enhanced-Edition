@@ -14,7 +14,7 @@ static const std::string LOG_FILE{"./log.bin"};
 nts::LoggerComponent::LoggerComponent():
     ACalculationComponent(ComponentType::Logger, 10, {
         BIT0, BIT1, BIT2, BIT3, BIT4, BIT5, BIT6, BIT7, CLOCK, INHIBIT
-    }, {}),
+    }, {})
 {
 }
 
