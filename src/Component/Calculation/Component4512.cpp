@@ -37,7 +37,7 @@ void nts::Component4512::computeOutputs()
     std::size_t index = 0;
     for (std::size_t pin : {X0, X1, X2, X3, X4, X5, X6, X7})
         x_inputs[index++] = compute(pin);
-    if (not_output_enabled == nts::TRUE || not_output_enabled == nts::UNDEFINED || inhibit == nts::UNDEFINED) {
+    if (not_output_enabled == nts::FALSE || not_output_enabled == nts::UNDEFINED || inhibit == nts::UNDEFINED) {
         m_output_pins[OUTPUT_Z] = nts::UNDEFINED;
         return;
     }
