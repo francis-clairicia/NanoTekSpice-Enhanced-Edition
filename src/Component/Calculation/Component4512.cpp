@@ -31,13 +31,13 @@ void nts::Component4512::computeOutputs()
     nts::Tristate input_b = compute(INPUT_B);
     nts::Tristate input_c = compute(INPUT_C);
     nts::Tristate inhibit = compute(INHIBIT);
-    nts::Tristate not_output_enabled = computeInternalComponent(*m_invert_oe, GateNOT::OUTPUT);
+    nts::Tristate output_enabled = computeInternalComponent(*m_invert_oe, GateNOT::OUTPUT);
     std::array<nts::Tristate, 8> x_inputs;
 
     std::size_t index = 0;
     for (std::size_t pin : {X0, X1, X2, X3, X4, X5, X6, X7})
         x_inputs[index++] = compute(pin);
-    if (not_output_enabled == nts::FALSE || not_output_enabled == nts::UNDEFINED || inhibit == nts::UNDEFINED) {
+    if (output_enabled == nts::FALSE || output_enabled == nts::UNDEFINED || inhibit == nts::UNDEFINED) {
         m_output_pins[OUTPUT_Z] = nts::UNDEFINED;
         return;
     }
