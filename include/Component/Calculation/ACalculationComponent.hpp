@@ -30,6 +30,7 @@ namespace nts
         protected:
             const nts::ComponentType  m_type;
             const nts::componentPin_t m_input_pins;
+            const nts::componentPin_t m_output_pin_list;
             nts::pinMap_t             m_output_pins;
 
         private:

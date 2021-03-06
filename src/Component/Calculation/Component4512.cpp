@@ -26,7 +26,7 @@ nts::Component4512::~Component4512() noexcept
 
 void nts::Component4512::computeOutputs()
 {
-    unsigned short int address = 0;
+    unsigned char address = 0;
     nts::Tristate input_a = compute(INPUT_A);
     nts::Tristate input_b = compute(INPUT_B);
     nts::Tristate input_c = compute(INPUT_C);

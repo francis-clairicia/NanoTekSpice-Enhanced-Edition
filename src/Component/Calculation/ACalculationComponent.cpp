@@ -14,7 +14,7 @@ nts::ACalculationComponent::ACalculationComponent(nts::ComponentType type,
                                                   std::size_t nb_pins,
                                                   const pinList_t &input_pins,
                                                   const pinList_t &output_pins) noexcept:
-    m_type{type}, m_input_pins{input_pins},
+    m_type{type}, m_input_pins{input_pins}, m_output_pin_list{output_pins},
     m_actual_tick{~0UL}, m_computed{false}, m_links{nb_pins}
 {
     for (std::size_t pin : output_pins)

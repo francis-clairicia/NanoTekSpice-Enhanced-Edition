@@ -44,11 +44,11 @@ nts::Tristate nts::Pin::compute(std::size_t tick) const
                         return link.component.compute(link.pin);
                     });
 
-    if (std::any_of(inputs.begin(), inputs.end(), [](nts::Tristate value){return value == nts::UNDEFINED;}))
+    if (std::any_of(inputs.begin(), inputs.end(), [](const nts::Tristate &value){return value == nts::UNDEFINED;}))
         return nts::UNDEFINED;
 
     bool output = nts::FALSE;
-    std::for_each(inputs.begin(), inputs.end(), [&output](nts::Tristate value){output |= value;});
+    std::for_each(inputs.begin(), inputs.end(), [&output](const nts::Tristate &value){output |= value;});
     return static_cast<nts::Tristate>(output);
 }
 
