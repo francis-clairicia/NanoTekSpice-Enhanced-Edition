@@ -41,7 +41,7 @@ namespace nts
 
         private:
             std::unique_ptr<nts::IComponent> m_invert_clock;
-            std::size_t                 m_counter;
+            std::size_t                      m_counter;
     };
 }
 

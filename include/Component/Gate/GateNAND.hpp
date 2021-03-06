@@ -15,7 +15,7 @@ namespace nts
     class GateNAND: public nts::GateTwoInputs {
         public:
             GateNAND() noexcept;
-            nts::Tristate operation(const nts::Tristate &a, const nts::Tristate &b) const final;
+            nts::Tristate operation(const nts::Tristate &a, const nts::Tristate &b) const noexcept final;
     };
 }
 

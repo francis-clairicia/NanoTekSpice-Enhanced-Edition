@@ -14,10 +14,10 @@ namespace nts
 {
     class ClockComponent: public nts::InputComponent {
         public:
-            ClockComponent();
+            ClockComponent() noexcept;
 
             void simulate(std::size_t tick) final;
-            void setValue(nts::Tristate value) final;
+            void setValue(nts::Tristate value) noexcept final;
         
         private:
             bool m_invert_value;

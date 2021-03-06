@@ -27,11 +27,11 @@ nts::Component4512::~Component4512() noexcept
 void nts::Component4512::computeOutputs()
 {
     unsigned char address = 0;
-    nts::Tristate input_a = compute(INPUT_A);
-    nts::Tristate input_b = compute(INPUT_B);
-    nts::Tristate input_c = compute(INPUT_C);
-    nts::Tristate inhibit = compute(INHIBIT);
-    nts::Tristate output_enabled = computeInternalComponent(*m_invert_oe, GateNOT::OUTPUT);
+    const nts::Tristate input_a = compute(INPUT_A);
+    const nts::Tristate input_b = compute(INPUT_B);
+    const nts::Tristate input_c = compute(INPUT_C);
+    const nts::Tristate inhibit = compute(INHIBIT);
+    const nts::Tristate output_enabled = computeInternalComponent(*m_invert_oe, GateNOT::OUTPUT);
     std::array<nts::Tristate, 8> x_inputs;
 
     std::size_t index = 0;
@@ -51,5 +51,4 @@ void nts::Component4512::computeOutputs()
     }
     address = (input_c << 2) | (input_b << 1) | input_a;
     m_output_pins[OUTPUT_Z] = x_inputs.at(address);
-
 }

@@ -45,7 +45,7 @@ nts::Component4008::~Component4008() noexcept
 {
 }
 
-void nts::Component4008::dumpInternalComponents() const
+void nts::Component4008::dumpInternalComponents() const noexcept
 {
     std::cout << "Internal components:" << '\n';
     for (const auto &component : m_components)

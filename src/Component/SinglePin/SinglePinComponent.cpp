@@ -30,7 +30,7 @@ void nts::SinglePinComponent::setLink(std::size_t pin, nts::IComponent &other, s
     m_pin.setLink(other, otherPin);
 }
 
-void nts::SinglePinComponent::dump() const
+void nts::SinglePinComponent::dump() const noexcept
 {
     std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << '\n';
     std::cout << "-> Pin 1: " << '\n';

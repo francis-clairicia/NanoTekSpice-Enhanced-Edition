@@ -22,9 +22,9 @@ namespace nts
 
         public:
             GateOneInput(nts::ComponentType type) noexcept;
-            ~GateOneInput() override;
+            ~GateOneInput() noexcept;
 
-            virtual nts::Tristate operation(const nts::Tristate &a) const = 0;
+            virtual nts::Tristate operation(const nts::Tristate &a) const noexcept = 0;
         
         protected:
             nts::Tristate computeOutput() final;

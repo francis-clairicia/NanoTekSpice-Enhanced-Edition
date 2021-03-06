@@ -55,7 +55,7 @@ nts::Tristate nts::ACalculationComponent::compute(std::size_t pin)
     return nts::UNDEFINED;
 }
 
-void nts::ACalculationComponent::dump() const
+void nts::ACalculationComponent::dump() const noexcept
 {
     std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << '\n';
 

@@ -26,8 +26,8 @@ namespace nts
             ~Pin() noexcept;
 
             nts::Tristate compute(std::size_t tick) const;
-            void setLink(nts::IComponent &component, std::size_t pin);
-            void dump() const;
+            void setLink(nts::IComponent &component, std::size_t pin) noexcept;
+            void dump() const noexcept;
 
             bool hasLinks() const noexcept;
 

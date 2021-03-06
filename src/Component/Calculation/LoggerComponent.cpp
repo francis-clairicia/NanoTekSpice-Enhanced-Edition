@@ -29,8 +29,8 @@ nts::LoggerComponent::~LoggerComponent() noexcept
 void nts::LoggerComponent::computeOutputs()
 {
     char character = 0;
-    nts::Tristate clock = compute(CLOCK);
-    nts::Tristate inhibit = compute(INHIBIT);
+    const nts::Tristate clock = compute(CLOCK);
+    const nts::Tristate inhibit = compute(INHIBIT);
     std::array<nts::Tristate, 8> inputs;
 
     if (clock == nts::UNDEFINED || inhibit == nts::UNDEFINED)

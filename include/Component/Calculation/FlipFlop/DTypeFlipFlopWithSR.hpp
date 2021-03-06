@@ -26,13 +26,13 @@ namespace nts
 
         public:
             DTypeFlipFlopWithSR() noexcept;
-            ~DTypeFlipFlopWithSR();
+            ~DTypeFlipFlopWithSR() noexcept;
 
         protected:
             void computeOutputs() final;
 
         private:
-            std::unique_ptr<nts::IComponent> m_invert;
+            std::unique_ptr<nts::IComponent> m_invert_data;
     };
 }
 

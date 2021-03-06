@@ -69,11 +69,11 @@ nts::Component4514::Latch::~Latch() noexcept
 
 void nts::Component4514::Latch::computeOutputs()
 {
-    nts::Tristate input_a = compute(INPUT_A);
-    nts::Tristate input_b = compute(INPUT_B);
-    nts::Tristate input_c = compute(INPUT_C);
-    nts::Tristate input_d = compute(INPUT_D);
-    nts::Tristate strobe = compute(INPUT_STROBE);
+    const nts::Tristate input_a = compute(INPUT_A);
+    const nts::Tristate input_b = compute(INPUT_B);
+    const nts::Tristate input_c = compute(INPUT_C);
+    const nts::Tristate input_d = compute(INPUT_D);
+    const nts::Tristate strobe = compute(INPUT_STROBE);
 
     if (strobe == nts::UNDEFINED) {
         for (auto &pair : m_output_pins)
@@ -107,12 +107,12 @@ nts::Component4514::Decoder::~Decoder() noexcept
 void nts::Component4514::Decoder::computeOutputs()
 {
     unsigned char address = 0;
-    nts::Tristate input_a = compute(INPUT_A);
-    nts::Tristate input_b = compute(INPUT_B);
-    nts::Tristate input_c = compute(INPUT_C);
-    nts::Tristate input_d = compute(INPUT_D);
-    nts::Tristate inhibit = compute(INPUT_INHIBIT);
-    std::array<nts::Tristate, 4> input_address{input_a, input_b, input_c, input_d};
+    const nts::Tristate input_a = compute(INPUT_A);
+    const nts::Tristate input_b = compute(INPUT_B);
+    const nts::Tristate input_c = compute(INPUT_C);
+    const nts::Tristate input_d = compute(INPUT_D);
+    const nts::Tristate inhibit = compute(INPUT_INHIBIT);
+    const std::array<nts::Tristate, 4> input_address{input_a, input_b, input_c, input_d};
 
     if (inhibit == nts::UNDEFINED || inhibit == nts::TRUE) {
         for (auto &pair : m_output_pins)

@@ -19,7 +19,7 @@ namespace nts
 
             nts::Tristate compute(std::size_t pin) final;
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
-            void dump() const final;
+            void dump() const noexcept final;
 
         protected:
             nts::Pin                 m_pin;

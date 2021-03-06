@@ -29,12 +29,12 @@ namespace nts
             ~Circuit() noexcept;
 
             void addComponent(const std::string &type, const std::string &name);
-            bool hasComponent(const std::string &name) const noexcept;
-            bool empty() const noexcept;
+            [[nodiscard]] bool hasComponent(const std::string &name) const noexcept;
+            [[nodiscard]] bool empty() const noexcept;
 
             void setValueForNextTick(const std::string &name, const std::string &value);
             void display(std::size_t tick) const noexcept;
-            void simulate(std::size_t tick);
+            void simulate(std::size_t tick) const noexcept;
             void dump() const noexcept;
 
             nts::Circuit &operator=(const nts::Circuit &rhs) noexcept = delete;

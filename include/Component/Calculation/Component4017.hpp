@@ -42,7 +42,7 @@ namespace nts
         private:
             std::unique_ptr<nts::IComponent> m_invert_cp1;
             std::unique_ptr<nts::IComponent> m_and_gate_clock;
-            std::size_t                 m_shift;
+            std::size_t                      m_shift;
     };
 }
 

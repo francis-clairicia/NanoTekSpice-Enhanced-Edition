@@ -60,17 +60,18 @@ static void input_value_set(const std::string &input, nts::Circuit &circuit)
     circuit.setValueForNextTick(args[0], args[1]);
 }
 
+const std::unordered_map<std::string_view, void (*)(nts::Circuit &, std::size_t &)> COMMANDS_TAB{
+    {"display",  &display_command},
+    {"simulate", &simulate_command},
+    {"loop",     &loop_command},
+    {"dump",     &dump_command},
+};
+
 int nts::nanotekspice(const std::string &circuit_file)
 {
     nts::Circuit circuit{circuit_file};
     std::string input;
     std::size_t tick = 0;
-    const std::unordered_map<std::string_view, void (*)(nts::Circuit &, std::size_t &)> commands{
-        {"display",  &display_command},
-        {"simulate", &simulate_command},
-        {"loop",     &loop_command},
-        {"dump",     &dump_command},
-    };
 
     circuit.simulate(tick);
     while (command_prompt(input)) {
@@ -83,8 +84,8 @@ int nts::nanotekspice(const std::string &circuit_file)
             if (input.find('=') != std::string::npos) {
                 input_value_set(input, circuit);
             } else {
-                const auto &search = commands.find(input);
-                if (search != commands.end())
+                const auto &search = COMMANDS_TAB.find(input);
+                if (search != COMMANDS_TAB.end())
                     search->second(circuit, tick);
                 else
                     std::cerr << "Unknown command \"" << input << "\"" << '\n';

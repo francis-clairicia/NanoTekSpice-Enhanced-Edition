@@ -25,10 +25,10 @@ namespace nts
 
         public:
             SumComponent() noexcept;
-            ~SumComponent();
+            ~SumComponent() noexcept;
 
         protected:
-            void dumpInternalComponents() const final;
+            void dumpInternalComponents() const noexcept final;
 
         private:
             std::unique_ptr<nts::IComponent> m_xor1;

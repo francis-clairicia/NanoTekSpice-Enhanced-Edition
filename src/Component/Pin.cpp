@@ -19,7 +19,7 @@ nts::Pin::~Pin() noexcept
 {
 }
 
-void nts::Pin::setLink(nts::IComponent &component, std::size_t pin)
+void nts::Pin::setLink(nts::IComponent &component, std::size_t pin) noexcept
 {
     const auto &link = std::find_if(m_links.begin(), m_links.end(),
                                     [&component, &pin](const Pin::Link &link){return &link.component == &component && link.pin == pin;});
@@ -30,9 +30,6 @@ void nts::Pin::setLink(nts::IComponent &component, std::size_t pin)
 
 nts::Tristate nts::Pin::compute(std::size_t tick) const
 {
-    static std::size_t indent = 0;
-
-    indent += 4;
     if (m_links.empty())
         return nts::UNDEFINED;
 
@@ -52,7 +49,7 @@ nts::Tristate nts::Pin::compute(std::size_t tick) const
     return static_cast<nts::Tristate>(output);
 }
 
-void nts::Pin::dump() const
+void nts::Pin::dump() const noexcept
 {
     std::cout << std::string(4, ' ');
     if (!hasLinks()) {

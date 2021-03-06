@@ -35,10 +35,10 @@ namespace nts
             ~Component4013() noexcept;
 
         protected:
-            void dumpInternalComponents() const final;
+            void dumpInternalComponents() const noexcept final;
 
         private:
-            internComponent_t m_components;
+            nts::internComponent_t m_components;
     };
 }
 

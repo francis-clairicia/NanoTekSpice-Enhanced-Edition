@@ -27,8 +27,8 @@ nts::Component4017::~Component4017() noexcept
 
 void nts::Component4017::computeOutputs()
 {
-    nts::Tristate master_reset = compute(MR);
-    nts::Tristate clock = computeInternalComponent(*m_and_gate_clock, GateAND::OUTPUT);
+    const nts::Tristate master_reset = compute(MR);
+    const nts::Tristate clock = computeInternalComponent(*m_and_gate_clock, GateAND::OUTPUT);
     nts::componentPin_t pins{m_output_pin_list};
 
     pins.pop_back();
@@ -44,7 +44,7 @@ void nts::Component4017::computeOutputs()
         m_output_pins[pins.at(index)] = static_cast<nts::Tristate>(index == m_shift);
     }
 
-    nts::componentPin_t output_5_to_9{Q5, Q6, Q7, Q8, Q9};
+    const nts::componentPin_t output_5_to_9{Q5, Q6, Q7, Q8, Q9};
     m_output_pins[Q5_9] = static_cast<nts::Tristate>(std::all_of(output_5_to_9.begin(), output_5_to_9.end(),
                                                     [this](const std::size_t &pin){return this->m_output_pins[pin] == nts::FALSE;}));
 }

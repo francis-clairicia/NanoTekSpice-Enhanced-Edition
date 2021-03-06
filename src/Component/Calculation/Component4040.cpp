@@ -26,8 +26,8 @@ nts::Component4040::~Component4040() noexcept
 
 void nts::Component4040::computeOutputs()
 {
-    nts::Tristate clock = computeInternalComponent(*m_invert_clock, GateNOT::OUTPUT);
-    nts::Tristate reset = compute(RESET);
+    const nts::Tristate clock = computeInternalComponent(*m_invert_clock, GateNOT::OUTPUT);
+    const nts::Tristate reset = compute(RESET);
 
     if (reset == nts::UNDEFINED || (reset == nts::FALSE && clock == nts::UNDEFINED)) {
         for (auto &pair : m_output_pins)

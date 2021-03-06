@@ -74,7 +74,7 @@ namespace nts
             ~ParallelGateTwoInputsComponent() noexcept = default;
 
         protected:
-            void dumpInternalComponents() const final
+            void dumpInternalComponents() const noexcept final
             {
                 std::cout << "Internal components:" << '\n';
                 for (const auto &component : m_components)
@@ -82,7 +82,7 @@ namespace nts
             }
 
         private:
-            internComponent_t m_components;
+            nts::internComponent_t m_components;
     };
 }
 

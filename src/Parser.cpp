@@ -29,7 +29,7 @@ nts::Parser::Parser(const std::string &circuit_file, nts::Circuit &circuit):
         throw nts::FileException(m_file, "Circuit file must have .nts extension");
 }
 
-nts::Parser::~Parser()
+nts::Parser::~Parser() noexcept
 {
 }
 
@@ -40,7 +40,7 @@ void nts::Parser::parse() const
     if (!file)
         throw FileException(m_file, "Cannot open file");
 
-    std::string buffer((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    const std::string buffer((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     file.close();
 
     std::list<nts::Parser::Line> lines;
@@ -75,7 +75,7 @@ void nts::Parser::initFactory(std::list<nts::Parser::Line> &lines) const
     bool links_declared = false;
     std::vector<std::string> line_tab;
     nts::Parser::Declaration declaration = nts::Parser::CHIPSETS;
-    std::unordered_map<nts::Parser::Declaration, void (nts::Parser::*)(std::size_t, const std::vector<std::string> &) const> initializer{
+    const std::unordered_map<nts::Parser::Declaration, void (nts::Parser::*)(std::size_t, const std::vector<std::string> &) const> initializer{
         {nts::Parser::CHIPSETS, &nts::Parser::initChipset},
         {nts::Parser::LINKS, &nts::Parser::initLink},
     };
@@ -121,8 +121,8 @@ void nts::Parser::initLink(std::size_t line_index, const std::vector<std::string
     if (line_tab.size() != 2)
         throw nts::SyntaxException(line_index, "Link declaration must respect this form: name1:pin1 name2:pin2");
 
-    std::vector<std::string> chipset_link1 = string_split_by_delimiters(line_tab[0], ":", true);
-    std::vector<std::string> chipset_link2 = string_split_by_delimiters(line_tab[1], ":", true);
+    const std::vector<std::string> chipset_link1 = string_split_by_delimiters(line_tab[0], ":", true);
+    const std::vector<std::string> chipset_link2 = string_split_by_delimiters(line_tab[1], ":", true);
 
     if (chipset_link1.size() != 2 || chipset_link2.size() != 2)
         throw nts::SyntaxException(line_index, "Link declaration must respect this form: name1:pin1 name2:pin2");

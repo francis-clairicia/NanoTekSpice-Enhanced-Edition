@@ -43,7 +43,7 @@ void nts::BoxComponent::setLink(std::size_t pin, nts::IComponent &other, std::si
     m_external_links[pin - 1].setLink(other, otherPin);
 }
 
-void nts::BoxComponent::dump() const
+void nts::BoxComponent::dump() const noexcept
 {
     std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << '\n';
 
@@ -66,7 +66,7 @@ void nts::BoxComponent::dump() const
     dumpInternalComponents();
 }
 
-void nts::BoxComponent::dumpInternalComponents() const
+void nts::BoxComponent::dumpInternalComponents() const noexcept
 {
 }
 

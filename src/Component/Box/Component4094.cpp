@@ -5,7 +5,6 @@
 ** Component4094
 */
 
-#include <iostream>
 #include "Component4094.hpp"
 #include "ConstComponent.hpp"
 #include "DTypeFlipFlopWithSR.hpp"
@@ -99,8 +98,8 @@ nts::Component4094::ShiftRegister::~ShiftRegister() noexcept
 
 void nts::Component4094::ShiftRegister::computeOutputs()
 {
-    nts::Tristate data = compute(INPUT_DATA_Q1);
-    nts::Tristate clock = compute(INPUT_CLOCK);
+    const nts::Tristate data = compute(INPUT_DATA_Q1);
+    const nts::Tristate clock = compute(INPUT_CLOCK);
 
     if (clock == nts::UNDEFINED) {
         for (auto &pair : m_output_pins)

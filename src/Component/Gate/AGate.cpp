@@ -48,7 +48,7 @@ nts::Tristate nts::AGate::compute(std::size_t pin)
     return nts::UNDEFINED;
 }
 
-void nts::AGate::dump() const
+void nts::AGate::dump() const noexcept
 {
     std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " gate component:" << '\n';
 

@@ -23,9 +23,9 @@ namespace nts
 
         public:
             GateTwoInputs(nts::ComponentType type) noexcept;
-            ~GateTwoInputs() override;
+            ~GateTwoInputs() noexcept;
 
-            virtual nts::Tristate operation(const nts::Tristate &a, const nts::Tristate &b) const = 0;
+            virtual nts::Tristate operation(const nts::Tristate &a, const nts::Tristate &b) const noexcept = 0;
         
         protected:
             nts::Tristate computeOutput() final;

@@ -34,7 +34,7 @@ namespace nts
 
         public:
             Parser(const std::string &circuit_file, nts::Circuit &circuit);
-            ~Parser();
+            ~Parser() noexcept;
 
             void parse() const;
 

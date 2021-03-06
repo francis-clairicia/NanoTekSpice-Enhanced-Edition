@@ -11,7 +11,7 @@ nts::GateOneInput::GateOneInput(nts::ComponentType type) noexcept: AGate(type, 2
 {
 }
 
-nts::GateOneInput::~GateOneInput()
+nts::GateOneInput::~GateOneInput() noexcept
 {
 }
 

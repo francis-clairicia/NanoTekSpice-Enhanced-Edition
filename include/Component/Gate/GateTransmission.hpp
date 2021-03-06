@@ -24,7 +24,7 @@ namespace nts
         public:
             GateTransmission() noexcept;
 
-            nts::Tristate operation(const nts::Tristate &input, const nts::Tristate &control) noexcept;
+            nts::Tristate operation(const nts::Tristate &input, const nts::Tristate &control) const noexcept;
 
         protected:
             nts::Tristate computeOutput() final;

@@ -20,11 +20,11 @@ namespace nts
             void simulate(std::size_t tick) final;
             nts::Tristate compute(std::size_t pin) final;
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
-            void dump() const final;
+            void dump() const noexcept final;
         
         protected:
             void setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin);
-            virtual void dumpInternalComponents() const;
+            virtual void dumpInternalComponents() const noexcept;
 
         protected:
             const nts::ComponentType  m_type;

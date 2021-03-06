@@ -24,7 +24,7 @@ namespace nts
 
             void simulate(std::size_t tick) override;
 
-            virtual void setValue(nts::Tristate value);
+            virtual void setValue(nts::Tristate value) noexcept;
 
         protected:
             std::size_t   m_actual_tick;

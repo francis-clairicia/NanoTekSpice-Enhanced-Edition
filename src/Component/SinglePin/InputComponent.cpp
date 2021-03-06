@@ -23,7 +23,7 @@ void nts::InputComponent::simulate(std::size_t tick)
     }
 }
 
-void nts::InputComponent::setValue(nts::Tristate value)
+void nts::InputComponent::setValue(nts::Tristate value) noexcept
 {
     m_value_for_next_tick = value;
 }

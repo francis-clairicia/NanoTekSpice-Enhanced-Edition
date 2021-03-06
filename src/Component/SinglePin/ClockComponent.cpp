@@ -7,7 +7,7 @@
 
 #include "ClockComponent.hpp"
 
-nts::ClockComponent::ClockComponent():
+nts::ClockComponent::ClockComponent() noexcept:
     InputComponent(ComponentType::Clock),
     m_invert_value{true}
 {
@@ -25,7 +25,7 @@ void nts::ClockComponent::simulate(std::size_t tick)
     }
 }
 
-void nts::ClockComponent::setValue(nts::Tristate value)
+void nts::ClockComponent::setValue(nts::Tristate value) noexcept
 {
     InputComponent::setValue(value);
     m_invert_value = false;

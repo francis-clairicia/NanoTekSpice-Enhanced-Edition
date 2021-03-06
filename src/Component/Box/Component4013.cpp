@@ -37,7 +37,7 @@ nts::Component4013::~Component4013() noexcept
 {
 }
 
-void nts::Component4013::dumpInternalComponents() const
+void nts::Component4013::dumpInternalComponents() const noexcept
 {
     std::cout << "Internal components:" << '\n';
     for (const auto &component : m_components)
