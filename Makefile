@@ -37,6 +37,7 @@ SRC_ONEPIN_COMPONENTS	=	src/Component/SinglePin/SinglePinComponent.cpp				\
 SRC_BOX_COMPONENTS		=	src/Component/Box/BoxComponent.cpp							\
 							src/Component/Box/Component4008.cpp							\
 							src/Component/Box/Component4013.cpp							\
+							src/Component/Box/Component4094.cpp							\
 							src/Component/Box/Component4514.cpp							\
 							src/Component/Box/Sum/SumComponent.cpp
 
@@ -47,6 +48,7 @@ SRC_GATES				=	src/Component/Gate/AGate.cpp								\
 							src/Component/Gate/GateNOT.cpp								\
 							src/Component/Gate/GateOneInput.cpp							\
 							src/Component/Gate/GateOR.cpp								\
+							src/Component/Gate/GateTransmission.cpp						\
 							src/Component/Gate/GateTwoInputs.cpp						\
 							src/Component/Gate/GateXOR.cpp
 

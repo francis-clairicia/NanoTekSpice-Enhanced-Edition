@@ -15,7 +15,7 @@ namespace nts
     class GateAND: public nts::GateTwoInputs {
         public:
             GateAND() noexcept;
-            nts::Tristate operation(nts::Tristate a, nts::Tristate b) const final;
+            nts::Tristate operation(const nts::Tristate &a, const nts::Tristate &b) const final;
     };
 }
 

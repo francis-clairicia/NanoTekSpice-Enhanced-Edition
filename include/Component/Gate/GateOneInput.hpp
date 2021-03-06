@@ -24,7 +24,7 @@ namespace nts
             GateOneInput(nts::ComponentType type) noexcept;
             ~GateOneInput() override;
 
-            virtual nts::Tristate operation(nts::Tristate a) const = 0;
+            virtual nts::Tristate operation(const nts::Tristate &a) const = 0;
         
         protected:
             nts::Tristate computeOutput() final;

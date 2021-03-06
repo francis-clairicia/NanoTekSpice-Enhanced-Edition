@@ -15,7 +15,7 @@ namespace nts
     class GateNOT: public nts::GateOneInput {
         public:
             GateNOT() noexcept;
-            nts::Tristate operation(nts::Tristate a) const final;
+            nts::Tristate operation(const nts::Tristate &a) const final;
     };
 }
 

@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Component4008.hpp"
 #include "SumComponent.hpp"
+#include "init_vector_component.hpp"
 
 nts::Component4008::Component4008() noexcept:
     BoxComponent(ComponentType::C4008, 16, {
@@ -16,8 +17,7 @@ nts::Component4008::Component4008() noexcept:
         S1, S2, S3, S4, Cout
     })
 {
-    for (std::size_t index = 0; index < 4; ++index)
-        m_components.push_back(std::make_unique<SumComponent>());
+    init_vector_component<SumComponent>(m_components, 4);
 
     m_components[0]->setLink(SumComponent::Ai, *this, A1);
     m_components[0]->setLink(SumComponent::Bi, *this, B1);

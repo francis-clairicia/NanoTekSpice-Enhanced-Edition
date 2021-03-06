@@ -11,7 +11,7 @@ nts::GateNOT::GateNOT() noexcept: GateOneInput(ComponentType::GateNOT)
 {
 }
 
-nts::Tristate nts::GateNOT::operation(nts::Tristate a) const
+nts::Tristate nts::GateNOT::operation(const nts::Tristate &a) const
 {
     if (a == nts::UNDEFINED)
         return nts::UNDEFINED;
