@@ -54,6 +54,7 @@ SRC_GATES				=	src/Component/Gate/AGate.cpp								\
 
 SRC_CALC_COMPONENTS		=	src/Component/Calculation/ACalculationComponent.cpp			\
 							src/Component/Calculation/LoggerComponent.cpp				\
+							src/Component/Calculation/Component2716.cpp					\
 							src/Component/Calculation/Component4017.cpp					\
 							src/Component/Calculation/Component4040.cpp					\
 							src/Component/Calculation/Component4512.cpp					\

@@ -9,6 +9,7 @@
 #include "ClockComponent.hpp"
 #include "ConstComponent.hpp"
 #include "OutputComponent.hpp"
+#include "Component2716.hpp"
 #include "Component4001.hpp"
 #include "Component4008.hpp"
 #include "Component4011.hpp"
@@ -31,6 +32,7 @@ static const std::unordered_map<std::string, std::unique_ptr<nts::IComponent> (*
     {"true",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::TrueComponent>();}},
     {"false",  []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::FalseComponent>();}},
     {"output", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::OutputComponent>();}},
+    {"2716",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component2716>();}},
     {"4001",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4001>();}},
     {"4008",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4008>();}},
     {"4011",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4011>();}},

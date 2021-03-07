@@ -35,7 +35,6 @@ namespace nts
 
         private:
             std::size_t               m_actual_tick;
-            bool                      m_computed;
             std::vector<nts::Pin>     m_links;
             
     };

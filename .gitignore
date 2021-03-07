@@ -15,3 +15,4 @@ vgcore.*
 !tests/.nts/**/*.nts
 docs
 log.bin
+rom.bin

@@ -15,7 +15,7 @@ nts::ACalculationComponent::ACalculationComponent(nts::ComponentType type,
                                                   const pinList_t &input_pins,
                                                   const pinList_t &output_pins) noexcept:
     m_type{type}, m_input_pins{input_pins}, m_output_pin_list{output_pins},
-    m_actual_tick{~0UL}, m_computed{false}, m_links{nb_pins}
+    m_actual_tick{~0UL}, m_links{nb_pins}
 {
     for (std::size_t pin : output_pins)
         m_output_pins[pin] = nts::UNDEFINED;
@@ -25,9 +25,7 @@ void nts::ACalculationComponent::simulate(std::size_t tick)
 {
     if (m_actual_tick != tick) {
         m_actual_tick = tick;
-        m_computed = false;
-        if (m_output_pins.empty())
-            computeOutputs();
+        computeOutputs();
     }
 }
 
@@ -46,10 +44,6 @@ nts::Tristate nts::ACalculationComponent::compute(std::size_t pin)
         return m_links.at(pin - 1).compute(m_actual_tick);
     }
     if (m_output_pins.find(pin) != m_output_pins.end()) {
-        if (!m_computed) {
-            m_computed = true;
-            computeOutputs();
-        }
         return m_output_pins.at(pin);
     }
     return nts::UNDEFINED;

@@ -92,8 +92,6 @@ void nts::Circuit::display(std::size_t tick) const noexcept
 
 void nts::Circuit::simulate(std::size_t tick) const noexcept
 {
-    for (auto &output : m_output_components)
-        output.second.simulate(tick);
     for (auto &component : m_components)
         component.second->simulate(tick);
 }
