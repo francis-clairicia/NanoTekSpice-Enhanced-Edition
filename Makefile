@@ -74,6 +74,7 @@ SRC						=	$(SRC_MAIN)													\
 							$(SRC_UTILS)
 
 SRC_TEST				=	$(SRC_COMPONENTS)											\
+							$(SRC_CIRCUIT)												\
 							$(SRC_EXCEPTIONS)											\
 							$(SRC_UTILS)
 
@@ -108,7 +109,7 @@ tests_run:	CXXFLAGS += --coverage
 tests_run:	LDLIBS += -lcriterion
 tests_run:
 	@find -name "*.gc*" -delete
-	$(CXX) -o unit_tests $(SRC_TEST) tests/**/*.cpp $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS)
+	$(CXX) -o unit_tests $(SRC_TEST) tests/**/*.cpp tests/**/**/*.cpp $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS)
 	-./unit_tests --verbose
 	$(RM) unit_tests test*.gc*
 	mkdir -p coverage

@@ -29,7 +29,7 @@ namespace nts
             void setLink(nts::IComponent &component, std::size_t pin) noexcept;
             void dump() const noexcept;
 
-            bool hasLinks() const noexcept;
+            [[nodiscard]] bool hasLinks() const noexcept;
 
         private:
             std::vector<Link> m_links;

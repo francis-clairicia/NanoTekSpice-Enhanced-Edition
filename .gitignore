@@ -10,5 +10,8 @@ coverage
 vgcore.*
 
 *.nts
+!tests/.nts
+!tests/.nts/*.nts
+!tests/.nts/**/*.nts
 docs
 log.bin
