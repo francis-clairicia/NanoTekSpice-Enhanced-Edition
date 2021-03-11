@@ -77,7 +77,33 @@ SRC						=	$(SRC_MAIN)													\
 SRC_TEST				=	$(SRC_COMPONENTS)											\
 							$(SRC_CIRCUIT)												\
 							$(SRC_EXCEPTIONS)											\
-							$(SRC_UTILS)
+							$(SRC_UTILS)												\
+							tests/Circuit/test_Circuit.cpp								\
+							tests/Circuit/test_Parser.cpp								\
+							tests/Component/advanced/test_and_or_not.cpp				\
+							tests/Component/test_ClockComponent.cpp						\
+							tests/Component/test_Component4008.cpp						\
+							tests/Component/test_Component4017.cpp						\
+							tests/Component/test_Component4040.cpp						\
+							tests/Component/test_Component4094.cpp						\
+							tests/Component/test_Component4512.cpp						\
+							tests/Component/test_Component4514.cpp						\
+							tests/Component/test_ConstComponent.cpp						\
+							tests/Component/test_IOComponent.cpp						\
+							tests/Component/test_LoggerComponent.cpp					\
+							tests/FlipFlop/test_FlipFlop.cpp							\
+							tests/Gate/test_GateAND.cpp									\
+							tests/Gate/test_GateNAND.cpp								\
+							tests/Gate/test_GateNOR.cpp									\
+							tests/Gate/test_GateNOT.cpp									\
+							tests/Gate/test_GateOR.cpp									\
+							tests/Gate/test_GateTransmission.cpp						\
+							tests/Gate/test_GateXOR.cpp									\
+							tests/Sum/test_Sum.cpp										\
+							tests/Utils/test_string_endswith.cpp						\
+							tests/Utils/test_string_is_number.cpp						\
+							tests/Utils/test_string_split.cpp							\
+							tests/Utils/test_trim_trailing_whitespace.cpp
 
 CXXFLAGS				=	-Wall -Wextra -std=c++17
 
@@ -98,6 +124,8 @@ CPPFLAGS				=	-I./include/												\
 
 OBJ						=	$(SRC:.cpp=.o)
 
+OBJ_TEST				=	$(SRC_TEST:.cpp=.o)
+
 NAME					=	nanotekspice
 
 all:	$(NAME)
@@ -106,15 +134,13 @@ $(NAME):	CXXFLAGS += -O2
 $(NAME):	$(OBJ)
 	$(CXX) -o $(NAME) $(OBJ) $(LDFLAGS) $(LDLIBS)
 
-tests_run:	CXXFLAGS += --coverage
-tests_run:	LDLIBS += -lcriterion
-tests_run:
+tests_run::	LDLIBS += -lcriterion -lgcov
+tests_run::	clean
+tests_run::	$(OBJ_TEST)
 	@find -name "*.gc*" -delete
-	$(CXX) -o unit_tests $(SRC_TEST) tests/**/*.cpp tests/**/**/*.cpp $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS)
+	$(CXX) -o unit_tests $(OBJ_TEST) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
 	-./unit_tests --verbose
-	$(RM) unit_tests test*.gc*
-	mkdir -p coverage
-	mv *.gc* coverage/
+	$(RM) unit_tests coverage
 
 debug:	CXXFLAGS += -g
 debug:

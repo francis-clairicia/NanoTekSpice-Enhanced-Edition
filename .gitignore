@@ -1,18 +1,45 @@
 .vscode
 __pycache__
-*.o
-*.a
-a.out
 nanotekspice
 debug
 unit_tests
 coverage
 vgcore.*
 
-*.nts
-!tests/.nts
-!tests/.nts/*.nts
-!tests/.nts/**/*.nts
-docs
+docs/html
+docs/*.cmd
 log.bin
 rom.bin
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
