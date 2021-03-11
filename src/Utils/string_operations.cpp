@@ -15,7 +15,7 @@ bool string_endswith(const std::string &str, const std::string &to_find)
 
 void trim_trailing_whitespace(std::string &str)
 {
-    auto predicate = [](const unsigned char &c) {return !std::isspace(c);};
+    auto predicate = [](unsigned char c) {return !std::isspace(c);};
 
     str.erase(str.begin(), std::find_if(str.begin(), str.end(), predicate));
     str.erase(std::find_if(str.rbegin(), str.rend(), predicate).base(), str.end());

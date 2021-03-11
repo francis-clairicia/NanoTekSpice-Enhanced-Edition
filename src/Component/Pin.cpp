@@ -15,10 +15,6 @@ nts::Pin::Pin() noexcept:
 {
 }
 
-nts::Pin::~Pin() noexcept
-{
-}
-
 void nts::Pin::setLink(nts::IComponent &component, std::size_t pin) noexcept
 {
     const auto &link = std::find_if(m_links.begin(), m_links.end(),
@@ -33,7 +29,7 @@ nts::Tristate nts::Pin::compute(std::size_t tick) const
     if (m_links.empty())
         return nts::UNDEFINED;
 
-    std::vector<nts::Tristate> inputs{};
+    std::vector<nts::Tristate> inputs;
 
     std::transform(m_links.begin(), m_links.end(), std::back_inserter(inputs),
                     [&tick](const Pin::Link &link){
@@ -41,11 +37,11 @@ nts::Tristate nts::Pin::compute(std::size_t tick) const
                         return link.component.compute(link.pin);
                     });
 
-    if (std::any_of(inputs.begin(), inputs.end(), [](const nts::Tristate &value){return value == nts::UNDEFINED;}))
+    if (std::any_of(inputs.begin(), inputs.end(), [](nts::Tristate value){return value == nts::UNDEFINED;}))
         return nts::UNDEFINED;
 
     bool output = nts::FALSE;
-    std::for_each(inputs.begin(), inputs.end(), [&output](const nts::Tristate &value){output |= value;});
+    std::for_each(inputs.begin(), inputs.end(), [&output](nts::Tristate value){output |= value;});
     return static_cast<nts::Tristate>(output);
 }
 

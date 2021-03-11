@@ -29,10 +29,6 @@ nts::Parser::Parser(const std::string &circuit_file, nts::Circuit &circuit):
         throw nts::FileException(m_file, "Circuit file must have .nts extension");
 }
 
-nts::Parser::~Parser() noexcept
-{
-}
-
 void nts::Parser::parse() const
 {
     std::ifstream file(m_file);

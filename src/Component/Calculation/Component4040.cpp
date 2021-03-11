@@ -20,10 +20,6 @@ nts::Component4040::Component4040() noexcept:
     m_invert_clock->setLink(GateNOT::INPUT, *this, CLOCK);
 }
 
-nts::Component4040::~Component4040() noexcept
-{
-}
-
 void nts::Component4040::computeOutputs()
 {
     const nts::Tristate clock = computeInternalComponent(*m_invert_clock, GateNOT::OUTPUT);

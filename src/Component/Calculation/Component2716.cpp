@@ -34,10 +34,6 @@ nts::Component2716::Component2716() noexcept:
     m_invert_ce_pgm->setLink(GateNOT::INPUT, *this, CHIP_ENABLED);
 }
 
-nts::Component2716::~Component2716() noexcept
-{
-}
-
 void nts::Component2716::computeOutputs()
 {
     std::array<nts::Tristate, 11> address_input;
@@ -55,7 +51,7 @@ void nts::Component2716::computeOutputs()
         return;
     }
 
-    if (std::any_of(address_input.begin(), address_input.end(), [](const nts::Tristate &v){return v == nts::UNDEFINED;})) {
+    if (std::any_of(address_input.begin(), address_input.end(), [](nts::Tristate v){return v == nts::UNDEFINED;})) {
         for (auto &pair : m_output_pins)
             pair.second = nts::UNDEFINED;
         return;

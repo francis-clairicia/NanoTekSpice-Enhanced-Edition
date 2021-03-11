@@ -15,7 +15,9 @@ namespace nts
     class GateNOR: public nts::GateTwoInputs {
         public:
             GateNOR() noexcept;
-            nts::Tristate operation(const nts::Tristate &a, const nts::Tristate &b) const noexcept final;
+            ~GateNOR() noexcept = default;
+
+            nts::Tristate operation(nts::Tristate a, nts::Tristate b) const noexcept final;
     };
 }
 

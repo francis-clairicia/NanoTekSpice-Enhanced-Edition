@@ -37,10 +37,6 @@ nts::Circuit::Circuit(const std::string &filepath):
     parser.parse();
 }
 
-nts::Circuit::~Circuit() noexcept
-{
-}
-
 void nts::Circuit::addComponent(const std::string &type, const std::string &name)
 {
     m_components[name] = m_factory.createComponent(type);
@@ -108,7 +104,16 @@ void nts::Circuit::dump() const noexcept
     }
 }
 
-nts::IComponent &nts::Circuit::operator[](const std::string &key) const
+const nts::IComponent &nts::Circuit::operator[](const std::string &key) const
+{
+    const auto &search = m_components.find(key);
+
+    if (search == m_components.end())
+        throw nts::BadComponentNameException(key);
+    return *(search->second);
+}
+
+nts::IComponent &nts::Circuit::operator[](const std::string &key)
 {
     const auto &search = m_components.find(key);
 

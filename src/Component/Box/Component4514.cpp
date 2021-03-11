@@ -48,10 +48,6 @@ nts::Component4514::Component4514() noexcept:
     setLinkInternal(OUT_S15, *m_decoder, Decoder::OUTPUT_S15);
 }
 
-nts::Component4514::~Component4514() noexcept
-{
-}
-
 /* -------------------- Latch component -------------------- */
 
 nts::Component4514::Latch::Latch() noexcept:
@@ -120,7 +116,7 @@ void nts::Component4514::Decoder::computeOutputs()
         return;
     }
 
-    if (std::any_of(input_address.begin(), input_address.end(), [](const nts::Tristate &value){return value == nts::UNDEFINED;})) {
+    if (std::any_of(input_address.begin(), input_address.end(), [](nts::Tristate value){return value == nts::UNDEFINED;})) {
         for (auto &pair : m_output_pins)
             pair.second = nts::UNDEFINED;
         return;

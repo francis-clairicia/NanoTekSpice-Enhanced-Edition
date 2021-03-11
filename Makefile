@@ -12,7 +12,6 @@ SRC_NANOTEKSPICE		=	src/nanotekspice.cpp
 SRC_EXCEPTIONS			=	src/Exception/BadComponentNameException.cpp					\
 							src/Exception/BadComponentTypeException.cpp					\
 							src/Exception/BadPinException.cpp							\
-							src/Exception/ConstComponentException.cpp					\
 							src/Exception/Exception.cpp									\
 							src/Exception/FileException.cpp								\
 							src/Exception/InputValueException.cpp						\
@@ -78,7 +77,8 @@ SRC_TEST				=	$(SRC_COMPONENTS)											\
 							$(SRC_CIRCUIT)												\
 							$(SRC_EXCEPTIONS)											\
 							$(SRC_UTILS)												\
-							tests/Circuit/test_Circuit.cpp								\
+
+SRC_UNIT_TEST			=	tests/Circuit/test_Circuit.cpp								\
 							tests/Circuit/test_Parser.cpp								\
 							tests/Component/advanced/test_and_or_not.cpp				\
 							tests/Component/test_ClockComponent.cpp						\
@@ -126,6 +126,8 @@ OBJ						=	$(SRC:.cpp=.o)
 
 OBJ_TEST				=	$(SRC_TEST:.cpp=.o)
 
+OBJ_UNIT_TEST			=	$(SRC_UNIT_TEST:.cpp=.o)
+
 NAME					=	nanotekspice
 
 all:	$(NAME)
@@ -136,18 +138,18 @@ $(NAME):	$(OBJ)
 
 tests_run::	LDLIBS += -lcriterion -lgcov
 tests_run::	clean
-tests_run::	$(OBJ_TEST)
+tests_run::	$(OBJ_TEST) $(OBJ_UNIT_TEST)
 	@find -name "*.gc*" -delete
-	$(CXX) -o unit_tests $(OBJ_TEST) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
+	$(CXX) -o unit_tests $(OBJ_TEST) $(OBJ_UNIT_TEST) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
 	-./unit_tests --verbose
-	$(RM) unit_tests coverage
+	$(RM) -r unit_tests coverage
 
 debug:	CXXFLAGS += -g
 debug:
 	$(CXX) -o debug $(SRC) $(LDFLAGS) $(LDLIBS) $(CXXFLAGS) $(CPPFLAGS)
 
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJ) $(OBJ_UNIT_TEST)
 	$(RM) debug unit_tests *.gc*
 
 fclean:	clean

@@ -15,6 +15,7 @@ namespace nts
     class ClockComponent: public nts::InputComponent {
         public:
             ClockComponent() noexcept;
+            ~ClockComponent() noexcept = default;
 
             void simulate(std::size_t tick) final;
             void setValue(nts::Tristate value) noexcept final;

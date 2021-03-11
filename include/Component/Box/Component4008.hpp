@@ -34,7 +34,7 @@ namespace nts
 
         public:
             Component4008() noexcept;
-            ~Component4008() noexcept;
+            ~Component4008() noexcept = default;
 
         protected:
             void dumpInternalComponents() const noexcept final;

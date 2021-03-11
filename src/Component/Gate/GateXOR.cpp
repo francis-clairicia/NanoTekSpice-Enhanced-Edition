@@ -11,7 +11,7 @@ nts::GateXOR::GateXOR() noexcept: GateTwoInputs(ComponentType::GateXOR)
 {
 }
 
-nts::Tristate nts::GateXOR::operation(const nts::Tristate &a, const nts::Tristate &b) const noexcept
+nts::Tristate nts::GateXOR::operation(nts::Tristate a, nts::Tristate b) const noexcept
 {
     if (a == nts::UNDEFINED || b == nts::UNDEFINED)
         return nts::UNDEFINED;

@@ -23,7 +23,9 @@ nts::Component4094::Component4094() noexcept:
     m_ground{std::make_unique<FalseComponent>()},
     m_invert_clock{std::make_unique<GateNOT>()},
     m_shift_register{std::make_unique<ShiftRegister>()},
-    m_qs_prime_flipflop{std::make_unique<FlipFlop>()}
+    m_qs_prime_flipflop{std::make_unique<FlipFlop>()},
+    m_output_transmissions(init_vector_component<GateTransmission>(8)),
+    m_output_flipflops(init_vector_component<FlipFlop>(8))
 {
     const std::array<std::size_t, 8> component_q_outputs{
         this->Q1,
@@ -46,9 +48,6 @@ nts::Component4094::Component4094() noexcept:
         ShiftRegister::OUTPUT_Q7,
         ShiftRegister::OUTPUT_Q8,
     };
-
-    init_vector_component<FlipFlop>(m_output_flipflops, nb_outputs);
-    init_vector_component<GateTransmission>(m_output_transmissions, nb_outputs);
 
     m_invert_clock->setLink(GateNOT::INPUT, *this, CLOCK);
 
@@ -75,10 +74,6 @@ nts::Component4094::Component4094() noexcept:
     m_qs_prime_flipflop->setLink(FlipFlop::RESET, *m_ground, FalseComponent::OUTPUT);
 
     setLinkInternal(QSp, *m_qs_prime_flipflop, FlipFlop::Q);
-}
-
-nts::Component4094::~Component4094() noexcept
-{
 }
 
 /* ----------------------- ShiftRegister component ----------------------- */

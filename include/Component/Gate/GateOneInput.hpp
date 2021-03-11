@@ -21,10 +21,10 @@ namespace nts
             };
 
         public:
-            GateOneInput(nts::ComponentType type) noexcept;
-            ~GateOneInput() noexcept;
+            explicit GateOneInput(nts::ComponentType type) noexcept;
+            ~GateOneInput() noexcept = default;
 
-            virtual nts::Tristate operation(const nts::Tristate &a) const noexcept = 0;
+            virtual nts::Tristate operation(nts::Tristate a) const noexcept = 0;
         
         protected:
             nts::Tristate computeOutput() final;

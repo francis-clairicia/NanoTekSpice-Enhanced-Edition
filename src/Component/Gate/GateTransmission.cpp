@@ -12,7 +12,7 @@ nts::GateTransmission::GateTransmission() noexcept:
 {
 }
 
-nts::Tristate nts::GateTransmission::operation(const nts::Tristate &input, const nts::Tristate &control) const noexcept
+nts::Tristate nts::GateTransmission::operation(nts::Tristate input, nts::Tristate control) const noexcept
 {
     return (control == nts::TRUE) ? input : nts::UNDEFINED;
 }

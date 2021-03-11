@@ -34,7 +34,7 @@ namespace nts
 
         public:
             Component4017() noexcept;
-            ~Component4017() noexcept;
+            ~Component4017() noexcept = default;
 
         protected:
             void computeOutputs() final;

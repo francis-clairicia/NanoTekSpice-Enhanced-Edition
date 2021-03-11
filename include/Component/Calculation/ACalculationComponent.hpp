@@ -17,6 +17,7 @@ namespace nts
         public:
             ACalculationComponent(nts::ComponentType type, std::size_t nb_pins,
                                   const pinList_t &input_pins, const pinList_t &output_pins) noexcept;
+            ~ACalculationComponent() noexcept = default;
 
             void simulate(std::size_t tick) final;
             nts::Tristate compute(std::size_t pin) final;

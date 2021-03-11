@@ -15,10 +15,9 @@ nts::Component4008::Component4008() noexcept:
         A1, B1, A2, B2, A3, B3, A4, B4, Cin
     }, {
         S1, S2, S3, S4, Cout
-    })
+    }),
+    m_components(init_vector_component<SumComponent>(4))
 {
-    init_vector_component<SumComponent>(m_components, 4);
-
     m_components[0]->setLink(SumComponent::Ai, *this, A1);
     m_components[0]->setLink(SumComponent::Bi, *this, B1);
     m_components[0]->setLink(SumComponent::Ci, *this, Cin);
@@ -39,10 +38,6 @@ nts::Component4008::Component4008() noexcept:
     m_components[3]->setLink(SumComponent::Ci, *(m_components[2]), SumComponent::Co);
     setLinkInternal(S4, *(m_components[3]), SumComponent::Si);
     setLinkInternal(Cout, *(m_components[3]), SumComponent::Co);
-}
-
-nts::Component4008::~Component4008() noexcept
-{
 }
 
 void nts::Component4008::dumpInternalComponents() const noexcept

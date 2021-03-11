@@ -34,7 +34,7 @@ namespace nts
 
         public:
             Component4512() noexcept;
-            ~Component4512() noexcept;
+            ~Component4512() noexcept = default;
 
         protected:
             void computeOutputs() final;

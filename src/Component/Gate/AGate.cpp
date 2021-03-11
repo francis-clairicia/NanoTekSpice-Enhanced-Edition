@@ -12,7 +12,7 @@
 
 nts::AGate::AGate(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, std::size_t output_pin) noexcept:
     m_value{nts::UNDEFINED}, m_type{type}, m_actual_tick{~0UL},
-    m_links{nb_pins}, m_input_pins{input_pins}, m_output_pin{output_pin}
+    m_links(nb_pins), m_input_pins(input_pins), m_output_pin(output_pin)
 {
 }
 

@@ -22,10 +22,10 @@ namespace nts
             };
 
         public:
-            GateTwoInputs(nts::ComponentType type) noexcept;
-            ~GateTwoInputs() noexcept;
+            explicit GateTwoInputs(nts::ComponentType type) noexcept;
+            ~GateTwoInputs() noexcept = default;
 
-            virtual nts::Tristate operation(const nts::Tristate &a, const nts::Tristate &b) const noexcept = 0;
+            virtual nts::Tristate operation(nts::Tristate a, nts::Tristate b) const noexcept = 0;
         
         protected:
             nts::Tristate computeOutput() final;

@@ -26,7 +26,7 @@ namespace nts
 
         public:
             DTypeFlipFlopWithSR() noexcept;
-            ~DTypeFlipFlopWithSR() noexcept;
+            ~DTypeFlipFlopWithSR() noexcept = default;
 
         protected:
             void computeOutputs() final;

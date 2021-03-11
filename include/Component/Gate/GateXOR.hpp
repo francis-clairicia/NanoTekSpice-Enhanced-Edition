@@ -15,7 +15,9 @@ namespace nts
     class GateXOR: public nts::GateTwoInputs {
         public:
             GateXOR() noexcept;
-            nts::Tristate operation(const nts::Tristate &a, const nts::Tristate &b) const noexcept final;
+            ~GateXOR() noexcept = default;
+
+            nts::Tristate operation(nts::Tristate a, nts::Tristate b) const noexcept final;
     };
 }
 

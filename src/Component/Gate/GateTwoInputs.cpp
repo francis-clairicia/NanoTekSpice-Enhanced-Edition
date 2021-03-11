@@ -11,10 +11,6 @@ nts::GateTwoInputs::GateTwoInputs(nts::ComponentType type) noexcept: AGate(type,
 {
 }
 
-nts::GateTwoInputs::~GateTwoInputs() noexcept
-{
-}
-
 nts::Tristate nts::GateTwoInputs::computeOutput()
 {
     return operation(compute(1), compute(2));

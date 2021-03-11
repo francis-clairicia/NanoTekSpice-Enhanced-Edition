@@ -43,7 +43,7 @@ namespace nts
 
         public:
             Component4514() noexcept;
-            ~Component4514() noexcept;
+            ~Component4514() noexcept = default;
     
         private:
             std::unique_ptr<IComponent> m_latch;

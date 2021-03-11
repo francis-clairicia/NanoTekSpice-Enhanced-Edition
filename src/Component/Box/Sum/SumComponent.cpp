@@ -48,10 +48,6 @@ nts::SumComponent::SumComponent() noexcept:
     setLinkInternal(SumComponent::Co, *m_or, GateOR::OUTPUT);
 }
 
-nts::SumComponent::~SumComponent() noexcept
-{
-}
-
 void nts::SumComponent::dumpInternalComponents() const noexcept
 {
     std::cout << "Internal components:" << '\n';

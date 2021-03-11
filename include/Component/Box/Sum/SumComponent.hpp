@@ -25,7 +25,7 @@ namespace nts
 
         public:
             SumComponent() noexcept;
-            ~SumComponent() noexcept;
+            ~SumComponent() noexcept = default;
 
         protected:
             void dumpInternalComponents() const noexcept final;

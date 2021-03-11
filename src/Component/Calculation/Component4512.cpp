@@ -20,10 +20,6 @@ nts::Component4512::Component4512() noexcept:
     m_invert_oe->setLink(GateNOT::INPUT, *this, INPUT_OE);
 }
 
-nts::Component4512::~Component4512() noexcept
-{
-}
-
 void nts::Component4512::computeOutputs()
 {
     unsigned char address = 0;

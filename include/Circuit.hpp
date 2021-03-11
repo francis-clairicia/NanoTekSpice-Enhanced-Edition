@@ -23,10 +23,10 @@ namespace nts
 
         public:
             Circuit() noexcept;
-            Circuit(const std::string &filepath);
+            explicit Circuit(const std::string &filepath);
             Circuit(const nts::Circuit &other) noexcept = delete;
             Circuit(nts::Circuit &&other) noexcept = delete;
-            ~Circuit() noexcept;
+            ~Circuit() noexcept = default;
 
             void addComponent(const std::string &type, const std::string &name);
             [[nodiscard]] bool hasComponent(const std::string &name) const noexcept;
@@ -38,7 +38,8 @@ namespace nts
             void dump() const noexcept;
 
             nts::Circuit &operator=(const nts::Circuit &rhs) noexcept = delete;
-            nts::IComponent &operator[](const std::string &key) const;
+            const nts::IComponent &operator[](const std::string &key) const;
+            nts::IComponent &operator[](const std::string &key);
 
         private:
             ComponentFactory     m_factory;

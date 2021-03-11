@@ -49,14 +49,6 @@ static const std::unordered_map<std::string, std::unique_ptr<nts::IComponent> (*
     {"logger", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::LoggerComponent>();}},
 };
 
-nts::ComponentFactory::ComponentFactory() noexcept
-{
-}
-
-nts::ComponentFactory::~ComponentFactory() noexcept
-{
-}
-
 std::unique_ptr<nts::IComponent> nts::ComponentFactory::createComponent(const std::string &type) const
 {
     const auto &search = COMPONENT_CREATOR.find(type);

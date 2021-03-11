@@ -7,11 +7,7 @@
 
 #include "GateOneInput.hpp"
 
-nts::GateOneInput::GateOneInput(nts::ComponentType type) noexcept: AGate(type, 2, {1}, 2)
-{
-}
-
-nts::GateOneInput::~GateOneInput() noexcept
+nts::GateOneInput::GateOneInput(nts::ComponentType type) noexcept: AGate(type, 2, {INPUT}, OUTPUT)
 {
 }
 

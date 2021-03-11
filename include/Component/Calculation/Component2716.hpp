@@ -41,7 +41,7 @@ namespace nts
 
         public:
             Component2716() noexcept;
-            ~Component2716() noexcept;
+            ~Component2716() noexcept = default;
 
         protected:
             void computeOutputs() final;

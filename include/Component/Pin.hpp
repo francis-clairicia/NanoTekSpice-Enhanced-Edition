@@ -23,7 +23,7 @@ namespace nts
 
         public:
             Pin() noexcept;
-            ~Pin() noexcept;
+            ~Pin() noexcept = default;
 
             nts::Tristate compute(std::size_t tick) const;
             void setLink(nts::IComponent &component, std::size_t pin) noexcept;

@@ -32,7 +32,7 @@ namespace nts
 
         public:
             Component4013() noexcept;
-            ~Component4013() noexcept;
+            ~Component4013() noexcept = default;
 
         protected:
             void dumpInternalComponents() const noexcept final;

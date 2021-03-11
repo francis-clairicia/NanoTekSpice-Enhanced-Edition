@@ -27,10 +27,6 @@ nts::DTypeFlipFlopWithSR::DTypeFlipFlopWithSR() noexcept:
     m_invert_data->setLink(GateNOT::INPUT, *this, DATA);
 }
 
-nts::DTypeFlipFlopWithSR::~DTypeFlipFlopWithSR() noexcept
-{
-}
-
 void nts::DTypeFlipFlopWithSR::computeOutputs()
 {
     const nts::Tristate data = compute(DATA);

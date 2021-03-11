@@ -16,6 +16,7 @@ namespace nts
     class AGate: public nts::IComponent {
         public:
             AGate(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, std::size_t output_pin) noexcept;
+            ~AGate() noexcept = default;
 
             void simulate(std::size_t tick) final;
             nts::Tristate compute(std::size_t pin) final;

@@ -33,10 +33,6 @@ nts::Component4013::Component4013() noexcept:
     setLinkInternal(Q2n, *m_components.back(), DTypeFlipFlopWithSR::Qn);
 }
 
-nts::Component4013::~Component4013() noexcept
-{
-}
-
 void nts::Component4013::dumpInternalComponents() const noexcept
 {
     std::cout << "Internal components:" << '\n';

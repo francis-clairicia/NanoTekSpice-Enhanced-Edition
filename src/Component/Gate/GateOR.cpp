@@ -11,7 +11,7 @@ nts::GateOR::GateOR() noexcept: GateTwoInputs(ComponentType::GateOR)
 {
 }
 
-nts::Tristate nts::GateOR::operation(const nts::Tristate &a, const nts::Tristate &b) const noexcept
+nts::Tristate nts::GateOR::operation(nts::Tristate a, nts::Tristate b) const noexcept
 {
     if (a == nts::TRUE || b == nts::TRUE)
         return nts::TRUE;

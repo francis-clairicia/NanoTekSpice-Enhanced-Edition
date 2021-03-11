@@ -9,7 +9,6 @@
 #define CONSTCOMPONENT_HPP_
 
 #include "SinglePinComponent.hpp"
-#include "ConstComponentException.hpp"
 
 namespace nts
 {
@@ -24,8 +23,7 @@ namespace nts
         public:
             ConstComponent(): SinglePinComponent(Type)
             {
-                if (Value == nts::UNDEFINED)
-                    throw nts::ConstComponentException("the constant value of a ConstComponent should not be 'undefined'");
+                static_assert(Value != nts::UNDEFINED, "the constant value of a ConstComponent should not be 'undefined'");
                 m_value = Value;
             }
 

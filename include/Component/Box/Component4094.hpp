@@ -35,7 +35,7 @@ namespace nts
 
         public:
             Component4094() noexcept;
-            ~Component4094() noexcept;
+            ~Component4094() noexcept = default;
 
         private:
             std::unique_ptr<IComponent> m_ground;
