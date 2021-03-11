@@ -16,18 +16,17 @@ nts::Component4017::Component4017() noexcept:
     m_and_gate_clock{std::make_unique<GateAND>()},
     m_shift{0}
 {
-    m_invert_cp1->setLink(GateNOT::INPUT, *this, CP1);
-    m_and_gate_clock->setLink(GateAND::INPUT1, *this, CP0);
+    m_pins[CP1].setLinkWithInternalComponent(*m_invert_cp1, GateNOT::INPUT);
+    m_pins[CP0].setLinkWithInternalComponent(*m_and_gate_clock, GateAND::INPUT1);
     m_and_gate_clock->setLink(GateAND::INPUT2, *m_invert_cp1, GateNOT::OUTPUT);
 }
 
-void nts::Component4017::computeOutputs()
+void nts::Component4017::computeOutputs(std::size_t tick)
 {
-    const nts::Tristate master_reset = compute(MR);
+    const nts::Tristate master_reset = m_pins[MR].compute(tick);
     const nts::Tristate clock = computeInternalComponent(*m_and_gate_clock, GateAND::OUTPUT);
-    nts::componentPin_t pins{m_output_pin_list};
+    const nts::componentPin_t pins{Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9};
 
-    pins.pop_back();
     if (master_reset == nts::UNDEFINED || (master_reset == nts::FALSE && clock == nts::UNDEFINED)) {
         for (auto &pair : m_output_pins)
             pair.second = nts::UNDEFINED;

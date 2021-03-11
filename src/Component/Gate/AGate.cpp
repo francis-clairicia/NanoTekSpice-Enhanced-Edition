@@ -11,8 +11,10 @@
 #include "BadPinException.hpp"
 
 nts::AGate::AGate(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, std::size_t output_pin) noexcept:
-    m_value{nts::UNDEFINED}, m_type{type}, m_actual_tick{~0UL},
-    m_links(nb_pins), m_input_pins(input_pins), m_output_pin(output_pin)
+    m_value{nts::UNDEFINED},
+    m_type{type},
+    m_pins{nb_pins, input_pins, {output_pin}},
+    m_actual_tick{~0UL}
 {
 }
 
@@ -20,25 +22,25 @@ void nts::AGate::simulate(std::size_t tick)
 {
     if (m_actual_tick != tick) {
         m_actual_tick = tick;
-        m_value = computeOutput();
+        m_value = computeOutput(tick);
     }
 }
 
 void nts::AGate::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
-    if (pin == 0 || pin > m_links.size())
+    if (!m_pins.hasPin(pin))
         throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
-    m_links[pin - 1].setLink(other, otherPin);
+    m_pins[pin].setLinkWithExternalComponent(other, otherPin);
 }
 
 nts::Tristate nts::AGate::compute(std::size_t pin)
 {
-    if (pin == 0 || pin > m_links.size())
+    if (!m_pins.hasPin(pin))
         throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
-    if (std::find(m_input_pins.begin(), m_input_pins.end(), pin) != m_input_pins.end()) {
-        return m_links.at(pin - 1).compute(m_actual_tick);
+    if (m_pins[pin] == nts::Pin::INPUT) {
+        return nts::FALSE;
     }
-    if (pin == m_output_pin) {
+    if (m_pins[pin] == nts::Pin::OUTPUT) {
         return m_value;
     }
     return nts::UNDEFINED;
@@ -47,10 +49,5 @@ nts::Tristate nts::AGate::compute(std::size_t pin)
 void nts::AGate::dump() const noexcept
 {
     std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " gate component:" << '\n';
-
-    std::size_t index = 0;
-    for (const auto &link : m_links) {
-        std::cout << "-> Pin " << ++index << ": " << '\n';
-        link.dump();
-    }
+    m_pins.dump();
 }

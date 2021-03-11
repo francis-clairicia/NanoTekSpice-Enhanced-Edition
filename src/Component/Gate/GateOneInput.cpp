@@ -11,7 +11,7 @@ nts::GateOneInput::GateOneInput(nts::ComponentType type) noexcept: AGate(type, 2
 {
 }
 
-nts::Tristate nts::GateOneInput::computeOutput()
+nts::Tristate nts::GateOneInput::computeOutput(std::size_t tick)
 {
-    return operation(compute(1));
+    return operation(m_pins[INPUT].compute(tick));
 }

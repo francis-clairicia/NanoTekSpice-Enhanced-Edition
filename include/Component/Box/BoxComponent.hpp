@@ -8,8 +8,7 @@
 #ifndef BOXCOMPONENT_HPP_
 #define BOXCOMPONENT_HPP_
 
-#include "types.hpp"
-#include "Pin.hpp"
+#include "PinList.hpp"
 
 namespace nts
 {
@@ -29,13 +28,10 @@ namespace nts
 
         protected:
             const nts::ComponentType  m_type;
-            const nts::componentPin_t m_input_pins;
-            const nts::componentPin_t m_output_pins;
 
         private:
             std::size_t               m_actual_tick;
-            std::vector<nts::Pin>     m_internal_links;
-            std::vector<nts::Pin>     m_external_links;
+            nts::PinList              m_pins;
     };
 }
 

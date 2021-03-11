@@ -61,6 +61,7 @@ SRC_CALC_COMPONENTS		=	src/Component/Calculation/ACalculationComponent.cpp			\
 
 SRC_COMPONENTS			=	src/Component/ComponentFactory.cpp							\
 							src/Pin/Pin.cpp												\
+							src/Pin/PinList.cpp											\
 							$(SRC_ONEPIN_COMPONENTS)									\
 							$(SRC_BOX_COMPONENTS)										\
 							$(SRC_GATES)												\

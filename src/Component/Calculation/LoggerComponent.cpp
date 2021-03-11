@@ -26,11 +26,11 @@ nts::LoggerComponent::~LoggerComponent() noexcept
     m_stream.close();
 }
 
-void nts::LoggerComponent::computeOutputs()
+void nts::LoggerComponent::computeOutputs(std::size_t tick)
 {
     char character = 0;
-    const nts::Tristate clock = compute(CLOCK);
-    const nts::Tristate inhibit = compute(INHIBIT);
+    const nts::Tristate clock = m_pins[CLOCK].compute(tick);
+    const nts::Tristate inhibit = m_pins[INHIBIT].compute(tick);
     std::array<nts::Tristate, 8> inputs;
 
     if (clock == nts::UNDEFINED || inhibit == nts::UNDEFINED)
@@ -39,7 +39,7 @@ void nts::LoggerComponent::computeOutputs()
         return;
 
     for (std::size_t bit = 0; bit < inputs.size(); ++bit)
-        inputs[bit] = compute(m_input_pins[bit]);
+        inputs[bit] = m_pins[m_pins.getInputPins().at(bit)].compute(tick);
     for (std::size_t bit = 0; bit < inputs.size(); ++bit) {
         if (inputs[bit] == nts::UNDEFINED)
             return;

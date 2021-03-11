@@ -34,9 +34,9 @@ Test(Component4008, adds_two_binary_numbers)
     circuit.simulate(tick++);
 
     // Check outputs to value 17
-    cr_assert_eq(circuit["out_0"].compute(1), 1);
-    cr_assert_eq(circuit["out_1"].compute(1), 0);
-    cr_assert_eq(circuit["out_2"].compute(1), 0);
-    cr_assert_eq(circuit["out_3"].compute(1), 0);
-    cr_assert_eq(circuit["out_c"].compute(1), 1);
+    cr_assert_eq(circuit.output("out_0").getValue(), 1);
+    cr_assert_eq(circuit.output("out_1").getValue(), 0);
+    cr_assert_eq(circuit.output("out_2").getValue(), 0);
+    cr_assert_eq(circuit.output("out_3").getValue(), 0);
+    cr_assert_eq(circuit.output("out_c").getValue(), 1);
 }

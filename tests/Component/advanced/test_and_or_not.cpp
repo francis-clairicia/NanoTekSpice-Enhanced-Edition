@@ -14,53 +14,53 @@ Test(and_or_not, gate_linking_circuit)
     std::size_t tick = 0;
 
     circuit.simulate(tick++);
-    cr_assert_eq(circuit["out"].compute(1), nts::UNDEFINED);
+    cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
 
     circuit.setValueForNextTick("in_a", "0");
     circuit.setValueForNextTick("in_b", "0");
     circuit.setValueForNextTick("in_c", "0");
     circuit.simulate(tick++);
-    cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
+    cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);
 
     circuit.setValueForNextTick("in_a", "1");
     circuit.setValueForNextTick("in_b", "0");
     circuit.setValueForNextTick("in_c", "0");
     circuit.simulate(tick++);
-    cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
+    cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);
 
     circuit.setValueForNextTick("in_a", "0");
     circuit.setValueForNextTick("in_b", "1");
     circuit.setValueForNextTick("in_c", "0");
     circuit.simulate(tick++);
-    cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
+    cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);
 
     circuit.setValueForNextTick("in_a", "1");
     circuit.setValueForNextTick("in_b", "1");
     circuit.setValueForNextTick("in_c", "0");
     circuit.simulate(tick++);
-    cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
+    cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);
 
     circuit.setValueForNextTick("in_a", "0");
     circuit.setValueForNextTick("in_b", "0");
     circuit.setValueForNextTick("in_c", "1");
     circuit.simulate(tick++);
-    cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
+    cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);
 
     circuit.setValueForNextTick("in_a", "1");
     circuit.setValueForNextTick("in_b", "0");
     circuit.setValueForNextTick("in_c", "1");
     circuit.simulate(tick++);
-    cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
+    cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);
 
     circuit.setValueForNextTick("in_a", "0");
     circuit.setValueForNextTick("in_b", "1");
     circuit.setValueForNextTick("in_c", "1");
     circuit.simulate(tick++);
-    cr_assert_eq(circuit["out"].compute(1), nts::TRUE);
+    cr_assert_eq(circuit.output("out").getValue(), nts::TRUE);
 
     circuit.setValueForNextTick("in_a", "1");
     circuit.setValueForNextTick("in_b", "1");
     circuit.setValueForNextTick("in_c", "1");
     circuit.simulate(tick++);
-    cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
+    cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);
 }

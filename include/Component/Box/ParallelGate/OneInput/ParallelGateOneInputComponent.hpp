@@ -51,27 +51,27 @@ namespace nts
                 })
             {
                 m_components.push_back(std::make_unique<Gate>());
-                m_components.back()->setLink(Gate::INPUT, *this, INPUT_1);
+                setLinkInternal(INPUT_1, *m_components.back(), Gate::INPUT);
                 setLinkInternal(OUTPUT_1, *m_components.back(), Gate::OUTPUT);
 
                 m_components.push_back(std::make_unique<Gate>());
-                m_components.back()->setLink(Gate::INPUT, *this, INPUT_2);
+                setLinkInternal(INPUT_2, *m_components.back(), Gate::INPUT);
                 setLinkInternal(OUTPUT_2, *m_components.back(), Gate::OUTPUT);
 
                 m_components.push_back(std::make_unique<Gate>());
-                m_components.back()->setLink(Gate::INPUT, *this, INPUT_3);
+                setLinkInternal(INPUT_3, *m_components.back(), Gate::INPUT);
                 setLinkInternal(OUTPUT_3, *m_components.back(), Gate::OUTPUT);
 
                 m_components.push_back(std::make_unique<Gate>());
-                m_components.back()->setLink(Gate::INPUT, *this, INPUT_4);
+                setLinkInternal(INPUT_4, *m_components.back(), Gate::INPUT);
                 setLinkInternal(OUTPUT_4, *m_components.back(), Gate::OUTPUT);
 
                 m_components.push_back(std::make_unique<Gate>());
-                m_components.back()->setLink(Gate::INPUT, *this, INPUT_5);
+                setLinkInternal(INPUT_5, *m_components.back(), Gate::INPUT);
                 setLinkInternal(OUTPUT_5, *m_components.back(), Gate::OUTPUT);
 
                 m_components.push_back(std::make_unique<Gate>());
-                m_components.back()->setLink(Gate::INPUT, *this, INPUT_6);
+                setLinkInternal(INPUT_6, *m_components.back(), Gate::INPUT);
                 setLinkInternal(OUTPUT_6, *m_components.back(), Gate::OUTPUT);
             }
             ~ParallelGateOneInputComponent() noexcept = default;

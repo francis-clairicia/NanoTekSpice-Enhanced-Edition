@@ -34,7 +34,7 @@ namespace nts
             ~LoggerComponent() noexcept;
 
         protected:
-            void computeOutputs() final;
+            void computeOutputs(std::size_t tick) final;
 
         private:
             std::ofstream m_stream;

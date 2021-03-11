@@ -37,7 +37,7 @@ namespace nts
             ~Component4040() noexcept = default;
 
         protected:
-            void computeOutputs() final;
+            void computeOutputs(std::size_t tick) final;
 
         private:
             std::unique_ptr<nts::IComponent> m_invert_clock;

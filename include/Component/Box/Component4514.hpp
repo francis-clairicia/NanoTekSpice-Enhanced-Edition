@@ -70,7 +70,7 @@ namespace nts
                     ~Latch() noexcept;
                 
                 protected:
-                    void computeOutputs() final;
+                    void computeOutputs(std::size_t tick) final;
             };
 
             class Decoder: public nts::ACalculationComponent {
@@ -105,7 +105,7 @@ namespace nts
                     ~Decoder() noexcept;
                 
                 protected:
-                    void computeOutputs() final;
+                    void computeOutputs(std::size_t tick) final;
             };
     };
 }

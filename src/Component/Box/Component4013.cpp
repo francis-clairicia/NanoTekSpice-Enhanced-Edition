@@ -17,18 +17,18 @@ nts::Component4013::Component4013() noexcept:
     })
 {
     m_components.push_back(std::make_unique<DTypeFlipFlopWithSR>());
-    m_components.back()->setLink(DTypeFlipFlopWithSR::CLOCK, *this, CLOCK1);
-    m_components.back()->setLink(DTypeFlipFlopWithSR::RESET, *this, RESET1);
-    m_components.back()->setLink(DTypeFlipFlopWithSR::DATA, *this, DATA1);
-    m_components.back()->setLink(DTypeFlipFlopWithSR::SET, *this, SET1);
+    setLinkInternal(CLOCK1, *m_components.back(), DTypeFlipFlopWithSR::CLOCK);
+    setLinkInternal(RESET1, *m_components.back(), DTypeFlipFlopWithSR::RESET);
+    setLinkInternal(DATA1, *m_components.back(), DTypeFlipFlopWithSR::DATA);
+    setLinkInternal(SET1, *m_components.back(), DTypeFlipFlopWithSR::SET);
     setLinkInternal(Q1, *m_components.back(), DTypeFlipFlopWithSR::Q);
     setLinkInternal(Q1n, *m_components.back(), DTypeFlipFlopWithSR::Qn);
 
     m_components.push_back(std::make_unique<DTypeFlipFlopWithSR>());
-    m_components.back()->setLink(DTypeFlipFlopWithSR::CLOCK, *this, CLOCK2);
-    m_components.back()->setLink(DTypeFlipFlopWithSR::RESET, *this, RESET2);
-    m_components.back()->setLink(DTypeFlipFlopWithSR::DATA, *this, DATA2);
-    m_components.back()->setLink(DTypeFlipFlopWithSR::SET, *this, SET2);
+    setLinkInternal(CLOCK2, *m_components.back(), DTypeFlipFlopWithSR::CLOCK);
+    setLinkInternal(RESET2, *m_components.back(), DTypeFlipFlopWithSR::RESET);
+    setLinkInternal(DATA2, *m_components.back(), DTypeFlipFlopWithSR::DATA);
+    setLinkInternal(SET2, *m_components.back(), DTypeFlipFlopWithSR::SET);
     setLinkInternal(Q2, *m_components.back(), DTypeFlipFlopWithSR::Q);
     setLinkInternal(Q2n, *m_components.back(), DTypeFlipFlopWithSR::Qn);
 }

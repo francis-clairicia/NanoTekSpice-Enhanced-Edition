@@ -15,6 +15,14 @@ namespace nts
 {
     class Pin {
         public:
+            enum Mode
+            {
+                NONE,
+                INPUT,
+                OUTPUT
+            };
+
+        public:
             struct Link
             {
                 nts::IComponent &component;
@@ -22,17 +30,24 @@ namespace nts
             };
 
         public:
-            Pin() noexcept;
+            explicit Pin(Pin::Mode mode = Mode::NONE) noexcept;
+            Pin(const Pin &other) noexcept = default;
             ~Pin() noexcept = default;
 
+            void setLinkWithExternalComponent(nts::IComponent &component, std::size_t pin) noexcept;
+            void setLinkWithInternalComponent(nts::IComponent &component, std::size_t pin) noexcept;
             nts::Tristate compute(std::size_t tick) const;
-            void setLink(nts::IComponent &component, std::size_t pin) noexcept;
             void dump() const noexcept;
 
-            [[nodiscard]] bool hasLinks() const noexcept;
+            Pin &operator=(const Pin &rhs) noexcept = default;
+            Pin &operator=(Pin::Mode mode) noexcept;
+            bool operator==(Pin::Mode mode) const noexcept;
+            bool operator!=(Pin::Mode mode) const noexcept;
 
         private:
-            std::vector<Link> m_links;
+            Pin::Mode              m_mode;
+            std::vector<Pin::Link> m_internal_links;
+            std::vector<Pin::Link> m_external_links;
     };
 }
 

@@ -67,7 +67,7 @@ namespace nts
                     ~ShiftRegister() noexcept;
 
                 protected:
-                    void computeOutputs() final;
+                    void computeOutputs(std::size_t tick) final;
             };
     };
 }

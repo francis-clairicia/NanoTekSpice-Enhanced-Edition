@@ -23,10 +23,10 @@ Test(Component4512, selector_component)
     circuit.setValueForNextTick("inhibit", "0");
 
     circuit.simulate(tick++);
-    cr_assert_eq(circuit["out_data"].compute(1), 1);
+    cr_assert_eq(circuit.output("out_data").getValue(), 1);
 
     /* returns Hi-Z (UNDEFINED) if OE is TRUE */
     circuit.setValueForNextTick("enable", "1");
     circuit.simulate(tick++);
-    cr_assert_eq(circuit["out_data"].compute(1), nts::UNDEFINED);
+    cr_assert_eq(circuit.output("out_data").getValue(), nts::UNDEFINED);
 }

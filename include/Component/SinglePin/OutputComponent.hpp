@@ -24,6 +24,9 @@ namespace nts
             ~OutputComponent() noexcept = default;
 
             void simulate(std::size_t tick) override;
+
+        protected:
+            nts::Tristate computeOutput() override;
     };
 }
 

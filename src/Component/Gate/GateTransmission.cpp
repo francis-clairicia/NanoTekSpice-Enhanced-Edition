@@ -17,7 +17,7 @@ nts::Tristate nts::GateTransmission::operation(nts::Tristate input, nts::Tristat
     return (control == nts::TRUE) ? input : nts::UNDEFINED;
 }
 
-nts::Tristate nts::GateTransmission::computeOutput()
+nts::Tristate nts::GateTransmission::computeOutput(std::size_t tick)
 {
-    return operation(compute(INPUT), compute(CONTROL));
+    return operation(m_pins[INPUT].compute(tick), m_pins[CONTROL].compute(tick));
 }

@@ -28,7 +28,7 @@ namespace nts
             nts::Tristate operation(nts::Tristate input, nts::Tristate control) const noexcept;
 
         protected:
-            nts::Tristate computeOutput() final;
+            nts::Tristate computeOutput(std::size_t tick) final;
     };
 }
 

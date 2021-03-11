@@ -15,12 +15,17 @@ namespace nts
 {
     class SinglePinComponent: public nts::IComponent {
         public:
-            explicit SinglePinComponent(nts::ComponentType type) noexcept;
+            SinglePinComponent(nts::ComponentType type, nts::Pin::Mode pin_mode) noexcept;
             ~SinglePinComponent() noexcept = default;
 
             nts::Tristate compute(std::size_t pin) final;
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
             void dump() const noexcept final;
+
+            [[nodiscard]] nts::Tristate getValue() const noexcept;
+
+        protected:
+            virtual nts::Tristate computeOutput();
 
         protected:
             nts::Pin                 m_pin;

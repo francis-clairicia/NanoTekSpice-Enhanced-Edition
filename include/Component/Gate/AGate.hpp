@@ -8,8 +8,7 @@
 #ifndef AGATE_HPP_
 #define AGATE_HPP_
 
-#include "types.hpp"
-#include "Pin.hpp"
+#include "PinList.hpp"
 
 namespace nts
 {
@@ -24,17 +23,15 @@ namespace nts
             void dump() const noexcept final;
 
         protected:
-            virtual nts::Tristate computeOutput() = 0;
+            virtual nts::Tristate computeOutput(std::size_t tick) = 0;
 
         protected:
             nts::Tristate             m_value;
             const nts::ComponentType  m_type;
+            nts::PinList              m_pins;
 
         private:
             std::size_t               m_actual_tick;
-            std::vector<nts::Pin>     m_links;
-            const nts::componentPin_t m_input_pins;
-            std::size_t               m_output_pin;
     };
 }
 

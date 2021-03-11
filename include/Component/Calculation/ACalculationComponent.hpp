@@ -8,8 +8,7 @@
 #ifndef ACALCULATIONCOMPONENT_HPP_
 #define ACALCULATIONCOMPONENT_HPP_
 
-#include "types.hpp"
-#include "Pin.hpp"
+#include "PinList.hpp"
 
 namespace nts
 {
@@ -26,17 +25,15 @@ namespace nts
 
         protected:
             nts::Tristate computeInternalComponent(nts::IComponent &component, std::size_t pin) const;
-            virtual void computeOutputs() = 0;
+            virtual void computeOutputs(std::size_t tick) = 0;
 
         protected:
             const nts::ComponentType  m_type;
-            const nts::componentPin_t m_input_pins;
-            const nts::componentPin_t m_output_pin_list;
             nts::pinMap_t             m_output_pins;
+            nts::PinList              m_pins;
 
         private:
             std::size_t               m_actual_tick;
-            std::vector<nts::Pin>     m_links;
             
     };
 }

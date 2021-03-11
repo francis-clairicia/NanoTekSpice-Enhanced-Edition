@@ -49,19 +49,19 @@ nts::Component4094::Component4094() noexcept:
         ShiftRegister::OUTPUT_Q8,
     };
 
-    m_invert_clock->setLink(GateNOT::INPUT, *this, CLOCK);
+    setLinkInternal(CLOCK, *m_invert_clock, GateNOT::INPUT);
 
-    m_shift_register->setLink(ShiftRegister::INPUT_DATA_Q1, *this, DATA);
-    m_shift_register->setLink(ShiftRegister::INPUT_CLOCK, *this, CLOCK);
+    setLinkInternal(DATA, *m_shift_register, ShiftRegister::INPUT_DATA_Q1);
+    setLinkInternal(CLOCK, *m_shift_register, ShiftRegister::INPUT_CLOCK);
 
     for (std::size_t index = 0; index < nb_outputs; ++index) {
         m_output_flipflops.at(index)->setLink(FlipFlop::DATA, *m_shift_register, shift_register_outputs.at(index));
-        m_output_flipflops.at(index)->setLink(FlipFlop::CLOCK, *this, STROBE);
+        setLinkInternal(STROBE, *m_output_flipflops.at(index), FlipFlop::CLOCK);
         m_output_flipflops.at(index)->setLink(FlipFlop::SET, *m_ground, FalseComponent::OUTPUT);
         m_output_flipflops.at(index)->setLink(FlipFlop::RESET, *m_ground, FalseComponent::OUTPUT);
 
         m_output_transmissions.at(index)->setLink(GateTransmission::INPUT, *m_output_flipflops.at(index), FlipFlop::Q);
-        m_output_transmissions.at(index)->setLink(GateTransmission::CONTROL, *this, OE);
+        setLinkInternal(OE, *m_output_transmissions.at(index), GateTransmission::CONTROL);
 
         setLinkInternal(component_q_outputs.at(index), *m_output_transmissions.at(index), GateTransmission::OUTPUT);
     }
@@ -91,10 +91,10 @@ nts::Component4094::ShiftRegister::~ShiftRegister() noexcept
 {
 }
 
-void nts::Component4094::ShiftRegister::computeOutputs()
+void nts::Component4094::ShiftRegister::computeOutputs(std::size_t tick)
 {
-    const nts::Tristate data = compute(INPUT_DATA_Q1);
-    const nts::Tristate clock = compute(INPUT_CLOCK);
+    const nts::Tristate data = m_pins[INPUT_DATA_Q1].compute(tick);
+    const nts::Tristate clock = m_pins[INPUT_CLOCK].compute(tick);
 
     if (clock == nts::UNDEFINED) {
         for (auto &pair : m_output_pins)
@@ -103,7 +103,7 @@ void nts::Component4094::ShiftRegister::computeOutputs()
     }
     if (clock == nts::FALSE)
         return;
-    for (long index = m_output_pin_list.size() - 1; index > 0; --index)
-        m_output_pins[m_output_pin_list.at(index)] = m_output_pins.at(m_output_pin_list.at(index - 1));
-    m_output_pins[m_output_pin_list.front()] = data;
+    for (long index = m_pins.getOutputPins().size() - 1; index > 0; --index)
+        m_output_pins[m_pins.getOutputPins().at(index)] = m_output_pins.at(m_pins.getOutputPins().at(index - 1));
+    m_output_pins[m_pins.getOutputPins().front()] = data;
 }

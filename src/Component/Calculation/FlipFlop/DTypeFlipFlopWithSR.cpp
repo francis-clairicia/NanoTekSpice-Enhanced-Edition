@@ -24,16 +24,16 @@ nts::DTypeFlipFlopWithSR::DTypeFlipFlopWithSR() noexcept:
     ACalculationComponent(ComponentType::DTypeFlipFlopWithSR, 6, {CLOCK, RESET, DATA, SET}, {Q, Qn}),
     m_invert_data{std::make_unique<GateNOT>()}
 {
-    m_invert_data->setLink(GateNOT::INPUT, *this, DATA);
+    m_pins[DATA].setLinkWithInternalComponent(*m_invert_data, GateNOT::INPUT);
 }
 
-void nts::DTypeFlipFlopWithSR::computeOutputs()
+void nts::DTypeFlipFlopWithSR::computeOutputs(std::size_t tick)
 {
-    const nts::Tristate data = compute(DATA);
+    const nts::Tristate data = m_pins[DATA].compute(tick);
     const nts::Tristate data_invert = computeInternalComponent(*m_invert_data, GateNOT::OUTPUT);
-    const nts::Tristate clock = compute(CLOCK);
-    const nts::Tristate reset = compute(RESET);
-    const nts::Tristate set = compute(SET);
+    const nts::Tristate clock = m_pins[CLOCK].compute(tick);
+    const nts::Tristate reset = m_pins[RESET].compute(tick);
+    const nts::Tristate set = m_pins[SET].compute(tick);
 
     if (reset == nts::UNDEFINED || set == nts::UNDEFINED) {
         m_output_pins[Q] = nts::UNDEFINED;

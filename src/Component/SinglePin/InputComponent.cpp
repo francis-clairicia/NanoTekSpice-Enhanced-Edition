@@ -9,7 +9,7 @@
 #include "InputComponent.hpp"
 
 nts::InputComponent::InputComponent(nts::ComponentType type) noexcept:
-    SinglePinComponent(type),
+    SinglePinComponent(type, nts::Pin::OUTPUT),
     m_actual_tick{~0UL},
     m_value_for_next_tick{nts::UNDEFINED}
 {

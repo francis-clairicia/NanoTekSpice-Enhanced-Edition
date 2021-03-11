@@ -18,17 +18,17 @@ nts::Component4514::Component4514() noexcept:
     m_latch{std::make_unique<Latch>()},
     m_decoder{std::make_unique<Decoder>()}
 {
-    m_latch->setLink(Latch::INPUT_A, *this, IN_A);
-    m_latch->setLink(Latch::INPUT_B, *this, IN_B);
-    m_latch->setLink(Latch::INPUT_C, *this, IN_C);
-    m_latch->setLink(Latch::INPUT_D, *this, IN_D);
-    m_latch->setLink(Latch::INPUT_STROBE, *this, STROBE);
+    setLinkInternal(IN_A, *m_latch, Latch::INPUT_A);
+    setLinkInternal(IN_B, *m_latch, Latch::INPUT_B);
+    setLinkInternal(IN_C, *m_latch, Latch::INPUT_C);
+    setLinkInternal(IN_D, *m_latch, Latch::INPUT_D);
+    setLinkInternal(STROBE, *m_latch, Latch::INPUT_STROBE);
 
     m_decoder->setLink(Decoder::INPUT_A, *m_latch, Latch::OUTPUT_A);
     m_decoder->setLink(Decoder::INPUT_B, *m_latch, Latch::OUTPUT_B);
     m_decoder->setLink(Decoder::INPUT_C, *m_latch, Latch::OUTPUT_C);
     m_decoder->setLink(Decoder::INPUT_D, *m_latch, Latch::OUTPUT_D);
-    m_decoder->setLink(Decoder::INPUT_INHIBIT, *this, INHIBIT);
+    setLinkInternal(INHIBIT, *m_decoder, Decoder::INPUT_INHIBIT);
 
     setLinkInternal(OUT_S0, *m_decoder, Decoder::OUTPUT_S0);
     setLinkInternal(OUT_S1, *m_decoder, Decoder::OUTPUT_S1);
@@ -63,13 +63,13 @@ nts::Component4514::Latch::~Latch() noexcept
 {
 }
 
-void nts::Component4514::Latch::computeOutputs()
+void nts::Component4514::Latch::computeOutputs(std::size_t tick)
 {
-    const nts::Tristate input_a = compute(INPUT_A);
-    const nts::Tristate input_b = compute(INPUT_B);
-    const nts::Tristate input_c = compute(INPUT_C);
-    const nts::Tristate input_d = compute(INPUT_D);
-    const nts::Tristate strobe = compute(INPUT_STROBE);
+    const nts::Tristate input_a = m_pins[INPUT_A].compute(tick);
+    const nts::Tristate input_b = m_pins[INPUT_B].compute(tick);
+    const nts::Tristate input_c = m_pins[INPUT_C].compute(tick);
+    const nts::Tristate input_d = m_pins[INPUT_D].compute(tick);
+    const nts::Tristate strobe = m_pins[INPUT_STROBE].compute(tick);
 
     if (strobe == nts::UNDEFINED) {
         for (auto &pair : m_output_pins)
@@ -100,14 +100,14 @@ nts::Component4514::Decoder::~Decoder() noexcept
 {
 }
 
-void nts::Component4514::Decoder::computeOutputs()
+void nts::Component4514::Decoder::computeOutputs(std::size_t tick)
 {
     unsigned char address = 0;
-    const nts::Tristate input_a = compute(INPUT_A);
-    const nts::Tristate input_b = compute(INPUT_B);
-    const nts::Tristate input_c = compute(INPUT_C);
-    const nts::Tristate input_d = compute(INPUT_D);
-    const nts::Tristate inhibit = compute(INPUT_INHIBIT);
+    const nts::Tristate input_a = m_pins[INPUT_A].compute(tick);
+    const nts::Tristate input_b = m_pins[INPUT_B].compute(tick);
+    const nts::Tristate input_c = m_pins[INPUT_C].compute(tick);
+    const nts::Tristate input_d = m_pins[INPUT_D].compute(tick);
+    const nts::Tristate inhibit = m_pins[INPUT_INHIBIT].compute(tick);
     const std::array<nts::Tristate, 4> input_address{input_a, input_b, input_c, input_d};
 
     if (inhibit == nts::UNDEFINED || inhibit == nts::TRUE) {
@@ -124,6 +124,6 @@ void nts::Component4514::Decoder::computeOutputs()
 
     address = (input_d << 3) | (input_c << 2) | (input_b << 1) | input_a;
 
-    for (std::size_t out = 0; out < m_output_pin_list.size(); ++out)
-        m_output_pins[m_output_pin_list.at(out)] = static_cast<nts::Tristate>(out == address);
+    for (std::size_t out = 0; out < m_pins.getOutputPins().size(); ++out)
+        m_output_pins[m_pins.getOutputPins().at(out)] = static_cast<nts::Tristate>(out == address);
 }

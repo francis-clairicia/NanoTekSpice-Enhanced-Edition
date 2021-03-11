@@ -21,7 +21,7 @@ namespace nts
             };
 
         public:
-            ConstComponent(): SinglePinComponent(Type)
+            ConstComponent(): SinglePinComponent(Type, nts::Pin::OUTPUT)
             {
                 static_assert(Value != nts::UNDEFINED, "the constant value of a ConstComponent should not be 'undefined'");
                 m_value = Value;
@@ -29,6 +29,12 @@ namespace nts
 
             void simulate(std::size_t tick __attribute__((unused))) final
             {
+            }
+
+        protected:
+            nts::Tristate computeOutput() final
+            {
+                return SinglePinComponent::computeOutput();
             }
     };
 

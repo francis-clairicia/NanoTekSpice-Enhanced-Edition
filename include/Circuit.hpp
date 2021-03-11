@@ -37,6 +37,12 @@ namespace nts
             void simulate(std::size_t tick) const noexcept;
             void dump() const noexcept;
 
+            [[nodiscard]] const InputComponent &input(const std::string &name) const;
+            [[nodiscard]] InputComponent &input(const std::string &name);
+
+            [[nodiscard]] const OutputComponent &output(const std::string &name) const;
+            [[nodiscard]] OutputComponent &output(const std::string &name);
+
             nts::Circuit &operator=(const nts::Circuit &rhs) noexcept = delete;
             const nts::IComponent &operator[](const std::string &key) const;
             nts::IComponent &operator[](const std::string &key);

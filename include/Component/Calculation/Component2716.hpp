@@ -44,7 +44,7 @@ namespace nts
             ~Component2716() noexcept = default;
 
         protected:
-            void computeOutputs() final;
+            void computeOutputs(std::size_t tick) final;
 
         private:
             std::unique_ptr<IComponent>     m_invert_oe;

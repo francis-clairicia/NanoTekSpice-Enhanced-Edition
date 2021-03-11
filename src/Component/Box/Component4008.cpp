@@ -18,23 +18,23 @@ nts::Component4008::Component4008() noexcept:
     }),
     m_components(init_vector_component<SumComponent>(4))
 {
-    m_components[0]->setLink(SumComponent::Ai, *this, A1);
-    m_components[0]->setLink(SumComponent::Bi, *this, B1);
-    m_components[0]->setLink(SumComponent::Ci, *this, Cin);
+    setLinkInternal(A1, *(m_components[0]), SumComponent::Ai);
+    setLinkInternal(B1, *(m_components[0]), SumComponent::Bi);
+    setLinkInternal(Cin, *(m_components[0]), SumComponent::Ci);
     setLinkInternal(S1, *(m_components[0]), SumComponent::Si);
 
-    m_components[1]->setLink(SumComponent::Ai, *this, A2);
-    m_components[1]->setLink(SumComponent::Bi, *this, B2);
+    setLinkInternal(A2, *(m_components[1]), SumComponent::Ai);
+    setLinkInternal(B2, *(m_components[1]), SumComponent::Bi);
     m_components[1]->setLink(SumComponent::Ci, *(m_components[0]), SumComponent::Co);
     setLinkInternal(S2, *(m_components[1]), SumComponent::Si);
 
-    m_components[2]->setLink(SumComponent::Ai, *this, A3);
-    m_components[2]->setLink(SumComponent::Bi, *this, B3);
+    setLinkInternal(A3, *(m_components[2]), SumComponent::Ai);
+    setLinkInternal(B3, *(m_components[2]), SumComponent::Bi);
     m_components[2]->setLink(SumComponent::Ci, *(m_components[1]), SumComponent::Co);
     setLinkInternal(S3, *(m_components[2]), SumComponent::Si);
 
-    m_components[3]->setLink(SumComponent::Ai, *this, A4);
-    m_components[3]->setLink(SumComponent::Bi, *this, B4);
+    setLinkInternal(A4, *(m_components[3]), SumComponent::Ai);
+    setLinkInternal(B4, *(m_components[3]), SumComponent::Bi);
     m_components[3]->setLink(SumComponent::Ci, *(m_components[2]), SumComponent::Co);
     setLinkInternal(S4, *(m_components[3]), SumComponent::Si);
     setLinkInternal(Cout, *(m_components[3]), SumComponent::Co);

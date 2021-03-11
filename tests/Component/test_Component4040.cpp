@@ -36,7 +36,7 @@ Test(Component4040, counter_component)
     circuit.setValueForNextTick("in_reset", "0");
     for (std::size_t count = 0; count < 4096; ++count) {
         for (std::size_t bit = 0; bit < out.size(); ++bit)
-            cr_assert_eq(circuit[out.at(bit)].compute(1), ((count & (1UL << bit)) >> bit));
+            cr_assert_eq(circuit.output(out.at(bit)).getValue(), ((count & (1UL << bit)) >> bit));
         circuit.simulate(tick++);
     }
 }

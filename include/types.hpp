@@ -9,7 +9,6 @@
 #define TYPES_HPP_
 
 #include <unordered_map>
-#include <initializer_list>
 #include <string>
 #include <vector>
 #include <memory>
@@ -19,7 +18,6 @@ namespace nts
 {
     using internComponent_t = std::vector<std::unique_ptr<nts::IComponent>>;
     using componentPin_t = std::vector<std::size_t>;
-    using pinList_t = std::initializer_list<std::size_t>;
     using pinMap_t = std::unordered_map<std::size_t, nts::Tristate>;
 
     enum class ComponentType

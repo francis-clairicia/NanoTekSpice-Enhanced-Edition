@@ -17,22 +17,22 @@ nts::Component4512::Component4512() noexcept:
     }),
     m_invert_oe{std::make_unique<nts::GateNOT>()}
 {
-    m_invert_oe->setLink(GateNOT::INPUT, *this, INPUT_OE);
+    m_pins[INPUT_OE].setLinkWithInternalComponent(*m_invert_oe, GateNOT::INPUT);
 }
 
-void nts::Component4512::computeOutputs()
+void nts::Component4512::computeOutputs(std::size_t tick)
 {
     unsigned char address = 0;
-    const nts::Tristate input_a = compute(INPUT_A);
-    const nts::Tristate input_b = compute(INPUT_B);
-    const nts::Tristate input_c = compute(INPUT_C);
-    const nts::Tristate inhibit = compute(INHIBIT);
+    const nts::Tristate input_a = m_pins[INPUT_A].compute(tick);
+    const nts::Tristate input_b = m_pins[INPUT_B].compute(tick);
+    const nts::Tristate input_c = m_pins[INPUT_C].compute(tick);
+    const nts::Tristate inhibit = m_pins[INHIBIT].compute(tick);
     const nts::Tristate output_enabled = computeInternalComponent(*m_invert_oe, GateNOT::OUTPUT);
     std::array<nts::Tristate, 8> x_inputs;
 
     std::size_t index = 0;
     for (std::size_t pin : {X0, X1, X2, X3, X4, X5, X6, X7})
-        x_inputs[index++] = compute(pin);
+        x_inputs[index++] = m_pins[pin].compute(tick);
     if (output_enabled == nts::FALSE || output_enabled == nts::UNDEFINED || inhibit == nts::UNDEFINED) {
         m_output_pins[OUTPUT_Z] = nts::UNDEFINED;
         return;

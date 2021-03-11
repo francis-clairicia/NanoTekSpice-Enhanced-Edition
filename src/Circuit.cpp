@@ -77,12 +77,12 @@ void nts::Circuit::display(std::size_t tick) const noexcept
     std::cout << "input(s):" << '\n';
     for (const auto &component : m_input_components) {
         std::cout << std::string(2, ' ') << component.first << ": ";
-        std::cout << TRISTATE_TO_STR.at(component.second.compute(InputComponent::OUTPUT)) << '\n';
+        std::cout << TRISTATE_TO_STR.at(component.second.getValue()) << '\n';
     }
     std::cout << "output(s):" << '\n';
     for (const auto &component : m_output_components) {
         std::cout << std::string(2, ' ') << component.first << ": ";
-        std::cout << TRISTATE_TO_STR.at(component.second.compute(OutputComponent::INPUT)) << '\n';
+        std::cout << TRISTATE_TO_STR.at(component.second.getValue()) << '\n';
     }
 }
 
@@ -102,6 +102,42 @@ void nts::Circuit::dump() const noexcept
         std::cout << "==== '" << pair.first << "' component ====" << '\n';
         pair.second->dump();
     }
+}
+
+const nts::InputComponent &nts::Circuit::input(const std::string &name) const
+{
+    const auto &search = m_input_components.find(name);
+
+    if (search == m_input_components.end())
+        throw nts::BadComponentNameException(name);
+    return search->second;
+}
+
+nts::InputComponent &nts::Circuit::input(const std::string &name)
+{
+    const auto &search = m_input_components.find(name);
+
+    if (search == m_input_components.end())
+        throw nts::BadComponentNameException(name);
+    return search->second;
+}
+
+const nts::OutputComponent &nts::Circuit::output(const std::string &name) const
+{
+    const auto &search = m_output_components.find(name);
+
+    if (search == m_output_components.end())
+        throw nts::BadComponentNameException(name);
+    return search->second;
+}
+
+nts::OutputComponent &nts::Circuit::output(const std::string &name)
+{
+    const auto &search = m_output_components.find(name);
+
+    if (search == m_output_components.end())
+        throw nts::BadComponentNameException(name);
+    return search->second;
 }
 
 const nts::IComponent &nts::Circuit::operator[](const std::string &key) const

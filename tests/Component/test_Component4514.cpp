@@ -24,7 +24,7 @@ Test(Component4514, decoder_component)
 
     circuit.simulate(tick++);
 
-    cr_assert_eq(circuit["out_00"].compute(1), 1);
+    cr_assert_eq(circuit.output("out_00").getValue(), 1);
 
     circuit.setValueForNextTick("in_0",    "0");
     circuit.setValueForNextTick("in_1",    "0");
@@ -33,5 +33,5 @@ Test(Component4514, decoder_component)
 
     circuit.simulate(tick++);
 
-    cr_assert_eq(circuit["out_04"].compute(1), 1);
+    cr_assert_eq(circuit.output("out_04").getValue(), 1);
 }

@@ -30,11 +30,11 @@ nts::Component2716::Component2716() noexcept:
         rom_stream >> m_memory[address];
     rom_stream.close();
 
-    m_invert_oe->setLink(GateNOT::INPUT, *this, OUTPUT_ENABLED);
-    m_invert_ce_pgm->setLink(GateNOT::INPUT, *this, CHIP_ENABLED);
+    m_pins[OUTPUT_ENABLED].setLinkWithInternalComponent(*m_invert_oe, GateNOT::INPUT);
+    m_pins[CHIP_ENABLED].setLinkWithInternalComponent(*m_invert_ce_pgm, GateNOT::INPUT);
 }
 
-void nts::Component2716::computeOutputs()
+void nts::Component2716::computeOutputs(std::size_t tick)
 {
     std::array<nts::Tristate, 11> address_input;
     const std::array<std::size_t, 11> address_pin{A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10};
@@ -43,7 +43,7 @@ void nts::Component2716::computeOutputs()
     nts::Tristate chipset_enabled = computeInternalComponent(*m_invert_ce_pgm, GateNOT::OUTPUT);
 
     for (std::size_t bit = 0; bit < address_input.size(); ++bit)
-        address_input[bit] = compute(address_pin.at(bit));
+        address_input[bit] = m_pins[address_pin.at(bit)].compute(tick);
 
     if (output_enabled == nts::FALSE || chipset_enabled == nts::FALSE || output_enabled == nts::UNDEFINED || chipset_enabled == nts::UNDEFINED) {
         for (auto &pair : m_output_pins)
@@ -64,6 +64,6 @@ void nts::Component2716::computeOutputs()
 
     const unsigned char &byte = m_memory.at(address);
 
-    for (std::size_t bit = 0; bit < m_output_pin_list.size(); ++bit)
-        m_output_pins[m_output_pin_list.at(bit)] = static_cast<nts::Tristate>((byte & (1 << bit)) >> bit);
+    for (std::size_t bit = 0; bit < m_pins.getOutputPins().size(); ++bit)
+        m_output_pins[m_pins.getOutputPins().at(bit)] = static_cast<nts::Tristate>((byte & (1 << bit)) >> bit);
 }
