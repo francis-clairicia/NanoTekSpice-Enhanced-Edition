@@ -60,7 +60,7 @@ SRC_CALC_COMPONENTS		=	src/Component/Calculation/ACalculationComponent.cpp			\
 							src/Component/Calculation/FlipFlop/DTypeFlipFlopWithSR.cpp
 
 SRC_COMPONENTS			=	src/Component/ComponentFactory.cpp							\
-							src/Component/Pin.cpp										\
+							src/Pin/Pin.cpp												\
 							$(SRC_ONEPIN_COMPONENTS)									\
 							$(SRC_BOX_COMPONENTS)										\
 							$(SRC_GATES)												\
@@ -120,6 +120,7 @@ CPPFLAGS				=	-I./include/												\
 							-I./include/Component/Gate/									\
 							-I./include/Component/Calculation							\
 							-I./include/Component/Calculation/FlipFlop/					\
+							-I./include/Pin/											\
 							-I./include/Utils/
 
 OBJ						=	$(SRC:.cpp=.o)
