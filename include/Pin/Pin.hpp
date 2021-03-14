@@ -17,9 +17,10 @@ namespace nts
         public:
             enum Mode
             {
-                NONE,
-                INPUT,
-                OUTPUT
+                NONE   = 0,
+                INPUT  = 1 << 0,
+                OUTPUT = 1 << 1,
+                BOTH   = INPUT | OUTPUT
             };
 
         public:
@@ -30,13 +31,20 @@ namespace nts
             };
 
         public:
+            using linkList_t = std::vector<Pin::Link>;
+
+        public:
             explicit Pin(Pin::Mode mode = Mode::NONE) noexcept;
             Pin(const Pin &other) noexcept = default;
             ~Pin() noexcept = default;
 
             void setLinkWithExternalComponent(nts::IComponent &component, std::size_t pin) noexcept;
             void setLinkWithInternalComponent(nts::IComponent &component, std::size_t pin) noexcept;
+
             nts::Tristate compute(std::size_t tick) const;
+            nts::Tristate computeAsInput(std::size_t tick) const;
+            nts::Tristate computeAsOutput(std::size_t tick) const;
+
             void dump() const noexcept;
 
             Pin &operator=(const Pin &rhs) noexcept = default;
@@ -45,9 +53,12 @@ namespace nts
             bool operator!=(Pin::Mode mode) const noexcept;
 
         private:
-            Pin::Mode              m_mode;
-            std::vector<Pin::Link> m_internal_links;
-            std::vector<Pin::Link> m_external_links;
+            nts::Tristate computeLinks(const Pin::linkList_t &used_links, std::size_t tick) const;
+
+        private:
+            Pin::Mode       m_mode;
+            Pin::linkList_t m_internal_links;
+            Pin::linkList_t m_external_links;
     };
 }
 

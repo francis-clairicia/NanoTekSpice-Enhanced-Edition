@@ -25,7 +25,7 @@ void nts::Pin::setLinkWithExternalComponent(nts::IComponent &component, std::siz
         return;
 
     m_external_links.push_back(Pin::Link{.component = component, .pin = pin});
-    if (m_mode == Mode::INPUT) {
+    if (m_mode & Mode::INPUT) {
         for (Pin::Link &link : m_internal_links) {
             link.component.setLink(link.pin, component, pin);
         }
@@ -41,7 +41,7 @@ void nts::Pin::setLinkWithInternalComponent(nts::IComponent &component, std::siz
         return;
 
     m_internal_links.push_back(Pin::Link{.component = component, .pin = pin});
-    if (m_mode == Mode::INPUT) {
+    if (m_mode & Mode::INPUT) {
         for (Pin::Link &link : m_external_links) {
             component.setLink(pin, link.component, link.pin);
         }
@@ -50,11 +50,25 @@ void nts::Pin::setLinkWithInternalComponent(nts::IComponent &component, std::siz
 
 nts::Tristate nts::Pin::compute(std::size_t tick) const
 {
-    if (m_mode == Mode::NONE)
-        return nts::UNDEFINED;
+    if (m_mode & Mode::OUTPUT)
+        return computeAsOutput(tick);
+    if (m_mode & Mode::INPUT)
+        return computeAsInput(tick);
+    return nts::UNDEFINED;
+}
 
-    const std::vector<Pin::Link> &used_links = (m_mode == Mode::INPUT) ? m_external_links : m_internal_links;
+nts::Tristate nts::Pin::computeAsInput(std::size_t tick) const
+{
+    return computeLinks(m_external_links, tick);
+}
 
+nts::Tristate nts::Pin::computeAsOutput(std::size_t tick) const
+{
+    return computeLinks(m_internal_links, tick);
+}
+
+nts::Tristate nts::Pin::computeLinks(const Pin::linkList_t &used_links, std::size_t tick) const
+{
     std::vector<nts::Tristate> inputs;
 
     std::transform(used_links.begin(), used_links.end(), std::back_inserter(inputs),
@@ -70,7 +84,6 @@ nts::Tristate nts::Pin::compute(std::size_t tick) const
     std::for_each(inputs.begin(), inputs.end(), [&output](nts::Tristate value){output |= value;});
     return static_cast<nts::Tristate>(output);
 }
-
 void nts::Pin::dump() const noexcept
 {
     std::cout << std::string(4, ' ');
