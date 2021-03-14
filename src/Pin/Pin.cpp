@@ -9,13 +9,6 @@
 #include <iostream>
 #include "Pin.hpp"
 
-nts::Pin::Pin() noexcept:
-    m_mode{0},
-    m_internal_links{},
-    m_external_links{}
-{
-}
-
 nts::Pin::Pin(Pin::Direction direction, Pin::Mode mode) noexcept:
     m_mode{direction | mode},
     m_internal_links{},
@@ -32,7 +25,7 @@ void nts::Pin::setLinkWithExternalComponent(nts::IComponent &component, std::siz
         return;
 
     m_external_links.push_back(Pin::Link{.component = component, .pin = pin});
-    if ((m_mode & BIDIRECTIONAL) || isInput()) {
+    if (isInput()) {
         for (Pin::Link &link : m_internal_links) {
             link.component.setLink(link.pin, component, pin);
         }
@@ -48,7 +41,7 @@ void nts::Pin::setLinkWithInternalComponent(nts::IComponent &component, std::siz
         return;
 
     m_internal_links.push_back(Pin::Link{.component = component, .pin = pin});
-    if ((m_mode & BIDIRECTIONAL) || isInput()) {
+    if (isInput()) {
         for (Pin::Link &link : m_external_links) {
             component.setLink(pin, link.component, link.pin);
         }
@@ -57,9 +50,9 @@ void nts::Pin::setLinkWithInternalComponent(nts::IComponent &component, std::siz
 
 nts::Tristate nts::Pin::compute(std::size_t tick) const
 {
-    if (isOutput())
+    if (m_mode & OUTPUT)
         return computeLinks(m_internal_links, tick);
-    if (isInput())
+    if (m_mode & INPUT)
         return computeLinks(m_external_links, tick);
     return nts::UNDEFINED;
 }
@@ -96,17 +89,17 @@ nts::Tristate nts::Pin::computeLinks(const Pin::linkList_t &used_links, std::siz
 
 bool nts::Pin::isInput() const noexcept
 {
-    return (m_mode & Mode::INPUT) != 0;
+    return (m_mode & BIDIRECTIONAL) || (m_mode & INPUT);
 }
 
 bool nts::Pin::isOutput() const noexcept
 {
-    return (m_mode & Mode::OUTPUT) != 0;
+    return (m_mode & BIDIRECTIONAL) || (m_mode & OUTPUT);
 }
 
 void nts::Pin::dump() const noexcept
 {
-    std::size_t space_indent = 4;
+    const std::size_t space_indent = 4;
 
     if (m_external_links.empty()) {
         std::cout << std::string(space_indent, ' ') << "not linked" << '\n';

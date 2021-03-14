@@ -18,7 +18,7 @@ nts::LoggerComponent::LoggerComponent():
     m_stream{LOG_FILE, std::ios_base::out | std::ios_base::binary}
 {
     if (!m_stream)
-        throw FileException(LOG_FILE, "Cannot open file");
+        throw nts::FileException(LOG_FILE, "Cannot open file");
 }
 
 nts::LoggerComponent::~LoggerComponent() noexcept
@@ -49,5 +49,5 @@ void nts::LoggerComponent::computeOutputs(std::size_t tick)
     m_stream.put(character);
     m_stream.flush();
     if (m_stream.bad())
-        throw FileException(LOG_FILE, "Error on writing");
+        throw nts::FileException(LOG_FILE, "Error on writing");
 }

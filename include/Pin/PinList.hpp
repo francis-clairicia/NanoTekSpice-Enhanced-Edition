@@ -18,12 +18,15 @@ namespace nts
 
     class PinList {
         public:
-            PinList(std::size_t nb, const pinList_t &inputs, const pinList_t &outputs);
+            PinList(std::size_t nb, const pinList_t &inputs, const pinList_t &outputs, bool accept_io = false);
             ~PinList() noexcept = default;
 
-            [[nodiscard]] const std::vector<std::size_t> &getInputPins() const noexcept;
-            [[nodiscard]] const std::vector<std::size_t> &getOutputPins() const noexcept;
+            [[nodiscard]] const nts::componentPin_t &getInputPins() const noexcept;
+            [[nodiscard]] const nts::componentPin_t &getOutputPins() const noexcept;
             [[nodiscard]] bool hasPin(std::size_t pin) const noexcept;
+
+            void setIOPinsAsInput() noexcept;
+            void setIOPinsAsOutput() noexcept;
 
             void dump() const noexcept;
 
@@ -31,8 +34,9 @@ namespace nts
             nts::Pin &operator[](std::size_t pin);
 
         private:
-            const std::vector<std::size_t>            m_input_pins;
-            const std::vector<std::size_t>            m_output_pins;
+            const nts::componentPin_t                 m_input_pins;
+            const nts::componentPin_t                 m_output_pins;
+            const nts::componentPin_t                 m_both_input_and_output_pins;
             std::unordered_map<std::size_t, nts::Pin> m_pins;
     };
 }

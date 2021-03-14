@@ -29,14 +29,14 @@ void nts::AGate::simulate(std::size_t tick)
 void nts::AGate::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
     if (!m_pins.hasPin(pin))
-        throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
+        throw nts::BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
     m_pins[pin].setLinkWithExternalComponent(other, otherPin);
 }
 
 nts::Tristate nts::AGate::compute(std::size_t pin)
 {
     if (!m_pins.hasPin(pin))
-        throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
+        throw nts::BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
     if (m_pins[pin].isInput()) {
         return nts::FALSE;
     }

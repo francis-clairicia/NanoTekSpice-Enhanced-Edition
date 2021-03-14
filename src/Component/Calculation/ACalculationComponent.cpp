@@ -15,9 +15,10 @@ nts::ACalculationComponent::ACalculationComponent(nts::ComponentType type,
                                                   const pinList_t &input_pins,
                                                   const pinList_t &output_pins) noexcept:
     m_type{type},
-    m_pins{nb_pins, input_pins, output_pins},
+    m_pins{nb_pins, input_pins, output_pins, true},
     m_actual_tick{~0UL}
 {
+    m_pins.setIOPinsAsOutput();
     for (std::size_t pin : m_pins.getOutputPins())
         m_output_pins[pin] = nts::UNDEFINED;
 }
@@ -27,24 +28,25 @@ void nts::ACalculationComponent::simulate(std::size_t tick)
     if (m_actual_tick != tick) {
         m_actual_tick = tick;
         computeOutputs(tick);
+        m_pins.setIOPinsAsOutput();
     }
 }
 
 void nts::ACalculationComponent::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
     if (!m_pins.hasPin(pin))
-        throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
+        throw nts::BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
     m_pins[pin].setLinkWithExternalComponent(other, otherPin);
 }
 
 nts::Tristate nts::ACalculationComponent::compute(std::size_t pin)
 {
     if (!m_pins.hasPin(pin))
-        throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
-    if (m_pins[pin].isInput())
-        return nts::FALSE;
+        throw nts::BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
     if (m_pins[pin].isOutput())
         return m_output_pins.at(pin);
+    if (m_pins[pin].isInput())
+        return nts::FALSE;
     return nts::UNDEFINED;
 }
 
