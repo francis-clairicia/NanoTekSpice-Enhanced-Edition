@@ -9,8 +9,15 @@
 #include <iostream>
 #include "Pin.hpp"
 
-nts::Pin::Pin(Pin::Mode mode) noexcept:
-    m_mode{mode},
+nts::Pin::Pin() noexcept:
+    m_mode{0},
+    m_internal_links{},
+    m_external_links{}
+{
+}
+
+nts::Pin::Pin(Pin::Direction direction, Pin::Mode mode) noexcept:
+    m_mode{direction | mode},
     m_internal_links{},
     m_external_links{}
 {
@@ -25,7 +32,7 @@ void nts::Pin::setLinkWithExternalComponent(nts::IComponent &component, std::siz
         return;
 
     m_external_links.push_back(Pin::Link{.component = component, .pin = pin});
-    if (m_mode & Mode::INPUT) {
+    if ((m_mode & BIDIRECTIONAL) || isInput()) {
         for (Pin::Link &link : m_internal_links) {
             link.component.setLink(link.pin, component, pin);
         }
@@ -41,7 +48,7 @@ void nts::Pin::setLinkWithInternalComponent(nts::IComponent &component, std::siz
         return;
 
     m_internal_links.push_back(Pin::Link{.component = component, .pin = pin});
-    if (m_mode & Mode::INPUT) {
+    if ((m_mode & BIDIRECTIONAL) || isInput()) {
         for (Pin::Link &link : m_external_links) {
             component.setLink(pin, link.component, link.pin);
         }
@@ -50,21 +57,23 @@ void nts::Pin::setLinkWithInternalComponent(nts::IComponent &component, std::siz
 
 nts::Tristate nts::Pin::compute(std::size_t tick) const
 {
-    if (m_mode & Mode::OUTPUT)
-        return computeAsOutput(tick);
-    if (m_mode & Mode::INPUT)
-        return computeAsInput(tick);
+    if (isOutput())
+        return computeLinks(m_internal_links, tick);
+    if (isInput())
+        return computeLinks(m_external_links, tick);
     return nts::UNDEFINED;
 }
 
-nts::Tristate nts::Pin::computeAsInput(std::size_t tick) const
+void nts::Pin::computeAsInput() noexcept
 {
-    return computeLinks(m_external_links, tick);
+    if (m_mode & BIDIRECTIONAL)
+        m_mode = BIDIRECTIONAL | INPUT;
 }
 
-nts::Tristate nts::Pin::computeAsOutput(std::size_t tick) const
+void nts::Pin::computeAsOutput() noexcept
 {
-    return computeLinks(m_internal_links, tick);
+    if (m_mode & BIDIRECTIONAL)
+        m_mode = BIDIRECTIONAL | OUTPUT;
 }
 
 nts::Tristate nts::Pin::computeLinks(const Pin::linkList_t &used_links, std::size_t tick) const
@@ -84,29 +93,26 @@ nts::Tristate nts::Pin::computeLinks(const Pin::linkList_t &used_links, std::siz
     std::for_each(inputs.begin(), inputs.end(), [&output](nts::Tristate value){output |= value;});
     return static_cast<nts::Tristate>(output);
 }
+
+bool nts::Pin::isInput() const noexcept
+{
+    return (m_mode & Mode::INPUT) != 0;
+}
+
+bool nts::Pin::isOutput() const noexcept
+{
+    return (m_mode & Mode::OUTPUT) != 0;
+}
+
 void nts::Pin::dump() const noexcept
 {
-    std::cout << std::string(4, ' ');
+    std::size_t space_indent = 4;
+
     if (m_external_links.empty()) {
-        std::cout << "not linked" << '\n';
+        std::cout << std::string(space_indent, ' ') << "not linked" << '\n';
     } else {
-        for (const Pin::Link &link : m_external_links)
-            std::cout << "linked to the pin " << link.pin << " of a component" << '\n';
+        for (const Pin::Link &link : m_external_links) {
+            std::cout << std::string(space_indent, ' ') << "linked to the pin " << link.pin << " of a component" << '\n';
+        }
     }
-}
-
-nts::Pin &nts::Pin::operator=(Pin::Mode mode) noexcept
-{
-    m_mode = mode;
-    return *this;
-}
-
-bool nts::Pin::operator==(Pin::Mode mode) const noexcept
-{
-    return m_mode == mode;
-}
-
-bool nts::Pin::operator!=(Pin::Mode mode) const noexcept
-{
-    return !(*this == mode);
 }

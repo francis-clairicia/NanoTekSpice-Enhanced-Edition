@@ -26,7 +26,7 @@ nts::Tristate nts::BoxComponent::compute(std::size_t pin)
     if (!m_pins.hasPin(pin))
         throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
 
-    if (m_pins[pin] == nts::Pin::INPUT)
+    if (m_pins[pin].isInput())
         return nts::FALSE;
 
     return m_pins[pin].compute(m_actual_tick);

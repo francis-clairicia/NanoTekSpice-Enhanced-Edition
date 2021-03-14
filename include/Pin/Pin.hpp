@@ -15,12 +15,17 @@ namespace nts
 {
     class Pin {
         public:
+            enum Direction
+            {
+                UNIDIRECTIONAL = 0,
+                BIDIRECTIONAL  = 1
+            };
+
             enum Mode
             {
                 NONE   = 0,
-                INPUT  = 1 << 0,
-                OUTPUT = 1 << 1,
-                BOTH   = INPUT | OUTPUT
+                INPUT  = 1 << 1,
+                OUTPUT = 1 << 2
             };
 
         public:
@@ -34,7 +39,8 @@ namespace nts
             using linkList_t = std::vector<Pin::Link>;
 
         public:
-            explicit Pin(Pin::Mode mode = Mode::NONE) noexcept;
+            Pin() noexcept;
+            explicit Pin(Pin::Direction direction, Pin::Mode mode = NONE) noexcept;
             Pin(const Pin &other) noexcept = default;
             ~Pin() noexcept = default;
 
@@ -42,21 +48,21 @@ namespace nts
             void setLinkWithInternalComponent(nts::IComponent &component, std::size_t pin) noexcept;
 
             nts::Tristate compute(std::size_t tick) const;
-            nts::Tristate computeAsInput(std::size_t tick) const;
-            nts::Tristate computeAsOutput(std::size_t tick) const;
+            void computeAsInput() noexcept;
+            void computeAsOutput() noexcept;
 
             void dump() const noexcept;
 
+            [[nodiscard]] bool isInput() const noexcept;
+            [[nodiscard]] bool isOutput() const noexcept;
+
             Pin &operator=(const Pin &rhs) noexcept = default;
-            Pin &operator=(Pin::Mode mode) noexcept;
-            bool operator==(Pin::Mode mode) const noexcept;
-            bool operator!=(Pin::Mode mode) const noexcept;
 
         private:
             nts::Tristate computeLinks(const Pin::linkList_t &used_links, std::size_t tick) const;
 
         private:
-            Pin::Mode       m_mode;
+            int             m_mode;
             Pin::linkList_t m_internal_links;
             Pin::linkList_t m_external_links;
     };

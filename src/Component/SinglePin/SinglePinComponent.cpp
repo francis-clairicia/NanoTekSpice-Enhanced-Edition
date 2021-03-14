@@ -10,7 +10,7 @@
 #include "BadPinException.hpp"
 
 nts::SinglePinComponent::SinglePinComponent(nts::ComponentType type, nts::Pin::Mode pin_mode) noexcept:
-    m_pin{pin_mode},
+    m_pin{nts::Pin::UNIDIRECTIONAL, pin_mode},
     m_type{type},
     m_value{nts::UNDEFINED}
 {

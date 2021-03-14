@@ -37,10 +37,10 @@ nts::Tristate nts::AGate::compute(std::size_t pin)
 {
     if (!m_pins.hasPin(pin))
         throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
-    if (m_pins[pin] == nts::Pin::INPUT) {
+    if (m_pins[pin].isInput()) {
         return nts::FALSE;
     }
-    if (m_pins[pin] == nts::Pin::OUTPUT) {
+    if (m_pins[pin].isOutput()) {
         return m_value;
     }
     return nts::UNDEFINED;

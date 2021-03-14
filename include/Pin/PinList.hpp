@@ -31,9 +31,9 @@ namespace nts
             nts::Pin &operator[](std::size_t pin);
 
         private:
-            const std::vector<std::size_t> m_input_pins;
-            const std::vector<std::size_t> m_output_pins;
-            std::vector<nts::Pin>          m_pins;
+            const std::vector<std::size_t>            m_input_pins;
+            const std::vector<std::size_t>            m_output_pins;
+            std::unordered_map<std::size_t, nts::Pin> m_pins;
     };
 }
 
