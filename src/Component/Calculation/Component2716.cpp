@@ -10,60 +10,65 @@
 #include "Component2716.hpp"
 #include "GateNOT.hpp"
 
-static const std::string ROM_BUFFER_FILE{"./rom.bin"};
-
-nts::Component2716::Component2716() noexcept:
-    ACalculationComponent(ComponentType::C2716, 24, {
-        A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, CHIP_ENABLED, OUTPUT_ENABLED
-    }, {
-        Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7
-    }),
-    m_invert_oe{std::make_unique<GateNOT>()},
-    m_invert_ce_pgm{std::make_unique<GateNOT>()}
+namespace
 {
-    std::fill(m_memory.begin(), m_memory.end(), 0);
-    std::ifstream rom_stream{ROM_BUFFER_FILE, std::ios_base::in | std::ios_base::binary};
+    const std::string ROM_BUFFER_FILE{"./rom.bin"};
+} // namespace
 
-    if (!rom_stream)
-        return;
-    for (std::size_t address = 0; !rom_stream.eof() && address < m_memory.size(); ++address)
-        rom_stream >> m_memory[address];
-    rom_stream.close();
-
-    m_pins[OUTPUT_ENABLED].setLinkWithInternalComponent(*m_invert_oe, GateNOT::INPUT);
-    m_pins[CHIP_ENABLED].setLinkWithInternalComponent(*m_invert_ce_pgm, GateNOT::INPUT);
-}
-
-void nts::Component2716::computeOutputs(std::size_t tick)
+namespace nts
 {
-    std::array<nts::Tristate, 11> address_input;
-    const std::array<std::size_t, 11> address_pin{A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10};
+    Component2716::Component2716() noexcept:
+        ACalculationComponent(ComponentType::C2716, 24, {
+            A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, CHIP_ENABLED, OUTPUT_ENABLED
+        }, {
+            Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7
+        }),
+        m_invert_oe{std::make_unique<GateNOT>()},
+        m_invert_ce_pgm{std::make_unique<GateNOT>()}
+    {
+        std::fill(m_memory.begin(), m_memory.end(), 0);
+        std::ifstream rom_stream{ROM_BUFFER_FILE, std::ios_base::binary};
 
-    nts::Tristate output_enabled = computeInternalComponent(*m_invert_oe, GateNOT::OUTPUT);
-    nts::Tristate chipset_enabled = computeInternalComponent(*m_invert_ce_pgm, GateNOT::OUTPUT);
+        if (!rom_stream)
+            return;
+        rom_stream.read(m_memory.data(), m_memory.size());
+        rom_stream.close();
 
-    for (std::size_t bit = 0; bit < address_input.size(); ++bit)
-        address_input[bit] = m_pins[address_pin.at(bit)].compute(tick);
-
-    if (output_enabled == nts::FALSE || chipset_enabled == nts::FALSE || output_enabled == nts::UNDEFINED || chipset_enabled == nts::UNDEFINED) {
-        for (auto &pair : m_output_pins)
-            pair.second = nts::UNDEFINED;
-        return;
+        m_pins[OUTPUT_ENABLED].setLinkWithInternalComponent(*m_invert_oe, GateNOT::INPUT);
+        m_pins[CHIP_ENABLED].setLinkWithInternalComponent(*m_invert_ce_pgm, GateNOT::INPUT);
     }
 
-    if (std::any_of(address_input.begin(), address_input.end(), [](nts::Tristate v){return v == nts::UNDEFINED;})) {
-        for (auto &pair : m_output_pins)
-            pair.second = nts::UNDEFINED;
-        return;
+    void Component2716::computeOutputs(std::size_t tick)
+    {
+        std::array<Tristate, 11> address_input;
+        const std::array<std::size_t, 11> address_pin{A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10};
+
+        Tristate output_enabled = computeInternalComponent(*m_invert_oe, GateNOT::OUTPUT);
+        Tristate chipset_enabled = computeInternalComponent(*m_invert_ce_pgm, GateNOT::OUTPUT);
+
+        for (std::size_t bit = 0; bit < address_input.size(); ++bit)
+            address_input[bit] = m_pins[address_pin.at(bit)].compute(tick);
+
+        if (output_enabled == FALSE || chipset_enabled == FALSE || output_enabled == UNDEFINED || chipset_enabled == UNDEFINED) {
+            for (auto &pair : m_output_pins)
+                pair.second = UNDEFINED;
+            return;
+        }
+
+        if (std::any_of(address_input.begin(), address_input.end(), [](Tristate v){return v == UNDEFINED;})) {
+            for (auto &pair : m_output_pins)
+                pair.second = UNDEFINED;
+            return;
+        }
+
+        unsigned short int address = 0;
+
+        for (std::size_t bit = 0; bit < address_input.size(); ++bit)
+            address |= (address_input.at(bit) << bit);
+
+        const char byte = m_memory.at(address);
+
+        for (std::size_t bit = 0; bit < m_pins.getOutputPins().size(); ++bit)
+            m_output_pins[m_pins.getOutputPins().at(bit)] = static_cast<Tristate>((byte & (1 << bit)) >> bit);
     }
-
-    unsigned short int address = 0;
-
-    for (std::size_t bit = 0; bit < address_input.size(); ++bit)
-        address |= (address_input.at(bit) << bit);
-
-    const unsigned char &byte = m_memory.at(address);
-
-    for (std::size_t bit = 0; bit < m_pins.getOutputPins().size(); ++bit)
-        m_output_pins[m_pins.getOutputPins().at(bit)] = static_cast<nts::Tristate>((byte & (1 << bit)) >> bit);
-}
+} // namespace nts

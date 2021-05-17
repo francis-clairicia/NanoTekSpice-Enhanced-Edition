@@ -7,7 +7,10 @@
 
 #include "FileException.hpp"
 
-nts::FileException::FileException(const std::string &filepath, const std::string &error_msg) noexcept:
-    Exception(filepath + ": " + error_msg)
+namespace nts
 {
-}
+    FileException::FileException(const std::string &filepath, const std::string &error_msg) noexcept:
+        Exception(filepath + ": " + error_msg)
+    {
+    }
+} // namespace nts

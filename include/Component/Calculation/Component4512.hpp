@@ -12,35 +12,36 @@
 
 namespace nts
 {
-    class Component4512: public nts::ACalculationComponent {
-        public:
-            enum PinName
-            {
-                X0       = 1,
-                X1       = 2,
-                X2       = 3,
-                X3       = 4,
-                X4       = 5,
-                X5       = 6,
-                X6       = 7,
-                X7       = 9,
-                INHIBIT  = 10,
-                INPUT_A  = 11,
-                INPUT_B  = 12,
-                INPUT_C  = 13,
-                OUTPUT_Z = 14,
-                INPUT_OE = 15
-            };
+    class Component4512: public ACalculationComponent
+    {
+    public:
+        enum PinName
+        {
+            X0       = 1,
+            X1       = 2,
+            X2       = 3,
+            X3       = 4,
+            X4       = 5,
+            X5       = 6,
+            X6       = 7,
+            X7       = 9,
+            INHIBIT  = 10,
+            INPUT_A  = 11,
+            INPUT_B  = 12,
+            INPUT_C  = 13,
+            OUTPUT_Z = 14,
+            INPUT_OE = 15
+        };
 
-        public:
-            Component4512() noexcept;
-            ~Component4512() noexcept = default;
+    public:
+        Component4512() noexcept;
+        ~Component4512() noexcept = default;
 
-        protected:
-            void computeOutputs(std::size_t tick) final;
+    protected:
+        void computeOutputs(std::size_t tick) final;
 
-        private:
-            std::unique_ptr<nts::IComponent> m_invert_oe;
+    private:
+        std::unique_ptr<IComponent> m_invert_oe;
     };
 }
 

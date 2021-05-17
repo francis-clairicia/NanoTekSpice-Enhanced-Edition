@@ -7,15 +7,18 @@
 
 #include "GateOR.hpp"
 
-nts::GateOR::GateOR() noexcept: GateTwoInputs(ComponentType::GateOR)
+namespace nts
 {
-}
+    GateOR::GateOR() noexcept: GateTwoInputs(ComponentType::GateOR)
+    {
+    }
 
-nts::Tristate nts::GateOR::operation(nts::Tristate a, nts::Tristate b) const noexcept
-{
-    if (a == nts::TRUE || b == nts::TRUE)
-        return nts::TRUE;
-    if (a == nts::UNDEFINED || b == nts::UNDEFINED)
-        return nts::UNDEFINED;
-    return nts::FALSE;
-}
+    Tristate GateOR::operation(Tristate a, Tristate b) const noexcept
+    {
+        if (a == TRUE || b == TRUE)
+            return TRUE;
+        if (a == UNDEFINED || b == UNDEFINED)
+            return UNDEFINED;
+        return FALSE;
+    }
+} // namespace nts

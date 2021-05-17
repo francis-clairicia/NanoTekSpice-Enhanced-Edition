@@ -12,26 +12,32 @@
 
 namespace nts
 {
-    class AGate: public nts::IComponent {
-        public:
-            AGate(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, std::size_t output_pin) noexcept;
-            ~AGate() noexcept = default;
+    class AGate: public IComponent
+    {
+    public:
+        AGate(ComponentType type, std::size_t nb_pins, PinList::Initializer input_pins, std::size_t output_pin) noexcept;
+        AGate(const AGate &other) noexcept = delete;
+        AGate(AGate &&other) noexcept = default;
+        ~AGate() noexcept override = default;
 
-            void simulate(std::size_t tick) final;
-            nts::Tristate compute(std::size_t pin) final;
-            void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
-            void dump() const noexcept final;
+        void simulate(std::size_t tick) final;
+        Tristate compute(std::size_t pin) final;
+        void setLink(std::size_t pin, IComponent &other, std::size_t otherPin) final;
+        void dump() const noexcept final;
 
-        protected:
-            virtual nts::Tristate computeOutput(std::size_t tick) = 0;
+        AGate &operator=(const AGate &rhs) noexcept = delete;
+        AGate &operator=(AGate &&rhs) noexcept = default;
 
-        protected:
-            nts::Tristate             m_value;
-            const nts::ComponentType  m_type;
-            nts::PinList              m_pins;
+    protected:
+        virtual Tristate computeOutput(std::size_t tick) = 0;
 
-        private:
-            std::size_t               m_actual_tick;
+    protected:
+        Tristate             m_value;
+        const ComponentType  m_type;
+        PinList              m_pins;
+
+    private:
+        std::size_t               m_actual_tick;
     };
 }
 

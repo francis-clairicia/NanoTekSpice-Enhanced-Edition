@@ -7,7 +7,10 @@
 
 #include "SyntaxException.hpp"
 
-nts::SyntaxException::SyntaxException(std::size_t line, const std::string &msg) noexcept:
-    ParserException("Syntax error", line, msg)
+namespace nts
 {
-}
+    SyntaxException::SyntaxException(std::size_t line, const std::string &msg) noexcept:
+        ParserException("Syntax error", line, msg)
+    {
+    }
+} // namespace nts

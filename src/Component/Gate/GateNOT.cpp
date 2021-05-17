@@ -7,13 +7,16 @@
 
 #include "GateNOT.hpp"
 
-nts::GateNOT::GateNOT() noexcept: GateOneInput(ComponentType::GateNOT)
+namespace nts
 {
-}
+    GateNOT::GateNOT() noexcept: GateOneInput(ComponentType::GateNOT)
+    {
+    }
 
-nts::Tristate nts::GateNOT::operation(nts::Tristate a) const noexcept
-{
-    if (a == nts::UNDEFINED)
-        return nts::UNDEFINED;
-    return static_cast<nts::Tristate>(!a);
-}
+    Tristate GateNOT::operation(Tristate a) const noexcept
+    {
+        if (a == UNDEFINED)
+            return UNDEFINED;
+        return static_cast<Tristate>(!a);
+    }
+} // namespace nts

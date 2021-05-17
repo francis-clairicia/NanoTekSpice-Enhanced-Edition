@@ -14,8 +14,9 @@ namespace nts
 {
     class ParserException: public Exception
     {
-        public:
-            ParserException(const std::string &error_type, std::size_t line, const std::string &error_msg) noexcept;
+    public:
+        ParserException(const std::string &error_type, std::size_t line, const std::string &error_msg) noexcept;
+        ~ParserException() noexcept override = default;
     };
 }
 

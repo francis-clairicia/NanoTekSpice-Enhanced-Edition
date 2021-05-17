@@ -12,29 +12,37 @@
 
 namespace nts
 {
-    class ACalculationComponent: public nts::IComponent {
-        public:
-            ACalculationComponent(nts::ComponentType type, std::size_t nb_pins,
-                                  const pinList_t &input_pins, const pinList_t &output_pins) noexcept;
-            ~ACalculationComponent() noexcept = default;
+    class ACalculationComponent: public IComponent
+    {
+    protected:
+        using OutputPins = std::unordered_map<std::size_t, Tristate>;
 
-            void simulate(std::size_t tick) final;
-            nts::Tristate compute(std::size_t pin) final;
-            void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
-            void dump() const noexcept final;
+    public:
+        ACalculationComponent(ComponentType type, std::size_t nb_pins,
+                                PinList::Initializer input_pins, PinList::Initializer output_pins) noexcept;
+        ACalculationComponent(const ACalculationComponent &other) noexcept = delete;
+        ACalculationComponent(ACalculationComponent &&other) noexcept = default;
+        ~ACalculationComponent() noexcept override = default;
 
-        protected:
-            nts::Tristate computeInternalComponent(nts::IComponent &component, std::size_t pin) const;
-            virtual void computeOutputs(std::size_t tick) = 0;
+        void simulate(std::size_t tick) final;
+        Tristate compute(std::size_t pin) final;
+        void setLink(std::size_t pin, IComponent &other, std::size_t otherPin) final;
+        void dump() const noexcept final;
 
-        protected:
-            const nts::ComponentType  m_type;
-            nts::pinMap_t             m_output_pins;
-            nts::PinList              m_pins;
+        ACalculationComponent &operator=(const ACalculationComponent &rhs) noexcept = delete;
+        ACalculationComponent &operator=(ACalculationComponent &&rhs) noexcept = default;
 
-        private:
-            std::size_t               m_actual_tick;
-            
+    protected:
+        Tristate computeInternalComponent(IComponent &component, std::size_t pin) const;
+        virtual void computeOutputs(std::size_t tick) = 0;
+
+    protected:
+        const ComponentType  m_type;
+        OutputPins           m_output_pins;
+        PinList              m_pins;
+
+    private:
+        std::size_t          m_actual_tick;
     };
 }
 

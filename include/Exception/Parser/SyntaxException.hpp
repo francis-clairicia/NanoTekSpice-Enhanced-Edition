@@ -12,9 +12,11 @@
 
 namespace nts
 {
-    class SyntaxException: public ParserException {
-        public:
-            SyntaxException(std::size_t line, const std::string &msg) noexcept;
+    class SyntaxException: public ParserException
+    {
+    public:
+        SyntaxException(std::size_t line, const std::string &msg) noexcept;
+        ~SyntaxException() noexcept override = default;
     };
 }
 

@@ -10,13 +10,16 @@
 #include "nanotekspice.hpp"
 #include "Exception.hpp"
 
-static void print_help(std::ostream &output)
+namespace
 {
-    output << "USAGE:\t./nanotekspice circuit" << '\n';
-    output << '\n';
-    output << "Positional arguments:" << '\n';
-    output << "\tcircuit\t\tPath to a .nts circuit file" << '\n';
-}
+    void print_help(std::ostream &output)
+    {
+        output << "USAGE:\t./nanotekspice circuit" << '\n';
+        output << '\n';
+        output << "Positional arguments:" << '\n';
+        output << "\tcircuit\t\tPath to a .nts circuit file" << '\n';
+    }
+} // namespace
 
 int main(int ac, char const * const *av)
 {

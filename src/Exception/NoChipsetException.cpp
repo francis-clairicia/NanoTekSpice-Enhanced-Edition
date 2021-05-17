@@ -7,6 +7,9 @@
 
 #include "NoChipsetException.hpp"
 
-nts::NoChipsetException::NoChipsetException() noexcept: Exception("No chipset in the circuit")
+namespace nts
 {
-}
+    NoChipsetException::NoChipsetException() noexcept: Exception("No chipset in the circuit")
+    {
+    }
+} // namespace nts

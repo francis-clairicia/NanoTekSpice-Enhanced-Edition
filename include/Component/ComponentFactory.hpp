@@ -13,12 +13,15 @@
 
 namespace nts
 {
-    class ComponentFactory {
-        public:
-            ComponentFactory() noexcept = default;
-            ~ComponentFactory() noexcept = default;
+    class ComponentFactory
+    {
+    public:
+        ~ComponentFactory() noexcept = default;
 
-            std::unique_ptr<nts::IComponent> createComponent(const std::string &type) const;
+        static std::unique_ptr<IComponent> createComponent(const std::string &type);
+
+    private:
+        ComponentFactory() noexcept = default;
     };
 }
 

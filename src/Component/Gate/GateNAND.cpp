@@ -7,15 +7,18 @@
 
 #include "GateNAND.hpp"
 
-nts::GateNAND::GateNAND() noexcept: GateTwoInputs(ComponentType::GateNAND)
+namespace nts
 {
-}
+    GateNAND::GateNAND() noexcept: GateTwoInputs(ComponentType::GateNAND)
+    {
+    }
 
-nts::Tristate nts::GateNAND::operation(nts::Tristate a, nts::Tristate b) const noexcept
-{
-    if (a == nts::FALSE || b == nts::FALSE)
-        return nts::TRUE;
-    if (a == nts::UNDEFINED || b == nts::UNDEFINED)
-        return nts::UNDEFINED;
-    return nts::FALSE;
-}
+    Tristate GateNAND::operation(Tristate a, Tristate b) const noexcept
+    {
+        if (a == FALSE || b == FALSE)
+            return TRUE;
+        if (a == UNDEFINED || b == UNDEFINED)
+            return UNDEFINED;
+        return FALSE;
+    }
+} // namespace nts

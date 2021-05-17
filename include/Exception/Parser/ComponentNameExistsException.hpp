@@ -12,9 +12,11 @@
 
 namespace nts
 {
-    class ComponentNameExistsException: public ParserException {
+    class ComponentNameExistsException: public ParserException
+    {
         public:
             ComponentNameExistsException(std::size_t line, const std::string &name) noexcept;
+            ~ComponentNameExistsException() noexcept override = default;
     };
 }
 

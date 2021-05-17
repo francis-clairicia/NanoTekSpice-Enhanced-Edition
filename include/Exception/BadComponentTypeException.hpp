@@ -12,9 +12,11 @@
 
 namespace nts
 {
-    class BadComponentTypeException: public Exception {
-        public:
-            BadComponentTypeException(const std::string &type) noexcept;
+    class BadComponentTypeException: public Exception
+    {
+    public:
+        BadComponentTypeException(const std::string &type) noexcept;
+        ~BadComponentTypeException() noexcept override = default;
     };
 }
 

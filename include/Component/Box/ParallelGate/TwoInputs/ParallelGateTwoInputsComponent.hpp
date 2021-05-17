@@ -10,79 +10,78 @@
 
 #include <iostream>
 #include "BoxComponent.hpp"
+#include "init_vector_component.hpp"
 
 namespace nts
 {
-    template<nts::ComponentType Type, typename Gate>
-    class ParallelGateTwoInputsComponent: public nts::BoxComponent {
-        public:
-            enum PinName
-            {
-                INPUT_1A = 1,
-                INPUT_1B = 2,
-                OUTPUT_1 = 3,
-                OUTPUT_2 = 4,
-                INPUT_2A = 5,
-                INPUT_2B = 6,
-                INPUT_3A = 8,
-                INPUT_3B = 9,
-                OUTPUT_3 = 10,
-                OUTPUT_4 = 11,
-                INPUT_4A = 12,
-                INPUT_4B = 13
-            };
+    template<ComponentType Type, typename Gate>
+    class ParallelGateTwoInputsComponent: public BoxComponent
+    {
+    public:
+        enum PinName
+        {
+            INPUT_1A = 1,
+            INPUT_1B = 2,
+            OUTPUT_1 = 3,
+            OUTPUT_2 = 4,
+            INPUT_2A = 5,
+            INPUT_2B = 6,
+            INPUT_3A = 8,
+            INPUT_3B = 9,
+            OUTPUT_3 = 10,
+            OUTPUT_4 = 11,
+            INPUT_4A = 12,
+            INPUT_4B = 13
+        };
 
-        public:
-            ParallelGateTwoInputsComponent() noexcept:
-                BoxComponent(Type, 14, {
-                    INPUT_1A,
-                    INPUT_1B,
-                    INPUT_2A,
-                    INPUT_2B,
-                    INPUT_3A,
-                    INPUT_3B,
-                    INPUT_4A,
-                    INPUT_4B
-                }, {
-                    OUTPUT_1,
-                    OUTPUT_2,
-                    OUTPUT_3,
-                    OUTPUT_4
-                })
-            {
-                m_components.push_back(std::make_unique<Gate>());
-                setLinkInternal(INPUT_1A, *m_components.back(), Gate::INPUT1);
-                setLinkInternal(INPUT_1B, *m_components.back(), Gate::INPUT2);
-                setLinkInternal(OUTPUT_1, *m_components.back(), Gate::OUTPUT);
+    public:
+        ParallelGateTwoInputsComponent() noexcept:
+            BoxComponent(Type, 14, {
+                INPUT_1A,
+                INPUT_1B,
+                INPUT_2A,
+                INPUT_2B,
+                INPUT_3A,
+                INPUT_3B,
+                INPUT_4A,
+                INPUT_4B
+            }, {
+                OUTPUT_1,
+                OUTPUT_2,
+                OUTPUT_3,
+                OUTPUT_4
+            }),
+            m_components(init_vector_component<Gate>(4))
+        {
+            setLinkInternal(INPUT_1A, *m_components.at(0), Gate::INPUT1);
+            setLinkInternal(INPUT_1B, *m_components.at(0), Gate::INPUT2);
+            setLinkInternal(OUTPUT_1, *m_components.at(0), Gate::OUTPUT);
 
-                m_components.push_back(std::make_unique<Gate>());
-                setLinkInternal(INPUT_2A, *m_components.back(), Gate::INPUT1);
-                setLinkInternal(INPUT_2B, *m_components.back(), Gate::INPUT2);
-                setLinkInternal(OUTPUT_2, *m_components.back(), Gate::OUTPUT);
+            setLinkInternal(INPUT_2A, *m_components.at(1), Gate::INPUT1);
+            setLinkInternal(INPUT_2B, *m_components.at(1), Gate::INPUT2);
+            setLinkInternal(OUTPUT_2, *m_components.at(1), Gate::OUTPUT);
 
-                m_components.push_back(std::make_unique<Gate>());
-                setLinkInternal(INPUT_3A, *m_components.back(), Gate::INPUT1);
-                setLinkInternal(INPUT_3B, *m_components.back(), Gate::INPUT2);
-                setLinkInternal(OUTPUT_3, *m_components.back(), Gate::OUTPUT);
+            setLinkInternal(INPUT_3A, *m_components.at(2), Gate::INPUT1);
+            setLinkInternal(INPUT_3B, *m_components.at(2), Gate::INPUT2);
+            setLinkInternal(OUTPUT_3, *m_components.at(2), Gate::OUTPUT);
 
-                m_components.push_back(std::make_unique<Gate>());
-                setLinkInternal(INPUT_4A, *m_components.back(), Gate::INPUT1);
-                setLinkInternal(INPUT_4B, *m_components.back(), Gate::INPUT2);
-                setLinkInternal(OUTPUT_4, *m_components.back(), Gate::OUTPUT);
-            }
+            setLinkInternal(INPUT_4A, *m_components.at(3), Gate::INPUT1);
+            setLinkInternal(INPUT_4B, *m_components.at(3), Gate::INPUT2);
+            setLinkInternal(OUTPUT_4, *m_components.at(3), Gate::OUTPUT);
+        }
 
-            ~ParallelGateTwoInputsComponent() noexcept = default;
+        ~ParallelGateTwoInputsComponent() noexcept override = default;
 
-        protected:
-            void dumpInternalComponents() const noexcept final
-            {
-                std::cout << "Internal components:" << '\n';
-                for (const auto &component : m_components)
-                    component->dump();
-            }
+    private:
+        void dumpInternalComponents() const noexcept final
+        {
+            std::cout << "Internal components:" << '\n';
+            for (const auto &component : m_components)
+                component->dump();
+        }
 
-        private:
-            nts::internComponent_t m_components;
+    private:
+        InternComponent m_components;
     };
 }
 

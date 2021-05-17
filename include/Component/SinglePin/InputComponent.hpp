@@ -12,26 +12,26 @@
 
 namespace nts
 {
-    class InputComponent: public nts::SinglePinComponent {
-        public:
-            enum PinName
-            {
-                OUTPUT = 1
-            };
+    class InputComponent: public SinglePinComponent
+    {
+    public:
+        enum PinName
+        {
+            OUTPUT = 1
+        };
 
-        public:
-            explicit InputComponent(nts::ComponentType type = ComponentType::Input) noexcept;
-            ~InputComponent() noexcept = default;
+    public:
+        explicit InputComponent(ComponentType type = ComponentType::Input) noexcept;
+        ~InputComponent() noexcept override = default;
 
-            void simulate(std::size_t tick) override;
+        void simulate(std::size_t tick) override;
 
-            virtual void setValue(nts::Tristate value) noexcept;
+        virtual void setValue(Tristate value) noexcept;
 
-        protected:
-            std::size_t   m_actual_tick;
-            nts::Tristate m_value_for_next_tick;
-    };  
+    protected:
+        std::size_t   m_actual_tick;
+        Tristate m_value_for_next_tick;
+    };
 }
-
 
 #endif /* !INPUTCOMPONENT_HPP_ */

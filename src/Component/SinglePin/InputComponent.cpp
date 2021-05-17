@@ -8,22 +8,25 @@
 #include <iostream>
 #include "InputComponent.hpp"
 
-nts::InputComponent::InputComponent(nts::ComponentType type) noexcept:
-    SinglePinComponent(type, nts::Pin::OUTPUT),
-    m_actual_tick{~0UL},
-    m_value_for_next_tick{nts::UNDEFINED}
+namespace nts
 {
-}
-
-void nts::InputComponent::simulate(std::size_t tick)
-{
-    if (m_actual_tick != tick) {
-        m_actual_tick = tick;
-        m_value = m_value_for_next_tick;
+    InputComponent::InputComponent(ComponentType type) noexcept:
+        SinglePinComponent(type, Pin::OUTPUT),
+        m_actual_tick{~0UL},
+        m_value_for_next_tick{UNDEFINED}
+    {
     }
-}
 
-void nts::InputComponent::setValue(nts::Tristate value) noexcept
-{
-    m_value_for_next_tick = value;
-}
+    void InputComponent::simulate(std::size_t tick)
+    {
+        if (m_actual_tick != tick) {
+            m_actual_tick = tick;
+            m_value = m_value_for_next_tick;
+        }
+    }
+
+    void InputComponent::setValue(Tristate value) noexcept
+    {
+        m_value_for_next_tick = value;
+    }
+} // namespace nts

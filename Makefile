@@ -60,6 +60,7 @@ SRC_CALC_COMPONENTS		=	src/Component/Calculation/ACalculationComponent.cpp			\
 							src/Component/Calculation/FlipFlop/DTypeFlipFlopWithSR.cpp
 
 SRC_COMPONENTS			=	src/Component/ComponentFactory.cpp							\
+							src/Component/ComponentType.cpp								\
 							src/Pin/Pin.cpp												\
 							src/Pin/PinList.cpp											\
 							$(SRC_ONEPIN_COMPONENTS)									\
@@ -132,9 +133,9 @@ OBJ_UNIT_TEST			=	$(SRC_UNIT_TEST:.cpp=.o)
 
 NAME					=	nanotekspice
 
+all:	CXXFLAGS += -O2
 all:	$(NAME)
 
-$(NAME):	CXXFLAGS += -O2
 $(NAME):	$(OBJ)
 	$(CXX) -o $(NAME) $(OBJ) $(LDFLAGS) $(LDLIBS)
 
@@ -143,12 +144,11 @@ tests_run::	clean
 tests_run::	$(OBJ_TEST) $(OBJ_UNIT_TEST)
 	@find -name "*.gc*" -delete
 	$(CXX) -o unit_tests $(OBJ_TEST) $(OBJ_UNIT_TEST) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
-	-./unit_tests --verbose
+	./unit_tests --verbose --always-succeed
 	$(RM) -r unit_tests coverage
 
 debug:	CXXFLAGS += -g
-debug:
-	$(CXX) -o debug $(SRC) $(LDFLAGS) $(LDLIBS) $(CXXFLAGS) $(CPPFLAGS)
+debug:	$(NAME)
 
 clean:
 	$(RM) $(OBJ) $(OBJ_UNIT_TEST)

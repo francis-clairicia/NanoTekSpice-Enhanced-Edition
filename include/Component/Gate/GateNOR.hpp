@@ -12,12 +12,13 @@
 
 namespace nts
 {
-    class GateNOR: public nts::GateTwoInputs {
-        public:
-            GateNOR() noexcept;
-            ~GateNOR() noexcept = default;
+    class GateNOR: public GateTwoInputs
+    {
+    public:
+        GateNOR() noexcept;
+        ~GateNOR() noexcept override = default;
 
-            nts::Tristate operation(nts::Tristate a, nts::Tristate b) const noexcept final;
+        Tristate operation(Tristate a, Tristate b) const noexcept final;
     };
 }
 

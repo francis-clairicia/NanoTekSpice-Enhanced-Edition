@@ -12,9 +12,11 @@
 
 namespace nts
 {
-    class InputValueException: public Exception {
-        public:
-            InputValueException(const std::string &value) noexcept;
+    class InputValueException: public Exception
+    {
+    public:
+        InputValueException(const std::string &value) noexcept;
+        ~InputValueException() noexcept override = default;
     };
 }
 

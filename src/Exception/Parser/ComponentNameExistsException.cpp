@@ -7,7 +7,10 @@
 
 #include "ComponentNameExistsException.hpp"
 
-nts::ComponentNameExistsException::ComponentNameExistsException(std::size_t line, const std::string &name) noexcept:
-    ParserException("Component name error", line, "\"" + name + "\" component already exists")
+namespace nts
 {
-}
+    ComponentNameExistsException::ComponentNameExistsException(std::size_t line, const std::string &name) noexcept:
+        ParserException("Component name error", line, "\"" + name + "\" component already exists")
+    {
+    }
+} // namespace nts

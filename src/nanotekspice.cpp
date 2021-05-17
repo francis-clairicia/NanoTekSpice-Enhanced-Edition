@@ -34,14 +34,14 @@ static void simulate_command(nts::Circuit &circuit, std::size_t &tick)
 static void loop_command(nts::Circuit &circuit, std::size_t &tick)
 {
     static bool loop = false;
-    sighandler_t former_handler = signal(SIGINT, [](int){loop = false;});
+    auto former_handler = std::signal(SIGINT, [](int){loop = false;});
 
     loop = true;
     while (loop) {
         simulate_command(circuit, tick);
         display_command(circuit, tick);
     }
-    signal(SIGINT, former_handler);
+    std::signal(SIGINT, former_handler);
 }
 
 static void dump_command(nts::Circuit &circuit, std::size_t &tick __attribute__((unused)))

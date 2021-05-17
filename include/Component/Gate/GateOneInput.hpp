@@ -12,22 +12,23 @@
 
 namespace nts
 {
-    class GateOneInput: public nts::AGate {
-        public:
-            enum PinName
-            {
-                INPUT  = 1,
-                OUTPUT = 2,
-            };
+    class GateOneInput: public AGate
+    {
+    public:
+        enum PinName
+        {
+            INPUT  = 1,
+            OUTPUT = 2,
+        };
 
-        public:
-            explicit GateOneInput(nts::ComponentType type) noexcept;
-            ~GateOneInput() noexcept = default;
+    public:
+        explicit GateOneInput(ComponentType type) noexcept;
+        ~GateOneInput() noexcept override = default;
 
-            virtual nts::Tristate operation(nts::Tristate a) const noexcept = 0;
-        
-        protected:
-            nts::Tristate computeOutput(std::size_t tick) final;
+        virtual Tristate operation(Tristate a) const noexcept = 0;
+
+    protected:
+        Tristate computeOutput(std::size_t tick) final;
     };
 }
 

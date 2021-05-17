@@ -13,31 +13,32 @@
 
 namespace nts
 {
-    class LoggerComponent: public nts::ACalculationComponent {
-        public:
-            enum PinName
-            {
-                BIT0    = 1,
-                BIT1    = 2,
-                BIT2    = 3,
-                BIT3    = 4,
-                BIT4    = 5,
-                BIT5    = 6,
-                BIT6    = 7,
-                BIT7    = 8,
-                CLOCK   = 9,
-                INHIBIT = 10
-            };
+    class LoggerComponent: public ACalculationComponent
+    {
+    public:
+        enum PinName
+        {
+            BIT0    = 1,
+            BIT1    = 2,
+            BIT2    = 3,
+            BIT3    = 4,
+            BIT4    = 5,
+            BIT5    = 6,
+            BIT6    = 7,
+            BIT7    = 8,
+            CLOCK   = 9,
+            INHIBIT = 10
+        };
 
-        public:
-            LoggerComponent();
-            ~LoggerComponent() noexcept;
+    public:
+        LoggerComponent();
+        ~LoggerComponent() noexcept override;
 
-        protected:
-            void computeOutputs(std::size_t tick) final;
+    protected:
+        void computeOutputs(std::size_t tick) final;
 
-        private:
-            std::ofstream m_stream;
+    private:
+        std::ofstream m_stream;
     };
 }
 

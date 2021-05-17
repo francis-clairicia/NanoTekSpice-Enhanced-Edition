@@ -12,9 +12,11 @@
 
 namespace nts
 {
-    class BadPinException: public Exception {
-        public:
-            BadPinException(const std::string &component_type, std::size_t non_valid_pin) noexcept;
+    class BadPinException: public Exception
+    {
+    public:
+        BadPinException(const std::string &component_type, std::size_t non_valid_pin) noexcept;
+        ~BadPinException() noexcept override = default;
     };
 }
 

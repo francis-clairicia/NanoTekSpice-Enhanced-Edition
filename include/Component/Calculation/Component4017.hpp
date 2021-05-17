@@ -12,37 +12,38 @@
 
 namespace nts
 {
-    class Component4017: public nts::ACalculationComponent {
-        public:
-            enum PinName
-            {
-                Q5    = 1,
-                Q1    = 2,
-                Q0    = 3,
-                Q2    = 4,
-                Q6    = 5,
-                Q7    = 6,
-                Q3    = 7,
-                Q8    = 9,
-                Q4    = 10,
-                Q9    = 11,
-                Q5_9  = 12,
-                CP1   = 13,
-                CP0   = 14,
-                MR    = 15
-            };
+    class Component4017: public ACalculationComponent
+    {
+    public:
+        enum PinName
+        {
+            Q5    = 1,
+            Q1    = 2,
+            Q0    = 3,
+            Q2    = 4,
+            Q6    = 5,
+            Q7    = 6,
+            Q3    = 7,
+            Q8    = 9,
+            Q4    = 10,
+            Q9    = 11,
+            Q5_9  = 12,
+            CP1   = 13,
+            CP0   = 14,
+            MR    = 15
+        };
 
-        public:
-            Component4017() noexcept;
-            ~Component4017() noexcept = default;
+    public:
+        Component4017() noexcept;
+        ~Component4017() noexcept override = default;
 
-        protected:
-            void computeOutputs(std::size_t tick) final;
+    protected:
+        void computeOutputs(std::size_t tick) final;
 
-        private:
-            std::unique_ptr<nts::IComponent> m_invert_cp1;
-            std::unique_ptr<nts::IComponent> m_and_gate_clock;
-            std::size_t                      m_shift;
+    private:
+        std::unique_ptr<IComponent> m_invert_cp1;
+        std::unique_ptr<IComponent> m_and_gate_clock;
+        std::size_t                 m_shift;
     };
 }
 

@@ -12,35 +12,36 @@
 
 namespace nts
 {
-    class Component4008: public nts::BoxComponent {
-        public:
-            enum PinName
-            {
-                A4   = 1,
-                B3   = 2,
-                A3   = 3,
-                B2   = 4,
-                A2   = 5,
-                B1   = 6,
-                A1   = 7,
-                Cin  = 9,
-                S1   = 10,
-                S2   = 11,
-                S3   = 12,
-                S4   = 13,
-                Cout = 14,
-                B4   = 15
-            };
+    class Component4008: public BoxComponent
+    {
+    public:
+        enum PinName
+        {
+            A4   = 1,
+            B3   = 2,
+            A3   = 3,
+            B2   = 4,
+            A2   = 5,
+            B1   = 6,
+            A1   = 7,
+            Cin  = 9,
+            S1   = 10,
+            S2   = 11,
+            S3   = 12,
+            S4   = 13,
+            Cout = 14,
+            B4   = 15
+        };
 
-        public:
-            Component4008() noexcept;
-            ~Component4008() noexcept = default;
+    public:
+        Component4008() noexcept;
+        ~Component4008() noexcept override = default;
 
-        protected:
-            void dumpInternalComponents() const noexcept final;
+    protected:
+        void dumpInternalComponents() const noexcept final;
 
-        private:
-            nts::internComponent_t m_components;
+    private:
+        InternComponent m_components;
     };
 }
 

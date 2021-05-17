@@ -12,27 +12,28 @@
 
 namespace nts
 {
-    class DTypeFlipFlopWithSR: public nts::ACalculationComponent {
-        public:
-            enum PinName
-            {
-                Q     = 1,
-                Qn    = 2,
-                CLOCK = 3,
-                RESET = 4,
-                DATA  = 5,
-                SET   = 6
-            };
+    class DTypeFlipFlopWithSR: public ACalculationComponent
+    {
+    public:
+        enum PinName
+        {
+            Q     = 1,
+            Qn    = 2,
+            CLOCK = 3,
+            RESET = 4,
+            DATA  = 5,
+            SET   = 6
+        };
 
-        public:
-            DTypeFlipFlopWithSR() noexcept;
-            ~DTypeFlipFlopWithSR() noexcept = default;
+    public:
+        DTypeFlipFlopWithSR() noexcept;
+        ~DTypeFlipFlopWithSR() noexcept override = default;
 
-        protected:
-            void computeOutputs(std::size_t tick) final;
+    protected:
+        void computeOutputs(std::size_t tick) final;
 
-        private:
-            std::unique_ptr<nts::IComponent> m_invert_data;
+    private:
+        std::unique_ptr<IComponent> m_invert_data;
     };
 }
 

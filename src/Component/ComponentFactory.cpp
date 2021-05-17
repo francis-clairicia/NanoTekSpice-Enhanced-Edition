@@ -26,34 +26,41 @@
 #include "LoggerComponent.hpp"
 #include "BadComponentTypeException.hpp"
 
-static const std::unordered_map<std::string, std::unique_ptr<nts::IComponent> (*)()> COMPONENT_CREATOR{
-    {"input",  []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::InputComponent>();}},
-    {"clock",  []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::ClockComponent>();}},
-    {"true",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::TrueComponent>();}},
-    {"false",  []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::FalseComponent>();}},
-    {"output", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::OutputComponent>();}},
-    {"2716",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component2716>();}},
-    {"4001",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4001>();}},
-    {"4008",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4008>();}},
-    {"4011",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4011>();}},
-    {"4013",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4013>();}},
-    {"4017",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4017>();}},
-    {"4030",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4030>();}},
-    {"4040",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4040>();}},
-    {"4069",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4069>();}},
-    {"4071",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4071>();}},
-    {"4081",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4081>();}},
-    {"4094",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4094>();}},
-    {"4512",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4512>();}},
-    {"4514",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4514>();}},
-    {"logger", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::LoggerComponent>();}},
-};
-
-std::unique_ptr<nts::IComponent> nts::ComponentFactory::createComponent(const std::string &type) const
+namespace
 {
-    const auto &search = COMPONENT_CREATOR.find(type);
+    const std::unordered_map<std::string_view, std::unique_ptr<nts::IComponent> (*)()> COMPONENT_CREATOR{
+        {"input",  []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::InputComponent>();}},
+        {"clock",  []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::ClockComponent>();}},
+        {"true",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::TrueComponent>();}},
+        {"false",  []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::FalseComponent>();}},
+        {"output", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::OutputComponent>();}},
+        {"2716",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component2716>();}},
+        {"4001",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4001>();}},
+        {"4008",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4008>();}},
+        {"4011",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4011>();}},
+        {"4013",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4013>();}},
+        {"4017",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4017>();}},
+        {"4030",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4030>();}},
+        {"4040",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4040>();}},
+        {"4069",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4069>();}},
+        {"4071",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4071>();}},
+        {"4081",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4081>();}},
+        {"4094",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4094>();}},
+        {"4512",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4512>();}},
+        {"4514",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4514>();}},
+        {"logger", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::LoggerComponent>();}},
+    };
+} // namespace
 
-    if (search == COMPONENT_CREATOR.end())
-        throw nts::BadComponentTypeException(type);
-    return search->second();
-}
+namespace nts
+{
+    std::unique_ptr<IComponent> ComponentFactory::createComponent(const std::string &type)
+    {
+        const auto &search = COMPONENT_CREATOR.find(std::string_view{type});
+
+        if (search == COMPONENT_CREATOR.end())
+            throw BadComponentTypeException(type);
+        return search->second();
+    }
+} // namespace nts
+

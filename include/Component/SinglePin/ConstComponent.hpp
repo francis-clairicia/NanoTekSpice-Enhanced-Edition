@@ -12,34 +12,30 @@
 
 namespace nts
 {
-    template<nts::ComponentType Type, nts::Tristate Value>
-    class ConstComponent: public nts::SinglePinComponent {
-        public:
-            enum PinName
-            {
-                OUTPUT = 1
-            };
+    template<ComponentType Type, Tristate Value>
+    class ConstComponent final: public SinglePinComponent
+    {
+    public:
+        enum PinName
+        {
+            OUTPUT = 1
+        };
 
-        public:
-            ConstComponent(): SinglePinComponent(Type, nts::Pin::OUTPUT)
-            {
-                static_assert(Value != nts::UNDEFINED, "the constant value of a ConstComponent should not be 'undefined'");
-                m_value = Value;
-            }
+    public:
+        ConstComponent(): SinglePinComponent{Type, Pin::OUTPUT}
+        {
+            static_assert(Value != UNDEFINED, "the constant value of a ConstComponent should not be 'undefined'");
+            m_value = Value;
+        }
+        ~ConstComponent() noexcept override = default;
 
-            void simulate(std::size_t tick __attribute__((unused))) final
-            {
-            }
-
-        protected:
-            nts::Tristate computeOutput() final
-            {
-                return SinglePinComponent::computeOutput();
-            }
+        void simulate(std::size_t tick __attribute__((unused))) final
+        {
+        }
     };
 
-    using TrueComponent = ConstComponent<nts::ComponentType::True, nts::TRUE>;
-    using FalseComponent = ConstComponent<nts::ComponentType::False, nts::FALSE>;
+    using TrueComponent = ConstComponent<ComponentType::True, TRUE>;
+    using FalseComponent = ConstComponent<ComponentType::False, FALSE>;
 }
 
 #endif /* !CONSTCOMPONENT_HPP_ */

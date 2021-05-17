@@ -10,44 +10,47 @@
 #include "AGate.hpp"
 #include "BadPinException.hpp"
 
-nts::AGate::AGate(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, std::size_t output_pin) noexcept:
-    m_value{nts::UNDEFINED},
-    m_type{type},
-    m_pins{nb_pins, input_pins, {output_pin}},
-    m_actual_tick{~0UL}
+namespace nts
 {
-}
-
-void nts::AGate::simulate(std::size_t tick)
-{
-    if (m_actual_tick != tick) {
-        m_actual_tick = tick;
-        m_value = computeOutput(tick);
+    AGate::AGate(ComponentType type, std::size_t nb_pins, PinList::Initializer input_pins, std::size_t output_pin) noexcept:
+        m_value{UNDEFINED},
+        m_type{type},
+        m_pins{nb_pins, input_pins, {output_pin}},
+        m_actual_tick{~0UL}
+    {
     }
-}
 
-void nts::AGate::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
-{
-    if (!m_pins.hasPin(pin))
-        throw nts::BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
-    m_pins[pin].setLinkWithExternalComponent(other, otherPin);
-}
-
-nts::Tristate nts::AGate::compute(std::size_t pin)
-{
-    if (!m_pins.hasPin(pin))
-        throw nts::BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
-    if (m_pins[pin].isInput()) {
-        return nts::FALSE;
+    void AGate::simulate(std::size_t tick)
+    {
+        if (m_actual_tick != tick) {
+            m_actual_tick = tick;
+            m_value = computeOutput(tick);
+        }
     }
-    if (m_pins[pin].isOutput()) {
-        return m_value;
-    }
-    return nts::UNDEFINED;
-}
 
-void nts::AGate::dump() const noexcept
-{
-    std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " gate component:" << '\n';
-    m_pins.dump();
-}
+    void AGate::setLink(std::size_t pin, IComponent &other, std::size_t otherPin)
+    {
+        if (!m_pins.hasPin(pin))
+            throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
+        m_pins[pin].setLinkWithExternalComponent(other, otherPin);
+    }
+
+    Tristate AGate::compute(std::size_t pin)
+    {
+        if (!m_pins.hasPin(pin))
+            throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
+        if (m_pins[pin].isInput()) {
+            return FALSE;
+        }
+        if (m_pins[pin].isOutput()) {
+            return m_value;
+        }
+        return UNDEFINED;
+    }
+
+    void AGate::dump() const noexcept
+    {
+        std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " gate component:" << '\n';
+        m_pins.dump();
+    }
+} // namespace nts

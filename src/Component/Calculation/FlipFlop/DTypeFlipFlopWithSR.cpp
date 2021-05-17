@@ -20,36 +20,39 @@ Outputs:
     Pin 2: /q (not q)
 */
 
-nts::DTypeFlipFlopWithSR::DTypeFlipFlopWithSR() noexcept:
-    ACalculationComponent(ComponentType::DTypeFlipFlopWithSR, 6, {CLOCK, RESET, DATA, SET}, {Q, Qn}),
-    m_invert_data{std::make_unique<GateNOT>()}
+namespace nts
 {
-    m_pins[DATA].setLinkWithInternalComponent(*m_invert_data, GateNOT::INPUT);
-}
+    DTypeFlipFlopWithSR::DTypeFlipFlopWithSR() noexcept:
+        ACalculationComponent(ComponentType::DTypeFlipFlopWithSR, 6, {CLOCK, RESET, DATA, SET}, {Q, Qn}),
+        m_invert_data{std::make_unique<GateNOT>()}
+    {
+        m_pins[DATA].setLinkWithInternalComponent(*m_invert_data, GateNOT::INPUT);
+    }
 
-void nts::DTypeFlipFlopWithSR::computeOutputs(std::size_t tick)
-{
-    const nts::Tristate data = m_pins[DATA].compute(tick);
-    const nts::Tristate data_invert = computeInternalComponent(*m_invert_data, GateNOT::OUTPUT);
-    const nts::Tristate clock = m_pins[CLOCK].compute(tick);
-    const nts::Tristate reset = m_pins[RESET].compute(tick);
-    const nts::Tristate set = m_pins[SET].compute(tick);
+    void DTypeFlipFlopWithSR::computeOutputs(std::size_t tick)
+    {
+        const Tristate data = m_pins[DATA].compute(tick);
+        const Tristate data_invert = computeInternalComponent(*m_invert_data, GateNOT::OUTPUT);
+        const Tristate clock = m_pins[CLOCK].compute(tick);
+        const Tristate reset = m_pins[RESET].compute(tick);
+        const Tristate set = m_pins[SET].compute(tick);
 
-    if (reset == nts::UNDEFINED || set == nts::UNDEFINED) {
-        m_output_pins[Q] = nts::UNDEFINED;
-        m_output_pins[Qn] = nts::UNDEFINED;
-        return;
+        if (reset == UNDEFINED || set == UNDEFINED) {
+            m_output_pins[Q] = UNDEFINED;
+            m_output_pins[Qn] = UNDEFINED;
+            return;
+        }
+        if (reset == TRUE || set == TRUE) {
+            m_output_pins[Q] = set;
+            m_output_pins[Qn] = reset;
+            return;
+        }
+        if (clock == TRUE) {
+            m_output_pins[Q] = data;
+            m_output_pins[Qn] = data_invert;
+        } else if (clock == UNDEFINED) {
+            m_output_pins[Q] = UNDEFINED;
+            m_output_pins[Qn] = UNDEFINED;
+        }
     }
-    if (reset == nts::TRUE || set == nts::TRUE) {
-        m_output_pins[Q] = set;
-        m_output_pins[Qn] = reset;
-        return;
-    }
-    if (clock == nts::TRUE) {
-        m_output_pins[Q] = data;
-        m_output_pins[Qn] = data_invert;
-    } else if (clock == nts::UNDEFINED) {
-        m_output_pins[Q] = nts::UNDEFINED;
-        m_output_pins[Qn] = nts::UNDEFINED;
-    }
-}
+} // namespace nts

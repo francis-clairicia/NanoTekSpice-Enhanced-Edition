@@ -12,30 +12,31 @@
 
 namespace nts
 {
-    class SumComponent: public nts::BoxComponent {
-        public:
-            enum PinName
-            {
-                Ai = 1,
-                Bi = 2,
-                Ci = 3,
-                Co = 4,
-                Si = 5
-            };
+    class SumComponent: public BoxComponent
+    {
+    public:
+        enum PinName
+        {
+            Ai = 1,
+            Bi = 2,
+            Ci = 3,
+            Co = 4,
+            Si = 5
+        };
 
-        public:
-            SumComponent() noexcept;
-            ~SumComponent() noexcept = default;
+    public:
+        SumComponent() noexcept;
+        ~SumComponent() noexcept override = default;
 
-        protected:
-            void dumpInternalComponents() const noexcept final;
+    protected:
+        void dumpInternalComponents() const noexcept final;
 
-        private:
-            std::unique_ptr<nts::IComponent> m_xor1;
-            std::unique_ptr<nts::IComponent> m_xor2;
-            std::unique_ptr<nts::IComponent> m_and1;
-            std::unique_ptr<nts::IComponent> m_and2;
-            std::unique_ptr<nts::IComponent> m_or;
+    private:
+        std::unique_ptr<IComponent> m_xor1;
+        std::unique_ptr<IComponent> m_xor2;
+        std::unique_ptr<IComponent> m_and1;
+        std::unique_ptr<IComponent> m_and2;
+        std::unique_ptr<IComponent> m_or;
     };
 }
 

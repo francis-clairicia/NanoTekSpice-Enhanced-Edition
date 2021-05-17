@@ -7,8 +7,10 @@
 
 #include "BadComponentTypeException.hpp"
 
-nts::BadComponentTypeException::BadComponentTypeException(const std::string &type) noexcept:
-    Exception("Unknown component type \"" + type + "\"")
+namespace nts
 {
-}
-
+    BadComponentTypeException::BadComponentTypeException(const std::string &type) noexcept:
+        Exception("Unknown component type \"" + type + "\"")
+    {
+    }
+} // namespace nts

@@ -12,21 +12,22 @@
 
 namespace nts
 {
-    class OutputComponent: public nts::SinglePinComponent {
-        public:
-            enum PinName
-            {
-                INPUT = 1
-            };
+    class OutputComponent: public SinglePinComponent
+    {
+    public:
+        enum PinName
+        {
+            INPUT = 1
+        };
 
-        public:
-            explicit OutputComponent(nts::ComponentType type = ComponentType::Output) noexcept;
-            ~OutputComponent() noexcept = default;
+    public:
+        explicit OutputComponent(ComponentType type = ComponentType::Output) noexcept;
+        ~OutputComponent() noexcept override = default;
 
-            void simulate(std::size_t tick) override;
+        void simulate(std::size_t tick) override;
 
-        protected:
-            nts::Tristate computeOutput() override;
+    protected:
+        Tristate computeOutput() override;
     };
 }
 

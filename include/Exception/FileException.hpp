@@ -12,9 +12,11 @@
 
 namespace nts
 {
-    class FileException: public Exception {
-        public:
-            FileException(const std::string &filepath, const std::string &error_msg) noexcept;
+    class FileException: public Exception
+    {
+    public:
+        FileException(const std::string &filepath, const std::string &error_msg) noexcept;
+        ~FileException() noexcept override = default;
     };
 }
 

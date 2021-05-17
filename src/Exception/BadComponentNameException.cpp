@@ -7,7 +7,10 @@
 
 #include "BadComponentNameException.hpp"
 
-nts::BadComponentNameException::BadComponentNameException(const std::string &component_name) noexcept:
-    Exception("Unknown component name \"" + component_name + "\"")
+namespace nts
 {
-}
+    BadComponentNameException::BadComponentNameException(const std::string &component_name) noexcept:
+        Exception("Unknown component name \"" + component_name + "\"")
+    {
+    }
+} // namespace nts

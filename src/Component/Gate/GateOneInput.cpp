@@ -7,11 +7,14 @@
 
 #include "GateOneInput.hpp"
 
-nts::GateOneInput::GateOneInput(nts::ComponentType type) noexcept: AGate(type, 2, {INPUT}, OUTPUT)
+namespace nts
 {
-}
+    GateOneInput::GateOneInput(ComponentType type) noexcept: AGate(type, 2, {INPUT}, OUTPUT)
+    {
+    }
 
-nts::Tristate nts::GateOneInput::computeOutput(std::size_t tick)
-{
-    return operation(m_pins[INPUT].compute(tick));
-}
+    Tristate GateOneInput::computeOutput(std::size_t tick)
+    {
+        return operation(m_pins[INPUT].compute(tick));
+    }
+} // namespace nts

@@ -13,14 +13,16 @@
 
 namespace nts
 {
-    class Exception: public std::exception {
-        public:
-            Exception(const std::string &msg) noexcept;
+    class Exception: public std::exception
+    {
+    public:
+        Exception(const std::string &msg) noexcept;
+        ~Exception() noexcept override = default;
 
-            const char *what() const noexcept final;
+        const char *what() const noexcept final;
 
-        private:
-            std::string m_msg;
+    private:
+        std::string m_msg;
     };
 }
 

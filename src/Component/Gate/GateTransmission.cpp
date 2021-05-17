@@ -7,17 +7,20 @@
 
 #include "GateTransmission.hpp"
 
-nts::GateTransmission::GateTransmission() noexcept:
-    AGate(ComponentType::GateTransmission, 3, {INPUT, CONTROL}, OUTPUT)
+namespace nts
 {
-}
+    GateTransmission::GateTransmission() noexcept:
+        AGate(ComponentType::GateTransmission, 3, {INPUT, CONTROL}, OUTPUT)
+    {
+    }
 
-nts::Tristate nts::GateTransmission::operation(nts::Tristate input, nts::Tristate control) const noexcept
-{
-    return (control == nts::TRUE) ? input : nts::UNDEFINED;
-}
+    Tristate GateTransmission::operation(Tristate input, Tristate control) const noexcept
+    {
+        return (control == TRUE) ? input : UNDEFINED;
+    }
 
-nts::Tristate nts::GateTransmission::computeOutput(std::size_t tick)
-{
-    return operation(m_pins[INPUT].compute(tick), m_pins[CONTROL].compute(tick));
-}
+    Tristate GateTransmission::computeOutput(std::size_t tick)
+    {
+        return operation(m_pins[INPUT].compute(tick), m_pins[CONTROL].compute(tick));
+    }
+} // namespace nts

@@ -7,11 +7,14 @@
 
 #include "Exception.hpp"
 
-nts::Exception::Exception(const std::string &msg) noexcept: m_msg(msg)
+namespace nts
 {
-}
+    Exception::Exception(const std::string &msg) noexcept: m_msg(msg)
+    {
+    }
 
-const char *nts::Exception::what() const noexcept
-{
-    return m_msg.c_str();
-}
+    const char *Exception::what() const noexcept
+    {
+        return m_msg.c_str();
+    }
+} // namespace nts

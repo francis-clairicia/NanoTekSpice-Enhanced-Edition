@@ -12,16 +12,17 @@
 
 namespace nts
 {
-    class ClockComponent: public nts::InputComponent {
-        public:
-            ClockComponent() noexcept;
-            ~ClockComponent() noexcept = default;
+    class ClockComponent: public InputComponent
+    {
+    public:
+        ClockComponent() noexcept;
+        ~ClockComponent() noexcept override = default;
 
-            void simulate(std::size_t tick) final;
-            void setValue(nts::Tristate value) noexcept final;
-        
-        private:
-            bool m_invert_value;
+        void simulate(std::size_t tick) final;
+        void setValue(Tristate value) noexcept final;
+
+    private:
+        bool m_invert_value;
     };
 }
 

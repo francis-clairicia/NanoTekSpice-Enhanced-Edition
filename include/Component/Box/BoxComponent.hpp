@@ -12,26 +12,32 @@
 
 namespace nts
 {
-    class BoxComponent: public nts::IComponent {
-        public:
-            BoxComponent(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, const pinList_t &output_pins) noexcept;
-            ~BoxComponent() noexcept = default;
+    class BoxComponent: public IComponent
+    {
+    public:
+        BoxComponent(ComponentType type, std::size_t nb_pins, PinList::Initializer input_pins, PinList::Initializer output_pins) noexcept;
+        BoxComponent(const BoxComponent &other) noexcept = delete;
+        BoxComponent(BoxComponent &&other) noexcept = default;
+        ~BoxComponent() noexcept override = default;
 
-            void simulate(std::size_t tick) final;
-            nts::Tristate compute(std::size_t pin) final;
-            void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
-            void dump() const noexcept final;
-        
-        protected:
-            void setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin);
-            virtual void dumpInternalComponents() const noexcept;
+        void simulate(std::size_t tick) final;
+        Tristate compute(std::size_t pin) final;
+        void setLink(std::size_t pin, IComponent &other, std::size_t otherPin) final;
+        void dump() const noexcept final;
 
-        protected:
-            const nts::ComponentType  m_type;
+        BoxComponent &operator=(const BoxComponent &rhs) noexcept = delete;
+        BoxComponent &operator=(BoxComponent &&rhs) noexcept = default;
 
-        private:
-            std::size_t               m_actual_tick;
-            nts::PinList              m_pins;
+    protected:
+        void setLinkInternal(std::size_t pin, IComponent &other, std::size_t otherPin);
+        virtual void dumpInternalComponents() const noexcept;
+
+    protected:
+        const ComponentType m_type;
+
+    private:
+        std::size_t m_actual_tick;
+        PinList     m_pins;
     };
 }
 

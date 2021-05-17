@@ -12,12 +12,13 @@
 
 namespace nts
 {
-    class GateNAND: public nts::GateTwoInputs {
-        public:
-            GateNAND() noexcept;
-            ~GateNAND() noexcept = default;
+    class GateNAND: public GateTwoInputs
+    {
+    public:
+        GateNAND() noexcept;
+        ~GateNAND() noexcept override = default;
 
-            nts::Tristate operation(nts::Tristate a, nts::Tristate b) const noexcept final;
+        Tristate operation(Tristate a, Tristate b) const noexcept final;
     };
 }
 

@@ -13,24 +13,30 @@
 
 namespace nts
 {
-    class SinglePinComponent: public nts::IComponent {
-        public:
-            SinglePinComponent(nts::ComponentType type, nts::Pin::Mode pin_mode) noexcept;
-            ~SinglePinComponent() noexcept = default;
+    class SinglePinComponent: public IComponent
+    {
+    public:
+        SinglePinComponent(ComponentType type, Pin::Mode pin_mode) noexcept;
+        SinglePinComponent(const SinglePinComponent &other) noexcept = delete;
+        SinglePinComponent(SinglePinComponent &&other) noexcept = default;
+        ~SinglePinComponent() noexcept override = default;
 
-            nts::Tristate compute(std::size_t pin) final;
-            void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) final;
-            void dump() const noexcept final;
+        Tristate compute(std::size_t pin) final;
+        void setLink(std::size_t pin, IComponent &other, std::size_t otherPin) final;
+        void dump() const noexcept final;
 
-            [[nodiscard]] nts::Tristate getValue() const noexcept;
+        [[nodiscard]] Tristate getValue() const noexcept;
 
-        protected:
-            virtual nts::Tristate computeOutput();
+        SinglePinComponent &operator=(const SinglePinComponent &rhs) noexcept = delete;
+        SinglePinComponent &operator=(SinglePinComponent &&rhs) noexcept = default;
 
-        protected:
-            nts::Pin                 m_pin;
-            const nts::ComponentType m_type;
-            nts::Tristate            m_value;
+    protected:
+        virtual Tristate computeOutput();
+
+    protected:
+        Pin                 m_pin;
+        const ComponentType m_type;
+        Tristate            m_value;
     };
 }
 

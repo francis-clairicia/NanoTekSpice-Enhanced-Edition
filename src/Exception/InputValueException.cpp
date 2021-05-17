@@ -7,7 +7,10 @@
 
 #include "InputValueException.hpp"
 
-nts::InputValueException::InputValueException(const std::string &value) noexcept:
-    Exception("Unknown input value \"" + value + "\"")
+namespace nts
 {
-}
+    InputValueException::InputValueException(const std::string &value) noexcept:
+        Exception("Unknown input value \"" + value + "\"")
+    {
+    }
+} // namespace nts

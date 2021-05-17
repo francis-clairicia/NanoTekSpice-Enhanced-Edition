@@ -7,15 +7,18 @@
 
 #include "GateAND.hpp"
 
-nts::GateAND::GateAND() noexcept: GateTwoInputs(ComponentType::GateAND)
+namespace nts
 {
-}
+    GateAND::GateAND() noexcept: GateTwoInputs(ComponentType::GateAND)
+    {
+    }
 
-nts::Tristate nts::GateAND::operation(nts::Tristate a, nts::Tristate b) const noexcept
-{
-    if (a == nts::FALSE || b == nts::FALSE)
-        return nts::FALSE;
-    if (a == nts::UNDEFINED || b == nts::UNDEFINED)
-        return nts::UNDEFINED;
-    return nts::TRUE;
-}
+    Tristate GateAND::operation(Tristate a, Tristate b) const noexcept
+    {
+        if (a == FALSE || b == FALSE)
+            return FALSE;
+        if (a == UNDEFINED || b == UNDEFINED)
+            return UNDEFINED;
+        return TRUE;
+    }
+} // namespace nts

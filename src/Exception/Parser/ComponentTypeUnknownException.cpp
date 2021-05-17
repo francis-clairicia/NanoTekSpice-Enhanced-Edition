@@ -7,7 +7,10 @@
 
 #include "ComponentTypeUnknownException.hpp"
 
-nts::ComponentTypeUnknownException::ComponentTypeUnknownException(std::size_t line, const std::string &type) noexcept:
-    ParserException("Component type error", line, "Unknown component type \"" + type + "\"")
+namespace nts
 {
-}
+    ComponentTypeUnknownException::ComponentTypeUnknownException(std::size_t line, const std::string &type) noexcept:
+        ParserException("Component type error", line, "Unknown component type \"" + type + "\"")
+    {
+    }
+} // namespace nts

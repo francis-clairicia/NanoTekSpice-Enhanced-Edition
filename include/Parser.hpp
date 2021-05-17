@@ -14,39 +14,40 @@
 
 namespace nts
 {
-    class Parser {
-        public:
-            struct Line
-            {
-                std::size_t index;
-                std::string content;
-            };
+    class Parser
+    {
+    public:
+        struct Line
+        {
+            std::size_t index;
+            std::string content;
+        };
 
-            enum Declaration
-            {
-                CHIPSETS,
-                LINKS
-            };
-        
-        public:
-            static const std::string CHIPSET_DECLARATION;
-            static const std::string LINK_DECLARATION;
+        enum Declaration
+        {
+            CHIPSETS,
+            LINKS
+        };
 
-        public:
-            Parser(const std::string &circuit_file, nts::Circuit &circuit);
-            ~Parser() noexcept = default;
+    public:
+        static const std::string CHIPSET_DECLARATION;
+        static const std::string LINK_DECLARATION;
 
-            void parse() const;
+    public:
+        Parser(const std::string &circuit_file, Circuit &circuit);
+        ~Parser() noexcept = default;
 
-        private:
-            void readBuffer(const std::string &buffer, std::list<nts::Parser::Line> &lines) const noexcept;
-            void initFactory(std::list<nts::Parser::Line> &lines) const;
-            void initChipset(std::size_t line_index, const std::vector<std::string> &line_tab) const;
-            void initLink(std::size_t line_index, const std::vector<std::string> &line_tab) const;
+        void parse() const;
 
-        private:
-            std::string m_file;
-            nts::Circuit &m_circuit;
+    private:
+        void readBuffer(const std::string &buffer, std::list<Parser::Line> &lines) const noexcept;
+        void initFactory(std::list<Parser::Line> &lines) const;
+        void initChipset(std::size_t line_index, const std::vector<std::string> &line_tab) const;
+        void initLink(std::size_t line_index, const std::vector<std::string> &line_tab) const;
+
+    private:
+        std::string m_file;
+        Circuit &m_circuit;
     };
 }
 

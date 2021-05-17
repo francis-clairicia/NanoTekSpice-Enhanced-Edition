@@ -9,50 +9,53 @@
 #include "BoxComponent.hpp"
 #include "BadPinException.hpp"
 
-nts::BoxComponent::BoxComponent(nts::ComponentType type, std::size_t nb_pins, const pinList_t &input_pins, const pinList_t &output_pins) noexcept:
-    m_type{type},
-    m_actual_tick{~0UL},
-    m_pins{nb_pins, input_pins, output_pins}
+namespace nts
 {
-}
+    BoxComponent::BoxComponent(ComponentType type, std::size_t nb_pins, PinList::Initializer input_pins, PinList::Initializer output_pins) noexcept:
+        m_type{type},
+        m_actual_tick{~0UL},
+        m_pins{nb_pins, input_pins, output_pins}
+    {
+    }
 
-void nts::BoxComponent::simulate(std::size_t tick)
-{
-    m_actual_tick = tick;
-}
+    void BoxComponent::simulate(std::size_t tick)
+    {
+        m_actual_tick = tick;
+    }
 
-nts::Tristate nts::BoxComponent::compute(std::size_t pin)
-{
-    if (!m_pins.hasPin(pin))
-        throw nts::BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
+    Tristate BoxComponent::compute(std::size_t pin)
+    {
+        if (!m_pins.hasPin(pin))
+            throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
 
-    if (m_pins[pin].isInput())
-        return nts::FALSE;
+        if (m_pins[pin].isInput())
+            return FALSE;
 
-    return m_pins[pin].compute(m_actual_tick);
-}
+        return m_pins[pin].compute(m_actual_tick);
+    }
 
-void nts::BoxComponent::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
-{
-    if (!m_pins.hasPin(pin))
-        throw nts::BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
-    m_pins[pin].setLinkWithExternalComponent(other, otherPin);
-}
+    void BoxComponent::setLink(std::size_t pin, IComponent &other, std::size_t otherPin)
+    {
+        if (!m_pins.hasPin(pin))
+            throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
+        m_pins[pin].setLinkWithExternalComponent(other, otherPin);
+    }
 
-void nts::BoxComponent::dump() const noexcept
-{
-    std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << '\n';
-    m_pins.dump();
-    dumpInternalComponents();
-}
+    void BoxComponent::dump() const noexcept
+    {
+        std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << '\n';
+        m_pins.dump();
+        dumpInternalComponents();
+    }
 
-void nts::BoxComponent::dumpInternalComponents() const noexcept
-{
-}
+    void BoxComponent::dumpInternalComponents() const noexcept
+    {
+    }
 
-void nts::BoxComponent::setLinkInternal(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
-{
-    if (!m_pins.hasPin(pin))
-        throw nts::BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
-    m_pins[pin].setLinkWithInternalComponent(other, otherPin);
-}
+    void BoxComponent::setLinkInternal(std::size_t pin, IComponent &other, std::size_t otherPin)
+    {
+        if (!m_pins.hasPin(pin))
+            throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
+        m_pins[pin].setLinkWithInternalComponent(other, otherPin);
+    }
+} // namespace nts

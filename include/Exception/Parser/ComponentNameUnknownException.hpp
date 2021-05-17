@@ -12,9 +12,11 @@
 
 namespace nts
 {
-    class ComponentNameUnknownException: public ParserException {
-        public:
-            ComponentNameUnknownException(std::size_t line, const std::string &error_msg) noexcept;
+    class ComponentNameUnknownException: public ParserException
+    {
+    public:
+        ComponentNameUnknownException(std::size_t line, const std::string &error_msg) noexcept;
+        ~ComponentNameUnknownException() noexcept override = default;
     };
 }
 

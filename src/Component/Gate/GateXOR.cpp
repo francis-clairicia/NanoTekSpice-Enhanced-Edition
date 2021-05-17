@@ -7,13 +7,16 @@
 
 #include "GateXOR.hpp"
 
-nts::GateXOR::GateXOR() noexcept: GateTwoInputs(ComponentType::GateXOR)
+namespace nts
 {
-}
+    GateXOR::GateXOR() noexcept: GateTwoInputs(ComponentType::GateXOR)
+    {
+    }
 
-nts::Tristate nts::GateXOR::operation(nts::Tristate a, nts::Tristate b) const noexcept
-{
-    if (a == nts::UNDEFINED || b == nts::UNDEFINED)
-        return nts::UNDEFINED;
-    return static_cast<nts::Tristate>(a != b);
-}
+    Tristate GateXOR::operation(Tristate a, Tristate b) const noexcept
+    {
+        if (a == UNDEFINED || b == UNDEFINED)
+            return UNDEFINED;
+        return static_cast<Tristate>(a != b);
+    }
+} // namespace nts

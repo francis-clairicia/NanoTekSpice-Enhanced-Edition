@@ -12,9 +12,11 @@
 
 namespace nts
 {
-    class NoChipsetException: public Exception {
-        public:
-            NoChipsetException() noexcept;
+    class NoChipsetException: public Exception
+    {
+    public:
+        NoChipsetException() noexcept;
+        ~NoChipsetException() noexcept override = default;
     };
 }
 
