@@ -7,10 +7,11 @@
 
 #include <criterion/criterion.h>
 #include "Circuit.hpp"
+#include "Parser.hpp"
 
 Test(ClockComponent, work_same_as_input)
 {
-    nts::Circuit circuit{"tests/.nts/clock.nts"};
+    nts::Circuit circuit = nts::Parser::parse("tests/.nts/clock.nts");
     std::size_t tick = 0;
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::UNDEFINED);
@@ -42,7 +43,7 @@ Test(ClockComponent, work_same_as_input)
 
 Test(ClockComponent, invert_state_at_each_simulate)
 {
-    nts::Circuit circuit{"tests/.nts/clock.nts"};
+    nts::Circuit circuit = nts::Parser::parse("tests/.nts/clock.nts");
     std::size_t tick = 0;
 
     circuit.simulate(tick++);
@@ -79,7 +80,7 @@ Test(ClockComponent, invert_state_at_each_simulate)
 
 Test(ClockComponent, does_not_invert_undefined_state)
 {
-    nts::Circuit circuit{"tests/.nts/clock.nts"};
+    nts::Circuit circuit = nts::Parser::parse("tests/.nts/clock.nts");
     std::size_t tick = 0;
 
     circuit.simulate(tick++);

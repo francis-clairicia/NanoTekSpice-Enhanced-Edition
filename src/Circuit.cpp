@@ -11,6 +11,7 @@
 #include "ComponentFactory.hpp"
 #include "BadComponentTypeException.hpp"
 #include "BadComponentNameException.hpp"
+#include "ComponentNameOverride.hpp"
 #include "InputValueException.hpp"
 
 namespace
@@ -30,16 +31,12 @@ namespace
 
 namespace nts
 {
-    Circuit::Circuit(const std::string &filepath)
-    {
-        Parser parser{filepath, *this};
-
-        parser.parse();
-    }
-
     void Circuit::addComponent(const std::string &type, const std::string &name)
     {
-        m_components[name] = ComponentFactory::createComponent(type);
+        if (hasComponent(name))
+            throw ComponentNameOverride{name};
+
+        m_components.emplace(name, ComponentFactory::createComponent(type));
 
         InputComponent *input = dynamic_cast<InputComponent *>(m_components[name].get());
         if (input)

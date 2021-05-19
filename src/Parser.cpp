@@ -16,50 +16,52 @@
 #include "ComponentLinkException.hpp"
 #include "ComponentTypeUnknownException.hpp"
 #include "ComponentNameExistsException.hpp"
+#include "ComponentNameOverride.hpp"
 #include "ComponentNameUnknownException.hpp"
 #include "NoChipsetException.hpp"
 
 namespace nts
 {
-    const std::string Parser::CHIPSET_DECLARATION{".chipsets:"};
-    const std::string Parser::LINK_DECLARATION{".links:"};
-
     Parser::Parser(const std::string &circuit_file, Circuit &circuit):
-        m_file(circuit_file), m_circuit(circuit)
+        m_file{circuit_file}, m_circuit{circuit}
     {
-        if (!string_endswith(m_file, ".nts"))
+        if (!string_endswith(m_file, FILE_EXTENSION.data()))
             throw FileException(m_file, "Circuit file must have .nts extension");
     }
 
-    void Parser::parse() const
+    Circuit Parser::parse(const std::string &file)
     {
-        std::ifstream file(m_file);
+        Circuit c;
+        Parser p{file, c};
 
-        if (!file)
-            throw FileException(m_file, "Cannot open file");
-
-        const std::string buffer((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-        file.close();
-
-        std::list<Parser::Line> lines;
-        readBuffer(buffer, lines);
-        initFactory(lines);
-        if (m_circuit.empty())
-            throw NoChipsetException();
+        p.internalParse();
+        return c;
     }
 
-    void Parser::readBuffer(const std::string &buffer, std::list<Parser::Line> &lines) const noexcept
+    void Parser::internalParse() const
     {
-        std::vector<std::string> splitted_buffer = string_split_by_delimiters(buffer, "\r\n", true);
-        std::size_t index = 0;
+        std::ifstream file{m_file};
 
-        for (auto &line : splitted_buffer) {
-            ++index;
+        if (!file)
+            throw FileException{m_file, "Cannot open file"};
+
+        std::list<Parser::Line> lines;
+        std::string line;
+
+        for (std::size_t index = 1; std::getline(file, line); ++index) {
             line = line.substr(0, line.find('#'));
             trim_trailing_whitespace(line);
             if (!line.empty())
-                lines.push_back(Parser::Line{.index = index, .content = line});
+                lines.emplace_back(index, line);
         }
+        if (file.bad())
+            throw FileException{m_file, "Error while reading file."};
+
+        file.close();
+
+        initFactory(lines);
+        if (m_circuit.empty())
+            throw NoChipsetException();
     }
 
     void Parser::initFactory(std::list<Parser::Line> &lines) const
@@ -69,34 +71,28 @@ namespace nts
         if (lines.front().content.compare(CHIPSET_DECLARATION) != 0)
             throw SyntaxException(lines.front().index, "The first instruction must be the chipsets declaration");
 
-        bool chipset_declared = false;
-        bool links_declared = false;
-        std::vector<std::string> line_tab;
-        Parser::Declaration declaration = Parser::CHIPSETS;
-        const std::unordered_map<Parser::Declaration, void (Parser::*)(std::size_t, const std::vector<std::string> &) const> initializer{
-            {Parser::CHIPSETS, &Parser::initChipset},
-            {Parser::LINKS, &Parser::initLink},
+        Declaration *declaration = nullptr;
+        std::unordered_map<std::string_view, Parser::Declaration> initializer{
+            {Parser::CHIPSET_DECLARATION, Declaration{"chipsets", &Parser::initChipset}},
+            {Parser::LINK_DECLARATION, Declaration{"links", &Parser::initLink}},
         };
 
         for (const auto &line : lines) {
-            if (line.content.compare(CHIPSET_DECLARATION) == 0) {
-                if (chipset_declared)
-                    throw SyntaxException(line.index, "Redeclaration of chipsets");
-                chipset_declared = true;
-                declaration = Parser::CHIPSETS;
-            } else if (line.content.compare(LINK_DECLARATION) == 0) {
-                if (links_declared)
-                    throw SyntaxException(line.index, "Redeclaration of links");
-                links_declared = true;
-                declaration = Parser::LINKS;
+            auto iterator = initializer.find(line.content);
+            if (iterator != initializer.end()) {
+                declaration = &iterator->second;
+                if (declaration->already_declared)
+                    throw SyntaxException(line.index, "Redeclaration of " + declaration->name);
+                declaration->already_declared = true;
             } else {
-                line_tab = string_split_by_delimiters(line.content, " \t\v");
-                (this->*initializer.at(declaration))(line.index, line_tab);
+                if (!declaration)
+                    throw SyntaxException(line.index, "Declaration outside a specific section.");
+                (this->*(declaration->method))(line.index, string_split_by_delimiters(line.content, " \t\v"));
             }
         }
     }
 
-    void Parser::initChipset(std::size_t line_index, const std::vector<std::string> &line_tab) const
+    void Parser::initChipset(std::size_t line_index, std::vector<std::string> line_tab) const
     {
         if (line_tab.size() != 2)
             throw SyntaxException(line_index, "Chipset declaration must respect this form: type name");
@@ -104,17 +100,16 @@ namespace nts
         const std::string &component_type = line_tab[0];
         const std::string &component_name = line_tab[1];
 
-        if (m_circuit.hasComponent(component_name))
-            throw ComponentNameExistsException(line_index, component_name);
-
         try {
             m_circuit.addComponent(component_type, component_name);
+        } catch (const ComponentNameOverride &) {
+            throw ComponentNameExistsException(line_index, component_name);
         } catch (const BadComponentTypeException &) {
             throw ComponentTypeUnknownException(line_index, component_type);
         }
     }
 
-    void Parser::initLink(std::size_t line_index, const std::vector<std::string> &line_tab) const
+    void Parser::initLink(std::size_t line_index, std::vector<std::string> line_tab) const
     {
         if (line_tab.size() != 2)
             throw SyntaxException(line_index, "Link declaration must respect this form: name1:pin1 name2:pin2");

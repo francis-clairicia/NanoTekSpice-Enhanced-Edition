@@ -7,10 +7,11 @@
 
 #include <criterion/criterion.h>
 #include "Circuit.hpp"
+#include "Parser.hpp"
 
 Test(Component4008, adds_two_binary_numbers)
 {
-    nts::Circuit circuit{"tests/.nts/4008_adder.nts"};
+    nts::Circuit circuit = nts::Parser::parse("tests/.nts/4008_adder.nts");
     std::size_t tick = 0;
 
     circuit.simulate(tick++);

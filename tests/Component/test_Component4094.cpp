@@ -7,10 +7,11 @@
 
 #include <criterion/criterion.h>
 #include "Circuit.hpp"
+#include "Parser.hpp"
 
 Test(Component4094, shift_register_component)
 {
-    nts::Circuit circuit{"tests/.nts/4094_shift.nts"};
+    nts::Circuit circuit = nts::Parser::parse("tests/.nts/4094_shift.nts");
     std::size_t tick = 0;
 
     circuit.simulate(tick++);

@@ -7,10 +7,11 @@
 
 #include <criterion/criterion.h>
 #include "Circuit.hpp"
+#include "Parser.hpp"
 
 Test(InputComponent, get_an_input_from_prompt)
 {
-    nts::Circuit circuit{"tests/.nts/input_output.nts"};
+    nts::Circuit circuit = nts::Parser::parse("tests/.nts/input_output.nts");
     std::size_t tick = 0;
 
     cr_assert_eq(circuit.input("in").getValue(), nts::UNDEFINED);
@@ -37,7 +38,7 @@ Test(InputComponent, get_an_input_from_prompt)
 
 Test(OutputComponent, get_value_computed_from_its_pin)
 {
-    nts::Circuit circuit{"tests/.nts/input_output.nts"};
+    nts::Circuit circuit = nts::Parser::parse("tests/.nts/input_output.nts");
     std::size_t tick = 0;
 
     cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);

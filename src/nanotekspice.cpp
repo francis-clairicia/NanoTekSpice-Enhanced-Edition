@@ -11,6 +11,7 @@
 #include <string_view>
 #include <unistd.h>
 #include "Circuit.hpp"
+#include "Parser.hpp"
 #include "Exception.hpp"
 #include "nanotekspice.hpp"
 #include "string_operations.hpp"
@@ -67,34 +68,38 @@ const std::unordered_map<std::string_view, void (*)(nts::Circuit &, std::size_t 
     {"dump",     &dump_command},
 };
 
-int nts::nanotekspice(const std::string &circuit_file)
+namespace nts
 {
-    nts::Circuit circuit{circuit_file};
-    std::string input;
-    std::size_t tick = 0;
+    int nanotekspice(const std::string &circuit_file)
+    {
+        Circuit circuit = Parser::parse(circuit_file);
+        std::string input;
+        std::size_t tick = 0;
 
-    circuit.simulate(tick);
-    while (command_prompt(input)) {
-        trim_trailing_whitespace(input);
-        if (input.empty())
-            continue;
-        if (input.compare("exit") == 0)
-            return 0;
-        try {
-            if (input.find('=') != std::string::npos) {
-                input_value_set(input, circuit);
-            } else {
-                const auto &search = COMMANDS_TAB.find(input);
-                if (search != COMMANDS_TAB.end())
-                    search->second(circuit, tick);
-                else
-                    std::cerr << "Unknown command \"" << input << "\"" << '\n';
+        circuit.simulate(tick);
+        while (command_prompt(input)) {
+            trim_trailing_whitespace(input);
+            if (input.empty())
+                continue;
+            if (input.compare("exit") == 0)
+                return 0;
+            try {
+                if (input.find('=') != std::string::npos) {
+                    input_value_set(input, circuit);
+                } else {
+                    const auto &search = COMMANDS_TAB.find(input);
+                    if (search != COMMANDS_TAB.end())
+                        search->second(circuit, tick);
+                    else
+                        std::cerr << "Unknown command \"" << input << "\"" << '\n';
+                }
+            } catch (const Exception &e){
+                std::cerr << e.what() << '\n';
             }
-        } catch (const nts::Exception &e){
-            std::cerr << e.what() << '\n';
         }
+        if (std::cin.eof() && isatty(STDIN_FILENO))
+            std::cout << '\n';
+        return (0);
     }
-    if (std::cin.eof() && isatty(STDIN_FILENO))
-        std::cout << '\n';
-    return (0);
-}
+} // namespace nts
+

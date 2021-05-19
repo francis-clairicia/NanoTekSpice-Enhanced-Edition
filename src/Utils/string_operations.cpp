@@ -24,19 +24,19 @@ void trim_trailing_whitespace(std::string &str)
 std::vector<std::string> string_split_by_delimiters(const std::string &str, const std::string &delim, bool keep_empty_string)
 {
     std::vector<std::string> array;
-    std::string element;
     std::size_t start = 0;
     std::size_t index = 0;
+    auto add_to_array = [&array, &keep_empty_string](std::string element)
+    {
+        if (keep_empty_string || !element.empty())
+            array.emplace_back(std::move(element));
+    };
 
     while ((index = str.find_first_of(delim, start)) != std::string::npos) {
-        element = str.substr(start, index - start);
-        if (keep_empty_string || !element.empty())
-            array.push_back(element);
+        add_to_array(str.substr(start, index - start));
         start = index + 1;
     }
-    element = str.substr(start);
-    if (keep_empty_string || !element.empty())
-        array.push_back(element);
+    add_to_array(str.substr(start));
     return array;
 }
 

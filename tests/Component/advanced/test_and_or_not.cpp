@@ -7,10 +7,11 @@
 
 #include <criterion/criterion.h>
 #include "Circuit.hpp"
+#include "Parser.hpp"
 
 Test(and_or_not, gate_linking_circuit)
 {
-    nts::Circuit circuit{"tests/.nts/advanced/and-or-not.nts"};
+    nts::Circuit circuit = nts::Parser::parse("tests/.nts/advanced/and-or-not.nts");
     std::size_t tick = 0;
 
     circuit.simulate(tick++);

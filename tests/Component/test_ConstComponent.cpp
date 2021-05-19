@@ -7,10 +7,11 @@
 
 #include <criterion/criterion.h>
 #include "Circuit.hpp"
+#include "Parser.hpp"
 
 Test(TrueComponent, always_returns_true)
 {
-    nts::Circuit circuit{"tests/.nts/true.nts"};
+    nts::Circuit circuit = nts::Parser::parse("tests/.nts/true.nts");
     std::size_t tick = 0;
 
     cr_assert_eq(circuit["in"].compute(1), nts::TRUE);
@@ -29,7 +30,7 @@ Test(TrueComponent, always_returns_true)
 
 Test(FalseComponent, always_returns_false)
 {
-    nts::Circuit circuit{"tests/.nts/false.nts"};
+    nts::Circuit circuit = nts::Parser::parse("tests/.nts/false.nts");
     std::size_t tick = 0;
 
     cr_assert_eq(circuit["in"].compute(1), nts::FALSE);

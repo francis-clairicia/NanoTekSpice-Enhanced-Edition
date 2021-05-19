@@ -12,6 +12,7 @@ SRC_NANOTEKSPICE		=	src/nanotekspice.cpp
 SRC_EXCEPTIONS			=	src/Exception/BadComponentNameException.cpp					\
 							src/Exception/BadComponentTypeException.cpp					\
 							src/Exception/BadPinException.cpp							\
+							src/Exception/ComponentNameOverride.cpp						\
 							src/Exception/Exception.cpp									\
 							src/Exception/FileException.cpp								\
 							src/Exception/InputValueException.cpp						\

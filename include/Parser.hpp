@@ -17,33 +17,44 @@ namespace nts
     class Parser
     {
     public:
+        static inline constexpr std::string_view FILE_EXTENSION{".nts"};
+        static inline constexpr std::string_view CHIPSET_DECLARATION{".chipsets:"};
+        static inline constexpr std::string_view LINK_DECLARATION{".links:"};
+
+    public:
+        ~Parser() noexcept = default;
+
+        static Circuit parse(const std::string &file);
+
+    private:
         struct Line
         {
-            std::size_t index;
+            Line() noexcept = default;
+            Line(std::size_t _index, const std::string &_content): index{_index}, content{_content} {}
+            ~Line() noexcept = default;
+
+            std::size_t index = 0L;
             std::string content;
         };
 
-        enum Declaration
+        struct Declaration
         {
-            CHIPSETS,
-            LINKS
+            using Initializer = void (Parser::*)(std::size_t, std::vector<std::string>) const;
+
+            Declaration(const std::string &_name, Initializer _method): name{_name}, already_declared{false}, method{_method} {}
+            ~Declaration() noexcept = default;
+
+            std::string name;
+            bool already_declared;
+            Initializer method;
         };
 
-    public:
-        static const std::string CHIPSET_DECLARATION;
-        static const std::string LINK_DECLARATION;
-
-    public:
-        Parser(const std::string &circuit_file, Circuit &circuit);
-        ~Parser() noexcept = default;
-
-        void parse() const;
-
     private:
-        void readBuffer(const std::string &buffer, std::list<Parser::Line> &lines) const noexcept;
+        Parser(const std::string &circuit_file, Circuit &circuit);
+        void internalParse() const;
         void initFactory(std::list<Parser::Line> &lines) const;
-        void initChipset(std::size_t line_index, const std::vector<std::string> &line_tab) const;
-        void initLink(std::size_t line_index, const std::vector<std::string> &line_tab) const;
+        void initChipset(std::size_t line_index, std::vector<std::string> line_tab) const;
+        void initLink(std::size_t line_index, std::vector<std::string> line_tab) const;
 
     private:
         std::string m_file;

@@ -23,7 +23,6 @@ namespace nts
 
     public:
         Circuit() noexcept = default;
-        explicit Circuit(const std::string &filepath);
         Circuit(const Circuit &other) noexcept = delete;
         Circuit(Circuit &&other) noexcept = default;
         ~Circuit() noexcept = default;

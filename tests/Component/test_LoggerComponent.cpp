@@ -8,10 +8,11 @@
 #include <fstream>
 #include <criterion/criterion.h>
 #include "Circuit.hpp"
+#include "Parser.hpp"
 
 Test(LoggerComponent, print_on_log_file)
 {
-    nts::Circuit circuit{"tests/.nts/logger.nts"};
+    nts::Circuit circuit = nts::Parser::parse("tests/.nts/logger.nts");
     std::size_t tick = 0;
 
     circuit.simulate(tick++);
