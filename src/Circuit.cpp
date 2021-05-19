@@ -59,13 +59,18 @@ namespace nts
 
     void Circuit::setValueForNextTick(const std::string &name, const std::string &value)
     {
-        const auto &component = m_input_components.find(name);
-        if (component == m_input_components.end())
-            throw BadComponentNameException(name);
-        const auto &input = STR_TO_TRISTATE.find(value);
+        auto input = STR_TO_TRISTATE.find(value);
         if (input == STR_TO_TRISTATE.end())
             throw InputValueException(value);
-        component->second.setValue(input->second);
+        setValueForNextTick(name, input->second);
+    }
+
+    void Circuit::setValueForNextTick(const std::string &name, Tristate value)
+    {
+        auto component = m_input_components.find(name);
+        if (component == m_input_components.end())
+            throw BadComponentNameException(name);
+        component->second.setValue(value);
     }
 
     void Circuit::display(std::size_t tick) const noexcept
@@ -103,7 +108,7 @@ namespace nts
 
     const InputComponent &Circuit::input(const std::string &name) const
     {
-        const auto &search = m_input_components.find(name);
+        auto search = m_input_components.find(name);
 
         if (search == m_input_components.end())
             throw BadComponentNameException(name);
@@ -112,7 +117,7 @@ namespace nts
 
     InputComponent &Circuit::input(const std::string &name)
     {
-        const auto &search = m_input_components.find(name);
+        auto search = m_input_components.find(name);
 
         if (search == m_input_components.end())
             throw BadComponentNameException(name);
@@ -121,7 +126,7 @@ namespace nts
 
     const OutputComponent &Circuit::output(const std::string &name) const
     {
-        const auto &search = m_output_components.find(name);
+        auto search = m_output_components.find(name);
 
         if (search == m_output_components.end())
             throw BadComponentNameException(name);
@@ -130,7 +135,7 @@ namespace nts
 
     OutputComponent &Circuit::output(const std::string &name)
     {
-        const auto &search = m_output_components.find(name);
+        auto search = m_output_components.find(name);
 
         if (search == m_output_components.end())
             throw BadComponentNameException(name);
@@ -139,7 +144,7 @@ namespace nts
 
     const IComponent &Circuit::operator[](const std::string &key) const
     {
-        const auto &search = m_components.find(key);
+        auto search = m_components.find(key);
 
         if (search == m_components.end())
             throw BadComponentNameException(key);
@@ -148,7 +153,7 @@ namespace nts
 
     IComponent &Circuit::operator[](const std::string &key)
     {
-        const auto &search = m_components.find(key);
+        auto search = m_components.find(key);
 
         if (search == m_components.end())
             throw BadComponentNameException(key);

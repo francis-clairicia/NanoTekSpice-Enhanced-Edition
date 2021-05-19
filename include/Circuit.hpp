@@ -32,6 +32,7 @@ namespace nts
         [[nodiscard]] bool empty() const noexcept;
 
         void setValueForNextTick(const std::string &name, const std::string &value);
+        void setValueForNextTick(const std::string &name, Tristate value);
         void display(std::size_t tick) const noexcept;
         void simulate(std::size_t tick) const noexcept;
         void dump() const noexcept;
