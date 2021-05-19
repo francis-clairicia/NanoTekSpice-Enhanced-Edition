@@ -27,7 +27,7 @@ namespace nts
             return;
 
         m_external_links.push_back(Pin::Link{.component = component, .pin = pin});
-        if (isInput()) {
+        if (isInput() || isBidirectional()) {
             for (Pin::Link &link : m_internal_links) {
                 link.component.setLink(link.pin, component, pin);
             }
@@ -43,7 +43,7 @@ namespace nts
             return;
 
         m_internal_links.push_back(Pin::Link{.component = component, .pin = pin});
-        if (isInput()) {
+        if (isInput() || isBidirectional()) {
             for (Pin::Link &link : m_external_links) {
                 component.setLink(pin, link.component, link.pin);
             }
@@ -91,12 +91,17 @@ namespace nts
 
     bool Pin::isInput() const noexcept
     {
-        return (m_mode & BIDIRECTIONAL) || (m_mode & INPUT);
+        return (m_mode & INPUT);
     }
 
     bool Pin::isOutput() const noexcept
     {
-        return (m_mode & BIDIRECTIONAL) || (m_mode & OUTPUT);
+        return (m_mode & OUTPUT);
+    }
+
+    bool Pin::isBidirectional() const noexcept
+    {
+        return (m_mode & BIDIRECTIONAL);
     }
 
     void Pin::dump() const noexcept

@@ -30,16 +30,6 @@ namespace nts
         };
 
     public:
-        struct Link
-        {
-            IComponent &component;
-            std::size_t pin;
-        };
-
-    public:
-        using Links = std::list<Pin::Link>;
-
-    public:
         Pin() noexcept;
         explicit Pin(Pin::Direction direction, Pin::Mode mode = NONE) noexcept;
         Pin(const Pin &other) noexcept = default;
@@ -57,9 +47,20 @@ namespace nts
 
         [[nodiscard]] bool isInput() const noexcept;
         [[nodiscard]] bool isOutput() const noexcept;
+        [[nodiscard]] bool isBidirectional() const noexcept;
 
         Pin &operator=(const Pin &rhs) noexcept = default;
         Pin &operator=(Pin &&rhs) noexcept = default;
+
+    private:
+        struct Link
+        {
+            IComponent &component;
+            std::size_t pin;
+        };
+
+    private:
+        using Links = std::list<Pin::Link>;
 
     private:
         Tristate computeLinks(const Links &used_links, std::size_t tick) const;
