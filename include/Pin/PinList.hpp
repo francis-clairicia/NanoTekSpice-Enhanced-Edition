@@ -21,7 +21,7 @@ namespace nts
         using PinMap = std::unordered_map<std::size_t, Pin>;
 
     public:
-        PinList(std::size_t nb, PinList::Initializer inputs, PinList::Initializer outputs, bool accept_io = false);
+        PinList(ComponentType owner, std::size_t nb, PinList::Initializer inputs, PinList::Initializer outputs, bool accept_io = false);
         ~PinList() noexcept = default;
 
         [[nodiscard]] const ComponentPins &getInputPins() const noexcept;
@@ -37,6 +37,7 @@ namespace nts
         Pin &operator[](std::size_t pin);
 
     private:
+        const ComponentType m_owner;
         const ComponentPins m_input_pins;
         const ComponentPins m_output_pins;
         const ComponentPins m_both_input_and_output_pins;

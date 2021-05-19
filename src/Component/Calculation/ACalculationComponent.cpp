@@ -8,17 +8,17 @@
 #include <iostream>
 #include <algorithm>
 #include "ACalculationComponent.hpp"
-#include "BadPinException.hpp"
+#include "constants.hpp"
 
 namespace nts
 {
     ACalculationComponent::ACalculationComponent(ComponentType type,
-                                                    std::size_t nb_pins,
-                                                    PinList::Initializer input_pins,
-                                                    PinList::Initializer output_pins) noexcept:
+                                                 std::size_t nb_pins,
+                                                 PinList::Initializer input_pins,
+                                                 PinList::Initializer output_pins) noexcept:
         m_type{type},
-        m_pins{nb_pins, input_pins, output_pins, true},
-        m_actual_tick{~0UL}
+        m_pins{type, nb_pins, input_pins, output_pins, true},
+        m_actual_tick{NO_TICKS}
     {
         m_pins.setIOPinsAsOutput();
         for (std::size_t pin : m_pins.getOutputPins())
@@ -36,15 +36,11 @@ namespace nts
 
     void ACalculationComponent::setLink(std::size_t pin, IComponent &other, std::size_t otherPin)
     {
-        if (!m_pins.hasPin(pin))
-            throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
         m_pins[pin].setLinkWithExternalComponent(other, otherPin);
     }
 
     Tristate ACalculationComponent::compute(std::size_t pin)
     {
-        if (!m_pins.hasPin(pin))
-            throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
         if (m_pins[pin].isOutput())
             return m_output_pins.at(pin);
         if (m_pins[pin].isInput())

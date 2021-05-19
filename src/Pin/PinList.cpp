@@ -8,7 +8,8 @@
 #include <algorithm>
 #include <iostream>
 #include "PinList.hpp"
-#include "Exception.hpp"
+#include "BadPinException.hpp"
+#include "NoIOPinException.hpp"
 
 namespace
 {
@@ -22,24 +23,31 @@ namespace
         std::set_intersection(std::begin(a), std::end(a), std::begin(b), std::end(b), std::back_inserter(a_inter_b));
         return a_inter_b;
     }
+
+    template<typename T, typename... Args>
+    bool vector_contains(const std::vector<T, Args...> &vector, const T &value)
+    {
+        return std::find(std::begin(vector), std::end(vector), value) != std::end(vector);
+    }
 } // namespace
 
 namespace nts
 {
-    PinList::PinList(std::size_t nb, PinList::Initializer inputs, PinList::Initializer outputs, bool accept_io):
-        m_input_pins(inputs),
-        m_output_pins(outputs),
-        m_both_input_and_output_pins(get_intermediate(m_input_pins, m_output_pins)),
+    PinList::PinList(ComponentType owner, std::size_t nb, PinList::Initializer inputs, PinList::Initializer outputs, bool accept_io):
+        m_owner{owner},
+        m_input_pins{inputs},
+        m_output_pins{outputs},
+        m_both_input_and_output_pins{get_intermediate(m_input_pins, m_output_pins)},
         m_pins{}
     {
         if (!accept_io && !m_both_input_and_output_pins.empty())
-            throw Exception("This component cannot have pins which are inputs and outputs at the same time");
+            throw NoIOPinException{COMPONENT_TYPE_AS_STRING.at(m_owner)};
         for (std::size_t pin = 1; pin <= nb; ++pin) {
-            if (std::find(m_both_input_and_output_pins.begin(), m_both_input_and_output_pins.end(), pin) != m_both_input_and_output_pins.end()) {
+            if (vector_contains(m_both_input_and_output_pins, pin)) {
                 m_pins.emplace(pin, Pin(Pin::BIDIRECTIONAL, Pin::NONE));
-            } else if (std::find(m_input_pins.begin(), m_input_pins.end(), pin) != m_input_pins.end()) {
+            } else if (vector_contains(m_input_pins, pin)) {
                 m_pins.emplace(pin, Pin(Pin::UNIDIRECTIONAL, Pin::INPUT));
-            } else if (std::find(m_output_pins.begin(), m_output_pins.end(), pin) != m_output_pins.end()) {
+            } else if (vector_contains(m_output_pins, pin)) {
                 m_pins.emplace(pin, Pin(Pin::UNIDIRECTIONAL, Pin::OUTPUT));
             } else {
                 m_pins.emplace(pin, Pin(Pin::UNIDIRECTIONAL, Pin::NONE));
@@ -84,11 +92,15 @@ namespace nts
 
     const Pin &PinList::operator[](std::size_t pin) const
     {
+        if (!hasPin(pin))
+            throw BadPinException{COMPONENT_TYPE_AS_STRING.at(m_owner), pin};
         return m_pins.at(pin);
     }
 
     Pin &PinList::operator[](std::size_t pin)
     {
+        if (!hasPin(pin))
+            throw BadPinException{COMPONENT_TYPE_AS_STRING.at(m_owner), pin};
         return m_pins.at(pin);
     }
 } // namespace nts

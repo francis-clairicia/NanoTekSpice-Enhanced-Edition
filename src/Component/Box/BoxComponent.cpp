@@ -7,14 +7,14 @@
 
 #include <iostream>
 #include "BoxComponent.hpp"
-#include "BadPinException.hpp"
+#include "constants.hpp"
 
 namespace nts
 {
     BoxComponent::BoxComponent(ComponentType type, std::size_t nb_pins, PinList::Initializer input_pins, PinList::Initializer output_pins) noexcept:
         m_type{type},
-        m_actual_tick{~0UL},
-        m_pins{nb_pins, input_pins, output_pins}
+        m_actual_tick{NO_TICKS},
+        m_pins{type, nb_pins, input_pins, output_pins}
     {
     }
 
@@ -25,19 +25,13 @@ namespace nts
 
     Tristate BoxComponent::compute(std::size_t pin)
     {
-        if (!m_pins.hasPin(pin))
-            throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
-
         if (m_pins[pin].isInput())
             return FALSE;
-
         return m_pins[pin].compute(m_actual_tick);
     }
 
     void BoxComponent::setLink(std::size_t pin, IComponent &other, std::size_t otherPin)
     {
-        if (!m_pins.hasPin(pin))
-            throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
         m_pins[pin].setLinkWithExternalComponent(other, otherPin);
     }
 
@@ -54,8 +48,6 @@ namespace nts
 
     void BoxComponent::setLinkInternal(std::size_t pin, IComponent &other, std::size_t otherPin)
     {
-        if (!m_pins.hasPin(pin))
-            throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
         m_pins[pin].setLinkWithInternalComponent(other, otherPin);
     }
 } // namespace nts

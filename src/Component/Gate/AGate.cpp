@@ -8,15 +8,15 @@
 #include <algorithm>
 #include <iostream>
 #include "AGate.hpp"
-#include "BadPinException.hpp"
+#include "constants.hpp"
 
 namespace nts
 {
     AGate::AGate(ComponentType type, std::size_t nb_pins, PinList::Initializer input_pins, std::size_t output_pin) noexcept:
         m_value{UNDEFINED},
         m_type{type},
-        m_pins{nb_pins, input_pins, {output_pin}},
-        m_actual_tick{~0UL}
+        m_pins{type, nb_pins, input_pins, {output_pin}},
+        m_actual_tick{NO_TICKS}
     {
     }
 
@@ -30,15 +30,11 @@ namespace nts
 
     void AGate::setLink(std::size_t pin, IComponent &other, std::size_t otherPin)
     {
-        if (!m_pins.hasPin(pin))
-            throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
         m_pins[pin].setLinkWithExternalComponent(other, otherPin);
     }
 
     Tristate AGate::compute(std::size_t pin)
     {
-        if (!m_pins.hasPin(pin))
-            throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
         if (m_pins[pin].isInput()) {
             return FALSE;
         }

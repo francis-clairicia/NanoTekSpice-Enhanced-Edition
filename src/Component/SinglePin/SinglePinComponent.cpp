@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include "SinglePinComponent.hpp"
-#include "BadPinException.hpp"
 
 namespace nts
 {
@@ -20,15 +19,11 @@ namespace nts
 
     Tristate SinglePinComponent::compute(std::size_t pin)
     {
-        if (pin != 1)
-            throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
         return computeOutput();
     }
 
     void SinglePinComponent::setLink(std::size_t pin, IComponent &other, std::size_t otherPin)
     {
-        if (pin != 1)
-            throw BadPinException(COMPONENT_TYPE_AS_STRING.at(m_type), pin);
         m_pin.setLinkWithExternalComponent(other, otherPin);
     }
 
