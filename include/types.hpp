@@ -15,7 +15,8 @@
 
 namespace nts
 {
-    using InternComponent = std::vector<std::unique_ptr<IComponent>>;
+    using InternComponent = std::unique_ptr<IComponent>;
+    using InternComponentList = std::vector<InternComponent>;
     using ComponentPins = std::vector<std::size_t>;
 }
 

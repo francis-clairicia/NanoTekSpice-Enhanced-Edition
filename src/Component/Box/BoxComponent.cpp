@@ -13,26 +13,23 @@ namespace nts
 {
     BoxComponent::BoxComponent(ComponentType type, std::size_t nb_pins, PinList::Initializer input_pins, PinList::Initializer output_pins) noexcept:
         m_type{type},
-        m_actual_tick{NO_TICKS},
         m_pins{type, nb_pins, input_pins, output_pins}
     {
     }
 
     void BoxComponent::simulate(std::size_t tick)
     {
-        m_actual_tick = tick;
+        m_pins.simulate(tick);
     }
 
     Tristate BoxComponent::compute(std::size_t pin)
     {
-        if (m_pins[pin].isInput())
-            return FALSE;
-        return m_pins[pin].compute(m_actual_tick);
+        return m_pins.compute(pin);
     }
 
     void BoxComponent::setLink(std::size_t pin, IComponent &other, std::size_t otherPin)
     {
-        m_pins[pin].setLinkWithExternalComponent(other, otherPin);
+        m_pins.setLink(pin, other, otherPin);
     }
 
     void BoxComponent::dump() const noexcept
@@ -48,6 +45,6 @@ namespace nts
 
     void BoxComponent::setLinkInternal(std::size_t pin, IComponent &other, std::size_t otherPin)
     {
-        m_pins[pin].setLinkWithInternalComponent(other, otherPin);
+        m_pins.setLinkInternal(pin, other, otherPin);
     }
 } // namespace nts

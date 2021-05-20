@@ -13,7 +13,7 @@
 
 namespace nts
 {
-    class Component4514: public BoxComponent
+    class Component4514 final: public BoxComponent
     {
     public:
         enum PinName
@@ -47,11 +47,11 @@ namespace nts
         ~Component4514() noexcept override = default;
 
     private:
-        std::unique_ptr<IComponent> m_latch;
-        std::unique_ptr<IComponent> m_decoder;
+        InternComponent m_latch;
+        InternComponent m_decoder;
 
     private:
-        class Latch: public ACalculationComponent
+        class Latch final: public ACalculationComponent
         {
         public:
             enum PinName
@@ -71,11 +71,11 @@ namespace nts
             Latch() noexcept;
             ~Latch() noexcept override = default;
 
-        protected:
-            void computeOutputs(std::size_t tick) final;
+        private:
+            void computeOutputs() final;
         };
 
-        class Decoder: public ACalculationComponent
+        class Decoder final: public ACalculationComponent
         {
         public:
             enum PinName
@@ -107,8 +107,8 @@ namespace nts
             Decoder() noexcept;
             ~Decoder() noexcept override = default;
 
-        protected:
-            void computeOutputs(std::size_t tick) final;
+        private:
+            void computeOutputs() final;
         };
     };
 }

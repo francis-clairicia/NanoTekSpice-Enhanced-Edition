@@ -12,7 +12,7 @@
 
 namespace nts
 {
-    class DTypeFlipFlopWithSR: public ACalculationComponent
+    class DTypeFlipFlopWithSR final: public ACalculationComponent
     {
     public:
         enum PinName
@@ -29,11 +29,11 @@ namespace nts
         DTypeFlipFlopWithSR() noexcept;
         ~DTypeFlipFlopWithSR() noexcept override = default;
 
-    protected:
-        void computeOutputs(std::size_t tick) final;
+    private:
+        void computeOutputs() final;
 
     private:
-        std::unique_ptr<IComponent> m_invert_data;
+        InternComponent m_invert_data;
     };
 }
 

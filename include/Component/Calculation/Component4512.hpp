@@ -12,7 +12,7 @@
 
 namespace nts
 {
-    class Component4512: public ACalculationComponent
+    class Component4512 final: public ACalculationComponent
     {
     public:
         enum PinName
@@ -35,13 +35,13 @@ namespace nts
 
     public:
         Component4512() noexcept;
-        ~Component4512() noexcept = default;
-
-    protected:
-        void computeOutputs(std::size_t tick) final;
+        ~Component4512() noexcept override = default;
 
     private:
-        std::unique_ptr<IComponent> m_invert_oe;
+        void computeOutputs() final;
+
+    private:
+        InternComponent m_invert_oe;
     };
 }
 

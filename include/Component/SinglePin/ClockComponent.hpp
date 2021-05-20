@@ -12,7 +12,7 @@
 
 namespace nts
 {
-    class ClockComponent: public InputComponent
+    class ClockComponent final: public InputComponent
     {
     public:
         ClockComponent() noexcept;

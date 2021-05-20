@@ -12,7 +12,7 @@
 
 namespace nts
 {
-    class SumComponent: public BoxComponent
+    class SumComponent final: public BoxComponent
     {
     public:
         enum PinName
@@ -28,15 +28,15 @@ namespace nts
         SumComponent() noexcept;
         ~SumComponent() noexcept override = default;
 
-    protected:
+    private:
         void dumpInternalComponents() const noexcept final;
 
     private:
-        std::unique_ptr<IComponent> m_xor1;
-        std::unique_ptr<IComponent> m_xor2;
-        std::unique_ptr<IComponent> m_and1;
-        std::unique_ptr<IComponent> m_and2;
-        std::unique_ptr<IComponent> m_or;
+        InternComponent m_xor1;
+        InternComponent m_xor2;
+        InternComponent m_and1;
+        InternComponent m_and2;
+        InternComponent m_or;
     };
 }
 

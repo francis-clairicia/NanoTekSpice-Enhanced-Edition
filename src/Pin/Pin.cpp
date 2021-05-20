@@ -20,8 +20,11 @@ namespace nts
 
     void Pin::setLinkWithExternalComponent(IComponent &component, std::size_t pin) noexcept
     {
-        const auto &search = std::find_if(m_external_links.begin(), m_external_links.end(),
-                                        [&component, &pin](const Pin::Link &link){return &link.component == &component && link.pin == pin;});
+        auto search = std::find_if(m_external_links.begin(), m_external_links.end(),
+                                    [&component, &pin](const Pin::Link &link)
+                                    {
+                                        return &link.component == &component && link.pin == pin;
+                                    });
 
         if (search != m_external_links.end())
             return;
@@ -36,8 +39,11 @@ namespace nts
 
     void Pin::setLinkWithInternalComponent(IComponent &component, std::size_t pin) noexcept
     {
-        const auto &search = std::find_if(m_internal_links.begin(), m_internal_links.end(),
-                                        [&component, &pin](const Pin::Link &link){return &link.component == &component && link.pin == pin;});
+        auto search = std::find_if(m_internal_links.begin(), m_internal_links.end(),
+                                    [&component, &pin](const Pin::Link &link)
+                                    {
+                                        return &link.component == &component && link.pin == pin;
+                                    });
 
         if (search != m_internal_links.end())
             return;
@@ -50,24 +56,30 @@ namespace nts
         }
     }
 
-    Tristate Pin::compute(std::size_t tick) const
+    bool Pin::hasInternalLinks() const noexcept
     {
-        if (m_mode & OUTPUT)
-            return computeLinks(m_internal_links, tick);
-        if (m_mode & INPUT)
-            return computeLinks(m_external_links, tick);
-        return UNDEFINED;
+        return !m_internal_links.empty();
     }
 
+    Tristate Pin::computeInternalLinks(std::size_t tick) const
+    {
+        return computeLinks(m_internal_links, tick);
+    }
+
+    Tristate Pin::computeExternalLinks(std::size_t tick) const
+    {
+        return computeLinks(m_external_links, tick);
+    }
+    
     void Pin::computeAsInput() noexcept
     {
-        if (m_mode & BIDIRECTIONAL)
+        if (isBidirectional())
             m_mode = BIDIRECTIONAL | INPUT;
     }
 
     void Pin::computeAsOutput() noexcept
     {
-        if (m_mode & BIDIRECTIONAL)
+        if (isBidirectional())
             m_mode = BIDIRECTIONAL | OUTPUT;
     }
 
@@ -76,10 +88,11 @@ namespace nts
         std::vector<Tristate> inputs;
 
         std::transform(used_links.begin(), used_links.end(), std::back_inserter(inputs),
-                        [&tick](const Pin::Link &link){
-                            link.component.simulate(tick);
-                            return link.component.compute(link.pin);
-                        });
+                       [&tick](const Pin::Link &link)
+                       {
+                           link.component.simulate(tick);
+                           return link.component.compute(link.pin);
+                       });
 
         if (std::any_of(inputs.begin(), inputs.end(), [](Tristate value){return value == UNDEFINED;}))
             return UNDEFINED;

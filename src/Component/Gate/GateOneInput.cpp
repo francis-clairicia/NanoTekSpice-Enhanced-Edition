@@ -9,12 +9,13 @@
 
 namespace nts
 {
-    GateOneInput::GateOneInput(ComponentType type) noexcept: AGate(type, 2, {INPUT}, OUTPUT)
+    GateOneInput::GateOneInput(ComponentType type) noexcept:
+        AGate{type, 2, {INPUT}, OUTPUT}
     {
     }
 
-    Tristate GateOneInput::computeOutput(std::size_t tick)
+    void GateOneInput::computeOutput()
     {
-        return operation(m_pins[INPUT].compute(tick));
+        m_pins.output(OUTPUT) = operation(m_pins.input(INPUT));
     }
 } // namespace nts

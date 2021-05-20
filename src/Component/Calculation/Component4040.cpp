@@ -19,17 +19,16 @@ namespace nts
         m_invert_clock{std::make_unique<GateNOT>()},
         m_counter{0}
     {
-        m_pins[CLOCK].setLinkWithInternalComponent(*m_invert_clock, GateNOT::INPUT);
+        m_invert_clock->setLink(GateNOT::INPUT, *this, CLOCK);
     }
 
-    void Component4040::computeOutputs(std::size_t tick)
+    void Component4040::computeOutputs()
     {
-        const Tristate clock = computeInternalComponent(*m_invert_clock, GateNOT::OUTPUT);
-        const Tristate reset = m_pins[RESET].compute(tick);
+        const Tristate clock = m_pins.computeInternal(*m_invert_clock, GateNOT::OUTPUT);
+        const Tristate reset = m_pins.input(RESET);
 
         if (reset == UNDEFINED || (reset == FALSE && clock == UNDEFINED)) {
-            for (auto &pair : m_output_pins)
-                pair.second = UNDEFINED;
+            m_pins.setAllOutputs(UNDEFINED);
             return;
         }
         if (reset == FALSE && clock == FALSE)
@@ -37,6 +36,6 @@ namespace nts
 
         m_counter = (m_counter + 1) * (!reset);
         for (std::size_t bit = 0; bit < m_pins.getOutputPins().size(); ++bit)
-            m_output_pins[m_pins.getOutputPins().at(bit)] = static_cast<Tristate>((m_counter & (1UL << bit)) >> bit);
+            m_pins.output(m_pins.getOutputPins().at(bit)) = static_cast<Tristate>((m_counter & (1UL << bit)) >> bit);
     }
 } // namespace nts

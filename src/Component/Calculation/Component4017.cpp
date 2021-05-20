@@ -18,31 +18,33 @@ namespace nts
         m_and_gate_clock{std::make_unique<GateAND>()},
         m_shift{0}
     {
-        m_pins[CP1].setLinkWithInternalComponent(*m_invert_cp1, GateNOT::INPUT);
-        m_pins[CP0].setLinkWithInternalComponent(*m_and_gate_clock, GateAND::INPUT1);
+        m_invert_cp1->setLink(GateNOT::INPUT, *this, CP1);
+        m_and_gate_clock->setLink(GateAND::INPUT1, *this, CP0);
         m_and_gate_clock->setLink(GateAND::INPUT2, *m_invert_cp1, GateNOT::OUTPUT);
     }
 
-    void Component4017::computeOutputs(std::size_t tick)
+    void Component4017::computeOutputs()
     {
-        const Tristate master_reset = m_pins[MR].compute(tick);
-        const Tristate clock = computeInternalComponent(*m_and_gate_clock, GateAND::OUTPUT);
-        const ComponentPins pins{Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9};
+        const Tristate master_reset = m_pins.input(MR);
+        const Tristate clock = m_pins.computeInternal(*m_and_gate_clock, GateAND::OUTPUT);
+        constexpr std::array<std::size_t, 10> pins{Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9};
 
         if (master_reset == UNDEFINED || (master_reset == FALSE && clock == UNDEFINED)) {
-            for (auto &pair : m_output_pins)
-                pair.second = UNDEFINED;
+            m_pins.setAllOutputs(UNDEFINED);
             return;
         }
         if (master_reset == FALSE && clock == FALSE)
             return;
         m_shift = ((m_shift + 1) % pins.size()) * (!master_reset);
         for (std::size_t index = 0; index < pins.size(); ++index) {
-            m_output_pins[pins.at(index)] = static_cast<Tristate>(index == m_shift);
+            m_pins.output(pins.at(index)) = static_cast<Tristate>(index == m_shift);
         }
 
-        const ComponentPins output_5_to_9{Q5, Q6, Q7, Q8, Q9};
-        m_output_pins[Q5_9] = static_cast<Tristate>(std::all_of(output_5_to_9.begin(), output_5_to_9.end(),
-                                                        [this](std::size_t pin){return this->m_output_pins[pin] == FALSE;}));
+        constexpr std::array<std::size_t, 5> output_5_to_9{Q5, Q6, Q7, Q8, Q9};
+        m_pins.output(Q5_9) = static_cast<Tristate>(std::all_of(output_5_to_9.begin(), output_5_to_9.end(), 
+                                                    [this](std::size_t pin)
+                                                    {
+                                                        return m_pins.output(pin) == FALSE;
+                                                    }));
     }
 } // namespace nts

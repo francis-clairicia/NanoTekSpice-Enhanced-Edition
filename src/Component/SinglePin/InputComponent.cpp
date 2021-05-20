@@ -12,7 +12,7 @@
 namespace nts
 {
     InputComponent::InputComponent(ComponentType type) noexcept:
-        SinglePinComponent(type, Pin::OUTPUT),
+        SinglePinComponent{type, Pin::OUTPUT},
         m_actual_tick{NO_TICKS},
         m_value_for_next_tick{UNDEFINED}
     {

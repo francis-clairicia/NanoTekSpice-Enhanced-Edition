@@ -10,13 +10,13 @@
 namespace nts
 {
     OutputComponent::OutputComponent(ComponentType type) noexcept:
-        SinglePinComponent(type, Pin::INPUT)
+        SinglePinComponent{type, Pin::INPUT}
     {
     }
 
     void OutputComponent::simulate(std::size_t tick)
     {
-        m_value = m_pin.compute(tick);
+        m_value = m_pin.computeExternalLinks(tick);
     }
 
     Tristate OutputComponent::computeOutput()

@@ -39,7 +39,10 @@ namespace nts
         void setLinkWithExternalComponent(IComponent &component, std::size_t pin) noexcept;
         void setLinkWithInternalComponent(IComponent &component, std::size_t pin) noexcept;
 
-        Tristate compute(std::size_t tick) const;
+        [[nodiscard]] bool hasInternalLinks() const noexcept;
+
+        Tristate computeInternalLinks(std::size_t tick) const;
+        Tristate computeExternalLinks(std::size_t tick) const;
         void computeAsInput() noexcept;
         void computeAsOutput() noexcept;
 

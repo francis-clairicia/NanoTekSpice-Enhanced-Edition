@@ -12,7 +12,7 @@
 
 namespace nts
 {
-    class Component4013: public BoxComponent
+    class Component4013 final: public BoxComponent
     {
     public:
         enum PinName
@@ -35,11 +35,11 @@ namespace nts
         Component4013() noexcept;
         ~Component4013() noexcept override = default;
 
-    protected:
+    private:
         void dumpInternalComponents() const noexcept final;
 
     private:
-        InternComponent m_components;
+        InternComponentList m_components;
     };
 }
 

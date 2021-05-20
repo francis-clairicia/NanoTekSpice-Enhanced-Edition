@@ -9,7 +9,8 @@
 
 namespace nts
 {
-    GateNAND::GateNAND() noexcept: GateTwoInputs(ComponentType::GateNAND)
+    GateNAND::GateNAND() noexcept:
+        GateTwoInputs{ComponentType::GateNAND}
     {
     }
 

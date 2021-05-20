@@ -12,7 +12,7 @@
 
 namespace nts
 {
-    class GateXOR: public GateTwoInputs
+    class GateXOR final: public GateTwoInputs
     {
     public:
         GateXOR() noexcept;

@@ -9,7 +9,8 @@
 
 namespace nts
 {
-    GateOR::GateOR() noexcept: GateTwoInputs(ComponentType::GateOR)
+    GateOR::GateOR() noexcept:
+        GateTwoInputs{ComponentType::GateOR}
     {
     }
 

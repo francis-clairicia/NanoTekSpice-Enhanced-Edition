@@ -89,20 +89,19 @@ namespace nts
     {
     }
 
-    void Component4094::ShiftRegister::computeOutputs(std::size_t tick)
+    void Component4094::ShiftRegister::computeOutputs()
     {
-        const Tristate data = m_pins[INPUT_DATA_Q1].compute(tick);
-        const Tristate clock = m_pins[INPUT_CLOCK].compute(tick);
+        const Tristate data = m_pins.input(INPUT_DATA_Q1);
+        const Tristate clock = m_pins.input(INPUT_CLOCK);
 
         if (clock == UNDEFINED) {
-            for (auto &pair : m_output_pins)
-                pair.second = UNDEFINED;
+            m_pins.setAllOutputs(UNDEFINED);
             return;
         }
         if (clock == FALSE)
             return;
         for (long index = m_pins.getOutputPins().size() - 1; index > 0; --index)
-            m_output_pins[m_pins.getOutputPins().at(index)] = m_output_pins.at(m_pins.getOutputPins().at(index - 1));
-        m_output_pins[m_pins.getOutputPins().front()] = data;
+            m_pins.output(m_pins.getOutputPins().at(index)) = m_pins.output(m_pins.getOutputPins().at(index - 1));
+        m_pins.output(m_pins.getOutputPins().front()) = data;
     }
 } // namespace nts

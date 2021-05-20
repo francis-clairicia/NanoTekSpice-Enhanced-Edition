@@ -10,7 +10,7 @@
 namespace nts
 {
     ClockComponent::ClockComponent() noexcept:
-        InputComponent(ComponentType::Clock),
+        InputComponent{ComponentType::Clock},
         m_invert_value{true}
     {
     }

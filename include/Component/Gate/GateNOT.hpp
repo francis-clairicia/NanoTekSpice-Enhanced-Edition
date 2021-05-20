@@ -12,7 +12,7 @@
 
 namespace nts
 {
-    class GateNOT: public GateOneInput
+    class GateNOT final: public GateOneInput
     {
     public:
         GateNOT() noexcept;

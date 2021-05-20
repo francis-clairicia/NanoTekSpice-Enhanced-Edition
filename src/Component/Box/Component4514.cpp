@@ -61,25 +61,24 @@ namespace nts
     {
     }
 
-    void Component4514::Latch::computeOutputs(std::size_t tick)
+    void Component4514::Latch::computeOutputs()
     {
-        const Tristate input_a = m_pins[INPUT_A].compute(tick);
-        const Tristate input_b = m_pins[INPUT_B].compute(tick);
-        const Tristate input_c = m_pins[INPUT_C].compute(tick);
-        const Tristate input_d = m_pins[INPUT_D].compute(tick);
-        const Tristate strobe = m_pins[INPUT_STROBE].compute(tick);
+        const Tristate input_a = m_pins.input(INPUT_A);
+        const Tristate input_b = m_pins.input(INPUT_B);
+        const Tristate input_c = m_pins.input(INPUT_C);
+        const Tristate input_d = m_pins.input(INPUT_D);
+        const Tristate strobe = m_pins.input(INPUT_STROBE);
 
         if (strobe == UNDEFINED) {
-            for (auto &pair : m_output_pins)
-                pair.second = UNDEFINED;
+            m_pins.setAllOutputs(UNDEFINED);
             return;
         }
         if (strobe == FALSE)
             return;
-        m_output_pins[OUTPUT_A] = input_a;
-        m_output_pins[OUTPUT_B] = input_b;
-        m_output_pins[OUTPUT_C] = input_c;
-        m_output_pins[OUTPUT_D] = input_d;
+        m_pins.output(OUTPUT_A) = input_a;
+        m_pins.output(OUTPUT_B) = input_b;
+        m_pins.output(OUTPUT_C) = input_c;
+        m_pins.output(OUTPUT_D) = input_d;
     }
 
     /* -------------------- Decoder component -------------------- */
@@ -94,31 +93,29 @@ namespace nts
     {
     }
 
-    void Component4514::Decoder::computeOutputs(std::size_t tick)
+    void Component4514::Decoder::computeOutputs()
     {
         std::size_t address = 0;
-        const Tristate input_a = m_pins[INPUT_A].compute(tick);
-        const Tristate input_b = m_pins[INPUT_B].compute(tick);
-        const Tristate input_c = m_pins[INPUT_C].compute(tick);
-        const Tristate input_d = m_pins[INPUT_D].compute(tick);
-        const Tristate inhibit = m_pins[INPUT_INHIBIT].compute(tick);
+        const Tristate input_a = m_pins.input(INPUT_A);
+        const Tristate input_b = m_pins.input(INPUT_B);
+        const Tristate input_c = m_pins.input(INPUT_C);
+        const Tristate input_d = m_pins.input(INPUT_D);
+        const Tristate inhibit = m_pins.input(INPUT_INHIBIT);
         const std::array<Tristate, 4> input_address{input_a, input_b, input_c, input_d};
 
         if (inhibit == UNDEFINED || inhibit == TRUE) {
-            for (auto &pair : m_output_pins)
-                pair.second = (inhibit == UNDEFINED) ? UNDEFINED : FALSE;
+            m_pins.setAllOutputs((inhibit == UNDEFINED) ? UNDEFINED : FALSE);
             return;
         }
 
         if (std::any_of(input_address.begin(), input_address.end(), [](Tristate value){return value == UNDEFINED;})) {
-            for (auto &pair : m_output_pins)
-                pair.second = UNDEFINED;
+            m_pins.setAllOutputs(UNDEFINED);
             return;
         }
 
         address = (input_d << 3) | (input_c << 2) | (input_b << 1) | input_a;
 
         for (std::size_t out = 0; out < m_pins.getOutputPins().size(); ++out)
-            m_output_pins[m_pins.getOutputPins().at(out)] = static_cast<Tristate>(out == address);
+            m_pins.output(m_pins.getOutputPins().at(out)) = static_cast<Tristate>(out == address);
     }
 } // namespace nts

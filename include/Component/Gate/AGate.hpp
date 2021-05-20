@@ -29,15 +29,11 @@ namespace nts
         AGate &operator=(AGate &&rhs) noexcept = default;
 
     protected:
-        virtual Tristate computeOutput(std::size_t tick) = 0;
+        virtual void computeOutput() = 0;
 
     protected:
-        Tristate             m_value;
         const ComponentType  m_type;
         PinList              m_pins;
-
-    private:
-        std::size_t               m_actual_tick;
     };
 }
 

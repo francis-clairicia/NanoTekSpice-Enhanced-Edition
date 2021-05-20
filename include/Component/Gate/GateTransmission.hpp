@@ -28,8 +28,8 @@ namespace nts
 
         Tristate operation(Tristate input, Tristate control) const noexcept;
 
-    protected:
-        Tristate computeOutput(std::size_t tick) final;
+    private:
+        void computeOutput() final;
     };
 }
 

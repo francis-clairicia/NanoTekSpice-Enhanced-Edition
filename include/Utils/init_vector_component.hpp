@@ -15,9 +15,9 @@
 namespace nts
 {
     template<typename Component>
-    std::vector<std::unique_ptr<IComponent>> init_vector_component(std::size_t n)
+    std::vector<InternComponent> init_vector_component(std::size_t n)
     {
-        std::vector<std::unique_ptr<IComponent>> components(n);
+        std::vector<InternComponent> components(n);
 
         for (std::size_t i = 0; i < n; ++i)
             components[i] = std::make_unique<Component>();

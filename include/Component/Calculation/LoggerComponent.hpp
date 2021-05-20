@@ -13,7 +13,7 @@
 
 namespace nts
 {
-    class LoggerComponent: public ACalculationComponent
+    class LoggerComponent final: public ACalculationComponent
     {
     public:
         enum PinName
@@ -34,8 +34,8 @@ namespace nts
         LoggerComponent();
         ~LoggerComponent() noexcept override;
 
-    protected:
-        void computeOutputs(std::size_t tick) final;
+    private:
+        void computeOutputs() final;
 
     private:
         std::ofstream m_stream;

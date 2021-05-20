@@ -36,7 +36,6 @@ namespace nts
         const ComponentType m_type;
 
     private:
-        std::size_t m_actual_tick;
         PinList     m_pins;
     };
 }

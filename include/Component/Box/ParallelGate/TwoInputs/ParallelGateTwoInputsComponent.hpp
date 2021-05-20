@@ -15,7 +15,7 @@
 namespace nts
 {
     template<ComponentType Type, typename Gate>
-    class ParallelGateTwoInputsComponent: public BoxComponent
+    class ParallelGateTwoInputsComponent final: public BoxComponent
     {
     public:
         enum PinName
@@ -81,7 +81,7 @@ namespace nts
         }
 
     private:
-        InternComponent m_components;
+        InternComponentList m_components;
     };
 }
 

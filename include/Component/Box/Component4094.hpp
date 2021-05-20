@@ -13,7 +13,7 @@
 
 namespace nts
 {
-    class Component4094: public BoxComponent
+    class Component4094 final: public BoxComponent
     {
     public:
         enum PinName
@@ -39,15 +39,15 @@ namespace nts
         ~Component4094() noexcept override = default;
 
     private:
-        std::unique_ptr<IComponent> m_ground;
-        std::unique_ptr<IComponent> m_invert_clock;
-        std::unique_ptr<IComponent> m_shift_register;
-        std::unique_ptr<IComponent> m_qs_prime_flipflop;
-        InternComponent           m_output_transmissions;
-        InternComponent           m_output_flipflops;
+        InternComponent m_ground;
+        InternComponent m_invert_clock;
+        InternComponent m_shift_register;
+        InternComponent m_qs_prime_flipflop;
+        InternComponentList           m_output_transmissions;
+        InternComponentList           m_output_flipflops;
 
     private:
-        class ShiftRegister: public ACalculationComponent
+        class ShiftRegister final: public ACalculationComponent
         {
         public:
             enum PinName
@@ -68,8 +68,8 @@ namespace nts
             ShiftRegister() noexcept;
             ~ShiftRegister() noexcept override = default;
 
-        protected:
-            void computeOutputs(std::size_t tick) final;
+        private:
+            void computeOutputs() final;
         };
     };
 }
