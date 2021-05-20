@@ -125,7 +125,8 @@ CPPFLAGS				=	-I./include/												\
 							-I./include/Component/Calculation							\
 							-I./include/Component/Calculation/FlipFlop/					\
 							-I./include/Pin/											\
-							-I./include/Utils/
+							-I./include/Utils/											\
+							-I./include/Memory/
 
 OBJ						=	$(SRC:.cpp=.o)
 

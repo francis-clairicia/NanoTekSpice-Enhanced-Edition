@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "BoxComponent.hpp"
+#include "GateTwoInputs.hpp"
 #include "init_vector_component.hpp"
 
 namespace nts
@@ -17,6 +18,9 @@ namespace nts
     template<ComponentType Type, typename Gate>
     class ParallelGateTwoInputsComponent final: public BoxComponent
     {
+    public:
+        static_assert(std::is_base_of_v<GateTwoInputs, Gate>);
+
     public:
         enum PinName
         {
@@ -53,21 +57,21 @@ namespace nts
             }),
             m_components(init_vector_component<Gate>(4))
         {
-            setLinkInternal(INPUT_1A, *m_components.at(0), Gate::INPUT1);
-            setLinkInternal(INPUT_1B, *m_components.at(0), Gate::INPUT2);
-            setLinkInternal(OUTPUT_1, *m_components.at(0), Gate::OUTPUT);
+            setLinkInternal(INPUT_1A, *m_components.at(0), GateTwoInputs::INPUT1);
+            setLinkInternal(INPUT_1B, *m_components.at(0), GateTwoInputs::INPUT2);
+            setLinkInternal(OUTPUT_1, *m_components.at(0), GateTwoInputs::OUTPUT);
 
-            setLinkInternal(INPUT_2A, *m_components.at(1), Gate::INPUT1);
-            setLinkInternal(INPUT_2B, *m_components.at(1), Gate::INPUT2);
-            setLinkInternal(OUTPUT_2, *m_components.at(1), Gate::OUTPUT);
+            setLinkInternal(INPUT_2A, *m_components.at(1), GateTwoInputs::INPUT1);
+            setLinkInternal(INPUT_2B, *m_components.at(1), GateTwoInputs::INPUT2);
+            setLinkInternal(OUTPUT_2, *m_components.at(1), GateTwoInputs::OUTPUT);
 
-            setLinkInternal(INPUT_3A, *m_components.at(2), Gate::INPUT1);
-            setLinkInternal(INPUT_3B, *m_components.at(2), Gate::INPUT2);
-            setLinkInternal(OUTPUT_3, *m_components.at(2), Gate::OUTPUT);
+            setLinkInternal(INPUT_3A, *m_components.at(2), GateTwoInputs::INPUT1);
+            setLinkInternal(INPUT_3B, *m_components.at(2), GateTwoInputs::INPUT2);
+            setLinkInternal(OUTPUT_3, *m_components.at(2), GateTwoInputs::OUTPUT);
 
-            setLinkInternal(INPUT_4A, *m_components.at(3), Gate::INPUT1);
-            setLinkInternal(INPUT_4B, *m_components.at(3), Gate::INPUT2);
-            setLinkInternal(OUTPUT_4, *m_components.at(3), Gate::OUTPUT);
+            setLinkInternal(INPUT_4A, *m_components.at(3), GateTwoInputs::INPUT1);
+            setLinkInternal(INPUT_4B, *m_components.at(3), GateTwoInputs::INPUT2);
+            setLinkInternal(OUTPUT_4, *m_components.at(3), GateTwoInputs::OUTPUT);
         }
 
         ~ParallelGateTwoInputsComponent() noexcept override = default;

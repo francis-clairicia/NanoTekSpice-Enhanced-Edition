@@ -17,10 +17,13 @@ namespace nts
     template<typename Component>
     std::vector<InternComponent> init_vector_component(std::size_t n)
     {
+        static_assert(std::is_base_of_v<IComponent, Component>);
         std::vector<InternComponent> components(n);
 
-        for (std::size_t i = 0; i < n; ++i)
-            components[i] = std::make_unique<Component>();
+        if constexpr(std::is_base_of_v<IComponent, Component>) {
+            for (std::size_t i = 0; i < n; ++i)
+                components[i] = std::make_unique<Component>();
+        }
         return components;
     }
 }

@@ -9,6 +9,7 @@
 #define COMPONENT2716_HPP_
 
 #include "ACalculationComponent.hpp"
+#include "Memory.hpp"
 
 namespace nts
 {
@@ -48,9 +49,9 @@ namespace nts
         void computeOutputs() final;
 
     private:
-        InternComponent     m_invert_oe;
-        InternComponent     m_invert_ce_pgm;
-        std::array<char, 2048> m_memory;
+        InternComponent m_invert_oe;
+        InternComponent m_invert_ce_pgm;
+        Memory<2048UL>  m_memory;
     };
 }
 

@@ -26,13 +26,11 @@ namespace nts
         m_invert_oe{std::make_unique<GateNOT>()},
         m_invert_ce_pgm{std::make_unique<GateNOT>()}
     {
-        std::fill(m_memory.begin(), m_memory.end(), 0);
         std::ifstream rom_stream{ROM_BUFFER_FILE.data(), std::ios_base::binary};
 
-        if (!rom_stream)
-            return;
-        rom_stream.read(m_memory.data(), m_memory.size());
-        rom_stream.close();
+        if (rom_stream.is_open()) {
+            rom_stream >> m_memory;
+        }
 
         m_pins.setLinkInternal(*this, OUTPUT_ENABLED, *m_invert_oe, GateNOT::INPUT);
         m_pins.setLinkInternal(*this, CHIP_ENABLED, *m_invert_ce_pgm, GateNOT::INPUT);
@@ -65,7 +63,7 @@ namespace nts
         for (std::size_t bit = 0; bit < address_input.size(); ++bit)
             address |= (address_input.at(bit) << bit);
 
-        const char byte = m_memory.at(address);
+        const auto byte = m_memory[address];
 
         for (std::size_t bit = 0; bit < byte_output.size(); ++bit)
             m_pins.output(byte_output.at(bit)) = static_cast<Tristate>((byte & (1 << bit)) >> bit);
