@@ -19,7 +19,7 @@ namespace nts
         m_invert_clock{std::make_unique<GateNOT>()},
         m_counter{0}
     {
-        m_invert_clock->setLink(GateNOT::INPUT, *this, CLOCK);
+        m_pins.setLinkInternal(*this, CLOCK, *m_invert_clock, GateNOT::INPUT);
     }
 
     void Component4040::computeOutputs()

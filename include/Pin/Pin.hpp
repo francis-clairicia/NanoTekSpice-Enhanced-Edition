@@ -58,6 +58,9 @@ namespace nts
     private:
         struct Link
         {
+            Link(IComponent &_component, std::size_t _pin) noexcept: component{_component}, pin{_pin} {}
+            ~Link() noexcept = default;
+
             IComponent &component;
             std::size_t pin;
         };

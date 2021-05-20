@@ -34,8 +34,8 @@ namespace nts
         rom_stream.read(m_memory.data(), m_memory.size());
         rom_stream.close();
 
-        m_invert_oe->setLink(GateNOT::INPUT, *this, OUTPUT_ENABLED);
-        m_invert_ce_pgm->setLink(GateNOT::INPUT, *this, CHIP_ENABLED);
+        m_pins.setLinkInternal(*this, OUTPUT_ENABLED, *m_invert_oe, GateNOT::INPUT);
+        m_pins.setLinkInternal(*this, CHIP_ENABLED, *m_invert_ce_pgm, GateNOT::INPUT);
     }
 
     void Component2716::computeOutputs()

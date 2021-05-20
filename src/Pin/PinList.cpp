@@ -115,12 +115,14 @@ namespace nts
         checkPin(pin);
         Pin &p = m_pins.at(pin);
         if (p.isOutput()) {
-            if (p.hasInternalLinks())
+            if (p.hasInternalLinks()) {
+                const Locker locker{*this};
                 return p.computeInternalLinks(m_actual_tick);
+            }
             return m_output_values.at(pin);
         }
         if (p.isInput()) {
-            if (!m_locked)
+            if (!isLocked())
                 return FALSE;
             return m_input_values.at(pin);
         }
@@ -129,17 +131,10 @@ namespace nts
 
     Tristate PinList::computeInternal(IComponent &component, std::size_t pin)
     {
-        auto simulate_and_compute = [&]()
-        {
-            component.simulate(m_actual_tick);
-            return component.compute(pin);
-        };
-    
-        if (!m_locked) {
-            const Locker locker{*this};
-            return simulate_and_compute();
-        }
-        return simulate_and_compute();
+        const Locker locker{*this};
+
+        component.simulate(m_actual_tick);
+        return component.compute(pin);
     }
 
     void PinList::setAllOutputs(Tristate v) noexcept
@@ -149,16 +144,40 @@ namespace nts
         }
     }
 
+    void PinList::setIOPinsAsInput() noexcept
+    {
+        for (auto pin : m_both_input_and_output_pins) {
+            m_pins.at(pin).computeAsInput();
+        }
+    }
+
+    void PinList::setIOPinsAsOutput() noexcept
+    {
+        for (auto pin : m_both_input_and_output_pins) {
+            m_pins.at(pin).computeAsOutput();
+        }
+    }
+
     void PinList::setLink(std::size_t pin, IComponent &other, std::size_t otherPin)
     {
         checkPin(pin);
         m_pins.at(pin).setLinkWithExternalComponent(other, otherPin);
     }
 
-    void PinList::setLinkInternal(std::size_t pin, IComponent &other, std::size_t otherPin)
+    void PinList::setLinkInternal(IComponent &owner, std::size_t pin, IComponent &other, std::size_t otherPin)
     {
         checkPin(pin);
-        m_pins.at(pin).setLinkWithInternalComponent(other, otherPin);
+        Pin &p = m_pins.at(pin);
+        if (p.isInput() || p.isBidirectional()) {
+            other.setLink(otherPin, owner, pin);
+        } else {
+            p.setLinkWithInternalComponent(other, otherPin);
+        }
+    }
+
+    bool PinList::isLocked() const noexcept
+    {
+        return m_locked;
     }
 
     void PinList::lock() noexcept
@@ -192,13 +211,16 @@ namespace nts
     }
 
     PinList::Locker::Locker(PinList &pin_list) noexcept:
-        m_pin_list{pin_list}
+        m_pin_list{pin_list},
+        m_already_locked{pin_list.isLocked()}
     {
-        m_pin_list.lock();
+        if (!m_already_locked)
+            m_pin_list.lock();
     }
 
     PinList::Locker::~Locker() noexcept
     {
-        m_pin_list.unlock();
+        if (!m_already_locked)
+            m_pin_list.unlock();
     }
 } // namespace nts

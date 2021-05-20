@@ -30,6 +30,7 @@ namespace nts
 
         private:
             PinList &m_pin_list;
+            bool     m_already_locked;
         };
 
     public:
@@ -67,8 +68,11 @@ namespace nts
 
         void setAllOutputs(Tristate v) noexcept;
 
+        void setIOPinsAsInput() noexcept;
+        void setIOPinsAsOutput() noexcept;
+
         void setLink(std::size_t pin, IComponent &other, std::size_t otherPin);
-        void setLinkInternal(std::size_t pin, IComponent &other, std::size_t otherPin);
+        void setLinkInternal(IComponent &owner, std::size_t pin, IComponent &other, std::size_t otherPin);
 
         void dump() const noexcept;
 
@@ -81,6 +85,7 @@ namespace nts
         void checkPin(std::size_t pin) const;
         void checkPin(const std::vector<std::size_t> &list, std::size_t pin) const;
 
+        [[nodiscard]] bool isLocked() const noexcept;
         void lock() noexcept;
         void unlock() noexcept;
 

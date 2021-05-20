@@ -18,8 +18,8 @@ namespace nts
         m_and_gate_clock{std::make_unique<GateAND>()},
         m_shift{0}
     {
-        m_invert_cp1->setLink(GateNOT::INPUT, *this, CP1);
-        m_and_gate_clock->setLink(GateAND::INPUT1, *this, CP0);
+        m_pins.setLinkInternal(*this, CP1, *m_invert_cp1, GateNOT::INPUT);
+        m_pins.setLinkInternal(*this, CP0, *m_and_gate_clock, GateAND::INPUT1);
         m_and_gate_clock->setLink(GateAND::INPUT2, *m_invert_cp1, GateNOT::OUTPUT);
     }
 

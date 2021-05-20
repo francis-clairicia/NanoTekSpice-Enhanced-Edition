@@ -29,7 +29,7 @@ namespace nts
         if (search != m_external_links.end())
             return;
 
-        m_external_links.push_back(Pin::Link{.component = component, .pin = pin});
+        m_external_links.emplace_back(component, pin);
         if (isInput() || isBidirectional()) {
             for (Pin::Link &link : m_internal_links) {
                 link.component.setLink(link.pin, component, pin);
@@ -48,7 +48,7 @@ namespace nts
         if (search != m_internal_links.end())
             return;
 
-        m_internal_links.push_back(Pin::Link{.component = component, .pin = pin});
+        m_internal_links.emplace_back(component, pin);
         if (isInput() || isBidirectional()) {
             for (Pin::Link &link : m_external_links) {
                 component.setLink(pin, link.component, link.pin);

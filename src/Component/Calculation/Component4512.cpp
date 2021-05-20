@@ -19,7 +19,7 @@ namespace nts
         }),
         m_invert_oe{std::make_unique<GateNOT>()}
     {
-        m_invert_oe->setLink(GateNOT::INPUT, *this, INPUT_OE);
+        m_pins.setLinkInternal(*this, INPUT_OE, *m_invert_oe, GateNOT::INPUT);
     }
 
     void Component4512::computeOutputs()

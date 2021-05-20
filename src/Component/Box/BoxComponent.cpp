@@ -45,6 +45,6 @@ namespace nts
 
     void BoxComponent::setLinkInternal(std::size_t pin, IComponent &other, std::size_t otherPin)
     {
-        m_pins.setLinkInternal(pin, other, otherPin);
+        m_pins.setLinkInternal(*this, pin, other, otherPin);
     }
 } // namespace nts

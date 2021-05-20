@@ -27,6 +27,7 @@ namespace nts
         m_invert_data{std::make_unique<GateNOT>()}
     {
         m_invert_data->setLink(GateNOT::INPUT, *this, DATA);
+        m_pins.setLinkInternal(*this, DATA, *m_invert_data, GateNOT::INPUT);
     }
 
     void DTypeFlipFlopWithSR::computeOutputs()
