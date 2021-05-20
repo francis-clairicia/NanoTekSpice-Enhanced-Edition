@@ -11,6 +11,7 @@
 #include "Circuit.hpp"
 #include "BadComponentNameException.hpp"
 #include "BadComponentTypeException.hpp"
+#include "ComponentNameOverride.hpp"
 
 Test(Circuit, create_and_handle_nanotekspice_circuit)
 {
@@ -21,11 +22,9 @@ Test(Circuit, create_and_handle_nanotekspice_circuit)
     circuit.addComponent("output", "out");
     circuit["in"].setLink(1, circuit["out"], 1);
     circuit["out"].setLink(1, circuit["in"], 1);
-    circuit.simulate(0);
+    circuit.simulate();
 
-    circuit.display(0);
-    std::cout.flush();
-    cr_assert_stdout_neq_str("");
+    cr_assert_eq(circuit.getTick(), 0);
 }
 
 Test(Circuit, throw_for_non_existing_component_type)
@@ -42,6 +41,14 @@ Test(Circuit, throw_for_non_existing_component_name)
     circuit.addComponent("input", "in");
     cr_assert_throw(circuit.setValueForNextTick("unknown", "1"), nts::BadComponentNameException);
     cr_assert_throw(circuit["unknown"], nts::BadComponentNameException);
+}
+
+Test(Circuit, throw_for_adding_component_existing_component_name)
+{
+    nts::Circuit circuit;
+
+    circuit.addComponent("input", "in");
+    cr_assert_throw(circuit.addComponent("input", "in"), nts::ComponentNameOverride);
 }
 
 Test(Circuit, dump_components)

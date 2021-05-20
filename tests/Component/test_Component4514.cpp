@@ -12,9 +12,8 @@
 Test(Component4514, decoder_component)
 {
     nts::Circuit circuit = nts::Parser::parse("tests/.nts/4514_decoder.nts");
-    std::size_t tick = 0;
 
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     circuit.setValueForNextTick("in_0",    "0");
     circuit.setValueForNextTick("in_1",    "0");
@@ -23,7 +22,7 @@ Test(Component4514, decoder_component)
     circuit.setValueForNextTick("inhibit", "0");
     circuit.setValueForNextTick("strobe",  "1");
 
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     cr_assert_eq(circuit.output("out_00").getValue(), 1);
 
@@ -32,7 +31,7 @@ Test(Component4514, decoder_component)
     circuit.setValueForNextTick("in_2",    "1");
     circuit.setValueForNextTick("in_3",    "0");
 
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     cr_assert_eq(circuit.output("out_04").getValue(), 1);
 }

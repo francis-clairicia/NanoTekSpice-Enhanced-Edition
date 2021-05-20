@@ -12,26 +12,25 @@
 Test(InputComponent, get_an_input_from_prompt)
 {
     nts::Circuit circuit = nts::Parser::parse("tests/.nts/input_output.nts");
-    std::size_t tick = 0;
 
     cr_assert_eq(circuit.input("in").getValue(), nts::UNDEFINED);
 
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     cr_assert_eq(circuit.input("in").getValue(), nts::UNDEFINED);
 
     circuit.setValueForNextTick("in", "0");
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     cr_assert_eq(circuit.input("in").getValue(), nts::FALSE);
 
     circuit.setValueForNextTick("in", "1");
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     cr_assert_eq(circuit.input("in").getValue(), nts::TRUE);
 
     circuit.setValueForNextTick("in", "U");
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     cr_assert_eq(circuit.input("in").getValue(), nts::UNDEFINED);
 }
@@ -39,30 +38,29 @@ Test(InputComponent, get_an_input_from_prompt)
 Test(OutputComponent, get_value_computed_from_its_pin)
 {
     nts::Circuit circuit = nts::Parser::parse("tests/.nts/input_output.nts");
-    std::size_t tick = 0;
 
     cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
     cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
 
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
     cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
 
     circuit.setValueForNextTick("in", "0");
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);
     cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
 
     circuit.setValueForNextTick("in", "1");
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     cr_assert_eq(circuit.output("out").getValue(), nts::TRUE);
     cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
 
     circuit.setValueForNextTick("in", "U");
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
     cr_assert_eq(circuit["out"].compute(1), nts::FALSE);

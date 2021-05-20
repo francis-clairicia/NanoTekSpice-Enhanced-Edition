@@ -13,6 +13,7 @@
 #include "BadComponentNameException.hpp"
 #include "ComponentNameOverride.hpp"
 #include "InputValueException.hpp"
+#include "constants.hpp"
 
 namespace
 {
@@ -21,16 +22,15 @@ namespace
         {"1", nts::TRUE},
         {"U", nts::UNDEFINED}
     };
-
-    const std::unordered_map<nts::Tristate, std::string> TRISTATE_TO_STR{
-        {nts::FALSE,     "0"},
-        {nts::TRUE,      "1"},
-        {nts::UNDEFINED, "U"}
-    };
 } // namespace
 
 namespace nts
 {
+    Circuit::Circuit() noexcept:
+        m_tick{NO_TICKS}
+    {
+    }
+
     void Circuit::addComponent(const std::string &type, const std::string &name)
     {
         if (hasComponent(name))
@@ -57,6 +57,11 @@ namespace nts
         return m_components.empty();
     }
 
+    std::size_t Circuit::getTick() const noexcept
+    {
+        return m_tick;
+    }
+
     void Circuit::setValueForNextTick(const std::string &name, const std::string &value)
     {
         auto input = STR_TO_TRISTATE.find(value);
@@ -73,25 +78,15 @@ namespace nts
         component->second.setValue(value);
     }
 
-    void Circuit::display(std::size_t tick) const noexcept
+    void Circuit::simulate() noexcept
     {
-        std::cout << "tick: " << tick << '\n';
-        std::cout << "input(s):" << '\n';
-        for (const auto &component : m_input_components) {
-            std::cout << std::string(2, ' ') << component.first << ": ";
-            std::cout << TRISTATE_TO_STR.at(component.second.getValue()) << '\n';
+        if (m_tick == NO_TICKS) {
+            m_tick = 0L;
+        } else {
+            ++m_tick;
         }
-        std::cout << "output(s):" << '\n';
-        for (const auto &component : m_output_components) {
-            std::cout << std::string(2, ' ') << component.first << ": ";
-            std::cout << TRISTATE_TO_STR.at(component.second.getValue()) << '\n';
-        }
-    }
-
-    void Circuit::simulate(std::size_t tick) const noexcept
-    {
         for (auto &component : m_components)
-            component.second->simulate(tick);
+            component.second->simulate(m_tick);
     }
 
     void Circuit::dump() const noexcept
@@ -124,6 +119,16 @@ namespace nts
         return search->second;
     }
 
+    Circuit::InputsList Circuit::getInputs() const
+    {
+        InputsList list;
+
+        for (const auto &component : m_input_components) {
+            list.emplace_back(component.first, component.second);
+        }
+        return list;
+    }
+
     const OutputComponent &Circuit::output(const std::string &name) const
     {
         auto search = m_output_components.find(name);
@@ -140,6 +145,16 @@ namespace nts
         if (search == m_output_components.end())
             throw BadComponentNameException(name);
         return search->second;
+    }
+
+    Circuit::OutputsList Circuit::getOutputs() const
+    {
+        OutputsList list;
+
+        for (const auto &component : m_output_components) {
+            list.emplace_back(component.first, component.second);
+        }
+        return list;
     }
 
     const IComponent &Circuit::operator[](const std::string &key) const

@@ -85,21 +85,29 @@ namespace nts
 
     Tristate Pin::computeLinks(const Pin::Links &used_links, std::size_t tick) const
     {
-        std::vector<Tristate> inputs;
+        std::vector<Tristate> inputs(used_links.size());
 
-        std::transform(used_links.begin(), used_links.end(), std::back_inserter(inputs),
+        std::transform(used_links.begin(), used_links.end(), inputs.begin(),
                        [&tick](const Pin::Link &link)
                        {
                            link.component.simulate(tick);
                            return link.component.compute(link.pin);
                        });
 
-        if (std::any_of(inputs.begin(), inputs.end(), [](Tristate value){return value == UNDEFINED;}))
-            return UNDEFINED;
-
-        bool output = false;
-        std::for_each(inputs.begin(), inputs.end(), [&output](Tristate value){output |= value;});
-        return static_cast<Tristate>(output);
+        Tristate output = FALSE;
+        for (Tristate value : inputs) {
+            switch (value)
+            {
+            case TRUE:
+                return TRUE;
+            case UNDEFINED:
+                output = UNDEFINED;
+                break;
+            default:
+                break;
+            }
+        }
+        return output;
     }
 
     bool Pin::isInput() const noexcept

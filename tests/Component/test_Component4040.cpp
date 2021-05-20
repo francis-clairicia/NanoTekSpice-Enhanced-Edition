@@ -12,7 +12,6 @@
 Test(Component4040, counter_component)
 {
     nts::Circuit circuit = nts::Parser::parse("tests/.nts/4040_counter.nts");
-    std::size_t tick = 0;
     std::vector<std::string> out{
         "out_00",
         "out_01",
@@ -28,16 +27,16 @@ Test(Component4040, counter_component)
         "out_11"
     };
 
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     circuit.setValueForNextTick("cl_clock", "0");
     circuit.setValueForNextTick("in_reset", "1");
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     circuit.setValueForNextTick("in_reset", "0");
     for (std::size_t count = 0; count < 4096; ++count) {
         for (std::size_t bit = 0; bit < out.size(); ++bit)
             cr_assert_eq(circuit.output(out.at(bit)).getValue(), ((count & (1UL << bit)) >> bit));
-        circuit.simulate(tick++);
+        circuit.simulate();
     }
 }

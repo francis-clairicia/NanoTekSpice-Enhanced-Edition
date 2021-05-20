@@ -13,9 +13,8 @@
 Test(LoggerComponent, print_on_log_file)
 {
     nts::Circuit circuit = nts::Parser::parse("tests/.nts/logger.nts");
-    std::size_t tick = 0;
 
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     circuit.setValueForNextTick("in_001",  "1");
     circuit.setValueForNextTick("in_002",  "0");
@@ -28,16 +27,16 @@ Test(LoggerComponent, print_on_log_file)
     circuit.setValueForNextTick("clock",   "1");
     circuit.setValueForNextTick("inhibit", "0");
 
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     /* Does not print if inhibit is True */
     circuit.setValueForNextTick("inhibit", "1");
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     /* Does not print if clock is False */
     circuit.setValueForNextTick("inhibit", "0");
     circuit.setValueForNextTick("clock",   "0");
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     std::ifstream log_stream{"./log.bin"};
 

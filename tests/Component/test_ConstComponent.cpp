@@ -12,17 +12,16 @@
 Test(TrueComponent, always_returns_true)
 {
     nts::Circuit circuit = nts::Parser::parse("tests/.nts/true.nts");
-    std::size_t tick = 0;
 
     cr_assert_eq(circuit["in"].compute(1), nts::TRUE);
     cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
 
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     cr_assert_eq(circuit["in"].compute(1), nts::TRUE);
     cr_assert_eq(circuit.output("out").getValue(), nts::TRUE);
 
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     cr_assert_eq(circuit["in"].compute(1), nts::TRUE);
     cr_assert_eq(circuit.output("out").getValue(), nts::TRUE);
@@ -31,17 +30,16 @@ Test(TrueComponent, always_returns_true)
 Test(FalseComponent, always_returns_false)
 {
     nts::Circuit circuit = nts::Parser::parse("tests/.nts/false.nts");
-    std::size_t tick = 0;
 
     cr_assert_eq(circuit["in"].compute(1), nts::FALSE);
     cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
 
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     cr_assert_eq(circuit["in"].compute(1), nts::FALSE);
     cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);
 
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     cr_assert_eq(circuit["in"].compute(1), nts::FALSE);
     cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);

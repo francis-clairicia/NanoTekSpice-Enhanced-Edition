@@ -17,12 +17,29 @@ namespace nts
     class Circuit
     {
     public:
-        using Components = std::map<std::string, std::unique_ptr<IComponent>>;
-        using Inputs = std::map<std::string, InputComponent &>;
-        using Outputs = std::map<std::string, OutputComponent &>;
+        struct Input
+        {
+            Input(const std::string &_name, InputComponent &_component) noexcept: name{_name}, component{_component} {}
+            ~Input() noexcept = default;
+
+            const std::string_view name;
+            const InputComponent &component;
+        };
+
+        struct Output
+        {
+            Output(const std::string &_name, OutputComponent &_component) noexcept: name{_name}, component{_component} {}
+            ~Output() noexcept = default;
+    
+            const std::string_view name;
+            const OutputComponent &component;
+        };
+
+        using InputsList = std::list<Input>;
+        using OutputsList = std::list<Output>;
 
     public:
-        Circuit() noexcept = default;
+        Circuit() noexcept;
         Circuit(const Circuit &other) noexcept = delete;
         Circuit(Circuit &&other) noexcept = default;
         ~Circuit() noexcept = default;
@@ -31,17 +48,20 @@ namespace nts
         [[nodiscard]] bool hasComponent(const std::string &name) const noexcept;
         [[nodiscard]] bool empty() const noexcept;
 
+        [[nodiscard]] std::size_t getTick() const noexcept;
+
         void setValueForNextTick(const std::string &name, const std::string &value);
         void setValueForNextTick(const std::string &name, Tristate value);
-        void display(std::size_t tick) const noexcept;
-        void simulate(std::size_t tick) const noexcept;
+        void simulate() noexcept;
         void dump() const noexcept;
 
         [[nodiscard]] const InputComponent &input(const std::string &name) const;
         [[nodiscard]] InputComponent &input(const std::string &name);
+        [[nodiscard]] InputsList getInputs() const;
 
         [[nodiscard]] const OutputComponent &output(const std::string &name) const;
         [[nodiscard]] OutputComponent &output(const std::string &name);
+        [[nodiscard]] OutputsList getOutputs() const;
 
         Circuit &operator=(const Circuit &rhs) noexcept = delete;
         Circuit &operator=(Circuit &&rhs) noexcept = default;
@@ -49,9 +69,15 @@ namespace nts
         IComponent &operator[](const std::string &key);
 
     private:
-        Components m_components;
-        Inputs     m_input_components;
-        Outputs    m_output_components;
+        using Components = std::map<std::string, std::unique_ptr<IComponent>>;
+        using InputsMap = std::map<std::string, InputComponent &>;
+        using OutputsMap = std::map<std::string, OutputComponent &>;
+
+    private:
+        std::size_t m_tick;
+        Components  m_components;
+        InputsMap   m_input_components;
+        OutputsMap  m_output_components;
     };
 }
 

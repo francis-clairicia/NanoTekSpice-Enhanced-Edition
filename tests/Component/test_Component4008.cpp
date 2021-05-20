@@ -12,9 +12,8 @@
 Test(Component4008, adds_two_binary_numbers)
 {
     nts::Circuit circuit = nts::Parser::parse("tests/.nts/4008_adder.nts");
-    std::size_t tick = 0;
 
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     // Sets in_a to 4 in binary
     circuit.setValueForNextTick("in_a1", "0");
@@ -32,7 +31,7 @@ Test(Component4008, adds_two_binary_numbers)
     circuit.setValueForNextTick("in_c", "0");
 
     // Simulate
-    circuit.simulate(tick++);
+    circuit.simulate();
 
     // Check outputs to value 17
     cr_assert_eq(circuit.output("out_0").getValue(), 1);
