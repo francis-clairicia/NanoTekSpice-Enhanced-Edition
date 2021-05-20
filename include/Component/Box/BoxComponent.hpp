@@ -14,10 +14,12 @@ namespace nts
 {
     class BoxComponent: public IComponent
     {
-    public:
+    protected:
         BoxComponent(ComponentType type, std::size_t nb_pins, PinList::Initializer input_pins, PinList::Initializer output_pins) noexcept;
         BoxComponent(const BoxComponent &other) noexcept = delete;
         BoxComponent(BoxComponent &&other) noexcept = default;
+
+    public:
         ~BoxComponent() noexcept override = default;
 
         void simulate(std::size_t tick) final;
