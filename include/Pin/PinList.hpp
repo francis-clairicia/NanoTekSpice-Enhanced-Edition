@@ -21,18 +21,6 @@ namespace nts
     public:
         using Initializer = std::initializer_list<std::size_t>;
 
-    private:
-        class Locker
-        {
-        public:
-            Locker(PinList &pin_list) noexcept;
-            ~Locker() noexcept;
-
-        private:
-            PinList &m_pin_list;
-            bool     m_already_locked;
-        };
-
     public:
         PinList(ComponentType owner, std::size_t nb, Initializer inputs, Initializer outputs, bool accept_io = false);
         ~PinList() noexcept = default;
@@ -79,6 +67,18 @@ namespace nts
     private:
         using PinMap = std::unordered_map<std::size_t, Pin>;
         using PinValues = std::unordered_map<std::size_t, Tristate>;
+
+    private:
+        class Locker
+        {
+        public:
+            Locker(PinList &pin_list) noexcept;
+            ~Locker() noexcept;
+
+        private:
+            PinList &m_pin_list;
+            bool     m_already_locked;
+        };
 
     private:
         bool updateInputs(std::size_t tick);
