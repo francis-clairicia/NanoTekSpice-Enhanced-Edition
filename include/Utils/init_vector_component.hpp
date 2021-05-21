@@ -8,9 +8,7 @@
 #ifndef INIT_VECTOR_COMPONENT_HPP_
 #define INIT_VECTOR_COMPONENT_HPP_
 
-#include <vector>
-#include <memory>
-#include "IComponent.hpp"
+#include "types.hpp"
 
 namespace nts
 {
