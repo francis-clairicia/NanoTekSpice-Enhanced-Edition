@@ -42,13 +42,13 @@ namespace nts
         constexpr std::array<std::size_t, 11> address_pin{A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10};
         constexpr std::array<std::size_t, 8> byte_output{Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7};
 
-        Tristate output_enabled = compute(*m_invert_oe, GateNOT::OUTPUT);
-        Tristate chipset_enabled = compute(*m_invert_ce_pgm, GateNOT::OUTPUT);
+        const Tristate output_enabled = compute(*m_invert_oe, GateNOT::OUTPUT);
+        const Tristate chipset_enabled = compute(*m_invert_ce_pgm, GateNOT::OUTPUT);
 
         for (std::size_t bit = 0; bit < address_input.size(); ++bit)
             address_input[bit] = compute(address_pin.at(bit));
 
-        if (output_enabled == FALSE || chipset_enabled == FALSE || output_enabled == UNDEFINED || chipset_enabled == UNDEFINED) {
+        if (output_enabled == TRUE || chipset_enabled == TRUE || output_enabled == UNDEFINED || chipset_enabled == UNDEFINED) {
             setAllOutputs(UNDEFINED);
             return;
         }

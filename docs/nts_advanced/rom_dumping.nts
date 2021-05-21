@@ -2,7 +2,6 @@
 
 .chipsets:
 clock  clock
-4069   not
 false  false
 true   true
 
@@ -13,11 +12,8 @@ input  reset
 logger logger
 
 .links:
-# NOT gate
-clock:1   not:1
-
 # Counter
-not:2     counter:10 # Clock
+clock:1   counter:10 # Clock
 reset:1   counter:11 # Reset
 
 # ROM
@@ -32,8 +28,8 @@ counter:13 rom:1   # Addr07
 counter:12 rom:23  # Addr08
 counter:14 rom:22  # Addr09
 counter:15 rom:19  # Addr10
-false:1    rom:18  # Enable (invert)
-false:1    rom:20  # Read (invert)
+true:1     rom:18  # Enable (invert)
+true:1     rom:20  # Read (invert)
 
 # Logger
 rom:9      logger:1   # Q0
