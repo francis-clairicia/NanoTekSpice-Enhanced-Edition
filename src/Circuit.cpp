@@ -62,20 +62,17 @@ namespace nts
         return m_tick;
     }
 
-    void Circuit::setValueForNextTick(const std::string &name, const std::string &value)
+    void Circuit::setValue(const std::string &name, const std::string &value)
     {
         auto input = STR_TO_TRISTATE.find(value);
         if (input == STR_TO_TRISTATE.end())
             throw InputValueException(value);
-        setValueForNextTick(name, input->second);
+        setValue(name, input->second);
     }
 
-    void Circuit::setValueForNextTick(const std::string &name, Tristate value)
+    void Circuit::setValue(const std::string &name, Tristate value)
     {
-        auto component = m_input_components.find(name);
-        if (component == m_input_components.end())
-            throw BadComponentNameException(name);
-        component->second.setValue(value);
+        input(name).setValue(value);
     }
 
     void Circuit::simulate() noexcept
@@ -155,6 +152,11 @@ namespace nts
             list.emplace_back(component.first, component.second);
         }
         return list;
+    }
+
+    Tristate Circuit::getValue(const std::string &name) const
+    {
+        return output(name).getValue();
     }
 
     const IComponent &Circuit::operator[](const std::string &key) const

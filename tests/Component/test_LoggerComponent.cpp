@@ -16,26 +16,26 @@ Test(LoggerComponent, print_on_log_file)
 
     circuit.simulate();
 
-    circuit.setValueForNextTick("in_001",  "1");
-    circuit.setValueForNextTick("in_002",  "0");
-    circuit.setValueForNextTick("in_004",  "0");
-    circuit.setValueForNextTick("in_008",  "0");
-    circuit.setValueForNextTick("in_016",  "0");
-    circuit.setValueForNextTick("in_032",  "0");
-    circuit.setValueForNextTick("in_064",  "1");
-    circuit.setValueForNextTick("in_128",  "0");
-    circuit.setValueForNextTick("clock",   "1");
-    circuit.setValueForNextTick("inhibit", "0");
+    circuit.setValue("in_001",  "1");
+    circuit.setValue("in_002",  "0");
+    circuit.setValue("in_004",  "0");
+    circuit.setValue("in_008",  "0");
+    circuit.setValue("in_016",  "0");
+    circuit.setValue("in_032",  "0");
+    circuit.setValue("in_064",  "1");
+    circuit.setValue("in_128",  "0");
+    circuit.setValue("clock",   "1");
+    circuit.setValue("inhibit", "0");
 
     circuit.simulate();
 
     /* Does not print if inhibit is True */
-    circuit.setValueForNextTick("inhibit", "1");
+    circuit.setValue("inhibit", "1");
     circuit.simulate();
 
     /* Does not print if clock is False */
-    circuit.setValueForNextTick("inhibit", "0");
-    circuit.setValueForNextTick("clock",   "0");
+    circuit.setValue("inhibit", "0");
+    circuit.setValue("clock",   "0");
     circuit.simulate();
 
     std::ifstream log_stream{"./log.bin"};

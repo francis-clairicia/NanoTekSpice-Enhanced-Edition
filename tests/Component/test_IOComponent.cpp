@@ -19,17 +19,17 @@ Test(InputComponent, get_an_input_from_prompt)
 
     cr_assert_eq(circuit.input("in").getValue(), nts::UNDEFINED);
 
-    circuit.setValueForNextTick("in", "0");
+    circuit.setValue("in", "0");
     circuit.simulate();
 
     cr_assert_eq(circuit.input("in").getValue(), nts::FALSE);
 
-    circuit.setValueForNextTick("in", "1");
+    circuit.setValue("in", "1");
     circuit.simulate();
 
     cr_assert_eq(circuit.input("in").getValue(), nts::TRUE);
 
-    circuit.setValueForNextTick("in", "U");
+    circuit.setValue("in", "U");
     circuit.simulate();
 
     cr_assert_eq(circuit.input("in").getValue(), nts::UNDEFINED);
@@ -39,29 +39,29 @@ Test(OutputComponent, get_value_computed_from_its_pin)
 {
     nts::Circuit circuit = nts::Parser::parse("tests/.nts/input_output.nts");
 
-    cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
+    cr_assert_eq(circuit.getValue("out"), nts::UNDEFINED);
     cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
 
     circuit.simulate();
 
-    cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
+    cr_assert_eq(circuit.getValue("out"), nts::UNDEFINED);
     cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
 
-    circuit.setValueForNextTick("in", "0");
+    circuit.setValue("in", "0");
     circuit.simulate();
 
-    cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);
+    cr_assert_eq(circuit.getValue("out"), nts::FALSE);
     cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
 
-    circuit.setValueForNextTick("in", "1");
+    circuit.setValue("in", "1");
     circuit.simulate();
 
-    cr_assert_eq(circuit.output("out").getValue(), nts::TRUE);
+    cr_assert_eq(circuit.getValue("out"), nts::TRUE);
     cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
 
-    circuit.setValueForNextTick("in", "U");
+    circuit.setValue("in", "U");
     circuit.simulate();
 
-    cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
+    cr_assert_eq(circuit.getValue("out"), nts::UNDEFINED);
     cr_assert_eq(circuit["out"].compute(1), nts::FALSE);
 }

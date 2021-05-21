@@ -49,9 +49,12 @@ namespace nts
         void computeOutputs() final;
 
     private:
+        using ROM = Memory<2048>;
+
+    private:
         InternComponent m_invert_oe;
         InternComponent m_invert_ce_pgm;
-        Memory<2048UL>  m_memory;
+        ROM             m_memory;
     };
 }
 

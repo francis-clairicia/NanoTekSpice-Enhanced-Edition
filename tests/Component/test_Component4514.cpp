@@ -15,23 +15,23 @@ Test(Component4514, decoder_component)
 
     circuit.simulate();
 
-    circuit.setValueForNextTick("in_0",    "0");
-    circuit.setValueForNextTick("in_1",    "0");
-    circuit.setValueForNextTick("in_2",    "0");
-    circuit.setValueForNextTick("in_3",    "0");
-    circuit.setValueForNextTick("inhibit", "0");
-    circuit.setValueForNextTick("strobe",  "1");
+    circuit.setValue("in_0",    "0");
+    circuit.setValue("in_1",    "0");
+    circuit.setValue("in_2",    "0");
+    circuit.setValue("in_3",    "0");
+    circuit.setValue("inhibit", "0");
+    circuit.setValue("strobe",  "1");
 
     circuit.simulate();
 
-    cr_assert_eq(circuit.output("out_00").getValue(), 1);
+    cr_assert_eq(circuit.getValue("out_00"), 1);
 
-    circuit.setValueForNextTick("in_0",    "0");
-    circuit.setValueForNextTick("in_1",    "0");
-    circuit.setValueForNextTick("in_2",    "1");
-    circuit.setValueForNextTick("in_3",    "0");
+    circuit.setValue("in_0",    "0");
+    circuit.setValue("in_1",    "0");
+    circuit.setValue("in_2",    "1");
+    circuit.setValue("in_3",    "0");
 
     circuit.simulate();
 
-    cr_assert_eq(circuit.output("out_04").getValue(), 1);
+    cr_assert_eq(circuit.getValue("out_04"), 1);
 }

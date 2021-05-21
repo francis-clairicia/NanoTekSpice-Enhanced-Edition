@@ -15,18 +15,18 @@ Test(Component4512, selector_component)
 
     circuit.simulate();
 
-    circuit.setValueForNextTick("in_a", "0");
-    circuit.setValueForNextTick("in_b", "0");
-    circuit.setValueForNextTick("in_c", "0");
-    circuit.setValueForNextTick("in_0", "1");
-    circuit.setValueForNextTick("enable", "0");
-    circuit.setValueForNextTick("inhibit", "0");
+    circuit.setValue("in_a", "0");
+    circuit.setValue("in_b", "0");
+    circuit.setValue("in_c", "0");
+    circuit.setValue("in_0", "1");
+    circuit.setValue("enable", "0");
+    circuit.setValue("inhibit", "0");
 
     circuit.simulate();
-    cr_assert_eq(circuit.output("out_data").getValue(), 1);
+    cr_assert_eq(circuit.getValue("out_data"), 1);
 
     /* returns Hi-Z (UNDEFINED) if OE is TRUE */
-    circuit.setValueForNextTick("enable", "1");
+    circuit.setValue("enable", "1");
     circuit.simulate();
-    cr_assert_eq(circuit.output("out_data").getValue(), nts::UNDEFINED);
+    cr_assert_eq(circuit.getValue("out_data"), nts::UNDEFINED);
 }

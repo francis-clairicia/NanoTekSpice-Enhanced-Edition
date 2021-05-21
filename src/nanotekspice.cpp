@@ -6,6 +6,7 @@
 */
 
 #include <iostream>
+#include <fstream>
 #include <algorithm>
 #include <csignal>
 #include <string_view>
@@ -15,6 +16,7 @@
 #include "Exception.hpp"
 #include "nanotekspice.hpp"
 #include "string_operations.hpp"
+#include "constants.hpp"
 
 namespace
 {
@@ -85,7 +87,7 @@ namespace
         if (args.size() != 2 || std::any_of(args.begin(), args.end(), [](const std::string &str){return str.empty();})) {
             throw nts::Exception("Invalid syntax");
         }
-        circuit.setValueForNextTick(args[0], args[1]);
+        circuit.setValue(args[0], args[1]);
     }
 
     const std::unordered_map<std::string_view, void (*)(nts::Circuit &)> COMMANDS_TAB{
@@ -94,6 +96,34 @@ namespace
         {"loop",     &loop_command},
         {"dump",     &dump_command},
     };
+
+    void execute_command(nts::Circuit &circuit, const std::string &command)
+    {
+        try {
+            if (command.find('=') != std::string::npos) {
+                input_value_set(command, circuit);
+            } else {
+                const auto &search = COMMANDS_TAB.find(command);
+                if (search != COMMANDS_TAB.end())
+                    search->second(circuit);
+                else
+                    std::cerr << "Unknown command \"" << command << "\"" << '\n';
+            }
+        } catch (const nts::Exception &e){
+            std::cerr << e.what() << '\n';
+        }
+    }
+
+    int cli_mainloop(nts::Circuit &circuit)
+    {
+        std::string input;
+        while (command_prompt(input)) {
+            if (input == "exit")
+                return EPITECH_EXIT_SUCCESS;
+            execute_command(circuit, input);
+        }
+        return EPITECH_EXIT_SUCCESS;
+    }
 } // namespace
 
 namespace nts
@@ -101,27 +131,34 @@ namespace nts
     int nanotekspice(const std::string &circuit_file)
     {
         Circuit circuit = Parser::parse(circuit_file);
-        std::string input;
 
         circuit.simulate();
-        while (command_prompt(input)) {
-            if (input == "exit")
-                return 0;
-            try {
-                if (input.find('=') != std::string::npos) {
-                    input_value_set(input, circuit);
-                } else {
-                    const auto &search = COMMANDS_TAB.find(input);
-                    if (search != COMMANDS_TAB.end())
-                        search->second(circuit);
-                    else
-                        std::cerr << "Unknown command \"" << input << "\"" << '\n';
-                }
-            } catch (const Exception &e){
-                std::cerr << e.what() << '\n';
-            }
+        return cli_mainloop(circuit);
+    }
+
+    int nanotekspice(const std::string &circuit_file, const std::string &default_commands_file)
+    {
+        Circuit circuit = Parser::parse(circuit_file);
+
+        circuit.simulate();
+        std::string input;
+        std::ifstream commands{default_commands_file};
+
+        if (!commands) {
+            std::cerr << "Cannot open '" << default_commands_file << "'\n";
+            return EPITECH_EXIT_FAILURE;
         }
-        return (0);
+        while (std::getline(commands, input)) {
+            trim_trailing_whitespace(input);
+            if (input.empty())
+                continue;
+            std::cout << "> " << input << '\n';
+            if (input == "exit")
+                return EPITECH_EXIT_SUCCESS;
+            execute_command(circuit, input);
+        }
+
+        return cli_mainloop(circuit);
     }
 } // namespace nts
 

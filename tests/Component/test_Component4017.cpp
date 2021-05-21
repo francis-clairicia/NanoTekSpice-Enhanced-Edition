@@ -28,16 +28,16 @@ Test(Component4017, johnson_decade_component)
     };
 
     circuit.simulate();
-    circuit.setValueForNextTick("in_0", "1");
-    circuit.setValueForNextTick("in_1", "0");
-    circuit.setValueForNextTick("in_r", "1");
+    circuit.setValue("in_0", "1");
+    circuit.setValue("in_1", "0");
+    circuit.setValue("in_r", "1");
     circuit.simulate();
 
-    circuit.setValueForNextTick("in_r", "0");
+    circuit.setValue("in_r", "0");
     for (std::size_t index = 0; index < out.size(); ++index) {
         for (std::size_t j = 0; j < out.size(); ++j)
             cr_assert_eq(circuit.output(out.at(j)).getValue(), (index == j));
-        cr_assert_eq(circuit.output("out_s").getValue(), (index < 5));
+        cr_assert_eq(circuit.getValue("out_s"), (index < 5));
         circuit.simulate();
     }
 }

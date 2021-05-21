@@ -39,7 +39,7 @@ Test(Circuit, throw_for_non_existing_component_name)
     nts::Circuit circuit;
 
     circuit.addComponent("input", "in");
-    cr_assert_throw(circuit.setValueForNextTick("unknown", "1"), nts::BadComponentNameException);
+    cr_assert_throw(circuit.setValue("unknown", "1"), nts::BadComponentNameException);
     cr_assert_throw(circuit["unknown"], nts::BadComponentNameException);
 }
 

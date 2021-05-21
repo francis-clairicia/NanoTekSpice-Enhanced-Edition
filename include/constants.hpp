@@ -15,4 +15,7 @@ namespace nts
     inline constexpr std::size_t NO_TICKS = ~0UL;
 } // namespace nts
 
+inline constexpr int EPITECH_EXIT_SUCCESS = 0;
+inline constexpr int EPITECH_EXIT_FAILURE = 84;
+
 #endif /* !CONSTANTS_HPP_ */

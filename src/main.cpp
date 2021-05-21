@@ -9,36 +9,30 @@
 #include <cstring>
 #include "nanotekspice.hpp"
 #include "Exception.hpp"
+#include "Args.hpp"
+#include "constants.hpp"
 
-namespace
+int main(int ac, char * const *av)
 {
-    void print_help(std::ostream &output)
-    {
-        output << "USAGE:\t./nanotekspice circuit" << '\n';
-        output << '\n';
-        output << "Positional arguments:" << '\n';
-        output << "\tcircuit\t\tPath to a .nts circuit file" << '\n';
-    }
-} // namespace
+    Args args;
 
-int main(int ac, char const * const *av)
-{
-    if (ac != 2) {
-        print_help(std::cerr);
-        return 84;
-    }
-    if (strcmp(av[1], "-h") == 0) {
-        print_help(std::cout);
-        return 0;
+    try {
+        args = Args::parse(ac, av);
+    } catch (const Args::Exception &exception) {
+        std::cerr << exception.what() << '\n';
+        return EPITECH_EXIT_FAILURE;
     }
 
     int output = 0;
 
     try {
-        output = nts::nanotekspice(av[1]);
+        if (!args.default_command_file.empty())
+            output = nts::nanotekspice(args.nts_file, args.default_command_file);
+        else
+            output = nts::nanotekspice(args.nts_file);
     } catch (const nts::Exception &e) {
         std::cerr << e.what() << '\n';
-        output = 84;
+        output = EPITECH_EXIT_FAILURE;
     }
 
     return output;

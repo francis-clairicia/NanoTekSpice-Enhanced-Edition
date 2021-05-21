@@ -7,6 +7,8 @@
 
 SRC_MAIN				=	src/main.cpp
 
+SRC_PARSER				=	src/Args.cpp
+
 SRC_NANOTEKSPICE		=	src/nanotekspice.cpp
 
 SRC_EXCEPTIONS			=	src/Exception/BadComponentNameException.cpp					\
@@ -59,6 +61,7 @@ SRC_CALC_COMPONENTS		=	src/Component/Calculation/ACalculationComponent.cpp			\
 							src/Component/Calculation/Component4040.cpp					\
 							src/Component/Calculation/Component4512.cpp					\
 							src/Component/Calculation/Component4514.cpp					\
+							src/Component/Calculation/Component4801.cpp					\
 							src/Component/Calculation/FlipFlop/DTypeFlipFlopWithSR.cpp
 
 SRC_COMPONENTS			=	src/Component/ComponentFactory.cpp							\
@@ -71,6 +74,7 @@ SRC_COMPONENTS			=	src/Component/ComponentFactory.cpp							\
 							$(SRC_CALC_COMPONENTS)
 
 SRC						=	$(SRC_MAIN)													\
+							$(SRC_PARSER)												\
 							$(SRC_NANOTEKSPICE)											\
 							$(SRC_EXCEPTIONS)											\
 							$(SRC_CIRCUIT)												\
@@ -92,6 +96,7 @@ SRC_UNIT_TEST			=	tests/Circuit/test_Circuit.cpp								\
 							tests/Component/test_Component4094.cpp						\
 							tests/Component/test_Component4512.cpp						\
 							tests/Component/test_Component4514.cpp						\
+							tests/Component/test_Component4801.cpp						\
 							tests/Component/test_ConstComponent.cpp						\
 							tests/Component/test_IOComponent.cpp						\
 							tests/Component/test_LoggerComponent.cpp					\

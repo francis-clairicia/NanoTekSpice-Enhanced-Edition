@@ -65,7 +65,7 @@ namespace nts
     std::istream &operator>>(std::istream &stream, Memory<Nm> &memory) noexcept
     {
         return stream.read(reinterpret_cast<char *>(memory.get()), Nm);
-    }    
+    }
 } // namespace nts
 
 #endif /* !MEMORY_HPP_ */

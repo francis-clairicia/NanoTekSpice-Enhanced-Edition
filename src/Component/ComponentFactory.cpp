@@ -23,6 +23,7 @@
 #include "Component4094.hpp"
 #include "Component4512.hpp"
 #include "Component4514.hpp"
+#include "Component4801.hpp"
 #include "LoggerComponent.hpp"
 #include "BadComponentTypeException.hpp"
 
@@ -48,6 +49,7 @@ namespace
         {"4094",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4094>();}},
         {"4512",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4512>();}},
         {"4514",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4514>();}},
+        {"4801",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4801>();}},
         {"logger", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::LoggerComponent>();}},
     };
 } // namespace

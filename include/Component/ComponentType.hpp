@@ -37,6 +37,7 @@ namespace nts
         C4094,
         C4512,
         C4514,
+        C4801,
         Logger,
         /* Gates */
         GateAND,

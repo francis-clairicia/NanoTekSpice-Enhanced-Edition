@@ -41,7 +41,7 @@ namespace nts
         }
 
         constexpr std::array<std::size_t, 5> output_5_to_9{Q5, Q6, Q7, Q8, Q9};
-        output(Q5_9) = static_cast<Tristate>(std::all_of(output_5_to_9.begin(), output_5_to_9.end(), 
+        output(Q5_9) = static_cast<Tristate>(std::all_of(output_5_to_9.begin(), output_5_to_9.end(),
                                             [this](std::size_t pin)
                                             {
                                                 return output(pin) == FALSE;

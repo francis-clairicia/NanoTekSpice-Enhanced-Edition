@@ -14,30 +14,30 @@ Test(ClockComponent, work_same_as_input)
     nts::Circuit circuit = nts::Parser::parse("tests/.nts/clock.nts");
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::UNDEFINED);
-    cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
+    cr_assert_eq(circuit.getValue("out"), nts::UNDEFINED);
 
     circuit.simulate();
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::UNDEFINED);
-    cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
+    cr_assert_eq(circuit.getValue("out"), nts::UNDEFINED);
 
-    circuit.setValueForNextTick("cl", "0");
+    circuit.setValue("cl", "0");
     circuit.simulate();
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::FALSE);
-    cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);
+    cr_assert_eq(circuit.getValue("out"), nts::FALSE);
 
-    circuit.setValueForNextTick("cl", "1");
+    circuit.setValue("cl", "1");
     circuit.simulate();
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::TRUE);
-    cr_assert_eq(circuit.output("out").getValue(), nts::TRUE);
+    cr_assert_eq(circuit.getValue("out"), nts::TRUE);
 
-    circuit.setValueForNextTick("cl", "U");
+    circuit.setValue("cl", "U");
     circuit.simulate();
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::UNDEFINED);
-    cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
+    cr_assert_eq(circuit.getValue("out"), nts::UNDEFINED);
 }
 
 Test(ClockComponent, invert_state_at_each_simulate)
@@ -46,34 +46,34 @@ Test(ClockComponent, invert_state_at_each_simulate)
 
     circuit.simulate();
 
-    circuit.setValueForNextTick("cl", "0");
+    circuit.setValue("cl", "0");
     cr_assert_eq(circuit.input("cl").getValue(), nts::UNDEFINED);
-    cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
+    cr_assert_eq(circuit.getValue("out"), nts::UNDEFINED);
 
     circuit.simulate();
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::FALSE);
-    cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);
+    cr_assert_eq(circuit.getValue("out"), nts::FALSE);
 
     circuit.simulate();
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::TRUE);
-    cr_assert_eq(circuit.output("out").getValue(), nts::TRUE);
+    cr_assert_eq(circuit.getValue("out"), nts::TRUE);
 
     circuit.simulate();
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::FALSE);
-    cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);
+    cr_assert_eq(circuit.getValue("out"), nts::FALSE);
 
     circuit.simulate();
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::TRUE);
-    cr_assert_eq(circuit.output("out").getValue(), nts::TRUE);
+    cr_assert_eq(circuit.getValue("out"), nts::TRUE);
 
     circuit.simulate();
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::FALSE);
-    cr_assert_eq(circuit.output("out").getValue(), nts::FALSE);
+    cr_assert_eq(circuit.getValue("out"), nts::FALSE);
 }
 
 Test(ClockComponent, does_not_invert_undefined_state)
@@ -83,20 +83,20 @@ Test(ClockComponent, does_not_invert_undefined_state)
     circuit.simulate();
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::UNDEFINED);
-    cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
+    cr_assert_eq(circuit.getValue("out"), nts::UNDEFINED);
 
     circuit.simulate();
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::UNDEFINED);
-    cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
+    cr_assert_eq(circuit.getValue("out"), nts::UNDEFINED);
 
     circuit.simulate();
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::UNDEFINED);
-    cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
+    cr_assert_eq(circuit.getValue("out"), nts::UNDEFINED);
 
     circuit.simulate();
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::UNDEFINED);
-    cr_assert_eq(circuit.output("out").getValue(), nts::UNDEFINED);
+    cr_assert_eq(circuit.getValue("out"), nts::UNDEFINED);
 }

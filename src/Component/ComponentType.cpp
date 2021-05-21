@@ -30,6 +30,7 @@ namespace nts
         {ComponentType::C4094,               "4094 'shift'"},
         {ComponentType::C4512,               "4512 'selector'"},
         {ComponentType::C4514,               "4514 'decoder'"},
+        {ComponentType::C4801,               "4801 'random-access memory'"},
         {ComponentType::GateAND,             "AND"},
         {ComponentType::GateNAND,            "NAND"},
         {ComponentType::GateNOR,             "NOR"},

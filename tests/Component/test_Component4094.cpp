@@ -15,33 +15,33 @@ Test(Component4094, shift_register_component)
 
     circuit.simulate();
 
-    circuit.setValueForNextTick("clock", "1");
-    circuit.setValueForNextTick("data", "1");
+    circuit.setValue("clock", "1");
+    circuit.setValue("data", "1");
 
     circuit.simulate();
-    cr_assert_eq(circuit.output("out_0").getValue(), 1);
+    cr_assert_eq(circuit.getValue("out_0"), 1);
 
-    circuit.setValueForNextTick("data", "0");
-
-    circuit.simulate();
-    cr_assert_eq(circuit.output("out_0").getValue(), 0);
-    cr_assert_eq(circuit.output("out_1").getValue(), 1);
+    circuit.setValue("data", "0");
 
     circuit.simulate();
-    cr_assert_eq(circuit.output("out_0").getValue(), 0);
-    cr_assert_eq(circuit.output("out_1").getValue(), 0);
-    cr_assert_eq(circuit.output("out_2").getValue(), 1);
+    cr_assert_eq(circuit.getValue("out_0"), 0);
+    cr_assert_eq(circuit.getValue("out_1"), 1);
+
+    circuit.simulate();
+    cr_assert_eq(circuit.getValue("out_0"), 0);
+    cr_assert_eq(circuit.getValue("out_1"), 0);
+    cr_assert_eq(circuit.getValue("out_2"), 1);
 
     for (std::size_t index = 3; index < 8; ++index)
         circuit.simulate();
-    cr_assert_eq(circuit.output("out_0").getValue(), 0);
-    cr_assert_eq(circuit.output("out_1").getValue(), 0);
-    cr_assert_eq(circuit.output("out_2").getValue(), 0);
-    cr_assert_eq(circuit.output("out_3").getValue(), 0);
-    cr_assert_eq(circuit.output("out_4").getValue(), 0);
-    cr_assert_eq(circuit.output("out_5").getValue(), 0);
-    cr_assert_eq(circuit.output("out_6").getValue(), 0);
-    cr_assert_eq(circuit.output("out_7").getValue(), 1);
-    cr_assert_eq(circuit.output("out_qs").getValue(), 1);
-    cr_assert_eq(circuit.output("out_qe").getValue(), nts::UNDEFINED);
+    cr_assert_eq(circuit.getValue("out_0"), 0);
+    cr_assert_eq(circuit.getValue("out_1"), 0);
+    cr_assert_eq(circuit.getValue("out_2"), 0);
+    cr_assert_eq(circuit.getValue("out_3"), 0);
+    cr_assert_eq(circuit.getValue("out_4"), 0);
+    cr_assert_eq(circuit.getValue("out_5"), 0);
+    cr_assert_eq(circuit.getValue("out_6"), 0);
+    cr_assert_eq(circuit.getValue("out_7"), 1);
+    cr_assert_eq(circuit.getValue("out_qs"), 1);
+    cr_assert_eq(circuit.getValue("out_qe"), nts::UNDEFINED);
 }

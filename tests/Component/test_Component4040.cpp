@@ -29,11 +29,11 @@ Test(Component4040, counter_component)
 
     circuit.simulate();
 
-    circuit.setValueForNextTick("cl_clock", "0");
-    circuit.setValueForNextTick("in_reset", "1");
+    circuit.setValue("cl_clock", "0");
+    circuit.setValue("in_reset", "1");
     circuit.simulate();
 
-    circuit.setValueForNextTick("in_reset", "0");
+    circuit.setValue("in_reset", "0");
     for (std::size_t count = 0; count < 4096; ++count) {
         for (std::size_t bit = 0; bit < out.size(); ++bit)
             cr_assert_eq(circuit.output(out.at(bit)).getValue(), ((count & (1UL << bit)) >> bit));

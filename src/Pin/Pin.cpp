@@ -70,7 +70,7 @@ namespace nts
     {
         return computeLinks(m_external_links, tick);
     }
-    
+
     void Pin::computeAsInput() noexcept
     {
         if (isBidirectional())

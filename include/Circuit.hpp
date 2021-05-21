@@ -30,7 +30,7 @@ namespace nts
         {
             Output(const std::string &_name, OutputComponent &_component) noexcept: name{_name}, component{_component} {}
             ~Output() noexcept = default;
-    
+
             const std::string_view name;
             const OutputComponent &component;
         };
@@ -50,18 +50,19 @@ namespace nts
 
         [[nodiscard]] std::size_t getTick() const noexcept;
 
-        void setValueForNextTick(const std::string &name, const std::string &value);
-        void setValueForNextTick(const std::string &name, Tristate value);
         void simulate() noexcept;
         void dump() const noexcept;
 
         [[nodiscard]] const InputComponent &input(const std::string &name) const;
         [[nodiscard]] InputComponent &input(const std::string &name);
         [[nodiscard]] InputsList getInputs() const;
+        void setValue(const std::string &name, const std::string &value);
+        void setValue(const std::string &name, Tristate value);
 
         [[nodiscard]] const OutputComponent &output(const std::string &name) const;
         [[nodiscard]] OutputComponent &output(const std::string &name);
         [[nodiscard]] OutputsList getOutputs() const;
+        Tristate getValue(const std::string &name) const;
 
         Circuit &operator=(const Circuit &rhs) noexcept = delete;
         Circuit &operator=(Circuit &&rhs) noexcept = default;

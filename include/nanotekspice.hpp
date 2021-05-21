@@ -13,6 +13,7 @@
 namespace nts
 {
     int nanotekspice(const std::string &circuit_file);
+    int nanotekspice(const std::string &circuit_file, const std::string &default_commands_file);
 }
 
 #endif /* !NANOTEKSPICE_HPP_ */
