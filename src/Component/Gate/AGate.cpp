@@ -14,13 +14,14 @@ namespace nts
 {
     AGate::AGate(ComponentType type, std::size_t nb_pins, PinList::Initializer input_pins, std::size_t output_pin) noexcept:
         m_type{type},
-        m_pins{type, nb_pins, input_pins, {output_pin}}
+        m_pins{type, nb_pins, input_pins, {output_pin}},
+        m_output{output_pin}
     {
     }
 
     void AGate::simulate(std::size_t tick)
     {
-        m_pins.simulate(tick, &AGate::computeOutput, this);
+        m_pins.simulate(tick, [this](){ m_pins.output(m_output) = computeOutput(); });
     }
 
     void AGate::setLink(std::size_t pin, IComponent &other, std::size_t otherPin)

@@ -28,7 +28,7 @@ namespace nts
         virtual Tristate operation(Tristate a) const noexcept = 0;
 
     private:
-        void computeOutput() final;
+        Tristate computeOutput() final;
     };
 }
 

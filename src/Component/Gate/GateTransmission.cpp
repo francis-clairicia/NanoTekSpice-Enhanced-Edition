@@ -19,8 +19,8 @@ namespace nts
         return (control == TRUE) ? input : UNDEFINED;
     }
 
-    void GateTransmission::computeOutput()
+    Tristate GateTransmission::computeOutput()
     {
-        m_pins.output(OUTPUT) = operation(m_pins.input(INPUT), m_pins.input(CONTROL));
+        return operation(compute(INPUT), compute(CONTROL));
     }
 } // namespace nts

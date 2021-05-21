@@ -41,4 +41,34 @@ namespace nts
         std::cout << COMPONENT_TYPE_AS_STRING.at(m_type) << " component:" << '\n';
         m_pins.dump();
     }
+
+    void ACalculationComponent::setLinkInternal(std::size_t pin, IComponent &other, std::size_t otherPin)
+    {
+        m_pins.setLinkInternal(*this, pin, other, otherPin);
+    }
+
+    Tristate ACalculationComponent::compute(IComponent &component, std::size_t pin)
+    {
+        return m_pins.computeInternal(component, pin);
+    }
+
+    Tristate &ACalculationComponent::output(std::size_t pin)
+    {
+        return m_pins.output(pin);
+    }
+
+    void ACalculationComponent::setAllOutputs(Tristate value) noexcept
+    {
+        m_pins.setAllOutputs(value);
+    }
+
+    void ACalculationComponent::setIOPinsAsInput() noexcept
+    {
+        m_pins.setIOPinsAsInput();
+    }
+
+    void ACalculationComponent::setIOPinsAsOutput() noexcept
+    {
+        m_pins.setIOPinsAsOutput();
+    }
 } // namespace nts

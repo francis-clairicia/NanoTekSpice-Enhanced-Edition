@@ -25,7 +25,7 @@ namespace nts
         };
 
     public:
-        SumComponent() noexcept;
+        SumComponent();
         ~SumComponent() noexcept override = default;
 
     private:

@@ -31,9 +31,20 @@ namespace nts
     protected:
         virtual void computeOutputs() = 0;
 
+        void setLinkInternal(std::size_t pin, IComponent &other, std::size_t otherPin);
+
+        Tristate compute(IComponent &component, std::size_t pin);
+        Tristate &output(std::size_t pin);
+        void setAllOutputs(Tristate value) noexcept;
+
+        void setIOPinsAsInput() noexcept;
+        void setIOPinsAsOutput() noexcept;
+
     protected:
-        const ComponentType  m_type;
-        PinList              m_pins;
+        const ComponentType m_type;
+
+    private:
+        PinList m_pins;
     };
 }
 

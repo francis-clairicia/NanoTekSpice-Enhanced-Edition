@@ -39,7 +39,7 @@ namespace nts
         };
 
     public:
-        ParallelGateOneInputComponent() noexcept:
+        ParallelGateOneInputComponent():
             BoxComponent(Type, 14, {
                 INPUT_1,
                 INPUT_2,

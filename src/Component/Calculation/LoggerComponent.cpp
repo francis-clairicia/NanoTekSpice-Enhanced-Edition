@@ -34,8 +34,9 @@ namespace nts
     void LoggerComponent::computeOutputs()
     {
         char character = 0;
-        const Tristate clock = m_pins.input(CLOCK);
-        const Tristate inhibit = m_pins.input(INHIBIT);
+        const Tristate clock = compute(CLOCK);
+        const Tristate inhibit = compute(INHIBIT);
+        constexpr std::array<std::size_t, 8> pins_input{BIT0, BIT1, BIT2, BIT3, BIT4, BIT5, BIT6, BIT7};
         std::array<Tristate, 8> inputs;
 
         if (clock == UNDEFINED || inhibit == UNDEFINED)
@@ -44,7 +45,7 @@ namespace nts
             return;
 
         for (std::size_t bit = 0; bit < inputs.size(); ++bit)
-            inputs[bit] = m_pins.input(m_pins.getInputPins().at(bit));
+            inputs[bit] = compute(pins_input.at(bit));
         for (std::size_t bit = 0; bit < inputs.size(); ++bit) {
             if (inputs[bit] == UNDEFINED)
                 return;

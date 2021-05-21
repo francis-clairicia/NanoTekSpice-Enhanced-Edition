@@ -16,7 +16,7 @@ namespace nts
 {
     using FlipFlop = DTypeFlipFlopWithSR;
 
-    Component4094::Component4094() noexcept:
+    Component4094::Component4094():
         BoxComponent(ComponentType::C4094, 16, {
             STROBE, DATA, CLOCK, OE
         }, {
@@ -91,17 +91,19 @@ namespace nts
 
     void Component4094::ShiftRegister::computeOutputs()
     {
-        const Tristate data = m_pins.input(INPUT_DATA_Q1);
-        const Tristate clock = m_pins.input(INPUT_CLOCK);
+        const Tristate clock = compute(INPUT_CLOCK);
+        constexpr std::array<std::size_t, 8> output_pins{
+            OUTPUT_Q8, OUTPUT_Q7, OUTPUT_Q6, OUTPUT_Q5, OUTPUT_Q4, OUTPUT_Q3, OUTPUT_Q2, OUTPUT_Q1
+        };
 
         if (clock == UNDEFINED) {
-            m_pins.setAllOutputs(UNDEFINED);
+            setAllOutputs(UNDEFINED);
             return;
         }
         if (clock == FALSE)
             return;
-        for (long index = m_pins.getOutputPins().size() - 1; index > 0; --index)
-            m_pins.output(m_pins.getOutputPins().at(index)) = m_pins.output(m_pins.getOutputPins().at(index - 1));
-        m_pins.output(m_pins.getOutputPins().front()) = data;
+        for (std::size_t index = 0; index < output_pins.size() - 1; ++index)
+            output(output_pins.at(index)) = output(output_pins.at(index + 1));
+        output(OUTPUT_Q1) = compute(INPUT_DATA_Q1);
     }
 } // namespace nts

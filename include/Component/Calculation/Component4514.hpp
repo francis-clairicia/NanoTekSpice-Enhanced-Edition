@@ -13,7 +13,7 @@
 
 namespace nts
 {
-    class Component4514 final: public BoxComponent
+    class Component4514 final: public ACalculationComponent
     {
     public:
         enum PinName
@@ -43,12 +43,14 @@ namespace nts
         };
 
     public:
-        Component4514() noexcept;
+        Component4514();
         ~Component4514() noexcept override = default;
 
     private:
+        void computeOutputs() final;
+
+    private:
         InternComponent m_latch;
-        InternComponent m_decoder;
 
     private:
         class Latch final: public ACalculationComponent
@@ -70,42 +72,6 @@ namespace nts
         public:
             Latch() noexcept;
             ~Latch() noexcept override = default;
-
-        private:
-            void computeOutputs() final;
-        };
-
-        class Decoder final: public ACalculationComponent
-        {
-        public:
-            enum PinName
-            {
-                INPUT_A       = 1,
-                INPUT_B       = 2,
-                INPUT_C       = 3,
-                INPUT_D       = 4,
-                OUTPUT_S0     = 5,
-                OUTPUT_S1     = 6,
-                OUTPUT_S2     = 7,
-                OUTPUT_S3     = 8,
-                OUTPUT_S4     = 9,
-                OUTPUT_S5     = 10,
-                OUTPUT_S6     = 11,
-                OUTPUT_S7     = 12,
-                OUTPUT_S8     = 13,
-                OUTPUT_S9     = 14,
-                OUTPUT_S10    = 15,
-                OUTPUT_S11    = 16,
-                OUTPUT_S12    = 17,
-                OUTPUT_S13    = 18,
-                OUTPUT_S14    = 19,
-                OUTPUT_S15    = 20,
-                INPUT_INHIBIT = 21,
-            };
-
-        public:
-            Decoder() noexcept;
-            ~Decoder() noexcept override = default;
 
         private:
             void computeOutputs() final;

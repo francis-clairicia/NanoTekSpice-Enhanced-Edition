@@ -12,7 +12,7 @@
 
 namespace nts
 {
-    Component4008::Component4008() noexcept:
+    Component4008::Component4008():
         BoxComponent(ComponentType::C4008, 16, {
             A1, B1, A2, B2, A3, B3, A4, B4, Cin
         }, {

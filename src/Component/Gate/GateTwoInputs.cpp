@@ -14,8 +14,8 @@ namespace nts
     {
     }
 
-    void GateTwoInputs::computeOutput()
+    Tristate GateTwoInputs::computeOutput()
     {
-        m_pins.output(OUTPUT) = operation(m_pins.input(INPUT1), m_pins.input(INPUT2));
+        return operation(compute(INPUT1), compute(INPUT2));
     }
 } // namespace nts

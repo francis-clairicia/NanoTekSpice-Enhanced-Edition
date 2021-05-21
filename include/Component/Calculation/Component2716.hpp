@@ -42,7 +42,7 @@ namespace nts
         };
 
     public:
-        Component2716() noexcept;
+        Component2716();
         ~Component2716() noexcept override = default;
 
     private:

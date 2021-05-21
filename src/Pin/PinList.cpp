@@ -204,7 +204,7 @@ namespace nts
             throw BadPinException{COMPONENT_TYPE_AS_STRING.at(m_owner), pin};
     }
 
-    void PinList::checkPin(const std::vector<std::size_t> &list, std::size_t pin) const
+    void PinList::checkPin(const ComponentPins &list, std::size_t pin) const
     {
         if (!vector_contains(list, pin))
             throw BadPinException{COMPONENT_TYPE_AS_STRING.at(m_owner), pin};

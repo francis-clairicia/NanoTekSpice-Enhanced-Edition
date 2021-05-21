@@ -39,7 +39,6 @@ SRC_BOX_COMPONENTS		=	src/Component/Box/BoxComponent.cpp							\
 							src/Component/Box/Component4008.cpp							\
 							src/Component/Box/Component4013.cpp							\
 							src/Component/Box/Component4094.cpp							\
-							src/Component/Box/Component4514.cpp							\
 							src/Component/Box/Sum/SumComponent.cpp
 
 SRC_GATES				=	src/Component/Gate/AGate.cpp								\
@@ -59,6 +58,7 @@ SRC_CALC_COMPONENTS		=	src/Component/Calculation/ACalculationComponent.cpp			\
 							src/Component/Calculation/Component4017.cpp					\
 							src/Component/Calculation/Component4040.cpp					\
 							src/Component/Calculation/Component4512.cpp					\
+							src/Component/Calculation/Component4514.cpp					\
 							src/Component/Calculation/FlipFlop/DTypeFlipFlopWithSR.cpp
 
 SRC_COMPONENTS			=	src/Component/ComponentFactory.cpp							\

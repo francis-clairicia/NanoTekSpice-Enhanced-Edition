@@ -26,7 +26,7 @@ namespace nts
         };
 
     public:
-        DTypeFlipFlopWithSR() noexcept;
+        DTypeFlipFlopWithSR();
         ~DTypeFlipFlopWithSR() noexcept override = default;
 
     private:

@@ -24,7 +24,7 @@ Outputs:
 
 namespace nts
 {
-    SumComponent::SumComponent() noexcept:
+    SumComponent::SumComponent():
         BoxComponent(ComponentType::Sum, 5, {Ai, Bi, Ci}, {Co, Si}),
         m_xor1(std::make_unique<GateXOR>()),
         m_xor2(std::make_unique<GateXOR>()),

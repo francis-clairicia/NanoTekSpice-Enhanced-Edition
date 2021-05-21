@@ -34,7 +34,7 @@ namespace nts
         };
 
     public:
-        Component4017() noexcept;
+        Component4017();
         ~Component4017() noexcept override = default;
 
     private:

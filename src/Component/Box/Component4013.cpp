@@ -12,7 +12,7 @@
 
 namespace nts
 {
-    Component4013::Component4013() noexcept:
+    Component4013::Component4013():
         BoxComponent(ComponentType::C4013, 14, {
             CLOCK1, RESET1, DATA1, SET1, CLOCK2, RESET2, DATA2, SET2
         }, {

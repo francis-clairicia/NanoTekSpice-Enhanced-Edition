@@ -46,6 +46,7 @@ namespace nts
 
             if constexpr(std::is_integral_v<IntegerNoRef> && std::is_invocable_v<Callable, Args...>) {
                 if (updateInputs(tick)) {
+                    const Locker locker{*this};
                     std::invoke(std::forward<Callable>(func), std::forward<Args>(args)...);
                 }
             }
@@ -83,7 +84,7 @@ namespace nts
     private:
         bool updateInputs(std::size_t tick);
         void checkPin(std::size_t pin) const;
-        void checkPin(const std::vector<std::size_t> &list, std::size_t pin) const;
+        void checkPin(const ComponentPins &list, std::size_t pin) const;
 
         [[nodiscard]] bool isLocked() const noexcept;
         void lock() noexcept;
