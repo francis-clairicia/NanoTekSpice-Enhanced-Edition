@@ -17,7 +17,7 @@ namespace nts
     class Memory
     {
     public:
-        using Byte = unsigned char;
+        using Byte = uint8_t;
 
     public:
         Memory(): m_buffer{std::make_unique<Byte []>(Nm)}

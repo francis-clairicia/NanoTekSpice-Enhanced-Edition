@@ -7,6 +7,7 @@
 
 #include "Component4040.hpp"
 #include "GateNOT.hpp"
+#include "get_tristate_bit.hpp"
 
 namespace nts
 {
@@ -37,6 +38,6 @@ namespace nts
 
         m_counter = (m_counter + 1) * (!reset);
         for (std::size_t bit = 0; bit < counter_outputs.size(); ++bit)
-            output(counter_outputs.at(bit)) = static_cast<Tristate>((m_counter & (1UL << bit)) >> bit);
+            output(counter_outputs.at(bit)) = get_tristate_bit(m_counter, bit);
     }
 } // namespace nts
