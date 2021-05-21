@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2021
-** OOP_tekspice_2020
+** NanoTekSpice-Enhanced-Edition
 ** File description:
 ** test_IOComponent
 */
