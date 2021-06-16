@@ -24,7 +24,20 @@ namespace nts
     public:
         ~Parser() noexcept = default;
 
-        static Circuit parse(const std::string &file);
+        template<typename CircuitClass>
+        static CircuitClass parse(const std::string &file)
+        {
+            static_assert(std::is_base_of_v<Circuit, CircuitClass>, "Must be a Circuit class.");
+            if constexpr(std::is_base_of_v<Circuit, CircuitClass>) {
+                CircuitClass c;
+                Parser p{file, c};
+
+                p.internalParse();
+                return c;
+            } else {
+                return CircuitClass{};
+            }
+        }
 
     private:
         struct Line

@@ -13,7 +13,7 @@
 
 Test(Component4017, johnson_decade_component)
 {
-    nts::Circuit circuit = nts::Parser::parse("tests/.nts/4017_johnson.nts");
+    nts::Circuit circuit = nts::Parser::parse<nts::Circuit>("tests/.nts/4017_johnson.nts");
     std::vector<std::string> out{
         "out_0",
         "out_1",

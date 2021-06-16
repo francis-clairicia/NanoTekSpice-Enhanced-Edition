@@ -11,7 +11,7 @@
 
 Test(Component4008, adds_two_binary_numbers)
 {
-    nts::Circuit circuit = nts::Parser::parse("tests/.nts/4008_adder.nts");
+    nts::Circuit circuit = nts::Parser::parse<nts::Circuit>("tests/.nts/4008_adder.nts");
 
     circuit.simulate();
 

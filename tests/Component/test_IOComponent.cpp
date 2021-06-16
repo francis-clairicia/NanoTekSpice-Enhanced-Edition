@@ -11,7 +11,7 @@
 
 Test(InputComponent, get_an_input_from_prompt)
 {
-    nts::Circuit circuit = nts::Parser::parse("tests/.nts/input_output.nts");
+    nts::Circuit circuit = nts::Parser::parse<nts::Circuit>("tests/.nts/input_output.nts");
 
     cr_assert_eq(circuit.input("in").getValue(), nts::UNDEFINED);
 
@@ -37,7 +37,7 @@ Test(InputComponent, get_an_input_from_prompt)
 
 Test(OutputComponent, get_value_computed_from_its_pin)
 {
-    nts::Circuit circuit = nts::Parser::parse("tests/.nts/input_output.nts");
+    nts::Circuit circuit = nts::Parser::parse<nts::Circuit>("tests/.nts/input_output.nts");
 
     cr_assert_eq(circuit.getValue("out"), nts::UNDEFINED);
     cr_assert_eq(circuit["out"].compute(1), nts::FALSE);

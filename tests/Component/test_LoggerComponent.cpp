@@ -12,7 +12,7 @@
 
 Test(LoggerComponent, print_on_log_file)
 {
-    nts::Circuit circuit = nts::Parser::parse("tests/.nts/logger.nts");
+    nts::Circuit circuit = nts::Parser::parse<nts::Circuit>("tests/.nts/logger.nts");
 
     circuit.simulate();
 

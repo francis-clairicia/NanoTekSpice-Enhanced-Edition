@@ -23,6 +23,7 @@ public:
 public:
     std::string nts_file;
     std::string default_command_file;
+    bool graphic = false;
 
 private:
     class Parser

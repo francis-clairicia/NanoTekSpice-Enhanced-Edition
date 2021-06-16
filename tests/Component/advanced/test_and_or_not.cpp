@@ -11,7 +11,7 @@
 
 Test(and_or_not, gate_linking_circuit)
 {
-    nts::Circuit circuit = nts::Parser::parse("tests/.nts/advanced/and-or-not.nts");
+    nts::Circuit circuit = nts::Parser::parse<nts::Circuit>("tests/.nts/advanced/and-or-not.nts");
 
     circuit.simulate();
     cr_assert_eq(circuit.getValue("out"), nts::UNDEFINED);

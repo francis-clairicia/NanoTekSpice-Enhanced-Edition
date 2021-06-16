@@ -11,7 +11,7 @@
 
 Test(Component4514, decoder_component)
 {
-    nts::Circuit circuit = nts::Parser::parse("tests/.nts/4514_decoder.nts");
+    nts::Circuit circuit = nts::Parser::parse<nts::Circuit>("tests/.nts/4514_decoder.nts");
 
     circuit.simulate();
 

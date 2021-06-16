@@ -7,10 +7,30 @@
 
 #include <iostream>
 #include <cstring>
-#include "nanotekspice.hpp"
+#include "CLINanoTekSpice.hpp"
 #include "Exception.hpp"
 #include "Args.hpp"
 #include "constants.hpp"
+
+namespace
+{
+    std::unique_ptr<nts::NanoTekSpice> make_interface(const Args &args)
+    {
+        std::unique_ptr<nts::NanoTekSpice> interface;
+
+        if (args.graphic) {
+            /* TODO */
+        } else {
+            std::unique_ptr<nts::CLINanoTekSpice> cli = std::make_unique<nts::CLINanoTekSpice>(args.nts_file);
+            if (!(args.default_command_file.empty()))
+                cli->runScript(args.default_command_file);
+            interface = std::move(cli);
+        }
+
+        return interface;
+    }
+} // namespace
+
 
 int main(int ac, char * const *av)
 {
@@ -23,13 +43,11 @@ int main(int ac, char * const *av)
         return EPITECH_EXIT_FAILURE;
     }
 
-    int output = 0;
+    int output = EPITECH_EXIT_SUCCESS;
 
     try {
-        if (!args.default_command_file.empty())
-            output = nts::nanotekspice(args.nts_file, args.default_command_file);
-        else
-            output = nts::nanotekspice(args.nts_file);
+        std::unique_ptr<nts::NanoTekSpice> interface = make_interface(args);
+        interface->run();
     } catch (const nts::Exception &e) {
         std::cerr << e.what() << '\n';
         output = EPITECH_EXIT_FAILURE;

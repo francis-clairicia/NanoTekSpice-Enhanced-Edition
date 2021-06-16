@@ -40,7 +40,7 @@ namespace
 
 Test(Component4801, random_access_memory_component)
 {
-    nts::Circuit circuit = nts::Parser::parse("tests/.nts/4801_ram.nts");
+    nts::Circuit circuit = nts::Parser::parse<nts::Circuit>("tests/.nts/4801_ram.nts");
     circuit.simulate();
 
     set_default_values(circuit);
@@ -121,7 +121,7 @@ Test(Component4801, random_access_memory_component)
 
 Test(Component4801, disabled_ram_component)
 {
-    nts::Circuit circuit = nts::Parser::parse("tests/.nts/4801_ram.nts");
+    nts::Circuit circuit = nts::Parser::parse<nts::Circuit>("tests/.nts/4801_ram.nts");
     circuit.simulate();
 
     set_default_values(circuit);

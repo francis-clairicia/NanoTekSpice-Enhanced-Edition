@@ -42,9 +42,9 @@ namespace nts
         Circuit() noexcept;
         Circuit(const Circuit &other) noexcept = delete;
         Circuit(Circuit &&other) noexcept = default;
-        ~Circuit() noexcept = default;
+        virtual ~Circuit() noexcept = default;
 
-        void addComponent(const std::string &type, const std::string &name);
+        virtual void addComponent(const std::string &type, const std::string &name);
         [[nodiscard]] bool hasComponent(const std::string &name) const noexcept;
         [[nodiscard]] bool empty() const noexcept;
 
@@ -69,16 +69,18 @@ namespace nts
         const IComponent &operator[](const std::string &key) const;
         IComponent &operator[](const std::string &key);
 
-    private:
+    protected:
         using Components = std::map<std::string, std::unique_ptr<IComponent>>;
         using InputsMap = std::map<std::string, InputComponent &>;
         using OutputsMap = std::map<std::string, OutputComponent &>;
 
-    private:
-        std::size_t m_tick;
+    protected:
         Components  m_components;
         InputsMap   m_input_components;
         OutputsMap  m_output_components;
+
+    private:
+        std::size_t m_tick;
     };
 }
 

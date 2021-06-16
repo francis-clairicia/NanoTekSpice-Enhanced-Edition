@@ -11,7 +11,7 @@
 
 Test(Component4040, counter_component)
 {
-    nts::Circuit circuit = nts::Parser::parse("tests/.nts/4040_counter.nts");
+    nts::Circuit circuit = nts::Parser::parse<nts::Circuit>("tests/.nts/4040_counter.nts");
     std::vector<std::string> out{
         "out_00",
         "out_01",

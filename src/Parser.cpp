@@ -29,15 +29,6 @@ namespace nts
             throw FileException(m_file, "Circuit file must have .nts extension");
     }
 
-    Circuit Parser::parse(const std::string &file)
-    {
-        Circuit c;
-        Parser p{file, c};
-
-        p.internalParse();
-        return c;
-    }
-
     void Parser::internalParse() const
     {
         std::ifstream file{m_file};

@@ -9,7 +9,7 @@ SRC_MAIN				=	src/main.cpp
 
 SRC_PARSER				=	src/Args.cpp
 
-SRC_NANOTEKSPICE		=	src/nanotekspice.cpp
+SRC_NANOTEKSPICE		=	src/CLINanoTekSpice.cpp										\
 
 SRC_EXCEPTIONS			=	src/Exception/BadComponentNameException.cpp					\
 							src/Exception/BadComponentTypeException.cpp					\
@@ -25,7 +25,8 @@ SRC_EXCEPTIONS			=	src/Exception/BadComponentNameException.cpp					\
 							src/Exception/Parser/ComponentNameUnknownException.cpp		\
 							src/Exception/Parser/ComponentTypeUnknownException.cpp		\
 							src/Exception/Parser/ParserException.cpp					\
-							src/Exception/Parser/SyntaxException.cpp
+							src/Exception/Parser/SyntaxException.cpp					\
+							src/Exception/CLI/UnknownCommandException.cpp
 
 SRC_CIRCUIT				=	src/Circuit.cpp												\
 							src/Parser.cpp
@@ -119,6 +120,7 @@ CXXFLAGS				=	-Wall -Wextra -std=c++17
 CPPFLAGS				=	-I./include/												\
 							-I./include/Exception/										\
 							-I./include/Exception/Parser/								\
+							-I./include/Exception/CLI/									\
 							-I./include/Component/										\
 							-I./include/Component/SinglePin/							\
 							-I./include/Component/Box/									\

@@ -11,7 +11,7 @@
 
 Test(Component4512, selector_component)
 {
-    nts::Circuit circuit = nts::Parser::parse("tests/.nts/4512_selector.nts");
+    nts::Circuit circuit = nts::Parser::parse<nts::Circuit>("tests/.nts/4512_selector.nts");
 
     circuit.simulate();
 

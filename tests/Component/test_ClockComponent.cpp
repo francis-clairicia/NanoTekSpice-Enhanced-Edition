@@ -11,7 +11,7 @@
 
 Test(ClockComponent, work_same_as_input)
 {
-    nts::Circuit circuit = nts::Parser::parse("tests/.nts/clock.nts");
+    nts::Circuit circuit = nts::Parser::parse<nts::Circuit>("tests/.nts/clock.nts");
 
     cr_assert_eq(circuit.input("cl").getValue(), nts::UNDEFINED);
     cr_assert_eq(circuit.getValue("out"), nts::UNDEFINED);
@@ -42,7 +42,7 @@ Test(ClockComponent, work_same_as_input)
 
 Test(ClockComponent, invert_state_at_each_simulate)
 {
-    nts::Circuit circuit = nts::Parser::parse("tests/.nts/clock.nts");
+    nts::Circuit circuit = nts::Parser::parse<nts::Circuit>("tests/.nts/clock.nts");
 
     circuit.simulate();
 
@@ -78,7 +78,7 @@ Test(ClockComponent, invert_state_at_each_simulate)
 
 Test(ClockComponent, does_not_invert_undefined_state)
 {
-    nts::Circuit circuit = nts::Parser::parse("tests/.nts/clock.nts");
+    nts::Circuit circuit = nts::Parser::parse<nts::Circuit>("tests/.nts/clock.nts");
 
     circuit.simulate();
 
