@@ -25,6 +25,7 @@
 #include "Component4514.hpp"
 #include "Component4801.hpp"
 #include "LoggerComponent.hpp"
+#include "GraphicalInputComponent.hpp"
 #include "BadComponentTypeException.hpp"
 
 namespace
@@ -53,7 +54,9 @@ namespace
         {"logger", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::LoggerComponent>();}},
     };
 
-    const std::unordered_map<std::string_view, std::unique_ptr<nts::AGraphicalComponent> (*)()> GRAPHICAL_COMPONENT_CREATOR{};
+    const std::unordered_map<std::string_view, std::unique_ptr<nts::IComponent> (*)()> GRAPHICAL_COMPONENT_CREATOR{
+        {"input", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::GraphicalInputComponent>();}},
+    };
 } // namespace
 
 namespace nts
@@ -67,7 +70,7 @@ namespace nts
         return search->second();
     }
 
-    std::unique_ptr<AGraphicalComponent> ComponentFactory::createGraphicalComponent(const std::string &type)
+    std::unique_ptr<IComponent> ComponentFactory::createGraphicalComponent(const std::string &type)
     {
         auto search = GRAPHICAL_COMPONENT_CREATOR.find(std::string_view{type});
 

@@ -20,7 +20,7 @@ namespace nts
         ~ComponentFactory() noexcept = default;
 
         static std::unique_ptr<IComponent> createComponent(const std::string &type);
-        static std::unique_ptr<AGraphicalComponent> createGraphicalComponent(const std::string &type);
+        static std::unique_ptr<IComponent> createGraphicalComponent(const std::string &type);
 
     private:
         ComponentFactory() noexcept = default;

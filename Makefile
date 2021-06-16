@@ -27,7 +27,8 @@ SRC_EXCEPTIONS			=	src/Exception/BadComponentNameException.cpp					\
 							src/Exception/Parser/ComponentTypeUnknownException.cpp		\
 							src/Exception/Parser/ParserException.cpp					\
 							src/Exception/Parser/SyntaxException.cpp					\
-							src/Exception/CLI/UnknownCommandException.cpp
+							src/Exception/CLI/UnknownCommandException.cpp				\
+							src/Exception/Resources/ResourcesException.cpp
 
 SRC_CIRCUIT				=	src/Circuit.cpp												\
 							src/GraphicalCircuit.cpp									\
@@ -67,7 +68,9 @@ SRC_CALC_COMPONENTS		=	src/Component/Calculation/ACalculationComponent.cpp			\
 							src/Component/Calculation/Component4801.cpp					\
 							src/Component/Calculation/FlipFlop/DTypeFlipFlopWithSR.cpp
 
-SRC_GRAPHIC_COMPONENTS	=	src/Component/Graphical/AGraphicalComponent.cpp				\
+SRC_GRAPHIC_COMPONENTS	=	src/Resources/ResourcesManager.cpp							\
+							src/Component/Graphical/AGraphicalComponent.cpp				\
+							src/Component/Graphical/GraphicalInputComponent.cpp
 
 SRC_COMPONENTS			=	src/Component/ComponentFactory.cpp							\
 							src/Component/ComponentType.cpp								\
@@ -127,6 +130,7 @@ override CPPFLAGS		+=	-I./include/												\
 							-I./include/Exception/										\
 							-I./include/Exception/Parser/								\
 							-I./include/Exception/CLI/									\
+							-I./include/Exception/Resources/							\
 							-I./include/Component/										\
 							-I./include/Component/SinglePin/							\
 							-I./include/Component/Box/									\
@@ -140,7 +144,8 @@ override CPPFLAGS		+=	-I./include/												\
 							-I./include/Component/Graphical/							\
 							-I./include/Pin/											\
 							-I./include/Utils/											\
-							-I./include/Memory/
+							-I./include/Memory/											\
+							-I./include/Resources/
 
 OBJ						=	$(SRC:.cpp=.o)
 

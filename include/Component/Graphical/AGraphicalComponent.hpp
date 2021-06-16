@@ -11,11 +11,10 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Window/Event.hpp>
-#include "IComponent.hpp"
 
 namespace nts
 {
-    class AGraphicalComponent: public IComponent, public sf::Drawable, public sf::Transformable
+    class AGraphicalComponent: public sf::Drawable, public sf::Transformable
     {
     public:
         AGraphicalComponent() noexcept;
