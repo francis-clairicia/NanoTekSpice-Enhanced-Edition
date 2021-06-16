@@ -18,9 +18,6 @@ namespace nts
         virtual ~NanoTekSpice() noexcept = default;
 
         virtual void run() = 0;
-
-    public:
-        static std::unique_ptr<NanoTekSpice> make(const std::string &nts_file);
     };
 } // namespace nts
 

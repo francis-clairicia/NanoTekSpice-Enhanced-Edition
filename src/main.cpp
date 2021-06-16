@@ -8,6 +8,7 @@
 #include <iostream>
 #include <cstring>
 #include "CLINanoTekSpice.hpp"
+#include "GUINanoTekSpice.hpp"
 #include "Exception.hpp"
 #include "Args.hpp"
 #include "constants.hpp"
@@ -19,7 +20,7 @@ namespace
         std::unique_ptr<nts::NanoTekSpice> interface;
 
         if (args.graphic) {
-            /* TODO */
+            interface = std::make_unique<nts::GUINanoTekSpice>(args.nts_file);
         } else {
             std::unique_ptr<nts::CLINanoTekSpice> cli = std::make_unique<nts::CLINanoTekSpice>(args.nts_file);
             if (!(args.default_command_file.empty()))

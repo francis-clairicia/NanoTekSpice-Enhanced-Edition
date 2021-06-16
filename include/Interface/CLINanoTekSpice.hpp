@@ -18,7 +18,6 @@ namespace nts
     class CLINanoTekSpice: public NanoTekSpice
     {
     public:
-        CLINanoTekSpice() noexcept;
         CLINanoTekSpice(const std::string &circuit_file);
         CLINanoTekSpice(const CLINanoTekSpice &other) noexcept = delete;
         CLINanoTekSpice(CLINanoTekSpice &&rhs) noexcept = default;
@@ -27,6 +26,9 @@ namespace nts
         void run() final;
         void execute(const std::string &command);
         void runScript(const std::string &script_file);
+
+        CLINanoTekSpice &operator=(const CLINanoTekSpice &other) noexcept = delete;
+        CLINanoTekSpice &operator=(CLINanoTekSpice &&rhs) noexcept = default;
 
     public:
         static constexpr std::string_view PROMPT{"> "};

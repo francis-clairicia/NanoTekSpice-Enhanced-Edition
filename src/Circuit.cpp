@@ -37,14 +37,8 @@ namespace nts
             throw ComponentNameOverride{name};
 
         m_components.emplace(name, ComponentFactory::createComponent(type));
-
-        InputComponent *input = dynamic_cast<InputComponent *>(m_components[name].get());
-        if (input)
-            m_input_components.emplace(name, *input);
-
-        OutputComponent *output = dynamic_cast<OutputComponent *>(m_components[name].get());
-        if (output)
-            m_output_components.emplace(name, *output);
+        registerComponent(m_input_components, name, *(m_components[name]));
+        registerComponent(m_output_components, name, *(m_components[name]));
     }
 
     bool Circuit::hasComponent(const std::string &name) const noexcept

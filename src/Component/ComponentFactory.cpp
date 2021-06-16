@@ -52,15 +52,26 @@ namespace
         {"4801",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4801>();}},
         {"logger", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::LoggerComponent>();}},
     };
+
+    const std::unordered_map<std::string_view, std::unique_ptr<nts::AGraphicalComponent> (*)()> GRAPHICAL_COMPONENT_CREATOR{};
 } // namespace
 
 namespace nts
 {
     std::unique_ptr<IComponent> ComponentFactory::createComponent(const std::string &type)
     {
-        const auto &search = COMPONENT_CREATOR.find(std::string_view{type});
+        auto search = COMPONENT_CREATOR.find(std::string_view{type});
 
         if (search == COMPONENT_CREATOR.end())
+            throw BadComponentTypeException(type);
+        return search->second();
+    }
+
+    std::unique_ptr<AGraphicalComponent> ComponentFactory::createGraphicalComponent(const std::string &type)
+    {
+        auto search = GRAPHICAL_COMPONENT_CREATOR.find(std::string_view{type});
+
+        if (search == GRAPHICAL_COMPONENT_CREATOR.end())
             throw BadComponentTypeException(type);
         return search->second();
     }

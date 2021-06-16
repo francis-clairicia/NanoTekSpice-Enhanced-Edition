@@ -14,11 +14,12 @@ namespace
 {
     const std::vector<option> LONG_OPTIONS{
         option{"help", no_argument, nullptr, 'h'},
+        option{"graphic", required_argument, nullptr, 'g'},
         option{"interpret", required_argument, nullptr, 'i'},
         option{nullptr, 0, nullptr, 0}
     };
 
-    constexpr std::string_view SHORT_OPTIONS{"hi:"};
+    constexpr std::string_view SHORT_OPTIONS{"hgi:"};
 } // namespace
 
 
@@ -53,6 +54,9 @@ void Args::Parser::printHelp() const noexcept
                  "\n"
                  "OPTIONS:\n"
                  "\t" "-h, --help" "\t\t\t" "Shows this help and exit\n"
+                 "\t" "-g, --graphic" "\t\t" "Toogle GUI mode\n"
+                 "\n"
+                 "CLI OPTIONS:\n"
                  "\t" "-i FILE, --interpret=FILE" "\t" "Executes instructions within FILE before showing the prompt\n"
                  "\n"
                  "POSITIONAL ARGUMENTS:\n"
@@ -71,14 +75,18 @@ void Args::Parser::parseOptions(Args &args)
         case 'h':
             printHelp();
             std::exit(0);
+        case 'g':
+            if (!(args.default_command_file.empty()))
+                throw Exception{"Cannot combine -i and -g options"};
+            args.graphic = true;
+            break;
         case 'i':
+            if (args.graphic)
+                throw Exception{"Cannot combine -i and -g options"};
             if (!optarg || *optarg == '\0')
                 throw Exception{m_argv[0], 'i', "Argument required."};
             args.default_command_file = optarg;
             break;
-        // case 'g':
-        //     args.graphic = true;
-        //     break;
         default:
             if (SHORT_OPTIONS.find(optopt) == std::string::npos)
                 throw Exception{m_argv[0], static_cast<char>(optopt), "Unknown option."};

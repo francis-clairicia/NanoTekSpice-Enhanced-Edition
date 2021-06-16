@@ -33,7 +33,7 @@ namespace
             return false;
         }
         trim_trailing_whitespace(buffer);
-        return (!buffer.empty()) ? true : read_input(stream, buffer);
+        return (!buffer.empty()) ? true : read_input(stream, buffer, print_prompt);
     }
 } // namespace
 
@@ -47,11 +47,6 @@ namespace nts
         {"loop",     &CLINanoTekSpice::loop},
         {"dump",     &CLINanoTekSpice::dump},
     };
-
-    CLINanoTekSpice::CLINanoTekSpice() noexcept:
-        m_running{false}
-    {
-    }
 
     CLINanoTekSpice::CLINanoTekSpice(const std::string &circuit_file):
         m_circuit{Parser::parse<Circuit>(circuit_file)},

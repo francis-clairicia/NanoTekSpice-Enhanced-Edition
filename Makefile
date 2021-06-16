@@ -9,7 +9,8 @@ SRC_MAIN				=	src/main.cpp
 
 SRC_PARSER				=	src/Args.cpp
 
-SRC_NANOTEKSPICE		=	src/CLINanoTekSpice.cpp										\
+SRC_NANOTEKSPICE		=	src/Interface/CLINanoTekSpice.cpp							\
+							src/Interface/GUINanoTekSpice.cpp
 
 SRC_EXCEPTIONS			=	src/Exception/BadComponentNameException.cpp					\
 							src/Exception/BadComponentTypeException.cpp					\
@@ -29,6 +30,7 @@ SRC_EXCEPTIONS			=	src/Exception/BadComponentNameException.cpp					\
 							src/Exception/CLI/UnknownCommandException.cpp
 
 SRC_CIRCUIT				=	src/Circuit.cpp												\
+							src/GraphicalCircuit.cpp									\
 							src/Parser.cpp
 
 SRC_UTILS				=	src/Utils/string_operations.cpp
@@ -65,6 +67,8 @@ SRC_CALC_COMPONENTS		=	src/Component/Calculation/ACalculationComponent.cpp			\
 							src/Component/Calculation/Component4801.cpp					\
 							src/Component/Calculation/FlipFlop/DTypeFlipFlopWithSR.cpp
 
+SRC_GRAPHIC_COMPONENTS	=	src/Component/Graphical/AGraphicalComponent.cpp				\
+
 SRC_COMPONENTS			=	src/Component/ComponentFactory.cpp							\
 							src/Component/ComponentType.cpp								\
 							src/Pin/Pin.cpp												\
@@ -72,7 +76,8 @@ SRC_COMPONENTS			=	src/Component/ComponentFactory.cpp							\
 							$(SRC_ONEPIN_COMPONENTS)									\
 							$(SRC_BOX_COMPONENTS)										\
 							$(SRC_GATES)												\
-							$(SRC_CALC_COMPONENTS)
+							$(SRC_CALC_COMPONENTS)										\
+							$(SRC_GRAPHIC_COMPONENTS)
 
 SRC						=	$(SRC_MAIN)													\
 							$(SRC_PARSER)												\
@@ -115,9 +120,10 @@ SRC_UNIT_TEST			=	tests/Circuit/test_Circuit.cpp								\
 							tests/Utils/test_string_split.cpp							\
 							tests/Utils/test_trim_trailing_whitespace.cpp
 
-CXXFLAGS				=	-Wall -Wextra -std=c++17
+override CXXFLAGS		+=	-Wall -Wextra -std=c++17
 
-CPPFLAGS				=	-I./include/												\
+override CPPFLAGS		+=	-I./include/												\
+							-I./include/Interface/										\
 							-I./include/Exception/										\
 							-I./include/Exception/Parser/								\
 							-I./include/Exception/CLI/									\
@@ -131,6 +137,7 @@ CPPFLAGS				=	-I./include/												\
 							-I./include/Component/Gate/									\
 							-I./include/Component/Calculation							\
 							-I./include/Component/Calculation/FlipFlop/					\
+							-I./include/Component/Graphical/							\
 							-I./include/Pin/											\
 							-I./include/Utils/											\
 							-I./include/Memory/
@@ -141,7 +148,9 @@ OBJ_TEST				=	$(SRC_TEST:.cpp=.o)
 
 OBJ_UNIT_TEST			=	$(SRC_UNIT_TEST:.cpp=.o)
 
-NAME					=	nanotekspice
+override LDLIBS			+=	-lsfml-window -lsfml-system -lsfml-graphics
+
+override NAME			=	nanotekspice
 
 all:	CXXFLAGS += -O2
 all:	$(NAME)
