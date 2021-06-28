@@ -45,7 +45,9 @@ SRC_BOX_COMPONENTS		=	src/Component/Box/BoxComponent.cpp							\
 							src/Component/Box/Component4008.cpp							\
 							src/Component/Box/Component4013.cpp							\
 							src/Component/Box/Component4094.cpp							\
-							src/Component/Box/Sum/SumComponent.cpp
+							src/Component/Box/SubComponent.cpp							\
+							src/Component/Box/Sum/SumComponent.cpp						\
+							src/Component/Box/Sum/TwoBitsSubComponent.cpp
 
 SRC_GATES				=	src/Component/Gate/AGate.cpp								\
 							src/Component/Gate/GateAND.cpp								\
@@ -109,6 +111,7 @@ SRC_UNIT_TEST			=	tests/Circuit/test_Circuit.cpp								\
 							tests/Component/test_ConstComponent.cpp						\
 							tests/Component/test_IOComponent.cpp						\
 							tests/Component/test_LoggerComponent.cpp					\
+							tests/Component/test_SubComponent.cpp						\
 							tests/FlipFlop/test_FlipFlop.cpp							\
 							tests/Gate/test_GateAND.cpp									\
 							tests/Gate/test_GateNAND.cpp								\
@@ -118,6 +121,7 @@ SRC_UNIT_TEST			=	tests/Circuit/test_Circuit.cpp								\
 							tests/Gate/test_GateTransmission.cpp						\
 							tests/Gate/test_GateXOR.cpp									\
 							tests/Sum/test_Sum.cpp										\
+							tests/Sum/test_Sub.cpp										\
 							tests/Utils/test_string_endswith.cpp						\
 							tests/Utils/test_string_is_number.cpp						\
 							tests/Utils/test_string_split.cpp							\

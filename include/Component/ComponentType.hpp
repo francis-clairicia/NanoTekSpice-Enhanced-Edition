@@ -49,6 +49,7 @@ namespace nts
         GateXOR,
         /* Sum */
         Sum,
+        Sub,
         /* FlipFlops */
         DTypeFlipFlopWithSR
     };

@@ -7,7 +7,6 @@
 
 #include <criterion/criterion.h>
 #include "SumComponent.hpp"
-#include "ConstComponent.hpp"
 #include "InputComponent.hpp"
 
 Test(SumComponent, Co_truth_table)
