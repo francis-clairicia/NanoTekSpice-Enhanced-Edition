@@ -51,6 +51,7 @@ namespace nts
         /* Sum */
         Sum,
         Sub,
+        Mul,
         /* FlipFlops */
         DTypeFlipFlopWithSR
     };

@@ -41,6 +41,7 @@ namespace nts
         {ComponentType::GateXOR,             "XOR"},
         {ComponentType::Sum,                 "SUM"},
         {ComponentType::Sub,                 "SUB"},
+        {ComponentType::Mul,                 "MUL"},
         {ComponentType::DTypeFlipFlopWithSR, "D-type Flip Flop with S/R"},
         {ComponentType::Logger,              "logger"},
     };

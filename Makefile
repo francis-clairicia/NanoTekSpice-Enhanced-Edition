@@ -47,6 +47,7 @@ SRC_BOX_COMPONENTS		=	src/Component/Box/BoxComponent.cpp							\
 							src/Component/Box/Component4063.cpp							\
 							src/Component/Box/Component4094.cpp							\
 							src/Component/Box/SubComponent.cpp							\
+							src/Component/Box/MulComponent.cpp							\
 							src/Component/Box/Sum/SumComponent.cpp						\
 							src/Component/Box/Sum/TwoBitsSubComponent.cpp
 

@@ -27,6 +27,7 @@
 #include "Component4801.hpp"
 #include "LoggerComponent.hpp"
 #include "SubComponent.hpp"
+#include "MulComponent.hpp"
 #include "GraphicalInputComponent.hpp"
 #include "BadComponentTypeException.hpp"
 
@@ -56,6 +57,7 @@ namespace
         {"4801",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4801>();}},
         {"logger", []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::LoggerComponent>();}},
         {"sub",    []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::SubComponent>();}},
+        {"mul",    []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::MulComponent>();}},
     };
 
     const std::unordered_map<std::string_view, std::unique_ptr<nts::AGraphicalComponent> (*)()> GRAPHICAL_COMPONENT_CREATOR{
