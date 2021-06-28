@@ -29,7 +29,7 @@ namespace nts
 
     void GUINanoTekSpice::drawScreen()
     {
-        m_window.clear(sf::Color{0, 5, 125});
+        m_window.clear(sf::Color{0, 5, 100});
         for (const auto &pair : m_circuit.m_graphical_components) {
             m_window.draw(*pair.second);
         }
