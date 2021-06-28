@@ -30,7 +30,7 @@ namespace nts
         GraphicalCircuit &operator=(GraphicalCircuit &&other) noexcept = default;
 
     private:
-        using GraphicalComponents = std::map<std::string, AGraphicalComponent &>;
+        using GraphicalComponents = std::map<std::string, std::unique_ptr<AGraphicalComponent>>;
 
     private:
         GraphicalComponents m_graphical_components;

@@ -18,13 +18,14 @@ namespace nts
             throw ComponentNameOverride{name};
 
         try {
-            m_components.emplace(name, ComponentFactory::createGraphicalComponent(type));
+            m_graphical_components.emplace(name, ComponentFactory::createGraphicalComponent(type));
+            IComponent &component = **(m_graphical_components.at(name));
+            m_components.emplace(name, component);
+            registerComponent(m_input_components, name, component);
+            registerComponent(m_output_components, name, component);
         } catch (const BadComponentTypeException &) {
-            m_components.emplace(name, ComponentFactory::createComponent(type));
+            Circuit::addComponent(type, name);
         }
-        registerComponent(m_input_components, name, *(m_components[name]));
-        registerComponent(m_output_components, name, *(m_components[name]));
-        registerComponent(m_graphical_components, name, *(m_components[name]));
     }
 } // namespace nts
 

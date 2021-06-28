@@ -16,6 +16,16 @@ namespace nts
     {
     }
 
+    IComponent *AGraphicalComponent::get() noexcept
+    {
+        return getInternalComponent();
+    }
+
+    const IComponent *AGraphicalComponent::get() const noexcept
+    {
+        return getInternalComponent();
+    }
+
     sf::FloatRect AGraphicalComponent::getGlobalBounds() const
     {
         return getTransform().transformRect(getLocalBounds());
@@ -100,6 +110,26 @@ namespace nts
 
     void AGraphicalComponent::mouseWheelAction(sf::Mouse::Wheel, float)
     {
+    }
+
+    IComponent *AGraphicalComponent::operator->() noexcept
+    {
+        return get();
+    }
+
+    const IComponent *AGraphicalComponent::operator->() const noexcept
+    {
+        return get();
+    }
+
+    IComponent &AGraphicalComponent::operator*() noexcept
+    {
+        return *get();
+    }
+
+    const IComponent &AGraphicalComponent::operator*() const noexcept
+    {
+        return *get();
     }
 } // namespace nts
 

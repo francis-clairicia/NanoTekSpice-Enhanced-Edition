@@ -16,16 +16,19 @@ namespace
         {nts::TRUE,      "1"},
         {nts::UNDEFINED, "U"}
     };
-
-    constexpr std::string_view FONT_FILE{"./assets/font/input.ttf"};
 } // namespace
 
 
 namespace nts
 {
-    GraphicalInputComponent::GraphicalInputComponent()
-        // m_text{TRISTATE_TO_STR.at(getValue()).data(), ResourcesManager::loadFont(FONT_FILE.data())}
+    GraphicalInputComponent::GraphicalInputComponent():
+        m_component{std::make_unique<InputComponent>()},
+        m_text{TRISTATE_TO_STR.at(m_component->getValue()).data(), ResourcesManager::loadFont(FONT_FILE.data())}
     {
+        sf::FloatRect text_bounds = m_text.getLocalBounds();
+
+        m_text.setFillColor(sf::Color::White);
+        m_box.setSize({text_bounds.width, text_bounds.height});
     }
 
     sf::FloatRect GraphicalInputComponent::getLocalBounds() const
@@ -37,6 +40,11 @@ namespace nts
     {
         target.draw(m_box, states);
         target.draw(m_text, states);
+    }
+
+    IComponent *GraphicalInputComponent::getInternalComponent() const noexcept
+    {
+        return m_component.get();
     }
 } // namespace nts
 

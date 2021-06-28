@@ -11,6 +11,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Window/Event.hpp>
+#include "IComponent.hpp"
 
 namespace nts
 {
@@ -19,6 +20,9 @@ namespace nts
     public:
         AGraphicalComponent() noexcept;
         ~AGraphicalComponent() noexcept override = default;
+
+        IComponent *get() noexcept;
+        const IComponent *get() const noexcept;
 
         virtual sf::FloatRect getLocalBounds() const = 0;
         sf::FloatRect getGlobalBounds() const;
@@ -33,7 +37,15 @@ namespace nts
         void mouseWheelHandler(sf::Mouse::Wheel wheel, float delta);
         void mouseMoveHandler(sf::Vector2f pos);
 
+        IComponent *operator->() noexcept;
+        const IComponent *operator->() const noexcept;
+
+        IComponent &operator*() noexcept;
+        const IComponent &operator*() const noexcept;
+
     protected:
+        virtual IComponent *getInternalComponent() const noexcept = 0;
+
         virtual void keyPressedAction(const sf::Event::KeyEvent &event);
         virtual void keyReleasedAction(const sf::Event::KeyEvent &event);
         virtual void mouseButtonClicked();

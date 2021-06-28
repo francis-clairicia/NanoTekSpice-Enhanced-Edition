@@ -54,7 +54,7 @@ void Args::Parser::printHelp() const noexcept
                  "\n"
                  "OPTIONS:\n"
                  "\t" "-h, --help" "\t\t\t" "Shows this help and exit\n"
-                 "\t" "-g, --graphic" "\t\t" "Toogle GUI mode\n"
+                 "\t" "-g, --graphic" "\t\t\t" "Toogle GUI mode\n"
                  "\n"
                  "CLI OPTIONS:\n"
                  "\t" "-i FILE, --interpret=FILE" "\t" "Executes instructions within FILE before showing the prompt\n"

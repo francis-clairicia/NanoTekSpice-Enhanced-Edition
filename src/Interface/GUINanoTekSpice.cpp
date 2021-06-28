@@ -23,14 +23,15 @@ namespace nts
         while (m_window.isOpen()) {
             handleEvents();
             drawScreen();
+            m_window.display();
         }
     }
 
     void GUINanoTekSpice::drawScreen()
     {
-        m_window.clear();
+        m_window.clear(sf::Color{0, 5, 125});
         for (const auto &pair : m_circuit.m_graphical_components) {
-            m_window.draw(pair.second);
+            m_window.draw(*pair.second);
         }
     }
 

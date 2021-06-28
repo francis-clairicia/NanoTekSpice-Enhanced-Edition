@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Font.hpp>
+#include "Resources.hpp"
 
 namespace nts
 {

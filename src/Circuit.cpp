@@ -36,9 +36,10 @@ namespace nts
         if (hasComponent(name))
             throw ComponentNameOverride{name};
 
-        m_components.emplace(name, ComponentFactory::createComponent(type));
-        registerComponent(m_input_components, name, *(m_components[name]));
-        registerComponent(m_output_components, name, *(m_components[name]));
+        m_component_container.emplace(name, ComponentFactory::createComponent(type));
+        m_components.emplace(name, *(m_component_container.at(name)));
+        registerComponent(m_input_components, name, m_components.at(name));
+        registerComponent(m_output_components, name, m_components.at(name));
     }
 
     bool Circuit::hasComponent(const std::string &name) const noexcept
@@ -77,7 +78,7 @@ namespace nts
             ++m_tick;
         }
         for (auto &component : m_components)
-            component.second->simulate(m_tick);
+            component.second.simulate(m_tick);
     }
 
     void Circuit::dump() const noexcept
@@ -88,7 +89,7 @@ namespace nts
             if (index++)
                 std::cout << '\n';
             std::cout << "==== '" << pair.first << "' component ====" << '\n';
-            pair.second->dump();
+            pair.second.dump();
         }
     }
 
@@ -159,7 +160,7 @@ namespace nts
 
         if (search == m_components.end())
             throw BadComponentNameException(key);
-        return *(search->second);
+        return search->second;
     }
 
     IComponent &Circuit::operator[](const std::string &key)
@@ -168,6 +169,6 @@ namespace nts
 
         if (search == m_components.end())
             throw BadComponentNameException(key);
-        return *(search->second);
+        return search->second;
     }
 } // namespace nts

@@ -56,7 +56,7 @@ namespace nts
                 auto end = m_circuit.m_graphical_components.rend();
 
                 for (auto pair = begin; pair != end; ++pair) {
-                    AGraphicalComponent &component = pair->second;
+                    AGraphicalComponent &component = *(pair->second);
                     (component.*(handler))(std::forward<HandlerArgs>(args)...);
                     if (component.isHighlighted())
                         m_highlighted_component = &component;

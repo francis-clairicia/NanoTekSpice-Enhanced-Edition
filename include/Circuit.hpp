@@ -70,7 +70,7 @@ namespace nts
         IComponent &operator[](const std::string &key);
 
     protected:
-        using Components = std::map<std::string, std::unique_ptr<IComponent>>;
+        using Components = std::map<std::string, IComponent &>;
         using InputsMap = std::map<std::string, InputComponent &>;
         using OutputsMap = std::map<std::string, OutputComponent &>;
 
@@ -89,7 +89,11 @@ namespace nts
         OutputsMap  m_output_components;
 
     private:
-        std::size_t m_tick;
+        using InternComponentMap = std::map<std::string, std::unique_ptr<IComponent>>;
+
+    private:
+        InternComponentMap m_component_container;
+        std::size_t        m_tick;
     };
 }
 
