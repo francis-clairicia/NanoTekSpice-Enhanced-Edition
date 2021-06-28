@@ -21,8 +21,14 @@ namespace nts
             m_graphical_components.emplace(name, ComponentFactory::createGraphicalComponent(type));
             IComponent &component = **(m_graphical_components.at(name));
             m_components.emplace(name, component);
-            registerComponent(m_input_components, name, component);
-            registerComponent(m_output_components, name, component);
+
+            InputComponent *input = dynamic_cast<InputComponent *>(&component);
+            if (input)
+                m_input_components.emplace(name, *input);
+
+            OutputComponent *output = dynamic_cast<OutputComponent *>(&component);
+            if (output)
+                m_output_components.emplace(name, *output);
         } catch (const BadComponentTypeException &) {
             Circuit::addComponent(type, name);
         }

@@ -75,15 +75,6 @@ namespace nts
         using OutputsMap = std::map<std::string, OutputComponent &>;
 
     protected:
-        template<typename Component>
-        static void registerComponent(std::map<std::string, Component &> component_map, const std::string &name, IComponent &component)
-        {
-            Component *casted_component = dynamic_cast<Component *>(&component);
-            if (casted_component)
-                component_map.emplace(name, *casted_component);
-        }
-
-    protected:
         Components  m_components;
         InputsMap   m_input_components;
         OutputsMap  m_output_components;

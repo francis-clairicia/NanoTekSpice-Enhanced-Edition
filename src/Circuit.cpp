@@ -38,8 +38,16 @@ namespace nts
 
         m_component_container.emplace(name, ComponentFactory::createComponent(type));
         m_components.emplace(name, *(m_component_container.at(name)));
-        registerComponent(m_input_components, name, m_components.at(name));
-        registerComponent(m_output_components, name, m_components.at(name));
+
+        IComponent *component = &m_components.at(name);
+
+        InputComponent *input = dynamic_cast<InputComponent *>(component);
+        if (input)
+            m_input_components.emplace(name, *input);
+
+        OutputComponent *output = dynamic_cast<OutputComponent *>(component);
+        if (output)
+            m_output_components.emplace(name, *output);
     }
 
     bool Circuit::hasComponent(const std::string &name) const noexcept
