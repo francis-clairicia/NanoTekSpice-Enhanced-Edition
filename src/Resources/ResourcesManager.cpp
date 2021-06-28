@@ -33,7 +33,7 @@ namespace nts
 
         if (search != manager.textures.end())
             return search->second;
-        
+
         sf::Texture &new_texture = manager.textures[path];
 
         if (!new_texture.loadFromFile(path))
@@ -48,7 +48,7 @@ namespace nts
 
         if (search != manager.fonts.end())
             return search->second;
-        
+
         sf::Font &new_font = manager.fonts[path];
 
         if (!new_font.loadFromFile(path))

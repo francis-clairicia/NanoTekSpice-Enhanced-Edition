@@ -17,6 +17,7 @@
 #include "Component4017.hpp"
 #include "Component4030.hpp"
 #include "Component4040.hpp"
+#include "Component4063.hpp"
 #include "Component4069.hpp"
 #include "Component4071.hpp"
 #include "Component4081.hpp"
@@ -45,6 +46,7 @@ namespace
         {"4017",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4017>();}},
         {"4030",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4030>();}},
         {"4040",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4040>();}},
+        {"4063",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4063>();}},
         {"4069",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4069>();}},
         {"4071",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4071>();}},
         {"4081",   []() -> std::unique_ptr<nts::IComponent> {return std::make_unique<nts::Component4081>();}},

@@ -24,6 +24,7 @@ namespace nts
         {ComponentType::C4017,               "4017 'johnson'"},
         {ComponentType::C4030,               "4030 'xor'"},
         {ComponentType::C4040,               "4040 'counter'"},
+        {ComponentType::C4063,               "4063 'comparator'"},
         {ComponentType::C4069,               "4069 'invert/not'"},
         {ComponentType::C4071,               "4071 'or'"},
         {ComponentType::C4081,               "4081 'and'"},

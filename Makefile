@@ -44,6 +44,7 @@ SRC_ONEPIN_COMPONENTS	=	src/Component/SinglePin/SinglePinComponent.cpp				\
 SRC_BOX_COMPONENTS		=	src/Component/Box/BoxComponent.cpp							\
 							src/Component/Box/Component4008.cpp							\
 							src/Component/Box/Component4013.cpp							\
+							src/Component/Box/Component4063.cpp							\
 							src/Component/Box/Component4094.cpp							\
 							src/Component/Box/SubComponent.cpp							\
 							src/Component/Box/Sum/SumComponent.cpp						\
