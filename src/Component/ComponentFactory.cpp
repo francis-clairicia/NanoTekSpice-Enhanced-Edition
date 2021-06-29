@@ -33,6 +33,7 @@
 #include "ButtonComponent.hpp"
 #include "ToggleComponent.hpp"
 #include "RGBLEDComponent.hpp"
+#include "SevenSegmentComponent.hpp"
 #include "BadComponentTypeException.hpp"
 
 namespace
@@ -69,7 +70,8 @@ namespace
         {"output", []() -> std::unique_ptr<nts::AGraphicalComponent> {return std::make_unique<nts::GraphicalOutputComponent>();}},
         {"button", []() -> std::unique_ptr<nts::AGraphicalComponent> {return std::make_unique<nts::ButtonComponent>();}},
         {"toggle", []() -> std::unique_ptr<nts::AGraphicalComponent> {return std::make_unique<nts::ToggleComponent>();}},
-        {"rgbled", []() -> std::unique_ptr<nts::AGraphicalComponent> {return std::make_unique<nts::RGBLEDComponent>();}}
+        {"rgbled", []() -> std::unique_ptr<nts::AGraphicalComponent> {return std::make_unique<nts::RGBLEDComponent>();}},
+        {"7seg",   []() -> std::unique_ptr<nts::AGraphicalComponent> {return std::make_unique<nts::SevenSegmentComponent>();}},
     };
 } // namespace
 
