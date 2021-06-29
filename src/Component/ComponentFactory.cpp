@@ -30,6 +30,7 @@
 #include "MulComponent.hpp"
 #include "GraphicalInputComponent.hpp"
 #include "GraphicalOutputComponent.hpp"
+#include "ToggleComponent.hpp"
 #include "BadComponentTypeException.hpp"
 
 namespace
@@ -64,6 +65,7 @@ namespace
     const std::unordered_map<std::string_view, std::unique_ptr<nts::AGraphicalComponent> (*)()> GRAPHICAL_COMPONENT_CREATOR{
         {"input",  []() -> std::unique_ptr<nts::AGraphicalComponent> {return std::make_unique<nts::GraphicalInputComponent>();}},
         {"output", []() -> std::unique_ptr<nts::AGraphicalComponent> {return std::make_unique<nts::GraphicalOutputComponent>();}},
+        {"toggle", []() -> std::unique_ptr<nts::AGraphicalComponent> {return std::make_unique<nts::ToggleComponent>();}},
     };
 } // namespace
 

@@ -14,7 +14,6 @@
 #include "InputComponent.hpp"
 #include "OutputComponent.hpp"
 #include "ResourcesManager.hpp"
-#include <SFML/Graphics/RenderTarget.hpp>
 
 namespace
 {

@@ -12,6 +12,7 @@
 
 namespace nts
 {
+    constexpr std::string_view SWITCH_IMG{"./assets/img/switch.png"};
     constexpr std::string_view FONT_FILE{"./assets/font/jackinput.ttf"};
 } // namespace nts
 
