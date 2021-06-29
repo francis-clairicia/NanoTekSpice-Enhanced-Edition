@@ -9,6 +9,8 @@
 #define TOGGLECOMPONENT_HPP_
 
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include "AGraphicalComponent.hpp"
 #include "InputComponent.hpp"
 
@@ -36,9 +38,11 @@ namespace nts
         void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
 
     private:
-        Component     m_component;
-        nts::Tristate m_intern_value;
-        sf::Sprite    m_sprite;
+        Component          m_component;
+        nts::Tristate      m_intern_value;
+        sf::Sprite         m_sprite;
+        sf::Text           m_text;
+        sf::RectangleShape m_box;
     };
 } // namespace nts
 

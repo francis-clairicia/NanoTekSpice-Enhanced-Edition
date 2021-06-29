@@ -27,6 +27,7 @@ namespace nts
         placeAllComponents();
 
         while (m_window.isOpen()) {
+            m_circuit.simulate();
             handleEvents();
             drawScreen();
             m_window.display();

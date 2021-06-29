@@ -59,6 +59,8 @@ namespace nts
         virtual void mouseButtonClicked();
         virtual void mouseWheelAction(sf::Mouse::Wheel wheel, float delta);
 
+        void appyTransformations(sf::Transformable &transformable);
+
     private:
         std::string  m_name;
         bool         m_highlighted;

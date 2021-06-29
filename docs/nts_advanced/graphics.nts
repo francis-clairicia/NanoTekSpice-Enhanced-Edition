@@ -1,0 +1,10 @@
+.chipsets:
+input in
+output out
+
+toggle toggle_in
+output toggle_out
+
+.links:
+in:1 out:1
+toggle_in:1 toggle_out:1

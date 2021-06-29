@@ -5,7 +5,6 @@
 ** GraphicalInputComponent
 */
 
-#include <iostream>
 #include "GraphicalInputComponent.hpp"
 
 namespace nts
@@ -29,7 +28,20 @@ namespace nts
 
     void GraphicalInputComponent::mouseButtonClicked()
     {
-        std::cout << "Clicked" << '\n';
+        switch (m_component->getValue())
+        {
+        case UNDEFINED:
+            m_component->setValue(FALSE);
+            break;
+        case FALSE:
+            m_component->setValue(TRUE);
+            break;
+        case TRUE:
+            m_component->setValue(UNDEFINED);
+            break;
+        default:
+            break;
+        }
     }
 } // namespace nts
 

@@ -52,8 +52,8 @@ namespace nts
 
             m_text.setOrigin({text_bounds.width / 2, text_bounds.height / 1.5f});
             m_box.setSize({text_bounds.width * 1.20f, text_bounds.height * 1.70f});
-            m_box.setOrigin(getOrigin());
-            m_box.setPosition(getPosition());
+            
+            appyTransformations(m_box);
 
             sf::FloatRect box_bounds = m_box.getGlobalBounds();
 

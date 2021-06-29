@@ -128,6 +128,14 @@ namespace nts
     {
     }
 
+    void AGraphicalComponent::appyTransformations(sf::Transformable &transformable)
+    {
+        transformable.setOrigin(getOrigin());
+        transformable.setPosition(getPosition());
+        transformable.setRotation(getRotation());
+        transformable.setScale(getScale());
+    }
+
     IComponent *AGraphicalComponent::operator->() noexcept
     {
         return get();
