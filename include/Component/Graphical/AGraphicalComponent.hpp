@@ -24,6 +24,8 @@ namespace nts
         IComponent *get() noexcept;
         const IComponent *get() const noexcept;
 
+        virtual void update() noexcept = 0;
+
         virtual sf::FloatRect getLocalBounds() const = 0;
         sf::FloatRect getGlobalBounds() const;
 

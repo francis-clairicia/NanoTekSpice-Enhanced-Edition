@@ -23,12 +23,24 @@ namespace nts
 {
     GraphicalInputComponent::GraphicalInputComponent():
         m_component{std::make_unique<InputComponent>()},
-        m_text{TRISTATE_TO_STR.at(m_component->getValue()).data(), ResourcesManager::loadFont(FONT_FILE.data())}
+        m_text{TRISTATE_TO_STR.at(m_component->getValue()).data(), ResourcesManager::loadFont(FONT_FILE.data()), 50}
+    {
+        m_box.setFillColor(sf::Color::Black);
+        m_text.setFillColor(sf::Color::White);
+    }
+
+    void GraphicalInputComponent::update() noexcept
     {
         sf::FloatRect text_bounds = m_text.getLocalBounds();
 
-        m_text.setFillColor(sf::Color::White);
-        m_box.setSize({text_bounds.width, text_bounds.height});
+        m_text.setOrigin({text_bounds.width / 2, text_bounds.height / 2});
+        m_box.setSize({text_bounds.width + 20, text_bounds.height + 20});
+        m_box.setOrigin(getOrigin());
+        m_box.setPosition(getPosition());
+
+        sf::FloatRect box_bounds = m_box.getGlobalBounds();
+
+        m_text.setPosition({box_bounds.left + box_bounds.width / 2, box_bounds.top + box_bounds.height / 5});
     }
 
     sf::FloatRect GraphicalInputComponent::getLocalBounds() const

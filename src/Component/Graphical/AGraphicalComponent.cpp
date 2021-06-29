@@ -84,7 +84,7 @@ namespace nts
         sf::FloatRect local_bounds = getLocalBounds();
         sf::FloatRect global_bounds = getGlobalBounds();
 
-        if (!m_highlighted) {
+        if (!m_moving) {
             m_highlighted = global_bounds.contains(pos);
             if (!m_highlighted)
                 return;

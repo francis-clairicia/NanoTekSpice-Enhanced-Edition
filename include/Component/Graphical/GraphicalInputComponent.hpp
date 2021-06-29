@@ -24,6 +24,8 @@ namespace nts
         GraphicalInputComponent();
         ~GraphicalInputComponent() noexcept override = default;
 
+        void update() noexcept override;
+
         sf::FloatRect getLocalBounds() const final;
 
     protected:

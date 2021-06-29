@@ -5,6 +5,7 @@
 ** GUINanoTekSpice
 */
 
+#include <SFML/Graphics/RectangleShape.hpp>
 #include "GUINanoTekSpice.hpp"
 #include "Parser.hpp"
 
@@ -19,6 +20,7 @@ namespace nts
     void GUINanoTekSpice::run()
     {
         m_window.create({800, 800}, "NanoTekSpice - Enhanced Edition");
+        m_window.setFramerateLimit(60);
 
         while (m_window.isOpen()) {
             handleEvents();
@@ -31,7 +33,19 @@ namespace nts
     {
         m_window.clear(sf::Color{0, 5, 100});
         for (const auto &pair : m_circuit.m_graphical_components) {
-            m_window.draw(*pair.second);
+            const std::unique_ptr<AGraphicalComponent> &component = pair.second;
+            component->update();
+            m_window.draw(*component);
+            if (component->isHighlighted()) {
+                sf::FloatRect bounds = component->getGlobalBounds();
+                sf::RectangleShape box{{bounds.width, bounds.height}};
+
+                box.setFillColor(sf::Color::Transparent);
+                box.setOutlineColor(sf::Color::Yellow);
+                box.setOutlineThickness(2);
+                box.setPosition({bounds.left, bounds.top});
+                m_window.draw(box);
+            }
         }
     }
 
