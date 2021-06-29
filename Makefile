@@ -74,7 +74,8 @@ SRC_CALC_COMPONENTS		=	src/Component/Calculation/ACalculationComponent.cpp			\
 
 SRC_GRAPHIC_COMPONENTS	=	src/Resources/ResourcesManager.cpp							\
 							src/Component/Graphical/AGraphicalComponent.cpp				\
-							src/Component/Graphical/GraphicalInputComponent.cpp
+							src/Component/Graphical/GraphicalInputComponent.cpp			\
+							src/Component/Graphical/GraphicalOutputComponent.cpp
 
 SRC_COMPONENTS			=	src/Component/ComponentFactory.cpp							\
 							src/Component/ComponentType.cpp								\

@@ -12,7 +12,8 @@ namespace nts
     AGraphicalComponent::AGraphicalComponent() noexcept:
         m_highlighted{false},
         m_clicked{false},
-        m_moving{false}
+        m_moving{false},
+        m_click_pos{0, 0}
     {
     }
 
@@ -29,6 +30,11 @@ namespace nts
     sf::FloatRect AGraphicalComponent::getGlobalBounds() const
     {
         return getTransform().transformRect(getLocalBounds());
+    }
+
+    void AGraphicalComponent::removeHighlight() noexcept
+    {
+        m_highlighted = m_moving = m_clicked = false;
     }
 
     void AGraphicalComponent::keyPressedHandler(const sf::Event::KeyEvent &event)
@@ -55,10 +61,11 @@ namespace nts
         }
     }
 
-    void AGraphicalComponent::mouseButtonPressedHandler(sf::Mouse::Button button)
+    void AGraphicalComponent::mouseButtonPressedHandler(sf::Mouse::Button button, sf::Vector2f pos)
     {
         if (m_highlighted && !m_clicked && button == sf::Mouse::Left) {
             m_clicked = true;
+            m_click_pos = pos;
         }
     }
 
@@ -81,7 +88,6 @@ namespace nts
 
     void AGraphicalComponent::mouseMoveHandler(sf::Vector2f pos)
     {
-        sf::FloatRect local_bounds = getLocalBounds();
         sf::FloatRect global_bounds = getGlobalBounds();
 
         if (!m_moving) {
@@ -91,8 +97,8 @@ namespace nts
         }
         m_moving = m_clicked;
         if (m_moving) {
-            setOrigin({local_bounds.width / 2, local_bounds.height / 2});
-            setPosition(pos);
+            move(pos - m_click_pos);
+            m_click_pos = pos;
         }
     }
 

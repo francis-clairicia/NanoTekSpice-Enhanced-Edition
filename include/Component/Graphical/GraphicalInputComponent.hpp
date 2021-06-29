@@ -8,36 +8,20 @@
 #ifndef GRAPHICALINPUTCOMPONENT_HPP_
 #define GRAPHICALINPUTCOMPONENT_HPP_
 
-#include <SFML/Graphics/Text.hpp>
-#include <SFML/Graphics/RectangleShape.hpp>
-#include "AGraphicalComponent.hpp"
-#include "InputComponent.hpp"
+#include "GraphicalIOComponent.hpp"
 
 namespace nts
 {
-    class GraphicalInputComponent: public AGraphicalComponent
+    class GraphicalInputComponent: public GraphicalIOComponent<InputComponent>
     {
-    public:
-        using Component = std::unique_ptr<InputComponent>;
-
     public:
         GraphicalInputComponent();
         ~GraphicalInputComponent() noexcept override = default;
 
         void update(const std::string &component_name) noexcept override;
 
-        sf::FloatRect getLocalBounds() const final;
-
     protected:
-        IComponent *getInternalComponent() const noexcept final;
-
-    private:
-        void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
-
-    private:
-        Component          m_component;
-        sf::Text           m_text;
-        sf::RectangleShape m_box;
+        void mouseButtonClicked() override;
     };
 } // namespace nts
 

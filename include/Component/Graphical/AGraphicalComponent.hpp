@@ -32,9 +32,11 @@ namespace nts
         [[nodiscard]] bool isHighlighted() const noexcept;
         [[nodiscard]] bool isClicked() const noexcept;
 
+        void removeHighlight() noexcept;
+
         void keyPressedHandler(const sf::Event::KeyEvent &event);
         void keyReleasedHandler(const sf::Event::KeyEvent &event);
-        void mouseButtonPressedHandler(sf::Mouse::Button button);
+        void mouseButtonPressedHandler(sf::Mouse::Button button, sf::Vector2f pos);
         void mouseButtonReleasedHandler(sf::Mouse::Button button);
         void mouseWheelHandler(sf::Mouse::Wheel wheel, float delta);
         void mouseMoveHandler(sf::Vector2f pos);
@@ -57,6 +59,7 @@ namespace nts
         bool m_highlighted;
         bool m_clicked;
         bool m_moving;
+        sf::Vector2f m_click_pos;
     };
 } // namespace nts
 

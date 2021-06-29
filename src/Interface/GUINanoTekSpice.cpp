@@ -19,7 +19,7 @@ namespace nts
 
     void GUINanoTekSpice::run()
     {
-        m_window.create({800, 800}, "NanoTekSpice - Enhanced Edition");
+        m_window.create({1366, 768}, "NanoTekSpice - Enhanced Edition");
         m_window.setFramerateLimit(60);
 
         while (m_window.isOpen()) {
@@ -113,7 +113,7 @@ namespace nts
 
     void GUINanoTekSpice::mouseButtonPressedHandler(const sf::Event::MouseButtonEvent &event)
     {
-        processComponentEvent(&AGraphicalComponent::mouseButtonPressedHandler, event.button);
+        processComponentEvent(&AGraphicalComponent::mouseButtonPressedHandler, event.button, getMousePosition({event.x, event.y}));
     }
 
     void GUINanoTekSpice::mouseButtonReleasedHandler(const sf::Event::MouseButtonEvent &event)
@@ -123,7 +123,7 @@ namespace nts
 
     void GUINanoTekSpice::mouseMoveHandler(const sf::Event::MouseMoveEvent &event)
     {
-        processComponentEvent(&AGraphicalComponent::mouseMoveHandler, getMousePosition({event.x, event.y}));
+        processMoveComponentEvent(getMousePosition({event.x, event.y}));
     }
 
     void GUINanoTekSpice::mouseWheelHandler(const sf::Event::MouseWheelScrollEvent &event)
@@ -134,5 +134,29 @@ namespace nts
     void GUINanoTekSpice::resizeHandler(const sf::Event::SizeEvent &event)
     {
         m_window.setView(sf::View{sf::FloatRect{0, 0, static_cast<float>(event.width), static_cast<float>(event.height)}});
+    }
+
+    void GUINanoTekSpice::processMoveComponentEvent(sf::Vector2f pos)
+    {
+        auto begin = m_circuit.m_graphical_components.begin();
+        auto end = m_circuit.m_graphical_components.end();
+
+        if (m_highlighted_component) {
+            if (m_highlighted_component->isClicked()) {
+                m_highlighted_component->mouseMoveHandler(pos);
+                return;
+            }
+            m_highlighted_component->removeHighlight();
+            m_highlighted_component = nullptr;
+        }
+        for (auto pair = begin; pair != end; ++pair) {
+            AGraphicalComponent &component = *(pair->second);
+            component.mouseMoveHandler(pos);
+            if (component.isHighlighted()) {
+                if (m_highlighted_component)
+                    m_highlighted_component->removeHighlight();
+                m_highlighted_component = &component;
+            }
+        }
     }
 } // namespace nts

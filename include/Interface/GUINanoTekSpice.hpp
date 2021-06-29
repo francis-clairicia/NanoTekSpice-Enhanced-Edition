@@ -51,20 +51,10 @@ namespace nts
                 (m_highlighted_component->*(handler))(std::forward<HandlerArgs>(args)...);
                 if (!(m_highlighted_component->isHighlighted()))
                     m_highlighted_component = nullptr;
-            } else {
-                auto begin = m_circuit.m_graphical_components.rbegin();
-                auto end = m_circuit.m_graphical_components.rend();
-
-                for (auto pair = begin; pair != end; ++pair) {
-                    AGraphicalComponent &component = *(pair->second);
-                    (component.*(handler))(std::forward<HandlerArgs>(args)...);
-                    if (component.isHighlighted()) {
-                        m_highlighted_component = &component;
-                        break;
-                    }
-                }
             }
         }
+
+        void processMoveComponentEvent(sf::Vector2f pos);
 
     private:
         GraphicalCircuit m_circuit;
