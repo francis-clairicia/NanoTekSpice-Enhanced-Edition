@@ -33,6 +33,7 @@ private:
 
         void parse(Args &args);
         void printHelp() const noexcept;
+        void printExample() const noexcept;
 
     private:
         void parseOptions(Args &args);

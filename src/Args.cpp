@@ -15,11 +15,12 @@ namespace
     const std::vector<option> LONG_OPTIONS{
         option{"help", no_argument, nullptr, 'h'},
         option{"graphic", required_argument, nullptr, 'g'},
+        option{"example", no_argument, nullptr, 'e'},
         option{"interpret", required_argument, nullptr, 'i'},
         option{nullptr, 0, nullptr, 0}
     };
 
-    constexpr std::string_view SHORT_OPTIONS{"hgi:"};
+    constexpr std::string_view SHORT_OPTIONS{"hgei:"};
 } // namespace
 
 
@@ -55,12 +56,33 @@ void Args::Parser::printHelp() const noexcept
                  "OPTIONS:\n"
                  "\t" "-h, --help" "\t\t\t" "Shows this help and exit\n"
                  "\t" "-g, --graphic" "\t\t\t" "Toogle GUI mode\n"
+                 "\t" "-e, --example" "\t\t\t" "Shows an example of .nts circuit file and exit\n"
                  "\n"
                  "CLI OPTIONS:\n"
                  "\t" "-i FILE, --interpret=FILE" "\t" "Executes instructions within FILE before showing the prompt\n"
                  "\n"
                  "POSITIONAL ARGUMENTS:\n"
                  "\t" "circuit" "\t" "Path to a .nts circuit file\n";
+}
+
+void Args::Parser::printExample() const noexcept
+{
+    std::cout << "# This is an example for your .nts circuit\n"
+                 "\n"
+                 "# Chipsets declaration\n"
+                 ".chipsets:\n"
+                 "\n"
+                 "# [type] [name]\n"
+                 "input in\n"
+                 "output out\n"
+                 "\n"
+                 "# Links declaration\n"
+                 ".links:\n"
+                 "\n"
+                 "# [name1:pin1] [name2:pin2]\n"
+                 "in:1 out:1\n"
+                 "\n"
+                 "# That's it ! :)\n";
 }
 
 void Args::Parser::parseOptions(Args &args)
@@ -80,6 +102,9 @@ void Args::Parser::parseOptions(Args &args)
                 throw Exception{"Cannot combine -i and -g options"};
             args.graphic = true;
             break;
+        case 'e':
+            printExample();
+            std::exit(0);
         case 'i':
             if (args.graphic)
                 throw Exception{"Cannot combine -i and -g options"};
