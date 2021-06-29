@@ -78,7 +78,8 @@ SRC_GRAPHIC_COMPONENTS	=	src/Resources/ResourcesManager.cpp							\
 							src/Component/Graphical/GraphicalInputComponent.cpp			\
 							src/Component/Graphical/GraphicalOutputComponent.cpp		\
 							src/Component/Graphical/ButtonComponent.cpp					\
-							src/Component/Graphical/ToggleComponent.cpp
+							src/Component/Graphical/ToggleComponent.cpp					\
+							src/Component/Graphical/RGBLEDComponent.cpp
 
 SRC_COMPONENTS			=	src/Component/ComponentFactory.cpp							\
 							src/Component/ComponentType.cpp								\

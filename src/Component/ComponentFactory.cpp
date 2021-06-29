@@ -32,6 +32,7 @@
 #include "GraphicalOutputComponent.hpp"
 #include "ButtonComponent.hpp"
 #include "ToggleComponent.hpp"
+#include "RGBLEDComponent.hpp"
 #include "BadComponentTypeException.hpp"
 
 namespace
@@ -68,6 +69,7 @@ namespace
         {"output", []() -> std::unique_ptr<nts::AGraphicalComponent> {return std::make_unique<nts::GraphicalOutputComponent>();}},
         {"button", []() -> std::unique_ptr<nts::AGraphicalComponent> {return std::make_unique<nts::ButtonComponent>();}},
         {"toggle", []() -> std::unique_ptr<nts::AGraphicalComponent> {return std::make_unique<nts::ToggleComponent>();}},
+        {"rgbled", []() -> std::unique_ptr<nts::AGraphicalComponent> {return std::make_unique<nts::RGBLEDComponent>();}}
     };
 } // namespace
 
