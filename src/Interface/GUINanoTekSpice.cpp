@@ -22,6 +22,8 @@ namespace nts
         m_window.create({1366, 768}, "NanoTekSpice - Enhanced Edition");
         m_window.setFramerateLimit(60);
 
+        placeAllComponents();
+
         while (m_window.isOpen()) {
             handleEvents();
             drawScreen();
@@ -83,6 +85,32 @@ namespace nts
             default:
                 break;
             }
+        }
+    }
+
+    void GUINanoTekSpice::placeAllComponents()
+    {
+        float x_offset = 20.f;
+        float y_offset = 20.f;
+
+        sf::Vector2f pos{x_offset, y_offset};
+        sf::Vector2u window_size = m_window.getSize();
+
+        float max_y = 0;
+
+        for (const auto &pair : m_circuit.m_graphical_components) {
+            AGraphicalComponent &component = *(pair.second);
+            component.setOrigin(0, 0);
+            component.setPosition(pos);
+            component.update(pair.first);
+            sf::FloatRect bounds = component.getGlobalBounds();
+            max_y = std::max(max_y, bounds.top + bounds.height);
+            if ((bounds.left + bounds.width) > (window_size.x - x_offset)) {
+                pos.x = x_offset;
+                pos.y = max_y + y_offset;
+                component.setPosition(pos);
+            }
+            pos.x += bounds.width + x_offset;
         }
     }
 

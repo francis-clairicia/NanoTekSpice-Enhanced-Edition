@@ -32,6 +32,8 @@ namespace nts
         void drawScreen();
         void handleEvents();
 
+        void placeAllComponents();
+
         sf::Vector2f getMousePosition() const noexcept;
         sf::Vector2f getMousePosition(sf::Vector2i mouse_pos) const noexcept;
 
