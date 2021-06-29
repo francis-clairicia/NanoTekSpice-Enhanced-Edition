@@ -58,8 +58,10 @@ namespace nts
                 for (auto pair = begin; pair != end; ++pair) {
                     AGraphicalComponent &component = *(pair->second);
                     (component.*(handler))(std::forward<HandlerArgs>(args)...);
-                    if (component.isHighlighted())
+                    if (component.isHighlighted()) {
                         m_highlighted_component = &component;
+                        break;
+                    }
                 }
             }
         }

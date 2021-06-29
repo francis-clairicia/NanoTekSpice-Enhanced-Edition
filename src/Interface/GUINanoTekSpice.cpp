@@ -34,7 +34,7 @@ namespace nts
         m_window.clear(sf::Color{0, 5, 100});
         for (const auto &pair : m_circuit.m_graphical_components) {
             const std::unique_ptr<AGraphicalComponent> &component = pair.second;
-            component->update();
+            component->update(pair.first);
             m_window.draw(*component);
             if (component->isHighlighted()) {
                 sf::FloatRect bounds = component->getGlobalBounds();
