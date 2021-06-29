@@ -19,6 +19,7 @@ namespace nts
 
         try {
             m_graphical_components.emplace(name, ComponentFactory::createGraphicalComponent(type));
+            m_graphical_components.at(name)->setName(name);
             IComponent &component = **(m_graphical_components.at(name));
             m_components.emplace(name, component);
 

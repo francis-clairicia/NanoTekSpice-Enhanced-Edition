@@ -16,9 +16,9 @@ namespace nts
         m_text.setFillColor(sf::Color::White);
     }
 
-    void GraphicalInputComponent::update(const std::string &component_name) noexcept
+    void GraphicalInputComponent::update() noexcept
     {
-        GraphicalIOComponent<InputComponent>::update(component_name);
+        GraphicalIOComponent<InputComponent>::update();
 
         if (isClicked()) {
             m_box.setFillColor({127, 127, 127});

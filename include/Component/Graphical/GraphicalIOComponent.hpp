@@ -45,9 +45,9 @@ namespace nts
 
         ~GraphicalIOComponent() noexcept override = default;
 
-        void update(const std::string &component_name) noexcept override
+        void update() noexcept override
         {
-            m_text.setString(component_name + "\nValue: " + TRISTATE_TO_STR.at(m_component->getValue()).data());
+            m_text.setString(getName() + "\nValue: " + TRISTATE_TO_STR.at(m_component->getValue()).data());
 
             sf::FloatRect text_bounds = m_text.getLocalBounds();
 

@@ -24,7 +24,10 @@ namespace nts
         IComponent *get() noexcept;
         const IComponent *get() const noexcept;
 
-        virtual void update(const std::string &component_name) noexcept = 0;
+        const std::string &getName() const noexcept;
+        void setName(const std::string &name);
+
+        virtual void update() noexcept = 0;
 
         virtual sf::FloatRect getLocalBounds() const = 0;
         sf::FloatRect getGlobalBounds() const;
@@ -56,9 +59,10 @@ namespace nts
         virtual void mouseWheelAction(sf::Mouse::Wheel wheel, float delta);
 
     private:
-        bool m_highlighted;
-        bool m_clicked;
-        bool m_moving;
+        std::string  m_name;
+        bool         m_highlighted;
+        bool         m_clicked;
+        bool         m_moving;
         sf::Vector2f m_click_pos;
     };
 } // namespace nts

@@ -18,7 +18,7 @@ namespace nts
         GraphicalOutputComponent();
         ~GraphicalOutputComponent() noexcept override = default;
 
-        void update(const std::string &component_name) noexcept override;
+        void update() noexcept override;
     };
 } // namespace nts
 

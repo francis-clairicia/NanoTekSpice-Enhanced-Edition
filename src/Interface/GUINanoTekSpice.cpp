@@ -36,7 +36,7 @@ namespace nts
         m_window.clear(sf::Color{0, 5, 100});
         for (const auto &pair : m_circuit.m_graphical_components) {
             const std::unique_ptr<AGraphicalComponent> &component = pair.second;
-            component->update(pair.first);
+            component->update();
             m_window.draw(*component);
             if (component->isHighlighted()) {
                 sf::FloatRect bounds = component->getGlobalBounds();
@@ -102,7 +102,7 @@ namespace nts
             AGraphicalComponent &component = *(pair.second);
             component.setOrigin(0, 0);
             component.setPosition(pos);
-            component.update(pair.first);
+            component.update();
             sf::FloatRect bounds = component.getGlobalBounds();
             max_y = std::max(max_y, bounds.top + bounds.height);
             if ((bounds.left + bounds.width) > (window_size.x - x_offset)) {

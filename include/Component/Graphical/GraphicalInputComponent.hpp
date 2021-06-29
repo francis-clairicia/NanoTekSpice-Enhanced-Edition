@@ -18,7 +18,7 @@ namespace nts
         GraphicalInputComponent();
         ~GraphicalInputComponent() noexcept override = default;
 
-        void update(const std::string &component_name) noexcept override;
+        void update() noexcept override;
 
     protected:
         void mouseButtonClicked() override;

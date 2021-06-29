@@ -27,6 +27,16 @@ namespace nts
         return getInternalComponent();
     }
 
+    const std::string &AGraphicalComponent::getName() const noexcept
+    {
+        return m_name;
+    }
+
+    void AGraphicalComponent::setName(const std::string &name)
+    {
+        m_name = name;
+    }
+
     sf::FloatRect AGraphicalComponent::getGlobalBounds() const
     {
         return getTransform().transformRect(getLocalBounds());
