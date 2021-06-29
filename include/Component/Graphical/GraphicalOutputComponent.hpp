@@ -11,7 +11,7 @@
 #include "GraphicalIOComponent.hpp"
 
 namespace nts
-{    
+{
     class GraphicalOutputComponent: public GraphicalIOComponent<OutputComponent>
     {
     public:

@@ -41,16 +41,6 @@ namespace nts
             const std::unique_ptr<AGraphicalComponent> &component = pair.second;
             component->update();
             m_window.draw(*component);
-            if (component->isHighlighted()) {
-                sf::FloatRect bounds = component->getGlobalBounds();
-                sf::RectangleShape box{{bounds.width, bounds.height}};
-
-                box.setFillColor(sf::Color::Transparent);
-                box.setOutlineColor(sf::Color::Yellow);
-                box.setOutlineThickness(2);
-                box.setPosition({bounds.left, bounds.top});
-                m_window.draw(box);
-            }
         }
     }
 

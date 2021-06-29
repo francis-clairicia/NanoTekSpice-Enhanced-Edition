@@ -64,6 +64,11 @@ namespace nts
         return m_clicked;
     }
 
+    bool AGraphicalComponent::isMoving() const noexcept
+    {
+        return m_moving;
+    }
+
     void AGraphicalComponent::keyReleasedHandler(const sf::Event::KeyEvent &event)
     {
         if (m_highlighted) {

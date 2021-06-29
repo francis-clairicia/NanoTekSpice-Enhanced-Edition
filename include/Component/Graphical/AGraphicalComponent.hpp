@@ -35,6 +35,7 @@ namespace nts
 
         [[nodiscard]] bool isHighlighted() const noexcept;
         [[nodiscard]] bool isClicked() const noexcept;
+        [[nodiscard]] bool isMoving() const noexcept;
 
         void removeHighlight() noexcept;
 

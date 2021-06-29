@@ -40,6 +40,8 @@ namespace nts
             m_component{std::make_unique<IOComponent>()},
             m_text{TRISTATE_TO_STR.at(m_component->getValue()).data(), ResourcesManager::loadFont(FONT_FILE.data()), 25}
         {
+            m_box.setOutlineThickness(2);
+            m_box.setOutlineColor(sf::Color::Transparent);
         }
 
         ~GraphicalIOComponent() noexcept override = default;
@@ -52,12 +54,18 @@ namespace nts
 
             m_text.setOrigin({text_bounds.width / 2, text_bounds.height / 1.5f});
             m_box.setSize({text_bounds.width * 1.20f, text_bounds.height * 1.70f});
-            
+
             appyTransformations(m_box);
 
             sf::FloatRect box_bounds = m_box.getGlobalBounds();
 
             m_text.setPosition({box_bounds.left + box_bounds.width / 2, box_bounds.top + box_bounds.height / 2});
+
+            if (isHighlighted()) {
+                m_box.setOutlineColor(sf::Color::Yellow);
+            } else {
+                m_box.setOutlineColor(sf::Color::Transparent);
+            }
         }
 
         sf::FloatRect getLocalBounds() const final

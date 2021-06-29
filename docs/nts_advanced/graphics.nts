@@ -5,6 +5,10 @@ output out
 toggle toggle_in
 output toggle_out
 
+button button_in
+output button_out
+
 .links:
 in:1 out:1
 toggle_in:1 toggle_out:1
+button_in:1 button_out:1

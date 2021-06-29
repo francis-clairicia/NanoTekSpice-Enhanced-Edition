@@ -28,6 +28,9 @@ namespace nts
         m_sprite.setScale({0.5f, 0.5f});
         update();
         m_text.setFillColor(sf::Color::White);
+        m_box.setFillColor(sf::Color::Transparent);
+        m_box.setOutlineThickness(2);
+        m_box.setOutlineColor(sf::Color::Transparent);
     }
 
     void ToggleComponent::update() noexcept
@@ -59,6 +62,12 @@ namespace nts
 
         m_text.setOrigin({text_bounds.width / 2, text_bounds.height});
         m_text.setPosition({bounds.left + bounds.width / 2, bounds.top + bounds.height * 0.9f});
+
+        if (isHighlighted()) {
+            m_box.setOutlineColor(sf::Color::Yellow);
+        } else {
+            m_box.setOutlineColor(sf::Color::Transparent);
+        }
     }
 
     sf::FloatRect ToggleComponent::getLocalBounds() const
@@ -81,6 +90,7 @@ namespace nts
     {
         target.draw(m_sprite, states);
         target.draw(m_text, states);
+        target.draw(m_box, states);
     }
 } // namespace nts
 
