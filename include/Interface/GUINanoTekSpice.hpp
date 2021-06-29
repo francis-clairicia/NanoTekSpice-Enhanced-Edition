@@ -13,6 +13,7 @@
 #include "NanoTekSpice.hpp"
 #include "GraphicalCircuit.hpp"
 #include "Camera.hpp"
+#include "Simulation.hpp"
 
 namespace nts
 {
@@ -61,6 +62,7 @@ namespace nts
 
     private:
         GraphicalCircuit     m_circuit;
+        Simulation           m_simulation;
         sf::RenderWindow     m_window;
         Camera               m_camera;
         AGraphicalComponent *m_highlighted_component;

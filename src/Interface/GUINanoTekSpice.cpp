@@ -13,6 +13,7 @@ namespace nts
 {
     GUINanoTekSpice::GUINanoTekSpice(const std::string &circuit_file):
         m_circuit{Parser::parse<GraphicalCircuit>(circuit_file)},
+        m_simulation{m_circuit, 60},
         m_camera{m_window},
         m_highlighted_component{nullptr}
     {
@@ -26,12 +27,14 @@ namespace nts
 
         placeAllComponents();
 
+        m_simulation.start();
         while (m_window.isOpen()) {
-            m_circuit.simulate();
+            m_simulation.tick();
             handleEvents();
             drawScreen();
             m_window.display();
         }
+        m_simulation.stop();
     }
 
     void GUINanoTekSpice::drawScreen()
