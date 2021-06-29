@@ -10,7 +10,8 @@ SRC_MAIN				=	src/main.cpp
 SRC_PARSER				=	src/Args.cpp
 
 SRC_NANOTEKSPICE		=	src/Interface/CLINanoTekSpice.cpp							\
-							src/Interface/GUINanoTekSpice.cpp
+							src/Interface/GUINanoTekSpice.cpp							\
+							src/Interface/GUI/Camera.cpp
 
 SRC_EXCEPTIONS			=	src/Exception/BadComponentNameException.cpp					\
 							src/Exception/BadComponentTypeException.cpp					\
@@ -134,6 +135,7 @@ override CXXFLAGS		+=	-Wall -Wextra -std=c++17
 
 override CPPFLAGS		+=	-I./include/												\
 							-I./include/Interface/										\
+							-I./include/Interface/GUI/									\
 							-I./include/Exception/										\
 							-I./include/Exception/Parser/								\
 							-I./include/Exception/CLI/									\

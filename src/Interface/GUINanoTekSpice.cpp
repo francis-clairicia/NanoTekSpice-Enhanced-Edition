@@ -13,6 +13,7 @@ namespace nts
 {
     GUINanoTekSpice::GUINanoTekSpice(const std::string &circuit_file):
         m_circuit{Parser::parse<GraphicalCircuit>(circuit_file)},
+        m_camera{m_window},
         m_highlighted_component{nullptr}
     {
     }
@@ -21,6 +22,7 @@ namespace nts
     {
         m_window.create({1366, 768}, "NanoTekSpice - Enhanced Edition");
         m_window.setFramerateLimit(60);
+        m_camera.reset();
 
         placeAllComponents();
 
@@ -132,6 +134,11 @@ namespace nts
     void GUINanoTekSpice::keyPressedHandler(const sf::Event::KeyEvent &event)
     {
         processComponentEvent(&AGraphicalComponent::keyPressedHandler, event);
+        if (!m_highlighted_component) {
+            if (event.code == sf::Keyboard::Escape) {
+                m_camera.reset();
+            }
+        }
     }
 
     void GUINanoTekSpice::keyReleasedHandler(const sf::Event::KeyEvent &event)
@@ -141,27 +148,46 @@ namespace nts
 
     void GUINanoTekSpice::mouseButtonPressedHandler(const sf::Event::MouseButtonEvent &event)
     {
-        processComponentEvent(&AGraphicalComponent::mouseButtonPressedHandler, event.button, getMousePosition({event.x, event.y}));
+        sf::Vector2f mouse_pos = getMousePosition({event.x, event.y});
+
+        processComponentEvent(&AGraphicalComponent::mouseButtonPressedHandler, event.button, mouse_pos);
+        if (!m_highlighted_component) {
+            m_camera.moveEvent(event.button, {event.x, event.y}, true);
+        }
     }
 
     void GUINanoTekSpice::mouseButtonReleasedHandler(const sf::Event::MouseButtonEvent &event)
     {
+        if (m_camera.isMoving()) {
+            return m_camera.moveEvent(event.button, {event.x, event.y}, false);
+        }
         processComponentEvent(&AGraphicalComponent::mouseButtonReleasedHandler, event.button);
     }
 
     void GUINanoTekSpice::mouseMoveHandler(const sf::Event::MouseMoveEvent &event)
     {
-        processMoveComponentEvent(getMousePosition({event.x, event.y}));
+        sf::Vector2f mouse_pos = getMousePosition({event.x, event.y});
+
+        if (m_camera.isMoving()) {
+            return m_camera.moveEvent({event.x, event.y});
+        }
+        processMoveComponentEvent(mouse_pos);
+        if (!m_highlighted_component) {
+            m_camera.moveEvent({event.x, event.y});
+        }
     }
 
     void GUINanoTekSpice::mouseWheelHandler(const sf::Event::MouseWheelScrollEvent &event)
     {
         processComponentEvent(&AGraphicalComponent::mouseWheelHandler, event.wheel, event.delta);
+        if (!m_highlighted_component) {
+            m_camera.zoomEvent(event);
+        }
     }
 
     void GUINanoTekSpice::resizeHandler(const sf::Event::SizeEvent &event)
     {
-        m_window.setView(sf::View{sf::FloatRect{0, 0, static_cast<float>(event.width), static_cast<float>(event.height)}});
+        m_camera.resizeEvent(event);
     }
 
     void GUINanoTekSpice::processMoveComponentEvent(sf::Vector2f pos)

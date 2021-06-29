@@ -12,6 +12,7 @@
 #include <SFML/Window/Event.hpp>
 #include "NanoTekSpice.hpp"
 #include "GraphicalCircuit.hpp"
+#include "Camera.hpp"
 
 namespace nts
 {
@@ -59,8 +60,9 @@ namespace nts
         void processMoveComponentEvent(sf::Vector2f pos);
 
     private:
-        GraphicalCircuit m_circuit;
-        sf::RenderWindow m_window;
+        GraphicalCircuit     m_circuit;
+        sf::RenderWindow     m_window;
+        Camera               m_camera;
         AGraphicalComponent *m_highlighted_component;
     };
 } // namespace nts
